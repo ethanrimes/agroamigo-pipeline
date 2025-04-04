@@ -1,0 +1,12 @@
+# Ignore all files in logs, test_data, and data directories
+src/logs/*
+!src/logs/.gitkeep
+
+tests/test_data/*
+!tests/test_data/.gitkeep
+
+src/data/*
+!src/data/.gitkeep
+
+# Ignore environment files
+.env

@@ -8,7 +8,6 @@ as well as assessing the quality of extracted text.
 import os
 import re
 import pandas as pd
-# import PyPDF2
 import pdfplumber
 import time
 import logging
@@ -122,7 +121,7 @@ class TextExtractor:
     
     def extract_table_with_pdfplumber(self, file_path):
         """
-        Extract tables from PDF using pdfplumber.
+        Extract tables from PDF using pdfplumber without preprocessing.
         
         Args:
             file_path (str): Path to the PDF file
@@ -142,25 +141,10 @@ class TextExtractor:
                     if extracted_tables:
                         for j, table in enumerate(extracted_tables):
                             if table and len(table) > 1:  # Skip empty tables
-                                # Try to determine headers
-                                headers = table[0]
-                                
-                                # If headers contain None values, try to find a better header row
-                                if None in headers:
-                                    for row_idx in range(1, min(5, len(table))):
-                                        if None not in table[row_idx]:
-                                            headers = table[row_idx]
-                                            table = table[row_idx+1:]
-                                            break
-                                
-                                # Clean up headers
-                                headers = [str(h).strip() if h is not None else f"Column_{i}" for i, h in enumerate(headers)]
-                                
-                                # Create DataFrame
-                                if table:
-                                    df = pd.DataFrame(table, columns=headers)
-                                    tables.append(df)
-                                    self.logger.debug(f"Extracted table {j+1} with shape {df.shape}")
+                                # Simply convert to DataFrame with basic column names
+                                df = pd.DataFrame(table)
+                                tables.append(df)
+                                self.logger.debug(f"Extracted table {j+1} with shape {df.shape}")
             
             duration = time.time() - start_time
             self.timing_stats['pdf_text_extraction'].append({

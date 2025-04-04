@@ -12,6 +12,7 @@ python -m pytest tests/test_pdf_processor.py -v
 ### 🎯 Running a Specific Test Function
 ```bash
 python -m pytest tests/test_pdf_processor.py::TestPDFProcessor::test_single_text_extraction_pdf -v
+python -m pytest tests/test_pdf_processor.py::TestPDFProcessor::test_metadata_extraction -v
 ```
 
 ### 📝 Running Text Extraction Tests

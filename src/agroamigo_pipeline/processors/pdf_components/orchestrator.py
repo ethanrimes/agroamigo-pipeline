@@ -86,7 +86,7 @@ class PDFProcessorOrchestrator:
         Args:
             file_path (str): Path to the PDF file
             text (str): Extracted text
-            
+                
         Returns:
             DataFrame: Processed data in standardized format
         """
@@ -98,10 +98,26 @@ class PDFProcessorOrchestrator:
         metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, text)
         self.logger.info(f"      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
         
-        # Process the text to extract product data
-        self.logger.info(f"      Processing text to extract product data")
-        result = self.product_parser.process_extracted_text(file_path, text, metadata)
-        self.logger.info(f"      Product data extraction complete, extracted {len(result) if result is not None else 0} rows")
+        # Try table extraction first
+        self.logger.info(f"      Attempting to extract tables with pdfplumber")
+        tables = self.text_extractor.extract_table_with_pdfplumber(file_path)
+        
+        if tables and len(tables) > 0:
+            self.logger.info(f"      Successfully extracted {len(tables)} tables, processing table data")
+            result = self.product_parser.process_table_data(file_path, tables, metadata)
+            if result is not None and not result.empty:
+                self.logger.info(f"      Table extraction successful, extracted {len(result)} rows")
+                self.logger.info(f"<---- Completed table extraction flow for: {filename}")
+                return result
+            else:
+                self.logger.info(f"      Table extraction failed to produce results, falling back to text processing")
+        else:
+            self.logger.info(f"      No tables extracted, falling back to text processing")
+        
+        # Fall back to text processing if table extraction fails
+        # self.logger.info(f"      Processing text to extract product data")
+        # result = self.product_parser.process_extracted_text(file_path, text, metadata)
+        # self.logger.info(f"      Product data extraction complete, extracted {len(result) if result is not None else 0} rows")
         
         self.logger.info(f"<---- Completed text extraction flow for: {filename}")
         return result

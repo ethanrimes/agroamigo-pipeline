@@ -669,3 +669,1880 @@ Kilogramo 1 Kilogramo 20.000 22.
 2025-04-04 22:27:50 - pdf_processor - INFO - Used GPT extraction: False
 2025-04-04 22:27:50 - pdf_processor - INFO - Step 5: Registering processing results
 2025-04-04 22:27:50 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:52:06 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:52:06 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:52:06 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:52:06 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:52:06 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:52:06.130068
+2025-04-04 22:52:06 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:52:06 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:52:06 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:52:06 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:52:06 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:52:06 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:52:06 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:52:06 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:52:06 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:52:06 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:52:06 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 22:52:06 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 22:52:06 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 22:52:06 - pdf_processor - INFO -       Combined 0 rows from 3 tables
+2025-04-04 22:52:06 - pdf_processor - WARNING -       No product data extracted from tables
+2025-04-04 22:52:06 - pdf_processor - INFO -       Table extraction failed to produce results, falling back to text processing
+2025-04-04 22:52:06 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:52:06 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 22:52:06 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 22:52:06 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 22:52:06 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:52:06 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:52:06 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:59:07 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:59:07 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:59:07 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:59:07 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:59:07 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:59:07.592612
+2025-04-04 22:59:07 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:59:07 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:59:07 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:59:07 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:59:07 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:59:07 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:59:07 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:59:07 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:59:07 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:59:07 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:59:07 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 22:59:07 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 22:59:07 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 22:59:07 - pdf_processor - INFO -       Combined 0 rows from 3 tables
+2025-04-04 22:59:07 - pdf_processor - WARNING -       No product data extracted from tables
+2025-04-04 22:59:07 - pdf_processor - INFO -       Table extraction failed to produce results, falling back to text processing
+2025-04-04 22:59:07 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:59:07 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 22:59:07 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 22:59:07 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 22:59:07 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:59:07 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:59:07 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:01:23 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:01:23 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:01:23 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:01:23 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:01:23 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:01:23.603609
+2025-04-04 23:01:23 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:01:23 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:01:23 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:01:23 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:01:23 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:01:23 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:01:23 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:01:23 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:01:23 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:01:23 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:01:23 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:01:23 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:01:23 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:01:23 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:01:23 - pdf_processor - INFO - Processing table:                                                        ... Column_6
+0                                                      ...     None
+1   PRECIOS DE VENTA MAYORISTA\nTunja, Complejo de...  ...     None
+2                                            Producto  ...     None
+3                                                None  ...   Máximo
+4                                              Carnes  ...     None
+5                                      Carne de cerdo  ...     None
+6                            Carne de cerdo, costilla  ...        0
+7                           Carne de cerdo,\nespinazo  ...        0
+8                     Carne de cerdo, lomo\nsin hueso  ...        0
+9                   Carne de cerdo, pernil\nsin hueso  ...        0
+10                    Carne de cerdo, tocino\nbarriga  ...        0
+11                                             Frutas  ...     None
+12                                           CÍtricos  ...     None
+13                                       Limón tahití  ...        0
+14                                 Mandarina arrayana  ...        0
+15                                    Mandarina común  ...        0
+16                                   Naranja valencia  ...        0
+17                                            Tangelo  ...        0
+18                                       Otras frutas  ...     None
+19                                      Aguacate hass  ...        0
+20                                 Aguacate papelillo  ...        0
+21                                       Banano urabá  ...        0
+22                                   Banano bocadillo  ...        0
+23                                     Banano criollo  ...        0
+24                                  Ciruela importada  ...        0
+25                                       Ciruela roja  ...        0
+26                                             Curuba  ...        0
+27                                   Durazno nacional  ...        0
+28                                             Feijoa  ...        0
+29                                              Fresa  ...        0
+30                                         Granadilla  ...        0
+31                                          Guanábana  ...        0
+32                                       Guayaba pera  ...        0
+33                                       Guayaba pera  ...        0
+34                                               Kiwi  ...        0
+35                                               Lulo  ...        0
+36                                        Mango tommy  ...        0
+37                                   Manzana nacional  ...        0
+38                             Manzana roja importada  ...        0
+39                      Manzana royal gala\nimportada  ...        0
+40                           Manzana verde\nimportada  ...        0
+41                                           Maracuyá  ...        0
+42                                     Melón cantalup  ...        0
+43                                   Mora de castilla  ...        0
+44                                     Papaya maradol  ...        0
+45                                            Patilla  ...        0
+46                                       Patilla baby  ...        0
+47                                      Pera nacional  ...        0
+48                                          Piña gold  ...        0
+
+[49 rows x 7 columns]
+2025-04-04 23:01:23 - pdf_processor - INFO -       Table has 49 rows
+2025-04-04 23:01:23 - pdf_processor - INFO - Processing table:                       Tomate de árbol      Canastilla  ...     0     0
+0                         Uva isabela  Caja de cartÓn  ...     0     0
+1                       Uva importada  Caja de icopor  ...     0     0
+2                            Pescados            None  ...  None  None
+3                Frescos y congelados            None  ...  None  None
+4   Bagre rayado en postas\ncongelado       Kilogramo  ...     0     0
+5   Basa, filete congelado\nimportado       Kilogramo  ...     0     0
+6                       Nicuro fresco       Kilogramo  ...     0     0
+7          Tilapia roja entera fresca       Kilogramo  ...     0     0
+8       Tuberculos, raices y platanos            None  ...  None  None
+9                    Otros tuberculos            None  ...  None  None
+10                 Arracacha amarilla           Bulto  ...     0     0
+11                            PlÁtano            None  ...  None  None
+12              Plátano hartón maduro           Bolsa  ...     0     0
+13               Plátano hartón verde           Bolsa  ...     0     0
+14                               Papa            None  ...  None  None
+15                        Papa betina           Bulto  ...     0     0
+16                Papa criolla limpia           Bulto  ...     0     0
+17                 Papa criolla sucia           Bulto  ...     0     0
+18                          Papa rubí           Bulto  ...     0     0
+19                      Papa superior           Bulto  ...     0     0
+20                               Yuca            None  ...  None  None
+21                       Yuca llanera           Bolsa  ...     0     0
+22              Verduras y hortalizas            None  ...  None  None
+23                        Leguminosas            None  ...  None  None
+24              Arveja verde en vaina           Bulto  ...     0     0
+25            Fríjol verde cargamanto           Bulto  ...     0     0
+26                         Haba verde           Bulto  ...     0     0
+27                         Habichuela           Bulto  ...     0     0
+28        Otras hortalizas y verduras            None  ...  None  None
+29                            Ahuyama           Bulto  ...     0     0
+30                  Ahuyamín (sakata)           Bulto  ...     0     0
+31                                Ajo    Atado/manojo  ...     0     0
+32                          Calabacín           Bolsa  ...     0     0
+33                    Chócolo mazorca           Bulto  ...     0     0
+34                    Pepino cohombro           Bulto  ...     0     0
+35                 Pepino de rellenar           Bolsa  ...     0     0
+36                           Pimentón      Canastilla  ...     0     0
+37                          Remolacha           Bulto  ...     0     0
+38                         Zanahorias            None  ...  None  None
+39                          Zanahoria           Bulto  ...     0     0
+40                           Cebollas            None  ...  None  None
+41           Cebolla cabezona\nblanca           Bulto  ...     0     0
+42              Cebolla cabezona roja           Bulto  ...     0     0
+43            Cebolla junca aquitania    Atado/manojo  ...     0     0
+44                            Tomates            None  ...  None  None
+45                      Tomate chonto      Canastilla  ...     0     0
+46                         Hortalizas            None  ...  None  None
+47                             Acelga    Atado/manojo  ...     0     0
+
+[48 rows x 7 columns]
+2025-04-04 23:01:23 - pdf_processor - INFO -       Table has 48 rows
+2025-04-04 23:01:23 - pdf_processor - INFO - Processing table:               Apio          Docena   20 Kilogramo  18.000  20.000  0  0
+0          Brócoli          Docena   10 Kilogramo  20.000  25.000  0  0
+1         Cilantro    Atado/manojo    6 Kilogramo  10.000  10.000  0  0
+2         Coliflor  Caja de cartÓn   10 Kilogramo  35.000  40.000  0  0
+3         Espinaca      Canastilla  6.5 Kilogramo  20.000  25.000  0  0
+4  Lechuga batavia  Caja de cartÓn   15 Kilogramo  20.000  25.000  0  0
+5          Perejil    Atado/manojo    6 Kilogramo  15.000  18.000  0  0
+6    Repollo verde           Bulto   60 Kilogramo  80.000  90.000  0  0
+2025-04-04 23:01:23 - pdf_processor - INFO -       Table has 7 rows
+2025-04-04 23:01:23 - pdf_processor - INFO -       Combined 0 rows from 3 tables
+2025-04-04 23:01:23 - pdf_processor - WARNING -       No product data extracted from tables
+2025-04-04 23:01:23 - pdf_processor - INFO -       Table extraction failed to produce results, falling back to text processing
+2025-04-04 23:01:23 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:01:23 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 23:01:23 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 23:01:23 - pdf_processor - INFO - Total processing time: 0.33 seconds
+2025-04-04 23:01:23 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:01:23 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:01:23 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:09:32 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:09:32 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:09:32 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:09:32 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:09:32 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:09:32.098187
+2025-04-04 23:09:32 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:09:32 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:09:32 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:09:32 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:09:32 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:09:32 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:09:32 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:09:32 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:09:32 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:09:32 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:09:32 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:09:32 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:09:32 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:09:32 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:09:32 - pdf_processor - INFO - Processing table:                                                        ... Column_6
+0                                                      ...     None
+1   PRECIOS DE VENTA MAYORISTA\nTunja, Complejo de...  ...     None
+2                                            Producto  ...     None
+3                                                None  ...   Máximo
+4                                              Carnes  ...     None
+5                                      Carne de cerdo  ...     None
+6                            Carne de cerdo, costilla  ...        0
+7                           Carne de cerdo,\nespinazo  ...        0
+8                     Carne de cerdo, lomo\nsin hueso  ...        0
+9                   Carne de cerdo, pernil\nsin hueso  ...        0
+10                    Carne de cerdo, tocino\nbarriga  ...        0
+11                                             Frutas  ...     None
+12                                           CÍtricos  ...     None
+13                                       Limón tahití  ...        0
+14                                 Mandarina arrayana  ...        0
+15                                    Mandarina común  ...        0
+16                                   Naranja valencia  ...        0
+17                                            Tangelo  ...        0
+18                                       Otras frutas  ...     None
+19                                      Aguacate hass  ...        0
+20                                 Aguacate papelillo  ...        0
+21                                       Banano urabá  ...        0
+22                                   Banano bocadillo  ...        0
+23                                     Banano criollo  ...        0
+24                                  Ciruela importada  ...        0
+25                                       Ciruela roja  ...        0
+26                                             Curuba  ...        0
+27                                   Durazno nacional  ...        0
+28                                             Feijoa  ...        0
+29                                              Fresa  ...        0
+30                                         Granadilla  ...        0
+31                                          Guanábana  ...        0
+32                                       Guayaba pera  ...        0
+33                                       Guayaba pera  ...        0
+34                                               Kiwi  ...        0
+35                                               Lulo  ...        0
+36                                        Mango tommy  ...        0
+37                                   Manzana nacional  ...        0
+38                             Manzana roja importada  ...        0
+39                      Manzana royal gala\nimportada  ...        0
+40                           Manzana verde\nimportada  ...        0
+41                                           Maracuyá  ...        0
+42                                     Melón cantalup  ...        0
+43                                   Mora de castilla  ...        0
+44                                     Papaya maradol  ...        0
+45                                            Patilla  ...        0
+46                                       Patilla baby  ...        0
+47                                      Pera nacional  ...        0
+48                                          Piña gold  ...        0
+
+[49 rows x 7 columns]
+2025-04-04 23:09:32 - pdf_processor - INFO -       Table has 49 rows
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 0: 
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 1: Column_1
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 2: Column_2
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 3: Column_3
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 4: Column_4
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 5: Column_5
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 6: Column_6
+2025-04-04 23:09:32 - pdf_processor - INFO - Processing table:                       Tomate de árbol      Canastilla  ...     0     0
+0                         Uva isabela  Caja de cartÓn  ...     0     0
+1                       Uva importada  Caja de icopor  ...     0     0
+2                            Pescados            None  ...  None  None
+3                Frescos y congelados            None  ...  None  None
+4   Bagre rayado en postas\ncongelado       Kilogramo  ...     0     0
+5   Basa, filete congelado\nimportado       Kilogramo  ...     0     0
+6                       Nicuro fresco       Kilogramo  ...     0     0
+7          Tilapia roja entera fresca       Kilogramo  ...     0     0
+8       Tuberculos, raices y platanos            None  ...  None  None
+9                    Otros tuberculos            None  ...  None  None
+10                 Arracacha amarilla           Bulto  ...     0     0
+11                            PlÁtano            None  ...  None  None
+12              Plátano hartón maduro           Bolsa  ...     0     0
+13               Plátano hartón verde           Bolsa  ...     0     0
+14                               Papa            None  ...  None  None
+15                        Papa betina           Bulto  ...     0     0
+16                Papa criolla limpia           Bulto  ...     0     0
+17                 Papa criolla sucia           Bulto  ...     0     0
+18                          Papa rubí           Bulto  ...     0     0
+19                      Papa superior           Bulto  ...     0     0
+20                               Yuca            None  ...  None  None
+21                       Yuca llanera           Bolsa  ...     0     0
+22              Verduras y hortalizas            None  ...  None  None
+23                        Leguminosas            None  ...  None  None
+24              Arveja verde en vaina           Bulto  ...     0     0
+25            Fríjol verde cargamanto           Bulto  ...     0     0
+26                         Haba verde           Bulto  ...     0     0
+27                         Habichuela           Bulto  ...     0     0
+28        Otras hortalizas y verduras            None  ...  None  None
+29                            Ahuyama           Bulto  ...     0     0
+30                  Ahuyamín (sakata)           Bulto  ...     0     0
+31                                Ajo    Atado/manojo  ...     0     0
+32                          Calabacín           Bolsa  ...     0     0
+33                    Chócolo mazorca           Bulto  ...     0     0
+34                    Pepino cohombro           Bulto  ...     0     0
+35                 Pepino de rellenar           Bolsa  ...     0     0
+36                           Pimentón      Canastilla  ...     0     0
+37                          Remolacha           Bulto  ...     0     0
+38                         Zanahorias            None  ...  None  None
+39                          Zanahoria           Bulto  ...     0     0
+40                           Cebollas            None  ...  None  None
+41           Cebolla cabezona\nblanca           Bulto  ...     0     0
+42              Cebolla cabezona roja           Bulto  ...     0     0
+43            Cebolla junca aquitania    Atado/manojo  ...     0     0
+44                            Tomates            None  ...  None  None
+45                      Tomate chonto      Canastilla  ...     0     0
+46                         Hortalizas            None  ...  None  None
+47                             Acelga    Atado/manojo  ...     0     0
+
+[48 rows x 7 columns]
+2025-04-04 23:09:32 - pdf_processor - INFO -       Table has 48 rows
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 0: Tomate de árbol
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 1: Canastilla
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 2: 25 Kilogramo
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 3: 55.000
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 4: 60.000
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 5: 0
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 6: 0
+2025-04-04 23:09:32 - pdf_processor - INFO - Processing table:               Apio          Docena   20 Kilogramo  18.000  20.000  0  0
+0          Brócoli          Docena   10 Kilogramo  20.000  25.000  0  0
+1         Cilantro    Atado/manojo    6 Kilogramo  10.000  10.000  0  0
+2         Coliflor  Caja de cartÓn   10 Kilogramo  35.000  40.000  0  0
+3         Espinaca      Canastilla  6.5 Kilogramo  20.000  25.000  0  0
+4  Lechuga batavia  Caja de cartÓn   15 Kilogramo  20.000  25.000  0  0
+5          Perejil    Atado/manojo    6 Kilogramo  15.000  18.000  0  0
+6    Repollo verde           Bulto   60 Kilogramo  80.000  90.000  0  0
+2025-04-04 23:09:32 - pdf_processor - INFO -       Table has 7 rows
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 0: Apio
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 1: Docena
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 2: 20 Kilogramo
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 3: 18.000
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 4: 20.000
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 5: 0
+2025-04-04 23:09:32 - pdf_processor - INFO -       Processing row 6: 0
+2025-04-04 23:09:32 - pdf_processor - INFO -       Combined 0 rows from 3 tables
+2025-04-04 23:09:32 - pdf_processor - WARNING -       No product data extracted from tables
+2025-04-04 23:09:32 - pdf_processor - INFO -       Table extraction failed to produce results, falling back to text processing
+2025-04-04 23:09:32 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:09:32 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 23:09:32 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 23:09:32 - pdf_processor - INFO - Total processing time: 0.33 seconds
+2025-04-04 23:09:32 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:09:32 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:09:32 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:16:36 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:16:36 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:16:36 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:16:36 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:16:36 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:16:36.031721
+2025-04-04 23:16:36 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:16:36 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:16:36 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:16:36 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:16:36 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:16:36 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:16:36 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:16:36 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:16:36 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:16:36 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:16:36 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:16:36 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:16:36 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:16:36 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:16:36 - pdf_processor - INFO - Processing table:                                                        ... Column_6
+0                                                      ...     None
+1   PRECIOS DE VENTA MAYORISTA\nTunja, Complejo de...  ...     None
+2                                            Producto  ...     None
+3                                                None  ...   Máximo
+4                                              Carnes  ...     None
+5                                      Carne de cerdo  ...     None
+6                            Carne de cerdo, costilla  ...        0
+7                           Carne de cerdo,\nespinazo  ...        0
+8                     Carne de cerdo, lomo\nsin hueso  ...        0
+9                   Carne de cerdo, pernil\nsin hueso  ...        0
+10                    Carne de cerdo, tocino\nbarriga  ...        0
+11                                             Frutas  ...     None
+12                                           CÍtricos  ...     None
+13                                       Limón tahití  ...        0
+14                                 Mandarina arrayana  ...        0
+15                                    Mandarina común  ...        0
+16                                   Naranja valencia  ...        0
+17                                            Tangelo  ...        0
+18                                       Otras frutas  ...     None
+19                                      Aguacate hass  ...        0
+20                                 Aguacate papelillo  ...        0
+21                                       Banano urabá  ...        0
+22                                   Banano bocadillo  ...        0
+23                                     Banano criollo  ...        0
+24                                  Ciruela importada  ...        0
+25                                       Ciruela roja  ...        0
+26                                             Curuba  ...        0
+27                                   Durazno nacional  ...        0
+28                                             Feijoa  ...        0
+29                                              Fresa  ...        0
+30                                         Granadilla  ...        0
+31                                          Guanábana  ...        0
+32                                       Guayaba pera  ...        0
+33                                       Guayaba pera  ...        0
+34                                               Kiwi  ...        0
+35                                               Lulo  ...        0
+36                                        Mango tommy  ...        0
+37                                   Manzana nacional  ...        0
+38                             Manzana roja importada  ...        0
+39                      Manzana royal gala\nimportada  ...        0
+40                           Manzana verde\nimportada  ...        0
+41                                           Maracuyá  ...        0
+42                                     Melón cantalup  ...        0
+43                                   Mora de castilla  ...        0
+44                                     Papaya maradol  ...        0
+45                                            Patilla  ...        0
+46                                       Patilla baby  ...        0
+47                                      Pera nacional  ...        0
+48                                          Piña gold  ...        0
+
+[49 rows x 7 columns]
+2025-04-04 23:16:36 - pdf_processor - INFO -       Table has 49 rows
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 0: 
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 1: Column_1
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 2: Column_2
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 3: Column_3
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 4: Column_4
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 5: Column_5
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 6: Column_6
+2025-04-04 23:16:36 - pdf_processor - INFO - Processing table:                       Tomate de árbol      Canastilla  ...     0     0
+0                         Uva isabela  Caja de cartÓn  ...     0     0
+1                       Uva importada  Caja de icopor  ...     0     0
+2                            Pescados            None  ...  None  None
+3                Frescos y congelados            None  ...  None  None
+4   Bagre rayado en postas\ncongelado       Kilogramo  ...     0     0
+5   Basa, filete congelado\nimportado       Kilogramo  ...     0     0
+6                       Nicuro fresco       Kilogramo  ...     0     0
+7          Tilapia roja entera fresca       Kilogramo  ...     0     0
+8       Tuberculos, raices y platanos            None  ...  None  None
+9                    Otros tuberculos            None  ...  None  None
+10                 Arracacha amarilla           Bulto  ...     0     0
+11                            PlÁtano            None  ...  None  None
+12              Plátano hartón maduro           Bolsa  ...     0     0
+13               Plátano hartón verde           Bolsa  ...     0     0
+14                               Papa            None  ...  None  None
+15                        Papa betina           Bulto  ...     0     0
+16                Papa criolla limpia           Bulto  ...     0     0
+17                 Papa criolla sucia           Bulto  ...     0     0
+18                          Papa rubí           Bulto  ...     0     0
+19                      Papa superior           Bulto  ...     0     0
+20                               Yuca            None  ...  None  None
+21                       Yuca llanera           Bolsa  ...     0     0
+22              Verduras y hortalizas            None  ...  None  None
+23                        Leguminosas            None  ...  None  None
+24              Arveja verde en vaina           Bulto  ...     0     0
+25            Fríjol verde cargamanto           Bulto  ...     0     0
+26                         Haba verde           Bulto  ...     0     0
+27                         Habichuela           Bulto  ...     0     0
+28        Otras hortalizas y verduras            None  ...  None  None
+29                            Ahuyama           Bulto  ...     0     0
+30                  Ahuyamín (sakata)           Bulto  ...     0     0
+31                                Ajo    Atado/manojo  ...     0     0
+32                          Calabacín           Bolsa  ...     0     0
+33                    Chócolo mazorca           Bulto  ...     0     0
+34                    Pepino cohombro           Bulto  ...     0     0
+35                 Pepino de rellenar           Bolsa  ...     0     0
+36                           Pimentón      Canastilla  ...     0     0
+37                          Remolacha           Bulto  ...     0     0
+38                         Zanahorias            None  ...  None  None
+39                          Zanahoria           Bulto  ...     0     0
+40                           Cebollas            None  ...  None  None
+41           Cebolla cabezona\nblanca           Bulto  ...     0     0
+42              Cebolla cabezona roja           Bulto  ...     0     0
+43            Cebolla junca aquitania    Atado/manojo  ...     0     0
+44                            Tomates            None  ...  None  None
+45                      Tomate chonto      Canastilla  ...     0     0
+46                         Hortalizas            None  ...  None  None
+47                             Acelga    Atado/manojo  ...     0     0
+
+[48 rows x 7 columns]
+2025-04-04 23:16:36 - pdf_processor - INFO -       Table has 48 rows
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 0: Tomate de árbol
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 1: Canastilla
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 2: 25 Kilogramo
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 3: 55.000
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 4: 60.000
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 5: 0
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 6: 0
+2025-04-04 23:16:36 - pdf_processor - INFO - Processing table:               Apio          Docena   20 Kilogramo  18.000  20.000  0  0
+0          Brócoli          Docena   10 Kilogramo  20.000  25.000  0  0
+1         Cilantro    Atado/manojo    6 Kilogramo  10.000  10.000  0  0
+2         Coliflor  Caja de cartÓn   10 Kilogramo  35.000  40.000  0  0
+3         Espinaca      Canastilla  6.5 Kilogramo  20.000  25.000  0  0
+4  Lechuga batavia  Caja de cartÓn   15 Kilogramo  20.000  25.000  0  0
+5          Perejil    Atado/manojo    6 Kilogramo  15.000  18.000  0  0
+6    Repollo verde           Bulto   60 Kilogramo  80.000  90.000  0  0
+2025-04-04 23:16:36 - pdf_processor - INFO -       Table has 7 rows
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 0: Apio
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 1: Docena
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 2: 20 Kilogramo
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 3: 18.000
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 4: 20.000
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 5: 0
+2025-04-04 23:16:36 - pdf_processor - INFO -       Processing row 6: 0
+2025-04-04 23:16:36 - pdf_processor - INFO -       Combined 0 rows from 3 tables
+2025-04-04 23:16:36 - pdf_processor - WARNING -       No product data extracted from tables
+2025-04-04 23:16:36 - pdf_processor - INFO -       Table extraction failed to produce results, falling back to text processing
+2025-04-04 23:16:36 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:16:36 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 23:16:36 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 23:16:36 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:16:36 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:16:36 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:16:36 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:18:55 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:18:55 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:18:55 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:18:55 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:18:55 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:18:55.733526
+2025-04-04 23:18:55 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:18:55 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:18:55 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:18:55 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:18:55 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:18:55 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:18:55 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:18:55 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:18:55 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:18:55 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:18:55 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:18:56 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:18:56 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:18:56 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:18:56 - pdf_processor - INFO - Processing table:                                                        ... Column_6
+0                                                      ...     None
+1   PRECIOS DE VENTA MAYORISTA\nTunja, Complejo de...  ...     None
+2                                            Producto  ...     None
+3                                                None  ...   Máximo
+4                                              Carnes  ...     None
+5                                      Carne de cerdo  ...     None
+6                            Carne de cerdo, costilla  ...        0
+7                           Carne de cerdo,\nespinazo  ...        0
+8                     Carne de cerdo, lomo\nsin hueso  ...        0
+9                   Carne de cerdo, pernil\nsin hueso  ...        0
+10                    Carne de cerdo, tocino\nbarriga  ...        0
+11                                             Frutas  ...     None
+12                                           CÍtricos  ...     None
+13                                       Limón tahití  ...        0
+14                                 Mandarina arrayana  ...        0
+15                                    Mandarina común  ...        0
+16                                   Naranja valencia  ...        0
+17                                            Tangelo  ...        0
+18                                       Otras frutas  ...     None
+19                                      Aguacate hass  ...        0
+20                                 Aguacate papelillo  ...        0
+21                                       Banano urabá  ...        0
+22                                   Banano bocadillo  ...        0
+23                                     Banano criollo  ...        0
+24                                  Ciruela importada  ...        0
+25                                       Ciruela roja  ...        0
+26                                             Curuba  ...        0
+27                                   Durazno nacional  ...        0
+28                                             Feijoa  ...        0
+29                                              Fresa  ...        0
+30                                         Granadilla  ...        0
+31                                          Guanábana  ...        0
+32                                       Guayaba pera  ...        0
+33                                       Guayaba pera  ...        0
+34                                               Kiwi  ...        0
+35                                               Lulo  ...        0
+36                                        Mango tommy  ...        0
+37                                   Manzana nacional  ...        0
+38                             Manzana roja importada  ...        0
+39                      Manzana royal gala\nimportada  ...        0
+40                           Manzana verde\nimportada  ...        0
+41                                           Maracuyá  ...        0
+42                                     Melón cantalup  ...        0
+43                                   Mora de castilla  ...        0
+44                                     Papaya maradol  ...        0
+45                                            Patilla  ...        0
+46                                       Patilla baby  ...        0
+47                                      Pera nacional  ...        0
+48                                          Piña gold  ...        0
+
+[49 rows x 7 columns]
+2025-04-04 23:18:56 - pdf_processor - INFO -       Table has 49 rows
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 0: 
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 1: PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+2025-04-04 23:18:56 - pdf_processor - INFO -       Found header row at index 1: ['PRECIOS DE VENTA MAYORISTA\nTunja, Complejo de Servicios del Sur\nPRODUCTOS PRIMERA CALIDAD - Boletín Gratuito\n21 de Febrero de 2025', None, None, None, None, None, None]
+2025-04-04 23:18:56 - pdf_processor - INFO -       Skipping header rows up to index 1
+2025-04-04 23:18:56 - pdf_processor - INFO -       Added row: Column_1
+2025-04-04 23:18:56 - pdf_processor - INFO -       Added row: Column_2
+2025-04-04 23:18:56 - pdf_processor - INFO -       Added row: Column_3
+2025-04-04 23:18:56 - pdf_processor - INFO -       Added row: Column_4
+2025-04-04 23:18:56 - pdf_processor - INFO -       Added row: Column_5
+2025-04-04 23:18:56 - pdf_processor - INFO -       Added row: Column_6
+2025-04-04 23:18:56 - pdf_processor - INFO - Processing table:                       Tomate de árbol      Canastilla  ...     0     0
+0                         Uva isabela  Caja de cartÓn  ...     0     0
+1                       Uva importada  Caja de icopor  ...     0     0
+2                            Pescados            None  ...  None  None
+3                Frescos y congelados            None  ...  None  None
+4   Bagre rayado en postas\ncongelado       Kilogramo  ...     0     0
+5   Basa, filete congelado\nimportado       Kilogramo  ...     0     0
+6                       Nicuro fresco       Kilogramo  ...     0     0
+7          Tilapia roja entera fresca       Kilogramo  ...     0     0
+8       Tuberculos, raices y platanos            None  ...  None  None
+9                    Otros tuberculos            None  ...  None  None
+10                 Arracacha amarilla           Bulto  ...     0     0
+11                            PlÁtano            None  ...  None  None
+12              Plátano hartón maduro           Bolsa  ...     0     0
+13               Plátano hartón verde           Bolsa  ...     0     0
+14                               Papa            None  ...  None  None
+15                        Papa betina           Bulto  ...     0     0
+16                Papa criolla limpia           Bulto  ...     0     0
+17                 Papa criolla sucia           Bulto  ...     0     0
+18                          Papa rubí           Bulto  ...     0     0
+19                      Papa superior           Bulto  ...     0     0
+20                               Yuca            None  ...  None  None
+21                       Yuca llanera           Bolsa  ...     0     0
+22              Verduras y hortalizas            None  ...  None  None
+23                        Leguminosas            None  ...  None  None
+24              Arveja verde en vaina           Bulto  ...     0     0
+25            Fríjol verde cargamanto           Bulto  ...     0     0
+26                         Haba verde           Bulto  ...     0     0
+27                         Habichuela           Bulto  ...     0     0
+28        Otras hortalizas y verduras            None  ...  None  None
+29                            Ahuyama           Bulto  ...     0     0
+30                  Ahuyamín (sakata)           Bulto  ...     0     0
+31                                Ajo    Atado/manojo  ...     0     0
+32                          Calabacín           Bolsa  ...     0     0
+33                    Chócolo mazorca           Bulto  ...     0     0
+34                    Pepino cohombro           Bulto  ...     0     0
+35                 Pepino de rellenar           Bolsa  ...     0     0
+36                           Pimentón      Canastilla  ...     0     0
+37                          Remolacha           Bulto  ...     0     0
+38                         Zanahorias            None  ...  None  None
+39                          Zanahoria           Bulto  ...     0     0
+40                           Cebollas            None  ...  None  None
+41           Cebolla cabezona\nblanca           Bulto  ...     0     0
+42              Cebolla cabezona roja           Bulto  ...     0     0
+43            Cebolla junca aquitania    Atado/manojo  ...     0     0
+44                            Tomates            None  ...  None  None
+45                      Tomate chonto      Canastilla  ...     0     0
+46                         Hortalizas            None  ...  None  None
+47                             Acelga    Atado/manojo  ...     0     0
+
+[48 rows x 7 columns]
+2025-04-04 23:18:56 - pdf_processor - INFO -       Table has 48 rows
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 0: Uva isabela
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 1: Uva importada
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 2: Pescados
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 3: Frescos y congelados
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 4: Bagre rayado en postas
+congelado
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 5: Basa, filete congelado
+importado
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 6: Nicuro fresco
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 7: Tilapia roja entera fresca
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 8: Tuberculos, raices y platanos
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 9: Otros tuberculos
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 10: Arracacha amarilla
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 11: PlÁtano
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 12: Plátano hartón maduro
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 13: Plátano hartón verde
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 14: Papa
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 15: Papa betina
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 16: Papa criolla limpia
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 17: Papa criolla sucia
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 18: Papa rubí
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 19: Papa superior
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 20: Yuca
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 21: Yuca llanera
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 22: Verduras y hortalizas
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 23: Leguminosas
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 24: Arveja verde en vaina
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 25: Fríjol verde cargamanto
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 26: Haba verde
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 27: Habichuela
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 28: Otras hortalizas y verduras
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 29: Ahuyama
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 30: Ahuyamín (sakata)
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 31: Ajo
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 32: Calabacín
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 33: Chócolo mazorca
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 34: Pepino cohombro
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 35: Pepino de rellenar
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 36: Pimentón
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 37: Remolacha
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 38: Zanahorias
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 39: Zanahoria
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 40: Cebollas
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 41: Cebolla cabezona
+blanca
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 42: Cebolla cabezona roja
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 43: Cebolla junca aquitania
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 44: Tomates
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 45: Tomate chonto
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 46: Hortalizas
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 47: Acelga
+2025-04-04 23:18:56 - pdf_processor - INFO - Processing table:               Apio          Docena   20 Kilogramo  18.000  20.000  0  0
+0          Brócoli          Docena   10 Kilogramo  20.000  25.000  0  0
+1         Cilantro    Atado/manojo    6 Kilogramo  10.000  10.000  0  0
+2         Coliflor  Caja de cartÓn   10 Kilogramo  35.000  40.000  0  0
+3         Espinaca      Canastilla  6.5 Kilogramo  20.000  25.000  0  0
+4  Lechuga batavia  Caja de cartÓn   15 Kilogramo  20.000  25.000  0  0
+5          Perejil    Atado/manojo    6 Kilogramo  15.000  18.000  0  0
+6    Repollo verde           Bulto   60 Kilogramo  80.000  90.000  0  0
+2025-04-04 23:18:56 - pdf_processor - INFO -       Table has 7 rows
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 0: Brócoli
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 1: Cilantro
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 2: Coliflor
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 3: Espinaca
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 4: Lechuga batavia
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 5: Perejil
+2025-04-04 23:18:56 - pdf_processor - INFO -       Processing row 6: Repollo verde
+2025-04-04 23:18:56 - pdf_processor - INFO -       Combined 6 rows from 3 tables
+2025-04-04 23:18:56 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:18:56 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:18:56 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:18:56 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:18:56 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:18:56 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:18:56 - pdf_processor - WARNING -       No product data extracted from tables
+2025-04-04 23:18:56 - pdf_processor - INFO -       Table extraction failed to produce results, falling back to text processing
+2025-04-04 23:18:56 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:18:56 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 23:18:56 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 23:18:56 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:18:56 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:18:56 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:18:56 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:19:35 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:19:35 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:19:35 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:19:35 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:19:35 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:19:35.612894
+2025-04-04 23:19:35 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:19:35 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:19:35 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:19:35 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:19:35 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:19:35 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:19:35 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:19:35 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:19:35 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:19:35 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:19:35 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:19:35 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:19:35 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:19:35 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:19:35 - pdf_processor - INFO - Processing table:                                                        ... Column_6
+0                                                      ...     None
+1   PRECIOS DE VENTA MAYORISTA\nTunja, Complejo de...  ...     None
+2                                            Producto  ...     None
+3                                                None  ...   Máximo
+4                                              Carnes  ...     None
+5                                      Carne de cerdo  ...     None
+6                            Carne de cerdo, costilla  ...        0
+7                           Carne de cerdo,\nespinazo  ...        0
+8                     Carne de cerdo, lomo\nsin hueso  ...        0
+9                   Carne de cerdo, pernil\nsin hueso  ...        0
+10                    Carne de cerdo, tocino\nbarriga  ...        0
+11                                             Frutas  ...     None
+12                                           CÍtricos  ...     None
+13                                       Limón tahití  ...        0
+14                                 Mandarina arrayana  ...        0
+15                                    Mandarina común  ...        0
+16                                   Naranja valencia  ...        0
+17                                            Tangelo  ...        0
+18                                       Otras frutas  ...     None
+19                                      Aguacate hass  ...        0
+20                                 Aguacate papelillo  ...        0
+21                                       Banano urabá  ...        0
+22                                   Banano bocadillo  ...        0
+23                                     Banano criollo  ...        0
+24                                  Ciruela importada  ...        0
+25                                       Ciruela roja  ...        0
+26                                             Curuba  ...        0
+27                                   Durazno nacional  ...        0
+28                                             Feijoa  ...        0
+29                                              Fresa  ...        0
+30                                         Granadilla  ...        0
+31                                          Guanábana  ...        0
+32                                       Guayaba pera  ...        0
+33                                       Guayaba pera  ...        0
+34                                               Kiwi  ...        0
+35                                               Lulo  ...        0
+36                                        Mango tommy  ...        0
+37                                   Manzana nacional  ...        0
+38                             Manzana roja importada  ...        0
+39                      Manzana royal gala\nimportada  ...        0
+40                           Manzana verde\nimportada  ...        0
+41                                           Maracuyá  ...        0
+42                                     Melón cantalup  ...        0
+43                                   Mora de castilla  ...        0
+44                                     Papaya maradol  ...        0
+45                                            Patilla  ...        0
+46                                       Patilla baby  ...        0
+47                                      Pera nacional  ...        0
+48                                          Piña gold  ...        0
+
+[49 rows x 7 columns]
+2025-04-04 23:19:35 - pdf_processor - INFO -       Table has 49 rows
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 0: 
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 1: PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 2: Producto
+2025-04-04 23:19:35 - pdf_processor - INFO -       Found header row at index 2: ['Producto', 'Presentación', 'Unidades', 'Ronda 1\n04:30 - 06:15', None, 'Ronda 2\n-', None]
+2025-04-04 23:19:35 - pdf_processor - INFO -       Skipping header rows up to index 2
+2025-04-04 23:19:35 - pdf_processor - INFO -       Added row: Column_1
+2025-04-04 23:19:35 - pdf_processor - INFO -       Added row: Column_2
+2025-04-04 23:19:35 - pdf_processor - INFO -       Added row: Column_3
+2025-04-04 23:19:35 - pdf_processor - INFO -       Added row: Column_4
+2025-04-04 23:19:35 - pdf_processor - INFO -       Added row: Column_5
+2025-04-04 23:19:35 - pdf_processor - INFO -       Added row: Column_6
+2025-04-04 23:19:35 - pdf_processor - INFO - Processing table:                       Tomate de árbol      Canastilla  ...     0     0
+0                         Uva isabela  Caja de cartÓn  ...     0     0
+1                       Uva importada  Caja de icopor  ...     0     0
+2                            Pescados            None  ...  None  None
+3                Frescos y congelados            None  ...  None  None
+4   Bagre rayado en postas\ncongelado       Kilogramo  ...     0     0
+5   Basa, filete congelado\nimportado       Kilogramo  ...     0     0
+6                       Nicuro fresco       Kilogramo  ...     0     0
+7          Tilapia roja entera fresca       Kilogramo  ...     0     0
+8       Tuberculos, raices y platanos            None  ...  None  None
+9                    Otros tuberculos            None  ...  None  None
+10                 Arracacha amarilla           Bulto  ...     0     0
+11                            PlÁtano            None  ...  None  None
+12              Plátano hartón maduro           Bolsa  ...     0     0
+13               Plátano hartón verde           Bolsa  ...     0     0
+14                               Papa            None  ...  None  None
+15                        Papa betina           Bulto  ...     0     0
+16                Papa criolla limpia           Bulto  ...     0     0
+17                 Papa criolla sucia           Bulto  ...     0     0
+18                          Papa rubí           Bulto  ...     0     0
+19                      Papa superior           Bulto  ...     0     0
+20                               Yuca            None  ...  None  None
+21                       Yuca llanera           Bolsa  ...     0     0
+22              Verduras y hortalizas            None  ...  None  None
+23                        Leguminosas            None  ...  None  None
+24              Arveja verde en vaina           Bulto  ...     0     0
+25            Fríjol verde cargamanto           Bulto  ...     0     0
+26                         Haba verde           Bulto  ...     0     0
+27                         Habichuela           Bulto  ...     0     0
+28        Otras hortalizas y verduras            None  ...  None  None
+29                            Ahuyama           Bulto  ...     0     0
+30                  Ahuyamín (sakata)           Bulto  ...     0     0
+31                                Ajo    Atado/manojo  ...     0     0
+32                          Calabacín           Bolsa  ...     0     0
+33                    Chócolo mazorca           Bulto  ...     0     0
+34                    Pepino cohombro           Bulto  ...     0     0
+35                 Pepino de rellenar           Bolsa  ...     0     0
+36                           Pimentón      Canastilla  ...     0     0
+37                          Remolacha           Bulto  ...     0     0
+38                         Zanahorias            None  ...  None  None
+39                          Zanahoria           Bulto  ...     0     0
+40                           Cebollas            None  ...  None  None
+41           Cebolla cabezona\nblanca           Bulto  ...     0     0
+42              Cebolla cabezona roja           Bulto  ...     0     0
+43            Cebolla junca aquitania    Atado/manojo  ...     0     0
+44                            Tomates            None  ...  None  None
+45                      Tomate chonto      Canastilla  ...     0     0
+46                         Hortalizas            None  ...  None  None
+47                             Acelga    Atado/manojo  ...     0     0
+
+[48 rows x 7 columns]
+2025-04-04 23:19:35 - pdf_processor - INFO -       Table has 48 rows
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 0: Uva isabela
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 1: Uva importada
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 2: Pescados
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 3: Frescos y congelados
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 4: Bagre rayado en postas
+congelado
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 5: Basa, filete congelado
+importado
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 6: Nicuro fresco
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 7: Tilapia roja entera fresca
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 8: Tuberculos, raices y platanos
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 9: Otros tuberculos
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 10: Arracacha amarilla
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 11: PlÁtano
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 12: Plátano hartón maduro
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 13: Plátano hartón verde
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 14: Papa
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 15: Papa betina
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 16: Papa criolla limpia
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 17: Papa criolla sucia
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 18: Papa rubí
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 19: Papa superior
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 20: Yuca
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 21: Yuca llanera
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 22: Verduras y hortalizas
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 23: Leguminosas
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 24: Arveja verde en vaina
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 25: Fríjol verde cargamanto
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 26: Haba verde
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 27: Habichuela
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 28: Otras hortalizas y verduras
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 29: Ahuyama
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 30: Ahuyamín (sakata)
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 31: Ajo
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 32: Calabacín
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 33: Chócolo mazorca
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 34: Pepino cohombro
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 35: Pepino de rellenar
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 36: Pimentón
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 37: Remolacha
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 38: Zanahorias
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 39: Zanahoria
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 40: Cebollas
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 41: Cebolla cabezona
+blanca
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 42: Cebolla cabezona roja
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 43: Cebolla junca aquitania
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 44: Tomates
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 45: Tomate chonto
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 46: Hortalizas
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 47: Acelga
+2025-04-04 23:19:35 - pdf_processor - INFO - Processing table:               Apio          Docena   20 Kilogramo  18.000  20.000  0  0
+0          Brócoli          Docena   10 Kilogramo  20.000  25.000  0  0
+1         Cilantro    Atado/manojo    6 Kilogramo  10.000  10.000  0  0
+2         Coliflor  Caja de cartÓn   10 Kilogramo  35.000  40.000  0  0
+3         Espinaca      Canastilla  6.5 Kilogramo  20.000  25.000  0  0
+4  Lechuga batavia  Caja de cartÓn   15 Kilogramo  20.000  25.000  0  0
+5          Perejil    Atado/manojo    6 Kilogramo  15.000  18.000  0  0
+6    Repollo verde           Bulto   60 Kilogramo  80.000  90.000  0  0
+2025-04-04 23:19:35 - pdf_processor - INFO -       Table has 7 rows
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 0: Brócoli
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 1: Cilantro
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 2: Coliflor
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 3: Espinaca
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 4: Lechuga batavia
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 5: Perejil
+2025-04-04 23:19:35 - pdf_processor - INFO -       Processing row 6: Repollo verde
+2025-04-04 23:19:35 - pdf_processor - INFO -       Combined 6 rows from 3 tables
+2025-04-04 23:19:35 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:19:35 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:19:35 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:19:35 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:19:35 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:19:35 - pdf_processor - INFO -       Found subcategory: C
+2025-04-04 23:19:35 - pdf_processor - WARNING -       No product data extracted from tables
+2025-04-04 23:19:35 - pdf_processor - INFO -       Table extraction failed to produce results, falling back to text processing
+2025-04-04 23:19:35 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:19:35 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 23:19:35 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 23:19:35 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:19:35 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:19:35 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:19:35 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:24:47 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:24:47 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:24:47 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:24:47 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:24:47 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:24:47.838253
+2025-04-04 23:24:47 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:24:47 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:24:47 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:24:47 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:24:47 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:24:47 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:24:47 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:24:47 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:24:47 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:24:47 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:24:47 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:24:48 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:24:48 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:24:48 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:24:48 - pdf_processor - INFO - Processing table 1 of 3
+2025-04-04 23:24:48 - pdf_processor - INFO -       Table has 49 rows
+2025-04-04 23:24:48 - pdf_processor - INFO -       Found header row at index 2
+2025-04-04 23:24:48 - pdf_processor - INFO -       Found major category: Carnes
+2025-04-04 23:24:48 - pdf_processor - INFO -       Found subcategory: Carne de cerdo
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Carne de cerdo, costilla
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Carne de cerdo,
+espinazo
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Carne de cerdo, lomo
+sin hueso
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Carne de cerdo, pernil
+sin hueso
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Carne de cerdo, tocino
+barriga
+2025-04-04 23:24:48 - pdf_processor - INFO -       Found major category: Frutas
+2025-04-04 23:24:48 - pdf_processor - INFO -       Found major category: CÍtricos
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Limón tahití
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Mandarina arrayana
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Mandarina común
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Naranja valencia
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Tangelo
+2025-04-04 23:24:48 - pdf_processor - INFO -       Found major category: Otras frutas
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Aguacate hass
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Aguacate papelillo
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Banano urabá
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Banano bocadillo
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Banano criollo
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Ciruela importada
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Ciruela roja
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Curuba
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Durazno nacional
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Feijoa
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Fresa
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Granadilla
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Guanábana
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Guayaba pera
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Guayaba pera
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Kiwi
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Lulo
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Mango tommy
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Manzana nacional
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Manzana roja importada
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Manzana royal gala
+importada
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Manzana verde
+importada
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Maracuyá
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Melón cantalup
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Mora de castilla
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Papaya maradol
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Patilla
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Patilla baby
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Pera nacional
+2025-04-04 23:24:48 - pdf_processor - INFO -       Added product: Piña gold
+2025-04-04 23:24:48 - pdf_processor - INFO - Processing table 2 of 3
+2025-04-04 23:24:48 - pdf_processor - INFO -       Table has 48 rows
+2025-04-04 23:24:48 - pdf_processor - INFO - Processing table 3 of 3
+2025-04-04 23:24:48 - pdf_processor - INFO -       Table has 7 rows
+2025-04-04 23:24:48 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 40 rows
+2025-04-04 23:24:48 - pdf_processor - INFO -       <----- Completed table processing from: tunja_complejo_20250221.pdf
+2025-04-04 23:24:48 - pdf_processor - INFO -       Table extraction successful, extracted 40 rows
+2025-04-04 23:24:48 - pdf_processor - INFO - <---- Completed table extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:24:48 - pdf_processor - INFO - Text extraction processing complete, extracted 40 rows
+2025-04-04 23:24:48 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 23:24:48 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 23:24:48 - pdf_processor - INFO - Data statistics: 40 rows, 39 products, 3 major categories, 2 subcategories
+2025-04-04 23:24:48 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:24:48 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:24:48 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:24:48 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:24:48 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:39:13 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:39:13 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:39:13 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:39:13 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:39:13 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:39:13.539878
+2025-04-04 23:39:13 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:39:13 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:39:13 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:39:13 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:39:13 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:39:13 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:39:13 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:39:13 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:39:13 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:39:13 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:39:13 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:39:13 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:39:13 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:39:13 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:39:13 - pdf_processor - INFO - Processing table 1 of 3
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:39:13 - pdf_processor - INFO - Processing table 2 of 3
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:39:13 - pdf_processor - INFO - Processing table 3 of 3
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Producto
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found major category: Carnes
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found major category: Carne de cerdo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Carne de cerdo, costilla
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Carne de cerdo,
+espinazo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Carne de cerdo, lomo
+sin hueso
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Carne de cerdo, pernil
+sin hueso
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Carne de cerdo, tocino
+barriga
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Frutas
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found major category: CÍtricos
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Limón tahití
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Mandarina arrayana
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Mandarina común
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Naranja valencia
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Tangelo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Otras frutas
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Aguacate hass
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Aguacate papelillo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Banano urabá
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Banano bocadillo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Banano criollo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Ciruela importada
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Ciruela roja
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Curuba
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Durazno nacional
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Feijoa
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Fresa
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Granadilla
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Guanábana
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Guayaba pera
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Guayaba pera
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Kiwi
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Lulo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Mango tommy
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Manzana nacional
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Manzana roja importada
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Manzana royal gala
+importada
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Manzana verde
+importada
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Maracuyá
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Melón cantalup
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Mora de castilla
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Papaya maradol
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Patilla
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Patilla baby
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Pera nacional
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Piña gold
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Producto
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Tomate de árbol
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Uva isabela
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Uva importada
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Pescados
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found major category: Frescos y congelados
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Bagre rayado en postas
+congelado
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Basa, filete congelado
+importado
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Nicuro fresco
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Tilapia roja entera fresca
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Tuberculos, raices y platanos
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found major category: Otros tuberculos
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Arracacha amarilla
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: PlÁtano
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Plátano hartón maduro
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Plátano hartón verde
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Papa
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Papa betina
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Papa criolla limpia
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Papa criolla sucia
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Papa rubí
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Papa superior
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Yuca
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Yuca llanera
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Verduras y hortalizas
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found major category: Leguminosas
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Arveja verde en vaina
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Fríjol verde cargamanto
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Haba verde
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Habichuela
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Otras hortalizas y verduras
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Ahuyama
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Ahuyamín (sakata)
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Ajo
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Calabacín
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Chócolo mazorca
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Pepino cohombro
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Pepino de rellenar
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Pimentón
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Remolacha
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Zanahorias
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Zanahoria
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Cebollas
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Cebolla cabezona
+blanca
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Cebolla cabezona roja
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Cebolla junca aquitania
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Tomates
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Tomate chonto
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Hortalizas
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Acelga
+2025-04-04 23:39:13 - pdf_processor - INFO -       Found subcategory: Producto
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Apio
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Brócoli
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Cilantro
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Coliflor
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Espinaca
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Lechuga batavia
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Perejil
+2025-04-04 23:39:13 - pdf_processor - INFO -       Added product: Repollo verde
+2025-04-04 23:39:13 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 83 rows
+2025-04-04 23:39:13 - pdf_processor - INFO -       <----- Completed table processing from: tunja_complejo_20250221.pdf
+2025-04-04 23:39:13 - pdf_processor - INFO -       Table extraction successful, extracted 83 rows
+2025-04-04 23:39:13 - pdf_processor - INFO - <---- Completed table extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:39:13 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-04 23:39:13 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 23:39:13 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 23:39:13 - pdf_processor - INFO - Data statistics: 83 rows, 82 products, 5 major categories, 11 subcategories
+2025-04-04 23:39:13 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:39:13 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:39:13 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:39:13 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:39:13 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:48:19 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:48:19 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:48:19 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:48:19 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:48:19 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:48:19.394830
+2025-04-04 23:48:19 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:48:19 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:48:19 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:48:19 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:48:19 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:48:19 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:48:19 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:48:19 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:48:19 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:48:19 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:48:19 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:48:19 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:48:19 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:48:19 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:48:19 - pdf_processor - INFO - Processing table 1 of 3
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:48:19 - pdf_processor - INFO - Processing table 2 of 3
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:48:19 - pdf_processor - INFO - Processing table 3 of 3
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found major category: Producto
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Carnes
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Carne de cerdo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Carne de cerdo, costilla
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Carne de cerdo,
+espinazo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Carne de cerdo, lomo
+sin hueso
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Carne de cerdo, pernil
+sin hueso
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Carne de cerdo, tocino
+barriga
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Frutas
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: CÍtricos
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Limón tahití
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Mandarina arrayana
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Mandarina común
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Naranja valencia
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Tangelo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Otras frutas
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Aguacate hass
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Aguacate papelillo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Banano urabá
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Banano bocadillo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Banano criollo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Ciruela importada
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Ciruela roja
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Curuba
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Durazno nacional
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Feijoa
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Fresa
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Granadilla
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Guanábana
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Guayaba pera
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Guayaba pera
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Kiwi
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Lulo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Mango tommy
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Manzana nacional
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Manzana roja importada
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Manzana royal gala
+importada
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Manzana verde
+importada
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Maracuyá
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Melón cantalup
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Mora de castilla
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Papaya maradol
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Patilla
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Patilla baby
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Pera nacional
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Piña gold
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Producto
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Tomate de árbol
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Uva isabela
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Uva importada
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Pescados
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Frescos y congelados
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Bagre rayado en postas
+congelado
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Basa, filete congelado
+importado
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Nicuro fresco
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Tilapia roja entera fresca
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Tuberculos, raices y platanos
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Otros tuberculos
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Arracacha amarilla
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: PlÁtano
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Plátano hartón maduro
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Plátano hartón verde
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Papa
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Papa betina
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Papa criolla limpia
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Papa criolla sucia
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Papa rubí
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Papa superior
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Yuca
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Yuca llanera
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Verduras y hortalizas
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Leguminosas
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Arveja verde en vaina
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Fríjol verde cargamanto
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Haba verde
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Habichuela
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Otras hortalizas y verduras
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Ahuyama
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Ahuyamín (sakata)
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Ajo
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Calabacín
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Chócolo mazorca
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Pepino cohombro
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Pepino de rellenar
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Pimentón
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Remolacha
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Zanahorias
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Zanahoria
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Cebollas
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Cebolla cabezona
+blanca
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Cebolla cabezona roja
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Cebolla junca aquitania
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Tomates
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Tomate chonto
+2025-04-04 23:48:19 - pdf_processor - INFO -       Stack flushed. New major category: Hortalizas
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Acelga
+2025-04-04 23:48:19 - pdf_processor - INFO -       Found subcategory: Producto
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Apio
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Brócoli
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Cilantro
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Coliflor
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Espinaca
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Lechuga batavia
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Perejil
+2025-04-04 23:48:19 - pdf_processor - INFO -       Added product: Repollo verde
+2025-04-04 23:48:19 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 83 rows
+2025-04-04 23:48:19 - pdf_processor - INFO -       <----- Completed table processing from: tunja_complejo_20250221.pdf
+2025-04-04 23:48:19 - pdf_processor - INFO -       Table extraction successful, extracted 83 rows
+2025-04-04 23:48:19 - pdf_processor - INFO - <---- Completed table extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:48:19 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-04 23:48:19 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 23:48:19 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 23:48:19 - pdf_processor - INFO - Data statistics: 83 rows, 82 products, 10 major categories, 8 subcategories
+2025-04-04 23:48:19 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:48:19 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:48:19 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:48:19 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:48:19 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:51:35 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:51:35 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:51:35 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:51:35 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:51:35 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:51:35.815004
+2025-04-04 23:51:35 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:51:35 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:51:35 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:51:35 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:51:35 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:51:35 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:51:35 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:51:35 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:51:35 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:51:35 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:51:35 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:51:36 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:51:36 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:51:36 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:51:36 - pdf_processor - INFO - Processing table 1 of 3
+2025-04-04 23:51:36 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added processed table with 47 rows
+2025-04-04 23:51:36 - pdf_processor - INFO - Processing table 2 of 3
+2025-04-04 23:51:36 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added processed table with 51 rows
+2025-04-04 23:51:36 - pdf_processor - INFO - Processing table 3 of 3
+2025-04-04 23:51:36 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added processed table with 10 rows
+2025-04-04 23:51:36 - pdf_processor - INFO -       Combined all tables, total rows: 108
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack was empty -> Added major category: 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Carnes'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Carne de cerdo'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Carne de cerdo, costilla' in category 'Carne de cerdo' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Carne de cerdo,
+espinazo' in category 'Carne de cerdo' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Carne de cerdo, lomo
+sin hueso' in category 'Carne de cerdo' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Carne de cerdo, pernil
+sin hueso' in category 'Carne de cerdo' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Carne de cerdo, tocino
+barriga' in category 'Carne de cerdo' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'CÍtricos'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Limón tahití' in category 'CÍtricos' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Mandarina arrayana' in category 'CÍtricos' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Mandarina común' in category 'CÍtricos' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Naranja valencia' in category 'CÍtricos' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Tangelo' in category 'CÍtricos' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Aguacate hass' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Aguacate papelillo' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Banano urabá' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Banano bocadillo' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Banano criollo' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Ciruela importada' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Ciruela roja' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Curuba' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Durazno nacional' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Feijoa' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Fresa' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Granadilla' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Guanábana' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Kiwi' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Lulo' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Mango tommy' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Manzana nacional' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Manzana roja importada' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Manzana royal gala
+importada' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Manzana verde
+importada' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Maracuyá' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Melón cantalup' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Mora de castilla' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Papaya maradol' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Patilla' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Patilla baby' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Pera nacional' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Piña gold' in category 'CÍtricos' > 'Otras frutas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Tomate de árbol' in category 'Producto' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Uva isabela' in category 'Producto' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Uva importada' in category 'Producto' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Pescados'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Frescos y congelados'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Bagre rayado en postas
+congelado' in category 'Frescos y congelados' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Basa, filete congelado
+importado' in category 'Frescos y congelados' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Nicuro fresco' in category 'Frescos y congelados' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Tilapia roja entera fresca' in category 'Frescos y congelados' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Tuberculos, raices y platanos'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Otros tuberculos'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Arracacha amarilla' in category 'Otros tuberculos' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'PlÁtano'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Plátano hartón maduro' in category 'Otros tuberculos' > 'PlÁtano'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Plátano hartón verde' in category 'Otros tuberculos' > 'PlÁtano'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Papa'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Papa betina' in category 'Papa' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Papa criolla limpia' in category 'Papa' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Papa criolla sucia' in category 'Papa' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Papa rubí' in category 'Papa' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Papa superior' in category 'Papa' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Yuca'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Yuca llanera' in category 'Papa' > 'Yuca'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Verduras y hortalizas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Leguminosas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Arveja verde en vaina' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Fríjol verde cargamanto' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Haba verde' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Habichuela' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Otras hortalizas y verduras'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Ahuyama' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Ahuyamín (sakata)' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Ajo' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Calabacín' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Chócolo mazorca' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Pepino cohombro' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Pepino de rellenar' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Pimentón' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Remolacha' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Zanahorias'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Zanahoria' in category 'Otras hortalizas y verduras' > 'Zanahorias'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Cebollas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Cebolla cabezona
+blanca' in category 'Cebollas' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Cebolla cabezona roja' in category 'Cebollas' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Cebolla junca aquitania' in category 'Cebollas' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Tomates'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Tomate chonto' in category 'Cebollas' > 'Tomates'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had 2 items -> Flushed stack and added new major category: 'Hortalizas'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Acelga' in category 'Hortalizas' > ''
+2025-04-04 23:51:36 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Apio' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Brócoli' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Cilantro' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Coliflor' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Espinaca' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Lechuga batavia' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Perejil' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Added product: 'Repollo verde' in category 'Hortalizas' > 'Producto'
+2025-04-04 23:51:36 - pdf_processor - INFO -       Final stack state: ['Hortalizas', 'Producto']
+2025-04-04 23:51:36 - pdf_processor - INFO -       Created DataFrame with 83 products
+2025-04-04 23:51:36 - pdf_processor - INFO -       Category distribution:
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Carne de cerdo > : 5 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Cebollas > : 3 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Cebollas > Tomates: 1 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - CÍtricos > : 5 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - CÍtricos > Otras frutas: 30 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Frescos y congelados > : 4 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Hortalizas > : 1 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Hortalizas > Producto: 8 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Otras hortalizas y verduras > : 9 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Otras hortalizas y verduras > Zanahorias: 1 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Otros tuberculos > : 1 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Otros tuberculos > PlÁtano: 2 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Papa > : 5 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Papa > Yuca: 1 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Producto > : 3 products
+2025-04-04 23:51:36 - pdf_processor - INFO -         - Verduras y hortalizas > Leguminosas: 4 products
+2025-04-04 23:51:36 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 83 rows
+2025-04-04 23:51:36 - pdf_processor - INFO -       <----- Completed table processing from: tunja_complejo_20250221.pdf
+2025-04-04 23:51:36 - pdf_processor - INFO -       Table extraction successful, extracted 83 rows
+2025-04-04 23:51:36 - pdf_processor - INFO - <---- Completed table extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:51:36 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-04 23:51:36 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 23:51:36 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 23:51:36 - pdf_processor - INFO - Data statistics: 83 rows, 82 products, 10 major categories, 8 subcategories
+2025-04-04 23:51:36 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:51:36 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:51:36 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:51:36 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:51:36 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:56:20 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 23:56:20 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 23:56:20 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 23:56:20 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 23:56:20 - pdf_processor - INFO - Starting processing at: 2025-04-04 23:56:20.466112
+2025-04-04 23:56:20 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 23:56:20 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 23:56:20 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 23:56:20 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 23:56:20 - pdf_processor - INFO - Text is valid: True
+2025-04-04 23:56:20 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 23:56:20 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 23:56:20 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:56:20 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 23:56:20 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 23:56:20 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-04 23:56:20 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-04 23:56:20 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-04 23:56:20 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-04 23:56:20 - pdf_processor - INFO - Processing table 1 of 3
+2025-04-04 23:56:20 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added processed table with 47 rows
+2025-04-04 23:56:20 - pdf_processor - INFO - Processing table 2 of 3
+2025-04-04 23:56:20 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added processed table with 51 rows
+2025-04-04 23:56:20 - pdf_processor - INFO - Processing table 3 of 3
+2025-04-04 23:56:20 - pdf_processor - INFO -       Found header row at index 1
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added processed table with 10 rows
+2025-04-04 23:56:20 - pdf_processor - INFO -       Combined all tables, total rows: 108
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack was empty -> Added major category: 'Carnes'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Carne de cerdo'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Carne de cerdo, costilla' in category 'Carnes' > 'Carne de cerdo'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Carne de cerdo,
+espinazo' in category 'Carnes' > 'Carne de cerdo'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Carne de cerdo, lomo
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Carne de cerdo, pernil
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Carne de cerdo, tocino
+barriga' in category 'Carnes' > 'Carne de cerdo'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Found known major category -> Clearing stack and adding: 'Frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'CÍtricos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Limón tahití' in category 'Frutas' > 'CÍtricos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Mandarina arrayana' in category 'Frutas' > 'CÍtricos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Mandarina común' in category 'Frutas' > 'CÍtricos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Naranja valencia' in category 'Frutas' > 'CÍtricos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Tangelo' in category 'Frutas' > 'CÍtricos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had 2 items -> Updated subcategory to: 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Aguacate hass' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Aguacate papelillo' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Banano urabá' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Banano bocadillo' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Banano criollo' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Ciruela importada' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Ciruela roja' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Curuba' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Durazno nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Feijoa' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Fresa' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Granadilla' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Guanábana' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Kiwi' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Lulo' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Mango tommy' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Manzana nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Manzana roja importada' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Manzana royal gala
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Manzana verde
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Maracuyá' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Melón cantalup' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Mora de castilla' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Papaya maradol' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Patilla' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Patilla baby' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Pera nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Piña gold' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Tomate de árbol' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Uva isabela' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Uva importada' in category 'Frutas' > 'Otras frutas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Found known major category -> Clearing stack and adding: 'Pescados'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Frescos y congelados'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Bagre rayado en postas
+congelado' in category 'Pescados' > 'Frescos y congelados'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Basa, filete congelado
+importado' in category 'Pescados' > 'Frescos y congelados'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Nicuro fresco' in category 'Pescados' > 'Frescos y congelados'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Tilapia roja entera fresca' in category 'Pescados' > 'Frescos y congelados'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Found known major category -> Clearing stack and adding: 'Tuberculos, raices y platanos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Otros tuberculos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Arracacha amarilla' in category 'Tuberculos, raices y platanos' > 'Otros tuberculos'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had 1 items -> Flushed stack and added new major category: 'PlÁtano'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Plátano hartón maduro' in category 'PlÁtano' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Plátano hartón verde' in category 'PlÁtano' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Papa'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Papa betina' in category 'PlÁtano' > 'Papa'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Papa criolla limpia' in category 'PlÁtano' > 'Papa'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Papa criolla sucia' in category 'PlÁtano' > 'Papa'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Papa rubí' in category 'PlÁtano' > 'Papa'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Papa superior' in category 'PlÁtano' > 'Papa'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had 1 items -> Flushed stack and added new major category: 'Yuca'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Yuca llanera' in category 'Yuca' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Found known major category -> Clearing stack and adding: 'Verduras y hortalizas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Leguminosas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Arveja verde en vaina' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Fríjol verde cargamanto' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Haba verde' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Habichuela' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had 1 items -> Flushed stack and added new major category: 'Otras hortalizas y verduras'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Ahuyama' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Ahuyamín (sakata)' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Ajo' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Calabacín' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Chócolo mazorca' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Pepino cohombro' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Pepino de rellenar' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Pimentón' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Remolacha' in category 'Otras hortalizas y verduras' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Zanahorias'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Zanahoria' in category 'Otras hortalizas y verduras' > 'Zanahorias'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had 1 items -> Flushed stack and added new major category: 'Cebollas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Cebolla cabezona
+blanca' in category 'Cebollas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Cebolla cabezona roja' in category 'Cebollas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Cebolla junca aquitania' in category 'Cebollas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Tomates'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Tomate chonto' in category 'Cebollas' > 'Tomates'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Stack had 1 items -> Flushed stack and added new major category: 'Hortalizas'
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Acelga' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Apio' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Brócoli' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Cilantro' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Coliflor' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Espinaca' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Lechuga batavia' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Perejil' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Added product: 'Repollo verde' in category 'Hortalizas' > ''
+2025-04-04 23:56:20 - pdf_processor - INFO -       Final stack state: ['Hortalizas']
+2025-04-04 23:56:20 - pdf_processor - INFO -       Created DataFrame with 83 products
+2025-04-04 23:56:20 - pdf_processor - INFO -       Category distribution:
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Carnes > Carne de cerdo: 5 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Cebollas > : 3 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Cebollas > Tomates: 1 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Frutas > CÍtricos: 5 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Frutas > Otras frutas: 33 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Hortalizas > : 9 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Otras hortalizas y verduras > : 9 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Otras hortalizas y verduras > Zanahorias: 1 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Pescados > Frescos y congelados: 4 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - PlÁtano > : 2 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - PlÁtano > Papa: 5 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Otros tuberculos: 1 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Verduras y hortalizas > Leguminosas: 4 products
+2025-04-04 23:56:20 - pdf_processor - INFO -         - Yuca > : 1 products
+2025-04-04 23:56:20 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 83 rows
+2025-04-04 23:56:20 - pdf_processor - INFO -       <----- Completed table processing from: tunja_complejo_20250221.pdf
+2025-04-04 23:56:20 - pdf_processor - INFO -       Table extraction successful, extracted 83 rows
+2025-04-04 23:56:20 - pdf_processor - INFO - <---- Completed table extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 23:56:20 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-04 23:56:20 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 23:56:20 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 23:56:20 - pdf_processor - INFO - Data statistics: 83 rows, 82 products, 10 major categories, 10 subcategories
+2025-04-04 23:56:20 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:56:20 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-04 23:56:20 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 23:56:20 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 23:56:20 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 00:04:42 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 00:04:42 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-05 00:04:42 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 00:04:42 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-05 00:04:42 - pdf_processor - INFO - Starting processing at: 2025-04-05 00:04:42.430712
+2025-04-05 00:04:42 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-05 00:04:42 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-05 00:04:42 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-05 00:04:42 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-05 00:04:42 - pdf_processor - INFO - Text is valid: True
+2025-04-05 00:04:42 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-05 00:04:42 - pdf_processor - INFO - Extracting metadata from text
+2025-04-05 00:04:42 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-05 00:04:42 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-05 00:04:42 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-05 00:04:42 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-05 00:04:42 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-05 00:04:42 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-05 00:04:42 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-05 00:04:42 - pdf_processor - INFO - Processing table 1 of 3
+2025-04-05 00:04:42 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added processed table with 47 rows
+2025-04-05 00:04:42 - pdf_processor - INFO - Processing table 2 of 3
+2025-04-05 00:04:42 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added processed table with 51 rows
+2025-04-05 00:04:42 - pdf_processor - INFO - Processing table 3 of 3
+2025-04-05 00:04:42 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added processed table with 10 rows
+2025-04-05 00:04:42 - pdf_processor - INFO -       Combined all tables, total rows: 108
+2025-04-05 00:04:42 - pdf_processor - INFO -       Stack was empty -> Added major category: 'Carnes'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Carne de cerdo'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Carne de cerdo, costilla' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Carne de cerdo,
+espinazo' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Carne de cerdo, lomo
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Carne de cerdo, pernil
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Carne de cerdo, tocino
+barriga' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Carnes' out, 'Frutas' to major, 'CÍtricos' to sub
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Limón tahití' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Mandarina arrayana' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Mandarina común' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Naranja valencia' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Tangelo' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Aguacate hass' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Aguacate papelillo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Banano urabá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Banano bocadillo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Banano criollo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Ciruela importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Ciruela roja' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Curuba' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Durazno nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Feijoa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Fresa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Granadilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Guanábana' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Kiwi' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Lulo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Mango tommy' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Manzana nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Manzana roja importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Manzana royal gala
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Manzana verde
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Maracuyá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Melón cantalup' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Mora de castilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Papaya maradol' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Patilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Patilla baby' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Pera nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Piña gold' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Tomate de árbol' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Uva isabela' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Uva importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Pescados'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Frutas' out, 'Pescados' to major, 'Frescos y congelados' to sub
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Bagre rayado en postas
+congelado' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Basa, filete congelado
+importado' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Nicuro fresco' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Tilapia roja entera fresca' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tuberculos, raices y platanos'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Pescados' out, 'Tuberculos, raices y platanos' to major, 'Otros tuberculos' to sub
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Arracacha amarilla' in category 'Tuberculos, raices y platanos' > 'Otros tuberculos'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'PlÁtano'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Plátano hartón maduro' in category 'Tuberculos, raices y platanos' > 'PlÁtano'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Plátano hartón verde' in category 'Tuberculos, raices y platanos' > 'PlÁtano'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Papa'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Papa betina' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Papa criolla limpia' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Papa criolla sucia' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Papa rubí' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Papa superior' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Yuca'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Yuca llanera' in category 'Tuberculos, raices y platanos' > 'Yuca'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Verduras y hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Tuberculos, raices y platanos' out, 'Verduras y hortalizas' to major, 'Leguminosas' to sub
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Arveja verde en vaina' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Fríjol verde cargamanto' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Haba verde' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Habichuela' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Ahuyama' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Ahuyamín (sakata)' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Ajo' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Calabacín' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Chócolo mazorca' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Pepino cohombro' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Pepino de rellenar' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Pimentón' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Remolacha' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Zanahorias'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Zanahoria' in category 'Verduras y hortalizas' > 'Zanahorias'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Cebollas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Cebolla cabezona
+blanca' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Cebolla cabezona roja' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Cebolla junca aquitania' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tomates'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Tomate chonto' in category 'Verduras y hortalizas' > 'Tomates'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Acelga' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Apio' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Brócoli' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Cilantro' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Coliflor' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Espinaca' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Lechuga batavia' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Perejil' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Added product: 'Repollo verde' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:04:42 - pdf_processor - INFO -       Final stack state: ['Verduras y hortalizas', 'Hortalizas']
+2025-04-05 00:04:42 - pdf_processor - INFO -       Created DataFrame with 83 products
+2025-04-05 00:04:42 - pdf_processor - INFO -       Category distribution:
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Carnes > Carne de cerdo: 5 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Frutas > CÍtricos: 5 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Frutas > Otras frutas: 33 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Pescados > Frescos y congelados: 4 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Otros tuberculos: 1 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Papa: 5 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Tuberculos, raices y platanos > PlÁtano: 2 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Yuca: 1 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Verduras y hortalizas > Cebollas: 3 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Verduras y hortalizas > Hortalizas: 9 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Verduras y hortalizas > Leguminosas: 4 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Verduras y hortalizas > Otras hortalizas y verduras: 9 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Verduras y hortalizas > Tomates: 1 products
+2025-04-05 00:04:42 - pdf_processor - INFO -         - Verduras y hortalizas > Zanahorias: 1 products
+2025-04-05 00:04:42 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 83 rows
+2025-04-05 00:04:42 - pdf_processor - INFO -       <----- Completed table processing from: tunja_complejo_20250221.pdf
+2025-04-05 00:04:42 - pdf_processor - INFO -       Table extraction successful, extracted 83 rows
+2025-04-05 00:04:42 - pdf_processor - INFO - <---- Completed table extraction flow for: tunja_complejo_20250221.pdf
+2025-04-05 00:04:42 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-05 00:04:42 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-05 00:04:42 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-05 00:04:42 - pdf_processor - INFO - Data statistics: 83 rows, 82 products, 5 major categories, 14 subcategories
+2025-04-05 00:04:42 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:04:42 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-05 00:04:42 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:04:42 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-05 00:04:42 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
