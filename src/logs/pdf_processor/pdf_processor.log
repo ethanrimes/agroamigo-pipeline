@@ -2546,3 +2546,477 @@ blanca' in category 'Verduras y hortalizas' > 'Cebollas'
 2025-04-05 00:04:42 - pdf_processor - INFO - Used GPT extraction: False
 2025-04-05 00:04:42 - pdf_processor - INFO - Step 5: Registering processing results
 2025-04-05 00:04:42 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 00:08:08 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 00:18:32 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 00:18:32 - pdf_processor - INFO - Processing 3 PDF files
+2025-04-05 00:18:32 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 00:18:32 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-05 00:18:32 - pdf_processor - INFO - Starting processing at: 2025-04-05 00:18:32.543894
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-05 00:18:32 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-05 00:18:32 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-05 00:18:32 - pdf_processor - INFO - Text is valid: True
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-05 00:18:32 - pdf_processor - INFO - Extracting metadata from text
+2025-04-05 00:18:32 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-05 00:18:32 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-05 00:18:32 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-05 00:18:32 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-05 00:18:32 - pdf_processor - INFO -       Successfully extracted 3 tables, processing table data
+2025-04-05 00:18:32 - pdf_processor - INFO -       -----> Processing tables from: tunja_complejo_20250221.pdf
+2025-04-05 00:18:32 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-05 00:18:32 - pdf_processor - INFO - Processing table 1 of 3
+2025-04-05 00:18:32 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added processed table with 47 rows
+2025-04-05 00:18:32 - pdf_processor - INFO - Processing table 2 of 3
+2025-04-05 00:18:32 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added processed table with 51 rows
+2025-04-05 00:18:32 - pdf_processor - INFO - Processing table 3 of 3
+2025-04-05 00:18:32 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added processed table with 10 rows
+2025-04-05 00:18:32 - pdf_processor - INFO -       Combined all tables, total rows: 108
+2025-04-05 00:18:32 - pdf_processor - INFO -       Stack was empty -> Added major category: 'Carnes'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Carne de cerdo'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Carne de cerdo, costilla' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Carne de cerdo,
+espinazo' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Carne de cerdo, lomo
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Carne de cerdo, pernil
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Carne de cerdo, tocino
+barriga' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Carnes' out, 'Frutas' to major, 'CÍtricos' to sub
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Limón tahití' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Mandarina arrayana' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Mandarina común' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Naranja valencia' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Tangelo' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Aguacate hass' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Aguacate papelillo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Banano urabá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Banano bocadillo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Banano criollo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Ciruela importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Ciruela roja' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Curuba' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Durazno nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Feijoa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Fresa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Granadilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Guanábana' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Kiwi' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Lulo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Mango tommy' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Manzana nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Manzana roja importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Manzana royal gala
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Manzana verde
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Maracuyá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Melón cantalup' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Mora de castilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Papaya maradol' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Patilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Patilla baby' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Pera nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Piña gold' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Tomate de árbol' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Uva isabela' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Uva importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Pescados'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Frutas' out, 'Pescados' to major, 'Frescos y congelados' to sub
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Bagre rayado en postas
+congelado' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Basa, filete congelado
+importado' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Nicuro fresco' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Tilapia roja entera fresca' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tuberculos, raices y platanos'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Pescados' out, 'Tuberculos, raices y platanos' to major, 'Otros tuberculos' to sub
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Arracacha amarilla' in category 'Tuberculos, raices y platanos' > 'Otros tuberculos'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'PlÁtano'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Plátano hartón maduro' in category 'Tuberculos, raices y platanos' > 'PlÁtano'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Plátano hartón verde' in category 'Tuberculos, raices y platanos' > 'PlÁtano'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Papa'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Papa betina' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Papa criolla limpia' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Papa criolla sucia' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Papa rubí' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Papa superior' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Yuca'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Yuca llanera' in category 'Tuberculos, raices y platanos' > 'Yuca'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Verduras y hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Tuberculos, raices y platanos' out, 'Verduras y hortalizas' to major, 'Leguminosas' to sub
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Arveja verde en vaina' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Fríjol verde cargamanto' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Haba verde' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Habichuela' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Ahuyama' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Ahuyamín (sakata)' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Ajo' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Calabacín' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Chócolo mazorca' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Pepino cohombro' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Pepino de rellenar' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Pimentón' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Remolacha' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Zanahorias'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Zanahoria' in category 'Verduras y hortalizas' > 'Zanahorias'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Cebollas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Cebolla cabezona
+blanca' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Cebolla cabezona roja' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Cebolla junca aquitania' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tomates'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Tomate chonto' in category 'Verduras y hortalizas' > 'Tomates'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Acelga' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Apio' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Brócoli' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Cilantro' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Coliflor' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Espinaca' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Lechuga batavia' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Perejil' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Added product: 'Repollo verde' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:32 - pdf_processor - INFO -       Final stack state: ['Verduras y hortalizas', 'Hortalizas']
+2025-04-05 00:18:32 - pdf_processor - INFO -       Created DataFrame with 83 products
+2025-04-05 00:18:32 - pdf_processor - INFO -       Category distribution:
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Carnes > Carne de cerdo: 5 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Frutas > CÍtricos: 5 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Frutas > Otras frutas: 33 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Pescados > Frescos y congelados: 4 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Otros tuberculos: 1 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Papa: 5 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Tuberculos, raices y platanos > PlÁtano: 2 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Yuca: 1 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Verduras y hortalizas > Cebollas: 3 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Verduras y hortalizas > Hortalizas: 9 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Verduras y hortalizas > Leguminosas: 4 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Verduras y hortalizas > Otras hortalizas y verduras: 9 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Verduras y hortalizas > Tomates: 1 products
+2025-04-05 00:18:32 - pdf_processor - INFO -         - Verduras y hortalizas > Zanahorias: 1 products
+2025-04-05 00:18:32 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 83 rows
+2025-04-05 00:18:32 - pdf_processor - INFO -       <----- Completed table processing from: tunja_complejo_20250221.pdf
+2025-04-05 00:18:32 - pdf_processor - INFO -       Table extraction successful, extracted 83 rows
+2025-04-05 00:18:32 - pdf_processor - INFO - <---- Completed table extraction flow for: tunja_complejo_20250221.pdf
+2025-04-05 00:18:32 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-05 00:18:32 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-05 00:18:32 - pdf_processor - INFO - Data statistics: 83 rows, 82 products, 5 major categories, 14 subcategories
+2025-04-05 00:18:32 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:18:32 - pdf_processor - INFO - Total processing time: 0.32 seconds
+2025-04-05 00:18:32 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-05 00:18:32 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 00:18:32 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: villavicencio_cav_20250221.pdf ==========
+2025-04-05 00:18:32 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-05 00:18:32 - pdf_processor - INFO - Starting processing at: 2025-04-05 00:18:32.869111
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-05 00:18:32 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-05 00:18:32 - pdf_processor - INFO - pdfplumber extraction complete, extracted 4207 characters
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-05 00:18:32 - pdf_processor - INFO - Text is valid: True
+2025-04-05 00:18:32 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-05 00:18:32 - pdf_processor - INFO - Extracting metadata from text
+2025-04-05 00:18:32 - pdf_processor - INFO - ----> Text extraction flow for: villavicencio_cav_20250221.pdf
+2025-04-05 00:18:32 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-05 00:18:32 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Villavicencio, market=CAV
+2025-04-05 00:18:32 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-05 00:18:33 - pdf_processor - INFO -       Successfully extracted 2 tables, processing table data
+2025-04-05 00:18:33 - pdf_processor - INFO -       -----> Processing tables from: villavicencio_cav_20250221.pdf
+2025-04-05 00:18:33 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-05 00:18:33 - pdf_processor - INFO - Processing table 1 of 2
+2025-04-05 00:18:33 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added processed table with 50 rows
+2025-04-05 00:18:33 - pdf_processor - INFO - Processing table 2 of 2
+2025-04-05 00:18:33 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added processed table with 34 rows
+2025-04-05 00:18:33 - pdf_processor - INFO -       Combined all tables, total rows: 84
+2025-04-05 00:18:33 - pdf_processor - INFO -       Stack was empty -> Added major category: 'Frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Limón tahití' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Limón común' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Limón mandarino' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Mandarina arrayana' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Naranja valencia' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Tangelo' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Aguacate papelillo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Banano urabá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Banano criollo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Borojó' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Ciruela roja' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Curuba' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Fresa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Granadilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Guanábana' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Kiwi' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Lulo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Mango tommy' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Manzana roja importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Manzana royal gala
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Manzana verde
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Maracuyá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Melón cantalup' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Mora de castilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Papaya paulina' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Patilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pera importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pitahaya' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Tomate de árbol' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Uva isabela' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Uva importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Uva red globe nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Uva red globe nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tuberculos, raices y platanos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Frutas' out, 'Tuberculos, raices y platanos' to major, 'Otros tuberculos' to sub
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Arracacha amarilla' in category 'Tuberculos, raices y platanos' > 'Otros tuberculos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'PlÁtano'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Plátano guineo' in category 'Tuberculos, raices y platanos' > 'PlÁtano'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Plátano hartón verde' in category 'Tuberculos, raices y platanos' > 'PlÁtano'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Papa'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Papa criolla limpia' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Papa superior' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Yuca'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Yuca llanera' in category 'Tuberculos, raices y platanos' > 'Yuca'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Verduras y hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Tuberculos, raices y platanos' out, 'Verduras y hortalizas' to major, 'Leguminosas' to sub
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Arveja verde en vaina' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Fríjol verde cargamanto' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Habichuela' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Ahuyamín (sakata)' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Ajo' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Calabaza' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Chócolo mazorca' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cidra' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pepino cohombro' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pepino de rellenar' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pimentón' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Remolacha' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Zanahorias'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Zanahoria' in category 'Verduras y hortalizas' > 'Zanahorias'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Cebollas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cebolla cabezona
+blanca' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cebolla junca' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tomates'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Tomate chonto' in category 'Verduras y hortalizas' > 'Tomates'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Acelga' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Apio' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Brócoli' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cilantro' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Coliflor' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Espinaca' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Lechuga batavia' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Lechuga crespa verde' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Repollo blanco' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Final stack state: ['Verduras y hortalizas', 'Hortalizas']
+2025-04-05 00:18:33 - pdf_processor - INFO -       Created DataFrame with 65 products
+2025-04-05 00:18:33 - pdf_processor - INFO -       Category distribution:
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Frutas > CÍtricos: 6 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Frutas > Otras frutas: 28 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Otros tuberculos: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Papa: 2 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > PlÁtano: 2 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Yuca: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Cebollas: 2 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Hortalizas: 9 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Leguminosas: 3 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Otras hortalizas y verduras: 9 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Tomates: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Zanahorias: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 65 rows
+2025-04-05 00:18:33 - pdf_processor - INFO -       <----- Completed table processing from: villavicencio_cav_20250221.pdf
+2025-04-05 00:18:33 - pdf_processor - INFO -       Table extraction successful, extracted 65 rows
+2025-04-05 00:18:33 - pdf_processor - INFO - <---- Completed table extraction flow for: villavicencio_cav_20250221.pdf
+2025-04-05 00:18:33 - pdf_processor - INFO - Text extraction processing complete, extracted 65 rows
+2025-04-05 00:18:33 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-05 00:18:33 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/villavicencio_cav_20250221.csv
+2025-04-05 00:18:33 - pdf_processor - INFO - Data statistics: 65 rows, 64 products, 3 major categories, 12 subcategories
+2025-04-05 00:18:33 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:18:33 - pdf_processor - INFO - Total processing time: 0.23 seconds
+2025-04-05 00:18:33 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:18:33 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-05 00:18:33 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: villavicencio_cav_20250221.pdf ==========
+2025-04-05 00:18:33 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: yopal_casanare_20250221.pdf ==========
+2025-04-05 00:18:33 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-05 00:18:33 - pdf_processor - INFO - Starting processing at: 2025-04-05 00:18:33.104389
+2025-04-05 00:18:33 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-05 00:18:33 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-05 00:18:33 - pdf_processor - INFO - pdfplumber extraction complete, extracted 4370 characters
+2025-04-05 00:18:33 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-05 00:18:33 - pdf_processor - INFO - Text is valid: True
+2025-04-05 00:18:33 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-05 00:18:33 - pdf_processor - INFO - Extracting metadata from text
+2025-04-05 00:18:33 - pdf_processor - INFO - ----> Text extraction flow for: yopal_casanare_20250221.pdf
+2025-04-05 00:18:33 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-05 00:18:33 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Yopal (Casanare), market=Unknown
+2025-04-05 00:18:33 - pdf_processor - INFO -       Attempting to extract tables with pdfplumber
+2025-04-05 00:18:33 - pdf_processor - INFO -       Successfully extracted 2 tables, processing table data
+2025-04-05 00:18:33 - pdf_processor - INFO -       -----> Processing tables from: yopal_casanare_20250221.pdf
+2025-04-05 00:18:33 - pdf_processor - INFO - Entered try catch block for table processing
+2025-04-05 00:18:33 - pdf_processor - INFO - Processing table 1 of 2
+2025-04-05 00:18:33 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added processed table with 44 rows
+2025-04-05 00:18:33 - pdf_processor - INFO - Processing table 2 of 2
+2025-04-05 00:18:33 - pdf_processor - INFO -       Found header row at index 1
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added processed table with 42 rows
+2025-04-05 00:18:33 - pdf_processor - INFO -       Combined all tables, total rows: 86
+2025-04-05 00:18:33 - pdf_processor - INFO -       Stack was empty -> Added major category: 'Carnes'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Stack had one item -> Added subcategory: 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, bola de
+pierna' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, bota' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, cadera' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, centro de
+pierna' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, chatas' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, costilla' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, lomo fino' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, morrillo' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, muchacho' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, murillo' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res, punta de
+anca' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de res,
+sobrebarriga' in category 'Carnes' > 'Carne de res'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Carne de cerdo'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de cerdo, brazo
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de cerdo, cabeza
+de lomo' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de cerdo, costilla' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de cerdo, pernil
+con hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Carne de cerdo, pernil
+sin hueso' in category 'Carnes' > 'Carne de cerdo'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Carnes' out, 'Frutas' to major, 'CÍtricos' to sub
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Limón tahití' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Limón mandarino' in category 'Frutas' > 'CÍtricos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Aguacate papelillo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Banano urabá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Fresa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Granadilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Lulo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Mango tommy' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Manzana roja importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Manzana verde
+importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Maracuyá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Mora de castilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pera importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Tomate de árbol' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Uva isabela' in category 'Frutas' > 'Otras frutas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Pescados'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Frutas' out, 'Pescados' to major, 'Frescos y congelados' to sub
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Bagre rayado entero
+fresco' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cachama de cultivo
+fresca' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Tilapia roja entera fresca' in category 'Pescados' > 'Frescos y congelados'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tuberculos, raices y platanos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Pescados' out, 'Tuberculos, raices y platanos' to major, 'Otros tuberculos' to sub
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Arracacha amarilla' in category 'Tuberculos, raices y platanos' > 'Otros tuberculos'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'PlÁtano'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Plátano hartón verde' in category 'Tuberculos, raices y platanos' > 'PlÁtano'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Papa'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Papa criolla limpia' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Papa parda pastusa' in category 'Tuberculos, raices y platanos' > 'Papa'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Yuca'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Yuca llanera' in category 'Tuberculos, raices y platanos' > 'Yuca'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Verduras y hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row was a category -> Shifted stack: 'Tuberculos, raices y platanos' out, 'Verduras y hortalizas' to major, 'Leguminosas' to sub
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Arveja verde en vaina' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Fríjol verde cargamanto' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Habichuela' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Ahuyama' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Ahuyamín (sakata)' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Ajo' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Chócolo mazorca' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pepino cohombro' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pepino de rellenar' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Pimentón' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Remolacha' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Zanahorias'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Zanahoria' in category 'Verduras y hortalizas' > 'Zanahorias'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Cebollas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cebolla cabezona
+blanca' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cebolla junca' in category 'Verduras y hortalizas' > 'Cebollas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Tomates'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Tomate riogrande' in category 'Verduras y hortalizas' > 'Tomates'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Previous row had prices -> Updated subcategory to: 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Acelga' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Cilantro' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Espinaca' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Lechuga batavia' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Perejil' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Added product: 'Repollo blanco' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 00:18:33 - pdf_processor - INFO -       Final stack state: ['Verduras y hortalizas', 'Hortalizas']
+2025-04-05 00:18:33 - pdf_processor - INFO -       Created DataFrame with 62 products
+2025-04-05 00:18:33 - pdf_processor - INFO -       Category distribution:
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Carnes > Carne de cerdo: 5 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Carnes > Carne de res: 12 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Frutas > CÍtricos: 2 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Frutas > Otras frutas: 14 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Pescados > Frescos y congelados: 3 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Otros tuberculos: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Papa: 2 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > PlÁtano: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Tuberculos, raices y platanos > Yuca: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Cebollas: 2 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Hortalizas: 6 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Leguminosas: 3 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Otras hortalizas y verduras: 8 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Tomates: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -         - Verduras y hortalizas > Zanahorias: 1 products
+2025-04-05 00:18:33 - pdf_processor - INFO -       Table processing completed in 0.00 seconds, extracted 62 rows
+2025-04-05 00:18:33 - pdf_processor - INFO -       <----- Completed table processing from: yopal_casanare_20250221.pdf
+2025-04-05 00:18:33 - pdf_processor - INFO -       Table extraction successful, extracted 62 rows
+2025-04-05 00:18:33 - pdf_processor - INFO - <---- Completed table extraction flow for: yopal_casanare_20250221.pdf
+2025-04-05 00:18:33 - pdf_processor - INFO - Text extraction processing complete, extracted 62 rows
+2025-04-05 00:18:33 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-05 00:18:33 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/yopal_casanare_20250221.csv
+2025-04-05 00:18:33 - pdf_processor - INFO - Data statistics: 62 rows, 62 products, 5 major categories, 15 subcategories
+2025-04-05 00:18:33 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:18:33 - pdf_processor - INFO - Total processing time: 0.23 seconds
+2025-04-05 00:18:33 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-05 00:18:33 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-05 00:18:33 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: yopal_casanare_20250221.pdf ==========
+2025-04-05 00:18:33 - pdf_processor - INFO - PDF processing summary: 3 processed, 0 failed, 0 skipped out of 3 total files
+2025-04-05 00:18:33 - pdf_processor - INFO - Processed 210 total rows
+2025-04-05 00:18:33 - pdf_processor - INFO - Files using GPT extraction: 0 out of 3 processed files
+2025-04-05 00:18:33 - pdf_processor - INFO - Made 0 GPT-4o calls
+2025-04-05 00:25:57 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 00:25:57 - pdf_processor - INFO - Processing 3 PDF files
+2025-04-05 00:25:57 - pdf_processor - INFO - Using 3 workers for parallel processing
+2025-04-05 00:25:58 - pdf_processor - INFO - PDF processing summary: 0 processed, 0 failed, 0 skipped out of 3 total files
+2025-04-05 00:25:58 - pdf_processor - INFO - Processed 0 total rows
+2025-04-05 00:25:58 - pdf_processor - INFO - Files using GPT extraction: 0 out of 0 processed files
+2025-04-05 00:25:58 - pdf_processor - INFO - Made 0 GPT-4o calls
+2025-04-05 00:28:21 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 00:28:21 - pdf_processor - INFO - Processing 3 PDF files
+2025-04-05 00:28:21 - pdf_processor - INFO - Using 3 workers for parallel processing
+2025-04-05 00:28:22 - pdf_processor - INFO - PDF processing summary: 0 processed, 0 failed, 0 skipped out of 3 total files
+2025-04-05 00:28:22 - pdf_processor - INFO - Processed 0 total rows
+2025-04-05 00:28:22 - pdf_processor - INFO - Files using GPT extraction: 0 out of 0 processed files
+2025-04-05 00:28:22 - pdf_processor - INFO - Made 0 GPT-4o calls
+2025-04-05 00:30:08 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
