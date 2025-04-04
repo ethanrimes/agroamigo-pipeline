@@ -1,0 +1,20 @@
+{
+    "yopal_casanare_20250221": {
+      "date": "2025-02-21",
+      "city": "Yopal",
+      "market": "Casanare",
+      "source": "informes por ciudades"
+    },
+    "villavicencio_cav_20250221": {
+      "date": "2025-02-21",
+      "city": "Villavicencio",
+      "market": "CAV",
+      "source": "informes por ciudades"
+    },
+    "tunja_complejo_20250221": {
+      "date": "2025-02-21",
+      "city": "Tunja",
+      "market": "Complejo de Servicios del Sur",
+      "source": "informes por ciudades"
+    }
+  }

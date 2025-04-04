@@ -1,0 +1,55 @@
+{
+  "files": {
+    "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf": {
+      "first_processed": "2025-04-04T20:52:29.516563",
+      "processing_history": [
+        {
+          "timestamp": "2025-04-04T20:52:29.516567",
+          "status": "error",
+          "output_path": null,
+          "error": "No data extracted from PDF; ",
+          "stats": {
+            "filename": "bogota_corabastos_20230720.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf",
+            "unique_products": 0,
+            "unique_major_categories": 0,
+            "unique_subcategories": 0,
+            "rows_processed": 0,
+            "error_occurred": true,
+            "errors_warnings": "No data extracted from PDF; ",
+            "processing_time_seconds": 0.057969,
+            "extraction_method": "gpt4o_vision",
+            "text_quality_score": 0.0
+          }
+        }
+      ],
+      "last_processed": "2025-04-04T20:52:29.516568"
+    },
+    "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/tunja_complejo_20250221.pdf": {
+      "first_processed": "2025-04-04T20:59:20.734087",
+      "processing_history": [
+        {
+          "timestamp": "2025-04-04T20:59:20.734094",
+          "status": "processed",
+          "output_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv",
+          "error": null,
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 82,
+            "unique_major_categories": 3,
+            "unique_subcategories": 2,
+            "rows_processed": 82,
+            "error_occurred": false,
+            "errors_warnings": "",
+            "processing_time_seconds": 52.49247,
+            "extraction_method": "gpt4o_vision",
+            "text_quality_score": 0.6444444444444444
+          }
+        }
+      ],
+      "last_processed": "2025-04-04T20:59:20.734099"
+    }
+  },
+  "last_updated": "2025-04-04T20:59:20.734101"
+}

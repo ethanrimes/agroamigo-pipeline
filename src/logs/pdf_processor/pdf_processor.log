@@ -1,0 +1,28 @@
+2025-04-04 20:52:29 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 20:52:29 - pdf_processor - INFO - Processing PDF file: bogota_corabastos_20230720.pdf
+2025-04-04 20:52:29 - pdf_processor - WARNING - Error extracting text with PyPDF2: [Errno 2] No such file or directory: '/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf'
+2025-04-04 20:52:29 - pdf_processor - WARNING - Error extracting text with pdfplumber: [Errno 2] No such file or directory: '/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf'
+2025-04-04 20:52:29 - pdf_processor - WARNING - Error extracting text with PyPDF2: [Errno 2] No such file or directory: '/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf'
+2025-04-04 20:52:29 - pdf_processor - WARNING - Error extracting text with pdfplumber: [Errno 2] No such file or directory: '/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf'
+2025-04-04 20:52:29 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf
+2025-04-04 20:52:29 - pdf_processor - ERROR - Failed to convert PDF to images: Unable to get page count.
+I/O Error: Couldn't open file '/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf': No such file or directory.
+
+2025-04-04 20:52:29 - pdf_processor - ERROR - Error processing PDF with GPT-4o mini: Unable to get page count.
+I/O Error: Couldn't open file '/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/bogota_corabastos_20230720.pdf': No such file or directory.
+
+2025-04-04 20:52:29 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 20:58:28 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 20:58:28 - pdf_processor - INFO - Processing PDF file: tunja_complejo_20250221.pdf
+2025-04-04 20:58:28 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/tunja_complejo_20250221.pdf
+2025-04-04 20:58:30 - pdf_processor - INFO - Converted 3 pages to images
+2025-04-04 20:58:30 - pdf_processor - INFO - PDF conversion completed in 1.67 seconds
+2025-04-04 20:58:30 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmphr9ivi56/page_0.jpg
+2025-04-04 20:58:52 - pdf_processor - INFO - GPT-4o mini query completed in 21.86 seconds
+2025-04-04 20:58:52 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmphr9ivi56/page_1.jpg
+2025-04-04 20:59:14 - pdf_processor - INFO - GPT-4o mini query completed in 22.01 seconds
+2025-04-04 20:59:14 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmphr9ivi56/page_2.jpg
+2025-04-04 20:59:20 - pdf_processor - INFO - GPT-4o mini query completed in 6.61 seconds
+2025-04-04 20:59:20 - pdf_processor - INFO - Processing GPT-4o extracted data from tunja_complejo_20250221.pdf
+2025-04-04 20:59:20 - pdf_processor - INFO - GPT-4o processing completed in 0.01 seconds, extracted 82 rows
+2025-04-04 20:59:20 - pdf_processor - INFO - Saved processed data to /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv

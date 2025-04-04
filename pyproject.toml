@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agroamigo_pipeline"
+version = "0.1.0"
+description = "A data pipeline for Colombian agricultural price data"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas>=2.2.3",
+    "numpy>=2.2.4",
+    "python-dotenv>=1.1.0",
+    "PyPDF2>=3.0.1",
+    "pdfplumber>=0.9.0",
+    "pdf2image>=1.17.0",
+    "pillow>=11.1.0",
+    "requests>=2.32.3",
+    "pytest>=8.3.5",
+    "python-dateutil>=2.9.0",
+    "pytz>=2024.1",
+    "six>=1.17.0",
+    "typing_extensions>=4.13.0",
+    "urllib3>=2.3.0",
+    # Additional dependencies from your original requirements.txt that don't appear in conda list
+    "openpyxl>=3.1.2",  # Not in conda list but might be needed
+    "xlrd>=2.0.1",      # Not in conda list but might be needed
+    "openai>=1.3.0",    # Not in conda list but might be needed 
+    "python-json-logger>=2.0.7",  # Not in conda list but might be needed
+    "tqdm>=4.66.1",     # Not in conda list but might be needed
+    "pytest-cov>=4.1.0" # Not in conda list but was in requirements.txt
+]
+
+[project.urls]
+"Repository" = "https://github.com/yourusername/colombian-agri-price-pipeline"
+
+[project.scripts]
+agriprice-pipeline = "main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = {find = {where = ["src"]}}
+
+[tool.pytest]
+testpaths = ["tests"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.csv"]

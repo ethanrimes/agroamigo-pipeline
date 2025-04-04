@@ -1,0 +1,20 @@
+Producto;Presentacion;Unidades;Minimo;Maximo;Minimo;Maximo
+Carnes;;;;;;
+Carne de cerdo;;;;;;
+Carne de cerdo, costilla;Kilogramo;1 Kilogramo;20000;24000;0;0
+Carne de cerdo, espinazo;Kilogramo;1 Kilogramo;14000;16000;0;0
+Carne de cerdo, lomo sin hueso;Kilogramo;1 Kilogramo;20000;24000;0;0
+Carne de cerdo, pernil sin hueso;Kilogramo;1 Kilogramo;20000;22000;0;0
+Carne de cerdo, tocino barriga;Kilogramo;1 Kilogramo;15000;16000;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón tahití;Canastilla;22 Kilogramo;40000;45000;0;0
+Mandarina arrayana;Canastilla;22 Kilogramo;50000;60000;0;0
+Mandarina común;Canastilla;22 Kilogramo;40000;45000;0;0
+Naranja valencia;Bulto;50 Kilogramo;80000;90000;0;0
+Tangelo;Canastilla;25 Kilogramo;90000;100000;0;0
+Otras frutas;;;;;;
+Aguacate hass;Kilogramo;1 Kilogramo;6000;6000;0;0
+Aguacate papelillo;Kilogramo;1 Kilogramo;7000;7500;0;0
+Banano urabá;Caja de cartón;20 Kilogramo;45000;50000;0;0
+Banano bocadillo;Canastilla;20 Kilogramo;40000;45000;0;0

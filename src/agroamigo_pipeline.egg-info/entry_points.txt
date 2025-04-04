@@ -1,0 +1,2 @@
+[console_scripts]
+agriprice-pipeline = main:main

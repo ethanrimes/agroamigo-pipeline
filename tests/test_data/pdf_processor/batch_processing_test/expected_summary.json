@@ -1,0 +1,41 @@
+{
+    "total_files": 3,
+    "processed_files": 3,
+    "failed_files": 0,
+    "skipped_files": 0,
+    "total_rows_processed": 217,
+    "warnings": 0,
+    "gpt4o_calls": 0,
+    "file_stats": {
+      "yopal_casanare_20250221.pdf": {
+        "filename": "yopal_casanare_20250221.pdf",
+        "unique_products": 58,
+        "unique_major_categories": 6,
+        "unique_subcategories": 13,
+        "rows_processed": 58,
+        "error_occurred": false,
+        "extraction_method": "text_extraction",
+        "text_quality_score": 0.85
+      },
+      "villavicencio_cav_20250221.pdf": {
+        "filename": "villavicencio_cav_20250221.pdf",
+        "unique_products": 72,
+        "unique_major_categories": 4,
+        "unique_subcategories": 12,
+        "rows_processed": 72,
+        "error_occurred": false,
+        "extraction_method": "text_extraction",
+        "text_quality_score": 0.87
+      },
+      "tunja_complejo_20250221.pdf": {
+        "filename": "tunja_complejo_20250221.pdf",
+        "unique_products": 87,
+        "unique_major_categories": 5,
+        "unique_subcategories": 13,
+        "rows_processed": 87,
+        "error_occurred": false,
+        "extraction_method": "text_extraction",
+        "text_quality_score": 0.83
+      }
+    }
+  }
