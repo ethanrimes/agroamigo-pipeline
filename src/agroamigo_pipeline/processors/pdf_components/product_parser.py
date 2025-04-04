@@ -30,6 +30,7 @@ class ProductParser:
             'data_processing': []
         }
     
+
     def process_product_data(self, text):
         """
         Process the text to extract product data using the stack-based approach.
@@ -40,121 +41,141 @@ class ProductParser:
         Returns:
             list: List of dictionaries with product data
         """
+        # Log the first 500 characters of received text
+        self.logger.info(f"Received text (first 500 chars): {text[:500]}")
+        
         product_data = []
         
         try:
             # Split text into lines
             lines = text.split('\n')
+            self.logger.info(f"Split text into {len(lines)} lines")
             
             # Stack to track category hierarchy
             category_stack = ["", ""]  # [major_category, sub_category]
+            self.logger.info("Initialized category stack")
             
-            # Common category keywords
-            category_keywords = ['frutas', 'verduras', 'hortalizas', 'tuberculos', 'raices', 'platanos', 
-                               'granos', 'cereales', 'lacteos', 'carnes', 'leguminosas', 'citricos']
+            # Common category keywords - added more based on the PDF
+            category_keywords = [
+                'frutas', 'verduras', 'hortalizas', 'tuberculos', 'raices', 'platanos', 
+                'granos', 'cereales', 'lacteos', 'carnes', 'leguminosas', 'citricos',
+                'papa', 'yuca', 'pescados', 'tomates', 'cebollas', 'zanahorias'
+            ]
             
-            # Identify table headers
+            # Identify table headers - improved pattern to match the PDF format
             table_header_pattern = r'(producto\s+presentaci[oó]n\s+unidades\s+(?:ronda.*?)?m[ií]nimo\s+m[aá]ximo)'
             header_found = False
+            current_major_category = ""
+            current_sub_category = ""
             
+            self.logger.info("Starting to process lines")
             for i, line in enumerate(lines):
                 line = line.strip()
                 
-                # Skip empty lines and headers
-                if not line or line.lower() in ['producto', 'presentacion', 'unidades']:
+                # Skip empty lines and header markers
+                if not line or line.lower() in ['producto', 'presentacion', 'unidades', 'mínimo', 'máximo']:
                     continue
-                
+                    
                 # Check if this is a table header
                 if re.search(table_header_pattern, line.lower()):
                     header_found = True
+                    self.logger.info(f"Table header found at line {i}: {line}")
                     continue
                 
-                # Skip lines before table header is found
-                if not header_found:
+                # Handle lines with just major categories (they're often standalone)
+                # Major categories in the PDF are often single words or short phrases
+                if len(line.split()) <= 3 and any(keyword in line.lower() for keyword in category_keywords):
+                    current_major_category = line.strip()
+                    current_sub_category = ""  # Reset sub-category when major category changes
+                    category_stack = [current_major_category, current_sub_category]
+                    self.logger.info(f"Found major category at line {i}: {current_major_category}")
                     continue
                 
-                # Check if this is a price data line
-                # Pattern: Product [whitespace] Presentation [whitespace] Units [whitespace] Prices
-                price_pattern = r'(.+?)\s+(\S+)\s+(\S+)\s+(\d[\d.,]*)\s+(\d[\d.,]*)'
-                extended_price_pattern = r'(.+?)\s+(\S+)\s+(\S+)\s+(\d[\d.,]*)\s+(\d[\d.,]*)\s+(\d[\d.,]*)\s+(\d[\d.,]*)'
+                # Check if line is likely a subcategory (indented or following major categories)
+                # Subcategories are often formatted differently
+                if not line[0].isdigit() and len(line.split()) <= 4 and not re.search(r'\d+\.\d+', line):
+                    # Check if this line starts with "Otras" or specific subcategory markers
+                    if (line.lower().startswith(('otras', 'otros')) or 
+                        any(f"{keyword}" in line.lower() for keyword in category_keywords)):
+                        if current_major_category:  # Only set subcategory if we have a major category
+                            current_sub_category = line.strip()
+                            category_stack = [current_major_category, current_sub_category]
+                            self.logger.info(f"Found subcategory at line {i}: {current_sub_category}")
+                            continue
                 
-                # Try extended pattern first (includes Ronda 1 and Ronda 2)
-                extended_match = re.search(extended_price_pattern, line)
-                if extended_match:
-                    product = extended_match.group(1).strip()
-                    presentation = extended_match.group(2).strip()
-                    units = extended_match.group(3).strip()
-                    
-                    # Extract prices from Ronda 1 and Ronda 2
-                    min1 = clean_price_value(extended_match.group(4))
-                    max1 = clean_price_value(extended_match.group(5))
-                    min2 = clean_price_value(extended_match.group(6))
-                    max2 = clean_price_value(extended_match.group(7))
-                    
-                    # Calculate daily min and max
-                    valid_prices = [p for p in [min1, min2, max1, max2] if p is not None and p > 0]
-                    if valid_prices:
-                        daily_min = min(valid_prices)
-                        daily_max = max(valid_prices)
-                        
-                        product_data.append({
-                            'product': product,
-                            'major_category': category_stack[0],
-                            'sub_category': category_stack[1],
-                            'presentation': presentation,
-                            'units': units,
-                            'daily_min': daily_min,
-                            'daily_max': daily_max
-                        })
-                    continue
-                
-                # Try standard pattern (simpler format with just min/max)
+                # Handle price data lines - Improved to match the PDF format with Ronda columns
+                # This matches the standard format seen in the document
+                price_pattern = r'(.+?)\s+(\S+)\s+(\S+)\s+(\d[\d.,]*)\s+(\d[\d.,]*)\s+(\d*)\s+(\d*)'
                 price_match = re.search(price_pattern, line)
+                
                 if price_match:
-                    product = price_match.group(1).strip()
+                    product_name = price_match.group(1).strip()
                     presentation = price_match.group(2).strip()
                     units = price_match.group(3).strip()
-                    min_price = clean_price_value(price_match.group(4))
-                    max_price = clean_price_value(price_match.group(5))
+                    min_price = self.clean_price_value(price_match.group(4))
+                    max_price = self.clean_price_value(price_match.group(5))
                     
+                    # Only process valid prices
                     if min_price is not None and max_price is not None:
-                        product_data.append({
-                            'product': product,
-                            'major_category': category_stack[0],
-                            'sub_category': category_stack[1],
-                            'presentation': presentation,
-                            'units': units,
-                            'daily_min': min_price,
-                            'daily_max': max_price
-                        })
+                        # Don't add products that are actually category headers
+                        if not any(keyword == product_name.lower() for keyword in category_keywords):
+                            product_entry = {
+                                'product': product_name,
+                                'major_category': category_stack[0],
+                                'sub_category': category_stack[1],
+                                'presentation': presentation,
+                                'units': units,
+                                'daily_min': min_price,
+                                'daily_max': max_price
+                            }
+                            product_data.append(product_entry)
+                            self.logger.info(f"Added product {product_name} with daily_min={min_price}, daily_max={max_price}")
                     continue
                 
-                # If not a price line, check if it's a category header
-                # Category headers typically don't have price data and might contain category keywords
-                is_category = False
-                for keyword in category_keywords:
-                    if keyword in line.lower():
-                        is_category = True
-                        break
-                
-                if is_category:
-                    # Check if it's a major or sub category
-                    # If all caps or very short, it's likely a major category
+                # If we get here, check if the line could be a category that wasn't caught above
+                # This handles cases where categories don't precisely match our patterns
+                if not header_found and any(keyword in line.lower() for keyword in category_keywords):
                     if line.isupper() or len(line) < 20:
-                        category_stack[0] = line  # Set major category
-                        category_stack[1] = ""    # Reset sub category
+                        current_major_category = line.strip()
+                        category_stack[0] = current_major_category
+                        self.logger.info(f"Found unlabeled major category: {current_major_category}")
                     else:
-                        category_stack[1] = line  # Set sub category
-                
-                # Check for "Other" category patterns (Otras frutas, Otros tuberculos, etc.)
-                elif line.lower().startswith('otro') and len(line) < 30:
-                    category_stack[1] = line  # Set as sub category
+                        current_sub_category = line.strip()
+                        category_stack[1] = current_sub_category
+                        self.logger.info(f"Found unlabeled subcategory: {current_sub_category}")
             
+            self.logger.info(f"Finished processing. Extracted {len(product_data)} products")
             return product_data
             
         except Exception as e:
             self.logger.warning(f"Error processing product data: {str(e)}")
+            # Log the traceback for more detailed error information
+            import traceback
+            self.logger.error(f"Traceback: {traceback.format_exc()}")
             return []
+
+    def clean_price_value(self, price_str):
+        """
+        Clean price strings and convert to float values.
+        
+        Args:
+            price_str (str): Price string from PDF
+            
+        Returns:
+            float: Cleaned price value or None if invalid
+        """
+        try:
+            # Handle cases where price is "0" or empty
+            if price_str in ["0", ""]:
+                return 0.0
+            
+            # Remove non-numeric characters except decimal point
+            cleaned = re.sub(r'[^\d.]', '', price_str.replace(',', '.'))
+            if cleaned:
+                return float(cleaned)
+            return None
+        except (ValueError, TypeError):
+            return None
     
     def process_extracted_text(self, file_path, text, metadata):
         """
@@ -169,18 +190,22 @@ class ProductParser:
             DataFrame: Processed data in standardized format
         """
         start_time = time.time()
-        self.logger.info(f"Processing extracted text from {os.path.basename(file_path)}")
+        filename = os.path.basename(file_path)
+        self.logger.info(f"      -----> Processing text from: {filename}")
         
         try:
             # Process product data
+            self.logger.info(f"      Parsing product data from text ({len(text)} characters)")
             product_data = self.process_product_data(text)
+            self.logger.info(f"      Parsed {len(product_data)} product entries from text")
             
             # If no products found, return empty DataFrame
             if not product_data:
-                self.logger.warning(f"No product data extracted from PDF")
+                self.logger.warning(f"      No product data extracted from PDF")
                 return pd.DataFrame()
             
             # Convert to DataFrame
+            self.logger.info(f"      Converting parsed data to DataFrame")
             output_data = []
             
             for product_entry in product_data:
@@ -202,6 +227,7 @@ class ProductParser:
             
             # Create DataFrame from output data
             output_df = pd.DataFrame(output_data)
+            self.logger.debug(f"      Created DataFrame with {len(output_df)} rows")
             
             # Ensure all required columns exist
             required_columns = [
@@ -220,11 +246,13 @@ class ProductParser:
                 'rows': len(output_df),
                 'duration': duration
             })
-            self.logger.info(f"Text processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
+            self.logger.info(f"      Text processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
+            self.logger.info(f"      <----- Completed text processing from: {filename}")
             
             return output_df
             
         except Exception as e:
-            self.logger.error(f"Error processing extracted text from PDF {file_path}: {str(e)}")
-            self.logger.debug(f"Error details: {traceback.format_exc()}")
+            self.logger.error(f"      Error processing extracted text from PDF {file_path}: {str(e)}")
+            self.logger.debug(f"      Error details: {traceback.format_exc()}")
+            self.logger.info(f"      <----- Failed text processing from: {filename}")
             return pd.DataFrame()

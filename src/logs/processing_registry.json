@@ -49,7 +49,171 @@
         }
       ],
       "last_processed": "2025-04-04T20:59:20.734099"
+    },
+    "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf": {
+      "first_processed": "2025-04-04T21:27:49.517753",
+      "processing_history": [
+        {
+          "timestamp": "2025-04-04T21:27:49.517759",
+          "status": "processed",
+          "output_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv",
+          "error": null,
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 81,
+            "unique_major_categories": 3,
+            "unique_subcategories": 2,
+            "rows_processed": 82,
+            "error_occurred": false,
+            "errors_warnings": "",
+            "processing_time_seconds": 61.179574,
+            "extraction_method": "gpt4o_vision",
+            "text_quality_score": 0.6444444444444444
+          }
+        },
+        {
+          "timestamp": "2025-04-04T21:53:47.178115",
+          "status": "processed",
+          "output_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv",
+          "error": null,
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 77,
+            "unique_major_categories": 1,
+            "unique_subcategories": 2,
+            "rows_processed": 81,
+            "error_occurred": false,
+            "errors_warnings": "",
+            "processing_time_seconds": 51.610838,
+            "extraction_method": "gpt4o_vision",
+            "text_quality_score": 0.6444444444444444
+          }
+        },
+        {
+          "timestamp": "2025-04-04T22:09:10.668909",
+          "status": "error",
+          "output_path": null,
+          "error": "No data extracted from PDF; ",
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 0,
+            "unique_major_categories": 0,
+            "unique_subcategories": 0,
+            "rows_processed": 0,
+            "error_occurred": true,
+            "errors_warnings": "No data extracted from PDF; ",
+            "processing_time_seconds": 0.14481,
+            "extraction_method": "text_extraction",
+            "text_is_valid": true,
+            "used_gpt_extraction": false
+          }
+        },
+        {
+          "timestamp": "2025-04-04T22:15:12.432592",
+          "status": "error",
+          "output_path": null,
+          "error": "No data extracted from PDF; ",
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 0,
+            "unique_major_categories": 0,
+            "unique_subcategories": 0,
+            "rows_processed": 0,
+            "error_occurred": true,
+            "errors_warnings": "No data extracted from PDF; ",
+            "processing_time_seconds": 0.149255,
+            "extraction_method": "text_extraction",
+            "text_is_valid": true,
+            "used_gpt_extraction": false
+          }
+        },
+        {
+          "timestamp": "2025-04-04T22:19:23.808675",
+          "status": "error",
+          "output_path": null,
+          "error": "No data extracted from PDF; ",
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 0,
+            "unique_major_categories": 0,
+            "unique_subcategories": 0,
+            "rows_processed": 0,
+            "error_occurred": true,
+            "errors_warnings": "No data extracted from PDF; ",
+            "processing_time_seconds": 0.116988,
+            "extraction_method": "text_extraction",
+            "text_is_valid": true,
+            "used_gpt_extraction": false
+          }
+        },
+        {
+          "timestamp": "2025-04-04T22:19:44.046596",
+          "status": "error",
+          "output_path": null,
+          "error": "No data extracted from PDF; ",
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 0,
+            "unique_major_categories": 0,
+            "unique_subcategories": 0,
+            "rows_processed": 0,
+            "error_occurred": true,
+            "errors_warnings": "No data extracted from PDF; ",
+            "processing_time_seconds": 0.117841,
+            "extraction_method": "text_extraction",
+            "text_is_valid": true,
+            "used_gpt_extraction": false
+          }
+        },
+        {
+          "timestamp": "2025-04-04T22:24:29.862113",
+          "status": "processed",
+          "output_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv",
+          "error": null,
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 76,
+            "unique_major_categories": 12,
+            "unique_subcategories": 2,
+            "rows_processed": 83,
+            "error_occurred": false,
+            "errors_warnings": "",
+            "processing_time_seconds": 0.129086,
+            "extraction_method": "text_extraction",
+            "text_is_valid": true,
+            "used_gpt_extraction": false
+          }
+        },
+        {
+          "timestamp": "2025-04-04T22:27:50.326749",
+          "status": "processed",
+          "output_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv",
+          "error": null,
+          "stats": {
+            "filename": "tunja_complejo_20250221.pdf",
+            "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf",
+            "unique_products": 76,
+            "unique_major_categories": 12,
+            "unique_subcategories": 2,
+            "rows_processed": 83,
+            "error_occurred": false,
+            "errors_warnings": "",
+            "processing_time_seconds": 0.122262,
+            "extraction_method": "text_extraction",
+            "text_is_valid": true,
+            "used_gpt_extraction": false
+          }
+        }
+      ],
+      "last_processed": "2025-04-04T22:27:50.326751"
     }
   },
-  "last_updated": "2025-04-04T20:59:20.734101"
+  "last_updated": "2025-04-04T22:27:50.326753"
 }

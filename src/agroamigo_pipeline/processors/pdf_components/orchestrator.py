@@ -12,8 +12,7 @@ import concurrent.futures
 from datetime import datetime
 
 from agroamigo_pipeline.config.settings import (
-    PDF_DIR, PROCESSED_DIR, MIN_UNIQUE_PRODUCTS, MAX_UNIQUE_PRODUCTS,
-    PDF_TEXT_QUALITY_THRESHOLD
+    PDF_DIR, PROCESSED_DIR, MIN_UNIQUE_PRODUCTS, MAX_UNIQUE_PRODUCTS
 )
 from agroamigo_pipeline.utils.logger import setup_logging, log_function_call, log_dataframe_info
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension, generate_output_path
@@ -57,7 +56,8 @@ class PDFProcessorOrchestrator:
             'skipped_files': 0,
             'total_rows_processed': 0,
             'warnings': 0,
-            'gpt4o_calls': 0
+            'gpt4o_calls': 0,
+            'files_using_gpt_extraction': 0
         }
         
         # Timing statistics
@@ -90,11 +90,21 @@ class PDFProcessorOrchestrator:
         Returns:
             DataFrame: Processed data in standardized format
         """
+        filename = os.path.basename(file_path)
+        self.logger.info(f"----> Text extraction flow for: {filename}")
+        
         # Extract metadata from text
+        self.logger.info(f"      Extracting metadata from text")
         metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, text)
+        self.logger.info(f"      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
         
         # Process the text to extract product data
-        return self.product_parser.process_extracted_text(file_path, text, metadata)
+        self.logger.info(f"      Processing text to extract product data")
+        result = self.product_parser.process_extracted_text(file_path, text, metadata)
+        self.logger.info(f"      Product data extraction complete, extracted {len(result) if result is not None else 0} rows")
+        
+        self.logger.info(f"<---- Completed text extraction flow for: {filename}")
+        return result
     
     def process_pdf_with_gpt4o(self, file_path):
         """
@@ -106,39 +116,58 @@ class PDFProcessorOrchestrator:
         Returns:
             DataFrame: Processed data in standardized format
         """
+        filename = os.path.basename(file_path)
+        self.logger.info(f"----> GPT-4o vision flow for: {filename}")
+        
         try:
             # First extract text to get metadata
-            text_pypdf = self.text_extractor.extract_text_with_pypdf(file_path)
-            text_pdfplumber = self.text_extractor.extract_text_with_pdfplumber(file_path)
-            
-            # Use the text with more content for metadata extraction
-            text_to_use = text_pypdf if len(text_pypdf) > len(text_pdfplumber) else text_pdfplumber
+            self.logger.info(f"      Extracting text for metadata")
+            text_to_use = self.text_extractor.extract_text_with_pdfplumber(file_path)
+            self.logger.info(f"      Using text from pdfplumber for metadata")
             
             # Extract metadata from text
+            self.logger.info(f"      Extracting metadata from text")
             metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, text_to_use)
+            self.logger.info(f"      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
             
             # Convert PDF to images
+            self.logger.info(f"      Converting PDF to images")
             image_paths = self.image_handler.convert_pdf_to_images(file_path)
+            self.logger.info(f"      PDF converted to {len(image_paths)} images")
             
             # Process each page with GPT-4o mini
             csv_texts = []
+            self.logger.info(f"      Processing images with GPT-4o mini")
             
-            for image_path in image_paths:
+            for i, image_path in enumerate(image_paths):
+                self.logger.info(f"      Processing image {i+1}/{len(image_paths)}: {os.path.basename(image_path)}")
+                
                 # Encode the image to base64
+                self.logger.info(f"      Encoding image to base64")
                 base64_image = self.image_handler.encode_image(image_path)
                 
                 # Query GPT-4o mini with the image
+                self.logger.info(f"      Querying GPT-4o mini with image")
                 csv_text = self.gpt_client.query_gpt4o_with_image(image_path, base64_image)
                 
                 if csv_text:
+                    self.logger.info(f"      Received response from GPT-4o mini, {len(csv_text)} characters")
                     csv_texts.append(csv_text)
+                else:
+                    self.logger.warning(f"      No text extracted from image {i+1}")
             
             # Process the CSV texts
-            return self.gpt_csv_parser.process_gpt4o_results(file_path, csv_texts, metadata)
+            self.logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")
+            result = self.gpt_csv_parser.process_gpt4o_results(file_path, csv_texts, metadata)
+            self.logger.info(f"      CSV processing complete, extracted {len(result) if result is not None else 0} rows")
+            
+            self.logger.info(f"<---- Completed GPT-4o vision flow for: {filename}")
+            return result
             
         except Exception as e:
             self.logger.error(f"Error processing PDF with GPT-4o mini: {str(e)}")
-            self.logger.debug(f"Error details: {traceback.format_exc()}")
+            self.logger.info(f"Error details: {traceback.format_exc()}")
+            self.logger.info(f"<---- Failed GPT-4o vision flow for: {filename}")
             return None
     
     def process_pdf_file(self, file_path, output_dir=None, force_reprocess=False):
@@ -154,7 +183,7 @@ class PDFProcessorOrchestrator:
             dict: Statistics about the processing
         """
         filename = os.path.basename(file_path)
-        self.logger.info(f"Processing PDF file: {filename}")
+        self.logger.info(f"========== STARTING PDF PROCESSING: {filename} ==========")
         
         # Check if file has already been processed
         if not force_reprocess and self.registry.file_processed(file_path):
@@ -164,6 +193,7 @@ class PDFProcessorOrchestrator:
         # Set default output directory
         output_dir = output_dir or PROCESSED_DIR
         ensure_directory(output_dir)
+        self.logger.info(f"Output directory: {output_dir}")
         
         # Statistics dictionary
         stats = {
@@ -177,63 +207,85 @@ class PDFProcessorOrchestrator:
             'errors_warnings': "",
             'processing_time_seconds': 0,
             'extraction_method': "",
-            'text_quality_score': 0.0
+            'text_is_valid': False,
+            'used_gpt_extraction': False  # Added new field to track if GPT image extraction was used
         }
         
         start_time = datetime.now()
+        self.logger.info(f"Starting processing at: {start_time}")
         
         try:
-            # Try direct text extraction first
-            text_pypdf = self.text_extractor.extract_text_with_pypdf(file_path)
-            text_pdfplumber = self.text_extractor.extract_text_with_pdfplumber(file_path)
+            # Flag to track if text extraction had errors
+            text_extraction_error = False
+            text_to_use = ""
             
-            # Use the text with more content
-            text_to_use = text_pypdf if len(text_pypdf) > len(text_pdfplumber) else text_pdfplumber
+            try:
+                self.logger.info(f"Step 1: Attempting text extraction from PDF")
+                # Use only pdfplumber for text extraction
+                self.logger.info(f"Extracting text using pdfplumber")
+                text_to_use = self.text_extractor.extract_text_with_pdfplumber(file_path)
+                self.logger.info(f"pdfplumber extraction complete, extracted {len(text_to_use)} characters")
+            except Exception as e:
+                self.logger.error(f"Error during text extraction: {str(e)}")
+                text_extraction_error = True
+                stats['errors_warnings'] += f"Text extraction error: {str(e)}; "
             
-            # Assess text quality
-            text_quality = self.text_extractor.assess_text_quality(text_to_use)
-            stats['text_quality_score'] = text_quality
+            # Assess text validity only if extraction was successful
+            text_is_valid = False
+            if not text_extraction_error:
+                self.logger.info(f"Step 2: Checking if text is valid")
+                text_is_valid = self.text_extractor.assess_text_quality(text_to_use)
+                stats['text_is_valid'] = text_is_valid
+                self.logger.info(f"Text is valid: {text_is_valid}")
             
-            # Processing strategy based on text quality
-            if text_quality >= PDF_TEXT_QUALITY_THRESHOLD:
-                # Good quality text - process directly
+            # Processing strategy based on text validity
+            if not text_extraction_error and text_is_valid:
+                # Valid text - process directly
+                self.logger.info(f"Step 3A: Text is valid, processing with direct text extraction")
                 stats['extraction_method'] = "text_extraction"
+                stats['used_gpt_extraction'] = False  # Text extraction was used
+                self.logger.info(f"Extracting metadata from text")
                 output_df = self.process_pdf_with_text_extraction(file_path, text_to_use)
+                self.logger.info(f"Text extraction processing complete, extracted {len(output_df) if output_df is not None else 0} rows")
             else:
-                # Poor quality text - use GPT-4o mini with image
+                # Invalid text or extraction error - use GPT-4o mini with image
+                if text_extraction_error:
+                    self.logger.info(f"Step 3B: Text extraction failed, processing with GPT-4o vision")
+                else:
+                    self.logger.info(f"Step 3B: Text is not valid, processing with GPT-4o vision")
+                    
                 stats['extraction_method'] = "gpt4o_vision"
+                stats['used_gpt_extraction'] = True  # GPT image extraction was used
+                self.logger.info(f"Converting PDF to images and processing with GPT-4o")
                 output_df = self.process_pdf_with_gpt4o(file_path)
                 self.stats['gpt4o_calls'] += 1
+                self.logger.info(f"GPT-4o vision processing complete, extracted {len(output_df) if output_df is not None else 0} rows")
             
-            # Update statistics
+            # Check if we have results
             if output_df is not None and not output_df.empty:
-                stats['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
-                stats['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
-                stats['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns and not output_df['sub_category'].isna().all() else 0
+                # Save to CSV
+                self.logger.info(f"Step 4: Saving extracted data to CSV")
+                base_filename = os.path.splitext(filename)[0]
+                output_csv = os.path.join(output_dir, f"{base_filename}.csv")
+                output_df.to_csv(output_csv, index=False)
+                self.logger.info(f"Saved output to: {output_csv}")
+                
+                # Update statistics
+                stats['unique_products'] = len(output_df['product'].unique())
+                stats['unique_major_categories'] = len(output_df['major_category'].unique())
+                stats['unique_subcategories'] = len(output_df['sub_category'].unique())
                 stats['rows_processed'] = len(output_df)
                 
-                # Check if we have enough unique products
-                if stats['unique_products'] < MIN_UNIQUE_PRODUCTS:
-                    warning_msg = f"Warning: File has only {stats['unique_products']} unique products, which is below the minimum threshold of {MIN_UNIQUE_PRODUCTS}"
-                    self.logger.warning(warning_msg)
-                    stats['errors_warnings'] += warning_msg + "; "
-                
-                # Check if we have too many unique products (might indicate parsing error)
-                if stats['unique_products'] > MAX_UNIQUE_PRODUCTS:
-                    warning_msg = f"Warning: File has {stats['unique_products']} unique products, which exceeds the maximum threshold of {MAX_UNIQUE_PRODUCTS}"
-                    self.logger.warning(warning_msg)
-                    stats['errors_warnings'] += warning_msg + "; "
-                
-                # Generate output path
-                output_path = generate_output_path(file_path, output_dir, extension='.csv')
-                
-                # Save to CSV
-                output_df.to_csv(output_path, index=False)
-                self.logger.info(f"Saved processed data to {output_path}")
+                self.logger.info(f"Data statistics: {stats['rows_processed']} rows, {stats['unique_products']} products, " + 
+                               f"{stats['unique_major_categories']} major categories, {stats['unique_subcategories']} subcategories")
+                self.logger.info(f"Used GPT extraction: {stats['used_gpt_extraction']}")
                 
                 # Update overall statistics
                 self.stats['processed_files'] += 1
                 self.stats['total_rows_processed'] += stats['rows_processed']
+                
+                output_path = output_csv
+                
             else:
                 self.logger.warning(f"No data extracted from PDF, no output file created")
                 stats['error_occurred'] = True
@@ -248,7 +300,7 @@ class PDFProcessorOrchestrator:
             stats['errors_warnings'] += str(e)
             
             self.logger.error(f"Error processing PDF file {filename}: {str(e)}")
-            self.logger.debug(f"Error details: {traceback.format_exc()}")
+            self.logger.error(f"Error details: {traceback.format_exc()}")
             
             # Update overall statistics
             self.stats['failed_files'] += 1
@@ -256,8 +308,11 @@ class PDFProcessorOrchestrator:
         
         # Calculate processing time
         stats['processing_time_seconds'] = (datetime.now() - start_time).total_seconds()
+        self.logger.info(f"Total processing time: {stats['processing_time_seconds']:.2f} seconds")
+        self.logger.info(f"Used GPT extraction: {stats['used_gpt_extraction']}")
         
         # Register processed file
+        self.logger.info(f"Step 5: Registering processing results")
         self.registry.register_file(
             file_path,
             output_path=output_path,
@@ -265,6 +320,8 @@ class PDFProcessorOrchestrator:
             error=stats['errors_warnings'] if stats['error_occurred'] else None,
             stats=stats
         )
+        
+        self.logger.info(f"========== COMPLETED PDF PROCESSING: {filename} ==========")
         
         return stats
     
@@ -302,7 +359,8 @@ class PDFProcessorOrchestrator:
             'skipped_files': 0,
             'total_rows_processed': 0,
             'warnings': 0,
-            'gpt4o_calls': 0
+            'gpt4o_calls': 0,
+            'files_using_gpt_extraction': 0
         }
         
         # Set maximum number of workers
@@ -327,7 +385,9 @@ class PDFProcessorOrchestrator:
                     
                     try:
                         stats = future.result()
-                        # Statistics are updated by the individual process_pdf_file calls
+                        # Update overall stats if GPT extraction was used
+                        if stats.get('used_gpt_extraction', False):
+                            self.stats['files_using_gpt_extraction'] += 1
                     except Exception as e:
                         self.logger.error(f"Error processing {filename}: {str(e)}")
                         self.stats['failed_files'] += 1
@@ -335,7 +395,10 @@ class PDFProcessorOrchestrator:
             # Process files sequentially
             for file_path in pdf_files:
                 try:
-                    self.process_pdf_file(file_path, output_dir, force_reprocess)
+                    stats = self.process_pdf_file(file_path, output_dir, force_reprocess)
+                    # Update overall stats if GPT extraction was used
+                    if stats.get('used_gpt_extraction', False):
+                        self.stats['files_using_gpt_extraction'] += 1
                 except Exception as e:
                     filename = os.path.basename(file_path)
                     self.logger.error(f"Error processing {filename}: {str(e)}")
@@ -346,6 +409,7 @@ class PDFProcessorOrchestrator:
                         f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
                         f"out of {self.stats['total_files']} total files")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
+        self.logger.info(f"Files using GPT extraction: {self.stats['files_using_gpt_extraction']} out of {self.stats['processed_files']} processed files")
         self.logger.info(f"Made {self.stats['gpt4o_calls']} GPT-4o calls")
         
         return self.stats

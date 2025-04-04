@@ -27,10 +27,6 @@ class PDFProcessor:
         self.stats = self.orchestrator.stats
         self.timing_stats = self.orchestrator.timing_stats
     
-    def _extract_text_with_pypdf(self, file_path):
-        """Delegate to TextExtractor's extract_text_with_pypdf method."""
-        return self.orchestrator.text_extractor.extract_text_with_pypdf(file_path)
-    
     def _extract_text_with_pdfplumber(self, file_path):
         """Delegate to TextExtractor's extract_text_with_pdfplumber method."""
         return self.orchestrator.text_extractor.extract_text_with_pdfplumber(file_path)

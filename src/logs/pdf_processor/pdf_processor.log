@@ -26,3 +26,646 @@ I/O Error: Couldn't open file '/Users/ethankallett/Documents/Projects/agroamigo_
 2025-04-04 20:59:20 - pdf_processor - INFO - Processing GPT-4o extracted data from tunja_complejo_20250221.pdf
 2025-04-04 20:59:20 - pdf_processor - INFO - GPT-4o processing completed in 0.01 seconds, extracted 82 rows
 2025-04-04 20:59:20 - pdf_processor - INFO - Saved processed data to /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 21:17:30 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 21:17:30 - pdf_processor - INFO - Processing PDF file: tunja_complejo_20250221.pdf
+2025-04-04 21:17:30 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/text_extraction_test/tunja_complejo_20250221.pdf
+2025-04-04 21:17:31 - pdf_processor - INFO - Converted 3 pages to images
+2025-04-04 21:17:31 - pdf_processor - INFO - PDF conversion completed in 0.19 seconds
+2025-04-04 21:17:31 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp8wr43feb/page_0.jpg
+2025-04-04 21:20:07 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 21:20:07 - pdf_processor - INFO - Processing PDF file: tunja_complejo_20250221.pdf
+2025-04-04 21:20:07 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf
+2025-04-04 21:20:08 - pdf_processor - INFO - Converted 3 pages to images
+2025-04-04 21:20:08 - pdf_processor - INFO - PDF conversion completed in 0.18 seconds
+2025-04-04 21:20:08 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp5i3jlrsz/page_0.jpg
+2025-04-04 21:20:34 - pdf_processor - INFO - GPT-4o mini query completed in 26.06 seconds
+2025-04-04 21:20:34 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp5i3jlrsz/page_1.jpg
+2025-04-04 21:26:48 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 21:26:48 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 21:26:48 - pdf_processor - INFO - Processing PDF file: tunja_complejo_20250221.pdf
+2025-04-04 21:26:48 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf
+2025-04-04 21:26:48 - pdf_processor - INFO - Converted 3 pages to images
+2025-04-04 21:26:48 - pdf_processor - INFO - PDF conversion completed in 0.19 seconds
+2025-04-04 21:26:48 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp1x1iwno1/page_0.jpg
+2025-04-04 21:27:09 - pdf_processor - INFO - GPT-4o mini query completed in 20.80 seconds
+2025-04-04 21:27:09 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp1x1iwno1/page_1.jpg
+2025-04-04 21:27:36 - pdf_processor - INFO - GPT-4o mini query completed in 26.61 seconds
+2025-04-04 21:27:36 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp1x1iwno1/page_2.jpg
+2025-04-04 21:27:49 - pdf_processor - INFO - GPT-4o mini query completed in 13.24 seconds
+2025-04-04 21:27:49 - pdf_processor - INFO - Processing GPT-4o extracted data from tunja_complejo_20250221.pdf
+2025-04-04 21:27:49 - pdf_processor - INFO - GPT-4o processing completed in 0.01 seconds, extracted 82 rows
+2025-04-04 21:27:49 - pdf_processor - INFO - Saved processed data to /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 21:52:55 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 21:52:55 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 21:52:55 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 21:52:55 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 21:52:55 - pdf_processor - INFO - Starting processing at: 2025-04-04 21:52:55.567070
+2025-04-04 21:52:55 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 21:52:55 - pdf_processor - INFO - Using text from: pdfplumber
+2025-04-04 21:52:55 - pdf_processor - INFO - Step 2: Assessing text quality
+2025-04-04 21:52:55 - pdf_processor - INFO - Text quality score: 0.64
+2025-04-04 21:52:55 - pdf_processor - INFO - Step 3B: Text quality insufficient, processing with GPT-4o vision
+2025-04-04 21:52:55 - pdf_processor - INFO - ----> GPT-4o vision flow for: tunja_complejo_20250221.pdf
+2025-04-04 21:52:55 - pdf_processor - INFO -       Extracting text for metadata
+2025-04-04 21:52:55 - pdf_processor - INFO -       Using text from pdfplumber for metadata
+2025-04-04 21:52:55 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 21:52:55 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 21:52:55 - pdf_processor - INFO -       Converting PDF to images
+2025-04-04 21:52:55 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf
+2025-04-04 21:52:56 - pdf_processor - INFO - Converted 3 pages to images
+2025-04-04 21:52:56 - pdf_processor - INFO - PDF conversion completed in 0.21 seconds
+2025-04-04 21:52:56 - pdf_processor - INFO -       PDF converted to 3 images
+2025-04-04 21:52:56 - pdf_processor - INFO -       Processing images with GPT-4o mini
+2025-04-04 21:52:56 - pdf_processor - INFO -       Processing image 1/3: page_0.jpg
+2025-04-04 21:52:56 - pdf_processor - INFO -       Querying GPT-4o mini with image
+2025-04-04 21:52:56 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpavoe8946/page_0.jpg
+2025-04-04 21:53:18 - pdf_processor - INFO - GPT-4o mini query completed in 22.02 seconds
+2025-04-04 21:53:18 - pdf_processor - INFO -       Received response from GPT-4o mini, 2201 characters
+2025-04-04 21:53:18 - pdf_processor - INFO -       Processing image 2/3: page_1.jpg
+2025-04-04 21:53:18 - pdf_processor - INFO -       Querying GPT-4o mini with image
+2025-04-04 21:53:18 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpavoe8946/page_1.jpg
+2025-04-04 21:53:36 - pdf_processor - INFO - GPT-4o mini query completed in 18.72 seconds
+2025-04-04 21:53:36 - pdf_processor - INFO -       Received response from GPT-4o mini, 2067 characters
+2025-04-04 21:53:36 - pdf_processor - INFO -       Processing image 3/3: page_2.jpg
+2025-04-04 21:53:36 - pdf_processor - INFO -       Querying GPT-4o mini with image
+2025-04-04 21:53:36 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpavoe8946/page_2.jpg
+2025-04-04 21:53:47 - pdf_processor - INFO - GPT-4o mini query completed in 10.33 seconds
+2025-04-04 21:53:47 - pdf_processor - INFO -       Received response from GPT-4o mini, 463 characters
+2025-04-04 21:53:47 - pdf_processor - INFO -       Processing 3 CSV texts from GPT-4o mini
+2025-04-04 21:53:47 - pdf_processor - INFO -       -----> Processing GPT-4o results for: tunja_complejo_20250221.pdf
+2025-04-04 21:53:47 - pdf_processor - INFO -       GPT-4o results processing completed in 0.01 seconds, extracted 81 rows
+2025-04-04 21:53:47 - pdf_processor - INFO -       <----- Completed GPT-4o results processing for: tunja_complejo_20250221.pdf
+2025-04-04 21:53:47 - pdf_processor - INFO -       CSV processing complete, extracted 81 rows
+2025-04-04 21:53:47 - pdf_processor - INFO - <---- Completed GPT-4o vision flow for: tunja_complejo_20250221.pdf
+2025-04-04 21:53:47 - pdf_processor - INFO - GPT-4o vision processing complete, extracted 81 rows
+2025-04-04 21:53:47 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 21:53:47 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 21:53:47 - pdf_processor - INFO - Data statistics: 81 rows, 77 products, 1 major categories, 2 subcategories
+2025-04-04 21:53:47 - pdf_processor - INFO - Total processing time: 51.61 seconds
+2025-04-04 21:53:47 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 21:53:47 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 21:56:20 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 21:56:20 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 21:56:20 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 21:56:20 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 21:56:20 - pdf_processor - INFO - Starting processing at: 2025-04-04 21:56:20.874472
+2025-04-04 21:56:20 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 21:56:20 - pdf_processor - INFO - Extracting text using PyPDF2
+2025-04-04 21:56:20 - pdf_processor - INFO -         -----> Extracting text with PyPDF2: tunja_complejo_20250221.pdf
+2025-04-04 21:56:20 - pdf_processor - INFO -         PDF has 3 pages
+2025-04-04 21:56:20 - pdf_processor - INFO -         Extracting text from page 1/3
+2025-04-04 21:56:20 - pdf_processor - INFO -         Extracted 2601 characters from page 1
+2025-04-04 21:56:20 - pdf_processor - INFO -         Extracting text from page 2/3
+2025-04-04 21:56:20 - pdf_processor - INFO -         Extracted 2383 characters from page 2
+2025-04-04 21:56:20 - pdf_processor - INFO -         Extracting text from page 3/3
+2025-04-04 21:56:20 - pdf_processor - INFO -         Extracted 645 characters from page 3
+2025-04-04 21:56:20 - pdf_processor - INFO -         PyPDF2 extraction completed in 0.03 seconds, extracted 5635 total characters
+2025-04-04 21:56:20 - pdf_processor - INFO -         <----- Completed PyPDF2 extraction for: tunja_complejo_20250221.pdf
+2025-04-04 21:56:20 - pdf_processor - INFO - PyPDF2 extraction complete, extracted 5635 characters
+2025-04-04 21:56:20 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 21:56:21 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 21:56:21 - pdf_processor - INFO - Using text from: pdfplumber
+2025-04-04 21:56:21 - pdf_processor - INFO - Step 2: Assessing text quality
+2025-04-04 21:56:21 - pdf_processor - INFO - Text quality score: 0.64
+2025-04-04 21:56:21 - pdf_processor - INFO - Step 3B: Text quality insufficient, processing with GPT-4o vision
+2025-04-04 21:56:21 - pdf_processor - INFO - Converting PDF to images and processing with GPT-4o
+2025-04-04 21:56:21 - pdf_processor - INFO - ----> GPT-4o vision flow for: tunja_complejo_20250221.pdf
+2025-04-04 21:56:21 - pdf_processor - INFO -       Extracting text for metadata
+2025-04-04 21:56:21 - pdf_processor - INFO -         -----> Extracting text with PyPDF2: tunja_complejo_20250221.pdf
+2025-04-04 21:56:21 - pdf_processor - INFO -         PDF has 3 pages
+2025-04-04 21:56:21 - pdf_processor - INFO -         Extracting text from page 1/3
+2025-04-04 21:56:21 - pdf_processor - INFO -         Extracted 2601 characters from page 1
+2025-04-04 21:56:21 - pdf_processor - INFO -         Extracting text from page 2/3
+2025-04-04 21:56:21 - pdf_processor - INFO -         Extracted 2383 characters from page 2
+2025-04-04 21:56:21 - pdf_processor - INFO -         Extracting text from page 3/3
+2025-04-04 21:56:21 - pdf_processor - INFO -         Extracted 645 characters from page 3
+2025-04-04 21:56:21 - pdf_processor - INFO -         PyPDF2 extraction completed in 0.05 seconds, extracted 5635 total characters
+2025-04-04 21:56:21 - pdf_processor - INFO -         <----- Completed PyPDF2 extraction for: tunja_complejo_20250221.pdf
+2025-04-04 21:56:21 - pdf_processor - INFO -       Using text from pdfplumber for metadata
+2025-04-04 21:56:21 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 21:56:21 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 21:56:21 - pdf_processor - INFO -       Converting PDF to images
+2025-04-04 21:56:21 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/metadata_extraction_test/tunja_complejo_20250221.pdf
+2025-04-04 21:56:21 - pdf_processor - INFO - Converted 3 pages to images
+2025-04-04 21:56:21 - pdf_processor - INFO - PDF conversion completed in 0.19 seconds
+2025-04-04 21:56:21 - pdf_processor - INFO -       PDF converted to 3 images
+2025-04-04 21:56:21 - pdf_processor - INFO -       Processing images with GPT-4o mini
+2025-04-04 21:56:21 - pdf_processor - INFO -       Processing image 1/3: page_0.jpg
+2025-04-04 21:56:21 - pdf_processor - INFO -       Encoding image to base64
+2025-04-04 21:56:21 - pdf_processor - INFO -       Querying GPT-4o mini with image
+2025-04-04 21:56:21 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpt2sz74m7/page_0.jpg
+2025-04-04 21:56:39 - pdf_processor - INFO - GPT-4o mini query completed in 18.40 seconds
+2025-04-04 21:56:39 - pdf_processor - INFO -       Received response from GPT-4o mini, 2304 characters
+2025-04-04 21:56:39 - pdf_processor - INFO -       Processing image 2/3: page_1.jpg
+2025-04-04 21:56:39 - pdf_processor - INFO -       Encoding image to base64
+2025-04-04 21:56:39 - pdf_processor - INFO -       Querying GPT-4o mini with image
+2025-04-04 21:56:39 - pdf_processor - INFO - Querying GPT-4o mini with image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpt2sz74m7/page_1.jpg
+2025-04-04 22:09:10 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:09:10 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:09:10 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:09:10 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:09:10 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:09:10.523987
+2025-04-04 22:09:10 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:09:10 - pdf_processor - INFO - Extracting text using PyPDF2
+2025-04-04 22:09:10 - pdf_processor - INFO -         -----> Extracting text with PyPDF2: tunja_complejo_20250221.pdf
+2025-04-04 22:09:10 - pdf_processor - INFO -         PDF has 3 pages
+2025-04-04 22:09:10 - pdf_processor - INFO -         Extracting text from page 1/3
+2025-04-04 22:09:10 - pdf_processor - INFO -         Extracted 2601 characters from page 1
+2025-04-04 22:09:10 - pdf_processor - INFO -         Extracting text from page 2/3
+2025-04-04 22:09:10 - pdf_processor - INFO -         Extracted 2383 characters from page 2
+2025-04-04 22:09:10 - pdf_processor - INFO -         Extracting text from page 3/3
+2025-04-04 22:09:10 - pdf_processor - INFO -         Extracted 645 characters from page 3
+2025-04-04 22:09:10 - pdf_processor - INFO -         PyPDF2 extraction completed in 0.03 seconds, extracted 5635 total characters
+2025-04-04 22:09:10 - pdf_processor - INFO -         <----- Completed PyPDF2 extraction for: tunja_complejo_20250221.pdf
+2025-04-04 22:09:10 - pdf_processor - INFO - PyPDF2 extraction complete, extracted 5635 characters
+2025-04-04 22:09:10 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:09:10 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:09:10 - pdf_processor - INFO - Using text from: pdfplumber
+2025-04-04 22:09:10 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:09:10 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:09:10 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:09:10 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:09:10 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:09:10 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:09:10 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:09:10 - pdf_processor - INFO -       Processing text to extract product data
+2025-04-04 22:09:10 - pdf_processor - INFO -       -----> Processing text from: tunja_complejo_20250221.pdf
+2025-04-04 22:09:10 - pdf_processor - INFO -       Parsed 0 product entries from text
+2025-04-04 22:09:10 - pdf_processor - WARNING -       No product data extracted from PDF
+2025-04-04 22:09:10 - pdf_processor - INFO -       Product data extraction complete, extracted 0 rows
+2025-04-04 22:09:10 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:09:10 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 22:09:10 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 22:09:10 - pdf_processor - INFO - Total processing time: 0.14 seconds
+2025-04-04 22:09:10 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:09:10 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:09:10 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:15:12 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:15:12 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:15:12 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:15:12 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:15:12 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:15:12.283180
+2025-04-04 22:15:12 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:15:12 - pdf_processor - INFO - Extracting text using PyPDF2
+2025-04-04 22:15:12 - pdf_processor - INFO -         -----> Extracting text with PyPDF2: tunja_complejo_20250221.pdf
+2025-04-04 22:15:12 - pdf_processor - INFO -         PDF has 3 pages
+2025-04-04 22:15:12 - pdf_processor - INFO -         Extracting text from page 1/3
+2025-04-04 22:15:12 - pdf_processor - INFO -         Extracted 2601 characters from page 1
+2025-04-04 22:15:12 - pdf_processor - INFO -         Extracting text from page 2/3
+2025-04-04 22:15:12 - pdf_processor - INFO -         Extracted 2383 characters from page 2
+2025-04-04 22:15:12 - pdf_processor - INFO -         Extracting text from page 3/3
+2025-04-04 22:15:12 - pdf_processor - INFO -         Extracted 645 characters from page 3
+2025-04-04 22:15:12 - pdf_processor - INFO -         PyPDF2 extraction completed in 0.03 seconds, extracted 5635 total characters
+2025-04-04 22:15:12 - pdf_processor - INFO -         <----- Completed PyPDF2 extraction for: tunja_complejo_20250221.pdf
+2025-04-04 22:15:12 - pdf_processor - INFO - PyPDF2 extraction complete, extracted 5635 characters
+2025-04-04 22:15:12 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:15:12 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:15:12 - pdf_processor - INFO - Using text from: pdfplumber
+2025-04-04 22:15:12 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:15:12 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:15:12 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:15:12 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:15:12 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:15:12 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:15:12 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:15:12 - pdf_processor - INFO -       Processing text to extract product data
+2025-04-04 22:15:12 - pdf_processor - INFO -       -----> Processing text from: tunja_complejo_20250221.pdf
+2025-04-04 22:15:12 - pdf_processor - INFO -       Parsing product data from text (5642 characters)
+2025-04-04 22:15:12 - pdf_processor - INFO - Received text (first 500 chars): PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+Ronda 1 Ronda 2
+Producto Presentación Unidades 04:30 - 06:15 -
+Mínimo Máximo Mínimo Máximo
+Carnes
+Carne de cerdo
+Carne de cerdo, costilla Kilogramo 1 Kilogramo 20.000 24.000 0 0
+Carne de cerdo,
+Kilogramo 1 Kilogramo 14.000 16.000 0 0
+espinazo
+Carne de cerdo, lomo
+Kilogramo 1 Kilogramo 20.000 24.000 0 0
+sin hueso
+Carne de cerdo, pernil
+Kilogramo 1 Kilogramo 20.000 22.
+2025-04-04 22:15:12 - pdf_processor - INFO - Split text into 150 lines
+2025-04-04 22:15:12 - pdf_processor - INFO - Initialized category stack
+2025-04-04 22:15:12 - pdf_processor - INFO - Starting to process lines
+2025-04-04 22:15:12 - pdf_processor - INFO - Finished processing. Extracted 0 products
+2025-04-04 22:15:12 - pdf_processor - INFO -       Parsed 0 product entries from text
+2025-04-04 22:15:12 - pdf_processor - WARNING -       No product data extracted from PDF
+2025-04-04 22:15:12 - pdf_processor - INFO -       Product data extraction complete, extracted 0 rows
+2025-04-04 22:15:12 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:15:12 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 22:15:12 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 22:15:12 - pdf_processor - INFO - Total processing time: 0.15 seconds
+2025-04-04 22:15:12 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:15:12 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:15:12 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:19:23 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:19:23 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:19:23 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:19:23 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:19:23 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:19:23.691554
+2025-04-04 22:19:23 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:19:23 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:19:23 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:19:23 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:19:23 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:19:23 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:19:23 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:19:23 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:19:23 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:19:23 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:19:23 - pdf_processor - INFO -       Processing text to extract product data
+2025-04-04 22:19:23 - pdf_processor - INFO -       -----> Processing text from: tunja_complejo_20250221.pdf
+2025-04-04 22:19:23 - pdf_processor - INFO -       Parsing product data from text (5642 characters)
+2025-04-04 22:19:23 - pdf_processor - INFO - Received text (first 500 chars): PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+Ronda 1 Ronda 2
+Producto Presentación Unidades 04:30 - 06:15 -
+Mínimo Máximo Mínimo Máximo
+Carnes
+Carne de cerdo
+Carne de cerdo, costilla Kilogramo 1 Kilogramo 20.000 24.000 0 0
+Carne de cerdo,
+Kilogramo 1 Kilogramo 14.000 16.000 0 0
+espinazo
+Carne de cerdo, lomo
+Kilogramo 1 Kilogramo 20.000 24.000 0 0
+sin hueso
+Carne de cerdo, pernil
+Kilogramo 1 Kilogramo 20.000 22.
+2025-04-04 22:19:23 - pdf_processor - INFO - Split text into 150 lines
+2025-04-04 22:19:23 - pdf_processor - INFO - Initialized category stack
+2025-04-04 22:19:23 - pdf_processor - INFO - Starting to process lines
+2025-04-04 22:19:23 - pdf_processor - INFO - Finished processing. Extracted 0 products
+2025-04-04 22:19:23 - pdf_processor - INFO -       Parsed 0 product entries from text
+2025-04-04 22:19:23 - pdf_processor - WARNING -       No product data extracted from PDF
+2025-04-04 22:19:23 - pdf_processor - INFO -       Product data extraction complete, extracted 0 rows
+2025-04-04 22:19:23 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:19:23 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 22:19:23 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 22:19:23 - pdf_processor - INFO - Total processing time: 0.12 seconds
+2025-04-04 22:19:23 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:19:23 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:19:23 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:19:43 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:19:43 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:19:43 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:19:43 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:19:43 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:19:43.928609
+2025-04-04 22:19:43 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:19:43 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:19:44 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:19:44 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:19:44 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:19:44 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:19:44 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:19:44 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:19:44 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:19:44 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:19:44 - pdf_processor - INFO -       Processing text to extract product data
+2025-04-04 22:19:44 - pdf_processor - INFO -       -----> Processing text from: tunja_complejo_20250221.pdf
+2025-04-04 22:19:44 - pdf_processor - INFO -       Parsing product data from text (5642 characters)
+2025-04-04 22:19:44 - pdf_processor - INFO - Received text (first 500 chars): PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+Ronda 1 Ronda 2
+Producto Presentación Unidades 04:30 - 06:15 -
+Mínimo Máximo Mínimo Máximo
+Carnes
+Carne de cerdo
+Carne de cerdo, costilla Kilogramo 1 Kilogramo 20.000 24.000 0 0
+Carne de cerdo,
+Kilogramo 1 Kilogramo 14.000 16.000 0 0
+espinazo
+Carne de cerdo, lomo
+Kilogramo 1 Kilogramo 20.000 24.000 0 0
+sin hueso
+Carne de cerdo, pernil
+Kilogramo 1 Kilogramo 20.000 22.
+2025-04-04 22:19:44 - pdf_processor - INFO - Split text into 150 lines
+2025-04-04 22:19:44 - pdf_processor - INFO - Initialized category stack
+2025-04-04 22:19:44 - pdf_processor - INFO - Starting to process lines
+2025-04-04 22:19:44 - pdf_processor - INFO - Finished processing. Extracted 0 products
+2025-04-04 22:19:44 - pdf_processor - INFO -       Parsed 0 product entries from text
+2025-04-04 22:19:44 - pdf_processor - WARNING -       No product data extracted from PDF
+2025-04-04 22:19:44 - pdf_processor - INFO -       Product data extraction complete, extracted 0 rows
+2025-04-04 22:19:44 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:19:44 - pdf_processor - INFO - Text extraction processing complete, extracted 0 rows
+2025-04-04 22:19:44 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-04 22:19:44 - pdf_processor - INFO - Total processing time: 0.12 seconds
+2025-04-04 22:19:44 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:19:44 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:19:44 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:24:29 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:24:29 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:24:29 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:24:29 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:24:29 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:24:29.732906
+2025-04-04 22:24:29 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:24:29 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:24:29 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:24:29 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:24:29 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:24:29 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:24:29 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:24:29 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:24:29 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:24:29 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:24:29 - pdf_processor - INFO -       Processing text to extract product data
+2025-04-04 22:24:29 - pdf_processor - INFO -       -----> Processing text from: tunja_complejo_20250221.pdf
+2025-04-04 22:24:29 - pdf_processor - INFO -       Parsing product data from text (5642 characters)
+2025-04-04 22:24:29 - pdf_processor - INFO - Received text (first 500 chars): PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+Ronda 1 Ronda 2
+Producto Presentación Unidades 04:30 - 06:15 -
+Mínimo Máximo Mínimo Máximo
+Carnes
+Carne de cerdo
+Carne de cerdo, costilla Kilogramo 1 Kilogramo 20.000 24.000 0 0
+Carne de cerdo,
+Kilogramo 1 Kilogramo 14.000 16.000 0 0
+espinazo
+Carne de cerdo, lomo
+Kilogramo 1 Kilogramo 20.000 24.000 0 0
+sin hueso
+Carne de cerdo, pernil
+Kilogramo 1 Kilogramo 20.000 22.
+2025-04-04 22:24:29 - pdf_processor - INFO - Split text into 150 lines
+2025-04-04 22:24:29 - pdf_processor - INFO - Initialized category stack
+2025-04-04 22:24:29 - pdf_processor - INFO - Starting to process lines
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 7: Carnes
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Carne de cerdo, costilla Kilogramo with daily_min=20.0, daily_max=24.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Kilogramo with daily_min=14.0, daily_max=16.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Kilogramo with daily_min=20.0, daily_max=24.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Kilogramo with daily_min=20.0, daily_max=22.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Kilogramo with daily_min=15.0, daily_max=16.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 22: Frutas
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Limón tahití Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Mandarina arrayana Canastilla with daily_min=50.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Mandarina común Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Naranja valencia Bulto with daily_min=80.0, daily_max=90.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Tangelo Canastilla with daily_min=90.0, daily_max=100.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 29: Otras frutas
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Aguacate hass Kilogramo with daily_min=6.0, daily_max=6.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Aguacate papelillo Kilogramo with daily_min=7.0, daily_max=7.5
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Banano urabá Caja de cartÓn with daily_min=45.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Banano bocadillo Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Banano criollo with daily_min=45.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Ciruela importada Caja de cartÓn with daily_min=110.0, daily_max=120.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Ciruela roja Canastilla with daily_min=40.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Curuba Canastilla with daily_min=50.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Durazno nacional Canastilla with daily_min=110.0, daily_max=120.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Feijoa Canastilla with daily_min=100.0, daily_max=100.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Fresa Canastilla with daily_min=95.0, daily_max=100.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Granadilla Caja de cartÓn with daily_min=130.0, daily_max=140.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Guanábana Kilogramo with daily_min=3.6, daily_max=3.8
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Guayaba pera Canastilla with daily_min=22.0, daily_max=25.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Guayaba pera Canastilla with daily_min=40.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Kiwi Canastilla with daily_min=180.0, daily_max=180.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Lulo Canastilla with daily_min=140.0, daily_max=150.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Mango tommy Canastilla with daily_min=65.0, daily_max=70.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Manzana nacional Canastilla with daily_min=70.0, daily_max=80.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Manzana roja importada Caja de cartÓn with daily_min=170.0, daily_max=180.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Caja de cartÓn with daily_min=170.0, daily_max=180.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Caja de cartÓn with daily_min=180.0, daily_max=190.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Maracuyá Bolsa with daily_min=40.0, daily_max=45.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Melón cantalup Canastilla with daily_min=55.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Mora de castilla Canastilla with daily_min=40.0, daily_max=40.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Papaya maradol Canastilla with daily_min=45.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Patilla Kilogramo with daily_min=2.2, daily_max=2.3
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Patilla baby Kilogramo with daily_min=2.3, daily_max=2.5
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Pera nacional Canastilla with daily_min=130.0, daily_max=140.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Piña gold Canastilla with daily_min=35.0, daily_max=40.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Tomate de árbol Canastilla with daily_min=55.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Uva isabela Caja de cartÓn 25 Unidad with daily_min=60.0, daily_max=65.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Uva importada Caja de icopor with daily_min=140.0, daily_max=150.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 78: Pescados
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Kilogramo with daily_min=30.0, daily_max=32.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Kilogramo with daily_min=18.0, daily_max=19.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Nicuro fresco Kilogramo with daily_min=18.0, daily_max=20.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Tilapia roja entera fresca Kilogramo with daily_min=18.0, daily_max=18.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found subcategory at line 88: Tuberculos, raices y platanos
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 89: Otros tuberculos
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Arracacha amarilla Bulto with daily_min=90.0, daily_max=110.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Plátano hartón maduro Bolsa with daily_min=45.0, daily_max=45.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Plátano hartón verde Bolsa with daily_min=45.0, daily_max=45.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 94: Papa
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Papa betina Bulto with daily_min=60.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Papa criolla limpia Bulto with daily_min=100.0, daily_max=100.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Papa criolla sucia Bulto with daily_min=50.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Papa rubí Bulto with daily_min=60.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Papa superior Bulto with daily_min=55.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 100: Yuca
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Yuca llanera Bolsa with daily_min=50.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 102: Verduras y hortalizas
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 103: Leguminosas
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Arveja verde en vaina Bulto with daily_min=220.0, daily_max=230.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Fríjol verde cargamanto Bulto with daily_min=150.0, daily_max=150.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Haba verde Bulto with daily_min=80.0, daily_max=90.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Habichuela Bulto with daily_min=120.0, daily_max=130.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found subcategory at line 108: Otras hortalizas y verduras
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Ahuyama Bulto with daily_min=30.0, daily_max=30.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Ahuyamín (sakata) Bulto with daily_min=30.0, daily_max=35.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Ajo Atado/manojo with daily_min=48.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Calabacín Bolsa with daily_min=25.0, daily_max=30.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Chócolo mazorca Bulto with daily_min=150.0, daily_max=160.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Pepino cohombro Bulto with daily_min=45.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Pepino de rellenar Bolsa with daily_min=18.0, daily_max=22.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Pimentón Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Remolacha Bulto with daily_min=80.0, daily_max=80.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 118: Zanahorias
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Zanahoria Bulto with daily_min=70.0, daily_max=80.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 120: Cebollas
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Bulto with daily_min=45.0, daily_max=50.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Cebolla cabezona roja Bulto with daily_min=100.0, daily_max=110.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Cebolla junca aquitania Atado/manojo with daily_min=50.0, daily_max=60.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 126: Tomates
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Tomate chonto Canastilla with daily_min=85.0, daily_max=90.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Found major category at line 128: Hortalizas
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Acelga Atado/manojo with daily_min=2.0, daily_max=2.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Apio Docena with daily_min=18.0, daily_max=20.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Brócoli Docena with daily_min=20.0, daily_max=25.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Cilantro Atado/manojo with daily_min=10.0, daily_max=10.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Coliflor Caja de cartÓn with daily_min=35.0, daily_max=40.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Espinaca Canastilla with daily_min=20.0, daily_max=25.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Lechuga batavia Caja de cartÓn with daily_min=20.0, daily_max=25.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Perejil Atado/manojo with daily_min=15.0, daily_max=18.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Added product Repollo verde Bulto with daily_min=80.0, daily_max=90.0
+2025-04-04 22:24:29 - pdf_processor - INFO - Finished processing. Extracted 83 products
+2025-04-04 22:24:29 - pdf_processor - INFO -       Parsed 83 product entries from text
+2025-04-04 22:24:29 - pdf_processor - INFO -       Converting parsed data to DataFrame
+2025-04-04 22:24:29 - pdf_processor - INFO -       Text processing completed in 0.01 seconds, extracted 83 rows
+2025-04-04 22:24:29 - pdf_processor - INFO -       <----- Completed text processing from: tunja_complejo_20250221.pdf
+2025-04-04 22:24:29 - pdf_processor - INFO -       Product data extraction complete, extracted 83 rows
+2025-04-04 22:24:29 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:24:29 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-04 22:24:29 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 22:24:29 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 22:24:29 - pdf_processor - INFO - Data statistics: 83 rows, 76 products, 12 major categories, 2 subcategories
+2025-04-04 22:24:29 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:24:29 - pdf_processor - INFO - Total processing time: 0.13 seconds
+2025-04-04 22:24:29 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:24:29 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:24:29 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:27:50 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-04 22:27:50 - pdf_processor - INFO - TESTING: Logging is initialized and working
+2025-04-04 22:27:50 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-04 22:27:50 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-04 22:27:50 - pdf_processor - INFO - Starting processing at: 2025-04-04 22:27:50.204390
+2025-04-04 22:27:50 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-04 22:27:50 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-04 22:27:50 - pdf_processor - INFO - pdfplumber extraction complete, extracted 5642 characters
+2025-04-04 22:27:50 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-04 22:27:50 - pdf_processor - INFO - Text is valid: True
+2025-04-04 22:27:50 - pdf_processor - INFO - Step 3A: Text is valid, processing with direct text extraction
+2025-04-04 22:27:50 - pdf_processor - INFO - Extracting metadata from text
+2025-04-04 22:27:50 - pdf_processor - INFO - ----> Text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:27:50 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-04 22:27:50 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Tunja, market=Complejo de Servicios del Sur
+2025-04-04 22:27:50 - pdf_processor - INFO -       Processing text to extract product data
+2025-04-04 22:27:50 - pdf_processor - INFO -       -----> Processing text from: tunja_complejo_20250221.pdf
+2025-04-04 22:27:50 - pdf_processor - INFO -       Parsing product data from text (5642 characters)
+2025-04-04 22:27:50 - pdf_processor - INFO - Received text (first 500 chars): PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+Ronda 1 Ronda 2
+Producto Presentación Unidades 04:30 - 06:15 -
+Mínimo Máximo Mínimo Máximo
+Carnes
+Carne de cerdo
+Carne de cerdo, costilla Kilogramo 1 Kilogramo 20.000 24.000 0 0
+Carne de cerdo,
+Kilogramo 1 Kilogramo 14.000 16.000 0 0
+espinazo
+Carne de cerdo, lomo
+Kilogramo 1 Kilogramo 20.000 24.000 0 0
+sin hueso
+Carne de cerdo, pernil
+Kilogramo 1 Kilogramo 20.000 22.
+2025-04-04 22:27:50 - pdf_processor - INFO - Split text into 150 lines
+2025-04-04 22:27:50 - pdf_processor - INFO - Initialized category stack
+2025-04-04 22:27:50 - pdf_processor - INFO - Starting to process lines
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 7: Carnes
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Carne de cerdo, costilla Kilogramo with daily_min=20.0, daily_max=24.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Kilogramo with daily_min=14.0, daily_max=16.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Kilogramo with daily_min=20.0, daily_max=24.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Kilogramo with daily_min=20.0, daily_max=22.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Kilogramo with daily_min=15.0, daily_max=16.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 22: Frutas
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Limón tahití Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Mandarina arrayana Canastilla with daily_min=50.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Mandarina común Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Naranja valencia Bulto with daily_min=80.0, daily_max=90.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Tangelo Canastilla with daily_min=90.0, daily_max=100.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 29: Otras frutas
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Aguacate hass Kilogramo with daily_min=6.0, daily_max=6.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Aguacate papelillo Kilogramo with daily_min=7.0, daily_max=7.5
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Banano urabá Caja de cartÓn with daily_min=45.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Banano bocadillo Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Banano criollo with daily_min=45.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Ciruela importada Caja de cartÓn with daily_min=110.0, daily_max=120.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Ciruela roja Canastilla with daily_min=40.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Curuba Canastilla with daily_min=50.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Durazno nacional Canastilla with daily_min=110.0, daily_max=120.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Feijoa Canastilla with daily_min=100.0, daily_max=100.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Fresa Canastilla with daily_min=95.0, daily_max=100.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Granadilla Caja de cartÓn with daily_min=130.0, daily_max=140.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Guanábana Kilogramo with daily_min=3.6, daily_max=3.8
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Guayaba pera Canastilla with daily_min=22.0, daily_max=25.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Guayaba pera Canastilla with daily_min=40.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Kiwi Canastilla with daily_min=180.0, daily_max=180.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Lulo Canastilla with daily_min=140.0, daily_max=150.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Mango tommy Canastilla with daily_min=65.0, daily_max=70.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Manzana nacional Canastilla with daily_min=70.0, daily_max=80.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Manzana roja importada Caja de cartÓn with daily_min=170.0, daily_max=180.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Caja de cartÓn with daily_min=170.0, daily_max=180.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Caja de cartÓn with daily_min=180.0, daily_max=190.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Maracuyá Bolsa with daily_min=40.0, daily_max=45.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Melón cantalup Canastilla with daily_min=55.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Mora de castilla Canastilla with daily_min=40.0, daily_max=40.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Papaya maradol Canastilla with daily_min=45.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Patilla Kilogramo with daily_min=2.2, daily_max=2.3
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Patilla baby Kilogramo with daily_min=2.3, daily_max=2.5
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Pera nacional Canastilla with daily_min=130.0, daily_max=140.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Piña gold Canastilla with daily_min=35.0, daily_max=40.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Tomate de árbol Canastilla with daily_min=55.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Uva isabela Caja de cartÓn 25 Unidad with daily_min=60.0, daily_max=65.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Uva importada Caja de icopor with daily_min=140.0, daily_max=150.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 78: Pescados
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Kilogramo with daily_min=30.0, daily_max=32.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Kilogramo with daily_min=18.0, daily_max=19.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Nicuro fresco Kilogramo with daily_min=18.0, daily_max=20.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Tilapia roja entera fresca Kilogramo with daily_min=18.0, daily_max=18.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found subcategory at line 88: Tuberculos, raices y platanos
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 89: Otros tuberculos
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Arracacha amarilla Bulto with daily_min=90.0, daily_max=110.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Plátano hartón maduro Bolsa with daily_min=45.0, daily_max=45.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Plátano hartón verde Bolsa with daily_min=45.0, daily_max=45.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 94: Papa
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Papa betina Bulto with daily_min=60.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Papa criolla limpia Bulto with daily_min=100.0, daily_max=100.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Papa criolla sucia Bulto with daily_min=50.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Papa rubí Bulto with daily_min=60.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Papa superior Bulto with daily_min=55.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 100: Yuca
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Yuca llanera Bolsa with daily_min=50.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 102: Verduras y hortalizas
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 103: Leguminosas
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Arveja verde en vaina Bulto with daily_min=220.0, daily_max=230.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Fríjol verde cargamanto Bulto with daily_min=150.0, daily_max=150.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Haba verde Bulto with daily_min=80.0, daily_max=90.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Habichuela Bulto with daily_min=120.0, daily_max=130.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found subcategory at line 108: Otras hortalizas y verduras
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Ahuyama Bulto with daily_min=30.0, daily_max=30.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Ahuyamín (sakata) Bulto with daily_min=30.0, daily_max=35.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Ajo Atado/manojo with daily_min=48.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Calabacín Bolsa with daily_min=25.0, daily_max=30.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Chócolo mazorca Bulto with daily_min=150.0, daily_max=160.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Pepino cohombro Bulto with daily_min=45.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Pepino de rellenar Bolsa with daily_min=18.0, daily_max=22.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Pimentón Canastilla with daily_min=40.0, daily_max=45.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Remolacha Bulto with daily_min=80.0, daily_max=80.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 118: Zanahorias
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Zanahoria Bulto with daily_min=70.0, daily_max=80.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 120: Cebollas
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Bulto with daily_min=45.0, daily_max=50.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Cebolla cabezona roja Bulto with daily_min=100.0, daily_max=110.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Cebolla junca aquitania Atado/manojo with daily_min=50.0, daily_max=60.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 126: Tomates
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Tomate chonto Canastilla with daily_min=85.0, daily_max=90.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Found major category at line 128: Hortalizas
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Acelga Atado/manojo with daily_min=2.0, daily_max=2.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Apio Docena with daily_min=18.0, daily_max=20.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Brócoli Docena with daily_min=20.0, daily_max=25.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Cilantro Atado/manojo with daily_min=10.0, daily_max=10.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Coliflor Caja de cartÓn with daily_min=35.0, daily_max=40.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Espinaca Canastilla with daily_min=20.0, daily_max=25.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Lechuga batavia Caja de cartÓn with daily_min=20.0, daily_max=25.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Perejil Atado/manojo with daily_min=15.0, daily_max=18.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Added product Repollo verde Bulto with daily_min=80.0, daily_max=90.0
+2025-04-04 22:27:50 - pdf_processor - INFO - Finished processing. Extracted 83 products
+2025-04-04 22:27:50 - pdf_processor - INFO -       Parsed 83 product entries from text
+2025-04-04 22:27:50 - pdf_processor - INFO -       Converting parsed data to DataFrame
+2025-04-04 22:27:50 - pdf_processor - INFO -       Text processing completed in 0.01 seconds, extracted 83 rows
+2025-04-04 22:27:50 - pdf_processor - INFO -       <----- Completed text processing from: tunja_complejo_20250221.pdf
+2025-04-04 22:27:50 - pdf_processor - INFO -       Product data extraction complete, extracted 83 rows
+2025-04-04 22:27:50 - pdf_processor - INFO - <---- Completed text extraction flow for: tunja_complejo_20250221.pdf
+2025-04-04 22:27:50 - pdf_processor - INFO - Text extraction processing complete, extracted 83 rows
+2025-04-04 22:27:50 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-04 22:27:50 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-04 22:27:50 - pdf_processor - INFO - Data statistics: 83 rows, 76 products, 12 major categories, 2 subcategories
+2025-04-04 22:27:50 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:27:50 - pdf_processor - INFO - Total processing time: 0.12 seconds
+2025-04-04 22:27:50 - pdf_processor - INFO - Used GPT extraction: False
+2025-04-04 22:27:50 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-04 22:27:50 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========

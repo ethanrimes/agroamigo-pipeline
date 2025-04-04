@@ -138,22 +138,28 @@ class GPTCSVParser:
             DataFrame: Processed data in standardized format
         """
         start_time = time.time()
-        self.logger.info(f"Processing GPT-4o extracted data from {os.path.basename(file_path)}")
+        filename = os.path.basename(file_path)
+        self.logger.info(f"      -----> Processing GPT-4o results for: {filename}")
         
         try:
             # Process each CSV text and combine results
             all_product_data = []
-            for csv_text in csv_texts:
+            self.logger.debug(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")
+            
+            for i, csv_text in enumerate(csv_texts):
                 if csv_text:
+                    self.logger.debug(f"      Processing CSV text {i+1}/{len(csv_texts)} ({len(csv_text)} characters)")
                     product_data = self.process_csv_from_gpt4o(csv_text, metadata)
+                    self.logger.debug(f"      Extracted {len(product_data)} product entries from CSV text {i+1}")
                     all_product_data.extend(product_data)
             
             # If no products found, return empty DataFrame
             if not all_product_data:
-                self.logger.warning(f"No product data extracted from PDF with GPT-4o mini")
+                self.logger.warning(f"      No product data extracted from PDF with GPT-4o mini")
                 return pd.DataFrame()
             
             # Convert to DataFrame
+            self.logger.debug(f"      Converting parsed data to DataFrame")
             output_data = []
             
             for product_entry in all_product_data:
@@ -175,6 +181,7 @@ class GPTCSVParser:
             
             # Create DataFrame from output data
             output_df = pd.DataFrame(output_data)
+            self.logger.debug(f"      Created DataFrame with {len(output_df)} rows")
             
             # Ensure all required columns exist
             required_columns = [
@@ -187,17 +194,13 @@ class GPTCSVParser:
                     output_df[col] = None if col in ['daily_min', 'daily_max'] else ""
             
             duration = time.time() - start_time
-            self.timing_stats['data_processing'].append({
-                'pdf': os.path.basename(file_path),
-                'method': 'gpt4o_processing',
-                'rows': len(output_df),
-                'duration': duration
-            })
-            self.logger.info(f"GPT-4o processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
+            self.logger.info(f"      GPT-4o results processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
+            self.logger.info(f"      <----- Completed GPT-4o results processing for: {filename}")
             
             return output_df
             
         except Exception as e:
-            self.logger.error(f"Error processing GPT-4o results for PDF {file_path}: {str(e)}")
-            self.logger.debug(f"Error details: {traceback.format_exc()}")
+            self.logger.error(f"      Error processing GPT-4o results for PDF {file_path}: {str(e)}")
+            self.logger.debug(f"      Error details: {traceback.format_exc()}")
+            self.logger.info(f"      <----- Failed GPT-4o results processing for: {filename}")
             return pd.DataFrame()

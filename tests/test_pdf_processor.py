@@ -28,11 +28,11 @@ def setup_module():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def teardown_module():
-    """Teardown for the test module."""
-    # Clean up the output directory after tests
-    if OUTPUT_DIR.exists():
-        shutil.rmtree(OUTPUT_DIR)
+# def teardown_module():
+#     """Teardown for the test module."""
+#     # Clean up the output directory after tests
+#     if OUTPUT_DIR.exists():
+#         shutil.rmtree(OUTPUT_DIR)
 
 
 class TestPDFProcessor:
@@ -246,6 +246,13 @@ class TestPDFProcessor:
         test_pdf = test_case_dir / "tunja_complejo_20250221.pdf"
         expected_metadata = test_case_dir / "expected_metadata.json"
 
+        from agroamigo_pipeline.utils.logger import setup_logging
+        logging_setup = setup_logging()
+        pdf_processor.logger = logging_setup['pdf_processor']
+        pdf_processor.orchestrator.logger = logging_setup['pdf_processor']
+        
+        # Add this line to test logging is working
+        pdf_processor.logger.info("TESTING: Logging is initialized and working")
         
         # Ensure test file exists
         assert test_pdf.exists(), "Test file for metadata extraction not found"

@@ -8,7 +8,7 @@ as well as assessing the quality of extracted text.
 import os
 import re
 import pandas as pd
-import PyPDF2
+# import PyPDF2
 import pdfplumber
 import time
 import logging
@@ -40,19 +40,25 @@ class TextExtractor:
             str: Extracted text
         """
         start_time = time.time()
-        self.logger.debug(f"Extracting text with PyPDF2: {file_path}")
+        filename = os.path.basename(file_path)
+        self.logger.info(f"        -----> Extracting text with PyPDF2: {filename}")
         
         text = ""
         try:
             with open(file_path, 'rb') as file:
                 reader = PyPDF2.PdfReader(file)
                 num_pages = len(reader.pages)
+                self.logger.info(f"        PDF has {num_pages} pages")
                 
                 for page_num in range(num_pages):
+                    self.logger.info(f"        Extracting text from page {page_num+1}/{num_pages}")
                     page = reader.pages[page_num]
                     page_text = page.extract_text()
                     if page_text:
                         text += page_text + "\n\n"
+                        self.logger.info(f"        Extracted {len(page_text)} characters from page {page_num+1}")
+                    else:
+                        self.logger.info(f"        No text extracted from page {page_num+1}")
             
             duration = time.time() - start_time
             self.timing_stats['pdf_text_extraction'].append({
@@ -60,11 +66,13 @@ class TextExtractor:
                 'pdf': os.path.basename(file_path),
                 'duration': duration
             })
-            self.logger.debug(f"PyPDF2 extraction completed in {duration:.2f} seconds")
+            self.logger.info(f"        PyPDF2 extraction completed in {duration:.2f} seconds, extracted {len(text)} total characters")
+            self.logger.info(f"        <----- Completed PyPDF2 extraction for: {filename}")
             
             return text
         except Exception as e:
-            self.logger.warning(f"Error extracting text with PyPDF2: {str(e)}")
+            self.logger.warning(f"        Error extracting text with PyPDF2: {str(e)}")
+            self.logger.info(f"        <----- Failed PyPDF2 extraction for: {filename}")
             return ""
     
     def extract_text_with_pdfplumber(self, file_path):
@@ -78,18 +86,24 @@ class TextExtractor:
             str: Extracted text
         """
         start_time = time.time()
-        self.logger.debug(f"Extracting text with pdfplumber: {file_path}")
+        filename = os.path.basename(file_path)
+        self.logger.debug(f"        -----> Extracting text with pdfplumber: {filename}")
         
         text = ""
         try:
             with pdfplumber.open(file_path) as pdf:
                 num_pages = len(pdf.pages)
+                self.logger.debug(f"        PDF has {num_pages} pages")
                 
                 for page_num in range(num_pages):
+                    self.logger.debug(f"        Extracting text from page {page_num+1}/{num_pages}")
                     page = pdf.pages[page_num]
                     page_text = page.extract_text()
                     if page_text:
                         text += page_text + "\n\n"
+                        self.logger.debug(f"        Extracted {len(page_text)} characters from page {page_num+1}")
+                    else:
+                        self.logger.debug(f"        No text extracted from page {page_num+1}")
             
             duration = time.time() - start_time
             self.timing_stats['pdf_text_extraction'].append({
@@ -97,11 +111,13 @@ class TextExtractor:
                 'pdf': os.path.basename(file_path),
                 'duration': duration
             })
-            self.logger.debug(f"pdfplumber extraction completed in {duration:.2f} seconds")
+            self.logger.debug(f"        pdfplumber extraction completed in {duration:.2f} seconds, extracted {len(text)} total characters")
+            self.logger.debug(f"        <----- Completed pdfplumber extraction for: {filename}")
             
             return text
         except Exception as e:
-            self.logger.warning(f"Error extracting text with pdfplumber: {str(e)}")
+            self.logger.warning(f"        Error extracting text with pdfplumber: {str(e)}")
+            self.logger.debug(f"        <----- Failed pdfplumber extraction for: {filename}")
             return ""
     
     def extract_table_with_pdfplumber(self, file_path):
@@ -160,47 +176,63 @@ class TextExtractor:
             self.logger.warning(f"Error extracting tables with pdfplumber: {str(e)}")
             return []
     
+    def is_valid_utf8(self, text):
+        """
+        Check if the text is valid UTF-8.
+        
+        Args:
+            text (str): Text to check
+            
+        Returns:
+            bool: True if text is valid UTF-8, False otherwise
+        """
+        if not text:
+            return False
+            
+        try:
+            # Try to encode the text as UTF-8 and then decode it back
+            encoded = text.encode('utf-8')
+            decoded = encoded.decode('utf-8')
+            # If the original and re-decoded text match, it's valid UTF-8
+            return text == decoded
+        except UnicodeError:
+            # If we get an error, the text isn't valid UTF-8
+            self.logger.warning("        Unicode error encountered during UTF-8 validation")
+            return False
+        except Exception as e:
+            # Catch any other errors and log them
+            self.logger.warning(f"        Error checking UTF-8 validity: {str(e)}")
+            return False
+    
     def assess_text_quality(self, text):
         """
-        Assess the quality of extracted text for informes por ciudades format.
+        Check if the extracted text is valid and usable.
         
         Args:
             text (str): Extracted text
             
         Returns:
-            float: Quality score between 0 and 1
+            bool: True if text is valid and usable, False otherwise
         """
-        if not text:
-            return 0.0
-        
-        # Check for expected patterns in agricultural price reports
-        patterns = [
-            r'precio',
-            r'mercado',
-            r'producto',
-            r'presentaci[oó]n',
-            r'unidades',
-            r'ronda',
-            r'm[ií]nimo',
-            r'm[aá]ximo',
-            r'frutas|verduras|hortalizas|leguminosas'
-        ]
-        
-        matches = 0
-        for pattern in patterns:
-            if re.search(pattern, text, re.IGNORECASE):
-                matches += 1
-        
-        # Calculate score based on pattern matches
-        pattern_score = matches / len(patterns)
-        
-        # Check if text contains structured data (tabular format)
-        has_structure = bool(re.search(r'\n[\s]*[\w\d]+[\s]+[\d.,]+[\s]+[\d.,]+', text))
-        structure_score = 0.5 if has_structure else 0.0
-        
-        # Check for the standard report header
-        has_header = bool(re.search(r'PRECIOS DE VENTA MAYORISTA', text, re.IGNORECASE))
-        header_score = 0.2 if has_header else 0.0
-        
-        # Combine scores
-        return min(1.0, pattern_score * 0.5 + structure_score + header_score)
+        try:
+            # Check if text is None or empty
+            if not text:
+                self.logger.info("        Text is empty or None")
+                return False
+            
+            # Check if the text is valid UTF-8
+            if not self.is_valid_utf8(text):
+                self.logger.info("        Text is not valid UTF-8")
+                return False
+            
+            # Check if there's enough text to be useful (at least some characters)
+            if len(text.strip()) < 100:
+                self.logger.info("        Text is too short to be useful")
+                return False
+                
+            return True
+            
+        except Exception as e:
+            # If any error occurs during assessment, log it and return False
+            self.logger.warning(f"        Error assessing text quality: {str(e)}")
+            return False
