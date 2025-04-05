@@ -87,6 +87,7 @@ If you're setting up a custom directory structure where your web scraper writes 
 
 ```bash
 python main.py --components excel --start-date 2024-12-01 --end-date 2024-12-07
+python main.py --components pdf --start-date 2024-12-01 --end-date 2024-12-03
 
 # Run the full pipeline
 python -m agroamigo_pipeline.main

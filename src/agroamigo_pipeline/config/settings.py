@@ -44,16 +44,26 @@ LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
 LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-# Ensure all directories exist
+
+# Add these to the existing settings.py file
+
+# Path to the registry files
+REGISTRY_DIR = os.path.join(PARENT_ROOT, 'registry')
+PROCESSING_REGISTRY = os.path.join(REGISTRY_DIR, 'processing_registry.json')
+REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'processing_registry.parquet')
+REGISTRY_CSV = os.path.join(REGISTRY_DIR, 'processing_summary.csv')
+
 def ensure_directories():
-    """Create all required directories if they don't exist."""
+    """Ensure all required directories exist."""
     directories = [
-        SOURCE_DIR, PDF_DIR, PROCESSED_DIR, CONSOLIDATED_DIR, TEMP_DIR,
-        SCRAPER_LOG_DIR, EXTRACTOR_LOG_DIR, EXCEL_LOG_DIR, PDF_LOG_DIR, 
-        ERROR_LOG_DIR, AGGREGATOR_LOG_DIR
+        LOG_DIR, SOURCE_DIR, PDF_DIR, PROCESSED_DIR, CONSOLIDATED_DIR,
+        SCRAPER_LOG_DIR, EXTRACTOR_LOG_DIR, EXCEL_LOG_DIR, 
+        PDF_LOG_DIR, ERROR_LOG_DIR, AGGREGATOR_LOG_DIR, REGISTRY_DIR
     ]
+    
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
+
 
 # Initialize directories when module is imported
 ensure_directories()

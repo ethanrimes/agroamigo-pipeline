@@ -11,7 +11,7 @@ import traceback
 from agroamigo_pipeline.config.settings import SOURCE_DIR, PROCESSED_DIR
 from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension, generate_output_path
-from agroamigo_pipeline.utils.file_registry import FileRegistry
+from agroamigo_pipeline.utils.parquet_registry import ParquetRegistry  # Changed from FileRegistry
 from agroamigo_pipeline.utils.exceptions import ExcelProcessingError
 from agroamigo_pipeline.utils.date_utils import filter_files_by_date
 from agroamigo_pipeline.processors.excel_components.excel_reader import ExcelFileReader
@@ -36,8 +36,8 @@ class ExcelProcessor:
         else:
             self.logger = logger
             
-        # Initialize file registry
-        self.registry = FileRegistry()
+        # Initialize registry - changed to ParquetRegistry
+        self.registry = ParquetRegistry()
         
         # Initialize components
         self.reader = ExcelFileReader(logger=self.logger)

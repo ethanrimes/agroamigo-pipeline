@@ -7,7 +7,7 @@ from pathlib import Path
 
 from agroamigo_pipeline.config.settings import (
     ensure_directories, SOURCE_DIR, PDF_DIR, PROCESSED_DIR, 
-    CONSOLIDATED_DIR, LOG_LEVEL, MAX_WORKERS
+    CONSOLIDATED_DIR, LOG_LEVEL, MAX_WORKERS, PROCESSING_REGISTRY
 )
 from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.processors.zip_extractor import ZipExtractor
@@ -15,7 +15,7 @@ from agroamigo_pipeline.processors.excel_processor import ExcelProcessor
 from agroamigo_pipeline.processors.pdf_processor import PDFProcessor
 from agroamigo_pipeline.processors.data_aggregator import DataAggregator
 from agroamigo_pipeline.error_handlers.error_gatherer import ErrorGatherer
-from agroamigo_pipeline.utils.file_registry import FileRegistry
+from agroamigo_pipeline.utils.parquet_registry import ParquetRegistry
 
 class Pipeline:
     """Main pipeline orchestration class."""
@@ -30,13 +30,32 @@ class Pipeline:
         # Ensure all directories exist
         ensure_directories()
         
-        # Initialize file registry
-        self.registry = FileRegistry()
+        # Initialize registry - use ParquetRegistry instead of FileRegistry
+        self.registry = ParquetRegistry()
+        
+        # Check if old JSON registry exists and migrate if needed
+        self._migrate_registry_if_needed()
         
         self.logger.info("Pipeline initialized")
         self.logger.debug(f"Log level: {logging.getLevelName(self.log_level)}")
         self.logger.debug(f"Directories: SOURCE={SOURCE_DIR}, PDF={PDF_DIR}, "
                        f"PROCESSED={PROCESSED_DIR}, CONSOLIDATED={CONSOLIDATED_DIR}")
+    
+    def _migrate_registry_if_needed(self):
+        """Migrate from JSON registry to Parquet if needed."""
+        if os.path.exists(PROCESSING_REGISTRY):
+            self.logger.info("Found existing JSON registry, attempting migration")
+            if self.registry.migrate_from_json(PROCESSING_REGISTRY):
+                self.logger.info("Successfully migrated registry data from JSON to Parquet")
+                # Optionally rename old JSON file to prevent future migrations
+                backup_path = f"{PROCESSING_REGISTRY}.bak"
+                try:
+                    os.rename(PROCESSING_REGISTRY, backup_path)
+                    self.logger.info(f"Renamed old JSON registry to {backup_path}")
+                except Exception as e:
+                    self.logger.warning(f"Could not rename old JSON registry: {str(e)}")
+            else:
+                self.logger.warning("Migration from JSON registry failed or had no data")
     
     def run(self, start_date=None, end_date=None, components=None, max_workers=None, force_reprocess=False):
         """
@@ -97,6 +116,12 @@ class Pipeline:
                 results['aggregator'] = aggregator_stats
                 self.logger.info("Completed data aggregation")
             
+            # Export registry data to CSV at the end of the run
+            self.logger.info("Exporting registry data to CSV...")
+            csv_path = self.registry.export_to_csv()
+            if csv_path:
+                self.logger.info(f"Registry data exported to {csv_path}")
+            
             self.logger.info("Pipeline execution completed successfully")
             return results
             
@@ -104,6 +129,9 @@ class Pipeline:
             self.logger.error(f"Pipeline execution failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
+    
+    # The rest of the class remains the same, just replace any remaining FileRegistry references with ParquetRegistry
+    # No other changes are needed in the methods below as they use the registry through the same interface
     
     def _run_extractor(self, force_reprocess=False):
         """Run the ZIP extractor component."""

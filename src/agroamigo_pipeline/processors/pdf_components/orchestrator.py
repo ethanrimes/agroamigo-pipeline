@@ -1,10 +1,8 @@
 """
-Revised PDF processing orchestration module with fixed thread management.
-
-This module coordinates the PDF processing workflow, including text extraction,
-metadata extraction, product parsing, and GPT-4o integration when needed.
+Updated import section for the PDF processor orchestrator to use ParquetRegistry
 """
 
+# Original imports
 import os
 import logging
 import traceback
@@ -22,7 +20,7 @@ from agroamigo_pipeline.config.settings import (
 )
 from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension
-from agroamigo_pipeline.utils.file_registry import FileRegistry
+from agroamigo_pipeline.utils.parquet_registry import ParquetRegistry  # Changed from FileRegistry
 from agroamigo_pipeline.utils.exceptions import PDFProcessingError
 
 from agroamigo_pipeline.processors.pdf_components.text_extraction import TextExtractor
@@ -31,6 +29,7 @@ from agroamigo_pipeline.processors.pdf_components.product_parser import ProductP
 from agroamigo_pipeline.processors.pdf_components.image_handler import ImageHandler
 from agroamigo_pipeline.processors.pdf_components.gpt_client import GPTClient
 from agroamigo_pipeline.processors.pdf_components.gpt_csv_parser import GPTCSVParser
+
 
 # Global lock for coordinating directory creation
 dir_creation_lock = threading.Lock()
@@ -63,8 +62,9 @@ class PDFProcessorOrchestrator:
         if self.save_debug_data:
             self.logger.info("Debug mode enabled - will save intermediate data to permanent directories")
             
-        # Initialize file registry - use it for reference only in multi-processing mode
-        self.registry = FileRegistry()
+        # Initialize registry - use it for reference only in multi-processing mode
+        # Changed to use ParquetRegistry instead of FileRegistry
+        self.registry = ParquetRegistry()
         
         # Initialize statistics dictionary
         self.stats = {
