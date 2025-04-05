@@ -25,8 +25,15 @@ PDF_LOG_DIR = os.path.join(LOG_DIR, 'pdf_processor')
 ERROR_LOG_DIR = os.path.join(LOG_DIR, 'error_handler')
 AGGREGATOR_LOG_DIR = os.path.join(LOG_DIR, 'data_aggregator')
 
-# File tracking database
-PROCESSING_REGISTRY = os.path.join(LOG_DIR, 'processing_registry.json')
+# Path to the registry files
+REGISTRY_DIR = os.path.join(PARENT_ROOT, 'registry')
+PROCESSING_REGISTRY = os.path.join(LOG_DIR, 'processing_registry.json')  # Legacy JSON registry
+REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'processing_registry.parquet')  # Main unified registry
+REGISTRY_CSV = os.path.join(REGISTRY_DIR, 'processing_summary.csv')
+
+# Component-specific registries
+SCRAPER_REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'scraper_registry.parquet')
+ZIP_REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'zip_registry.parquet')
 
 # Processing parameters
 MAX_WORKERS = os.cpu_count()  # Use all available cores for PDF processing
@@ -43,15 +50,6 @@ GPT4O_API_KEY = os.getenv('GPT4O_API_KEY')
 LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
 LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-
-
-# Add these to the existing settings.py file
-
-# Path to the registry files
-REGISTRY_DIR = os.path.join(PARENT_ROOT, 'registry')
-PROCESSING_REGISTRY = os.path.join(REGISTRY_DIR, 'processing_registry.json')
-REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'processing_registry.parquet')
-REGISTRY_CSV = os.path.join(REGISTRY_DIR, 'processing_summary.csv')
 
 def ensure_directories():
     """Ensure all required directories exist."""

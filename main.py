@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 from agroamigo_pipeline.config.settings import (
-    ensure_directories, SOURCE_DIR, PDF_DIR, PROCESSED_DIR, 
+    ensure_directories, SOURCE_DIR, PDF_DIR, TEMP_DIR, PROCESSED_DIR, 
     CONSOLIDATED_DIR, LOG_LEVEL, MAX_WORKERS, PROCESSING_REGISTRY
 )
 from agroamigo_pipeline.utils.logger import setup_logging
@@ -18,6 +18,7 @@ from agroamigo_pipeline.error_handlers.error_gatherer import ErrorGatherer
 from agroamigo_pipeline.utils.parquet_registry import ParquetRegistry
 from agroamigo_pipeline.scraping.web_scraper import WebScraper
 from agroamigo_pipeline.utils.web_scraper_registry import WebScraperRegistry
+from agroamigo_pipeline.processors.pdf_components.orchestrator import PDFProcessorOrchestrator
 
 class Pipeline:
     """Main pipeline orchestration class."""
@@ -46,6 +47,72 @@ class Pipeline:
         self.logger.debug(f"Directories: SOURCE={SOURCE_DIR}, PDF={PDF_DIR}, "
                        f"PROCESSED={PROCESSED_DIR}, CONSOLIDATED={CONSOLIDATED_DIR}")
     
+    def _run_extractor(self, start_date=None, end_date=None, force_reprocess=False):
+        """
+        Run the ZIP extractor component.
+        
+        Args:
+            start_date (datetime): Start date for filtering files
+            end_date (datetime): End date for filtering files
+            force_reprocess (bool): If True, reprocess files even if already processed
+        
+        Returns:
+            dict: Processing statistics
+        """
+        try:
+            self.logger.info("Starting ZIP extraction process")
+            
+            # Format date range for logging
+            start_date_str = start_date.strftime('%Y-%m-%d') if start_date else "earliest"
+            end_date_str = end_date.strftime('%Y-%m-%d') if end_date else "latest"
+            self.logger.info(f"Date range for ZIP extraction: {start_date_str} to {end_date_str}")
+            
+            # Create and configure the ZipExtractor
+            extractor = ZipExtractor(
+                source_dir=SOURCE_DIR,
+                pdf_dir=PDF_DIR, 
+                temp_dir=TEMP_DIR
+            )
+            
+            # Process all ZIP files with date filtering
+            stats = extractor.process_all_zips(
+                start_date=start_date,
+                end_date=end_date,
+                force_reprocess=force_reprocess
+            )
+            
+            self.logger.info(f"ZIP extraction completed: {stats.get('success', 0)} successful, "
+                            f"{stats.get('failed', 0)} failed, {stats.get('skipped', 0)} skipped due to date filter")
+            return stats
+        except Exception as e:
+            self.logger.error(f"ZIP extraction failed: {str(e)}")
+            self.logger.exception("Exception details:")
+            raise
+
+    def _run_error_aggregation(self):
+        """Run the error aggregation to collect all errors from pipeline components."""
+        try:
+            self.logger.info("Starting error aggregation process")
+            
+            # Create error gatherer
+            error_gatherer = ErrorGatherer()
+            
+            # Collect all errors from component registries
+            error_df, summary_path = error_gatherer.collect_all_errors()
+            
+            error_count = len(error_df) if error_df is not None else 0
+            self.logger.info(f"Error aggregation completed: {error_count} errors found")
+            self.logger.info(f"Error summary written to: {summary_path}")
+            
+            return {
+                'error_count': error_count,
+                'summary_path': summary_path
+            }
+        except Exception as e:
+            self.logger.error(f"Error aggregation failed: {str(e)}")
+            self.logger.exception("Exception details:")
+            raise
+
     def _migrate_registry_if_needed(self):
         """Migrate from JSON registry to Parquet if needed."""
         if os.path.exists(PROCESSING_REGISTRY):
@@ -77,7 +144,11 @@ class Pipeline:
             dict: Results from each pipeline component
         """
         self.logger.info(f"Starting pipeline run with components: {components or 'all'}")
-        self.logger.info(f"Date range: {start_date} to {end_date}")
+        
+        # Format date range for logging
+        start_date_str = start_date.strftime('%Y-%m-%d') if start_date else "earliest"
+        end_date_str = end_date.strftime('%Y-%m-%d') if end_date else "latest"
+        self.logger.info(f"Date range for filtering: {start_date_str} to {end_date_str}")
         
         # Use provided max_workers or default from settings
         max_workers = max_workers or MAX_WORKERS
@@ -96,7 +167,7 @@ class Pipeline:
             # Step 1: ZIP extraction
             if not components or 'extractor' in components:
                 self.logger.info("Running ZIP extraction...")
-                extractor_stats = self._run_extractor(force_reprocess)
+                extractor_stats = self._run_extractor(start_date, end_date, force_reprocess)
                 results['extractor'] = extractor_stats
                 self.logger.info("Completed ZIP extraction")
             
@@ -156,6 +227,89 @@ class Pipeline:
             return stats
         except Exception as e:
             self.logger.error(f"Web scraping failed: {str(e)}")
+            self.logger.exception("Exception details:")
+            raise
+
+    def _run_excel_processor(self, start_date=None, end_date=None, force_reprocess=False):
+        """Run the Excel processor component."""
+        try:
+            self.logger.info("Starting Excel processing")
+            
+            # Create and configure the ExcelProcessor
+            processor = ExcelProcessor(logger=self.logger)
+            
+            # Process Excel files
+            stats = processor.process_excel_files(
+                source_dir=SOURCE_DIR,
+                output_dir=PROCESSED_DIR,
+                start_date=start_date,
+                end_date=end_date,
+                force_reprocess=force_reprocess
+            )
+            
+            self.logger.info(f"Excel processing completed: {stats['processed_files']} succeeded, {stats['failed_files']} failed")
+            return stats
+        except Exception as e:
+            self.logger.error(f"Excel processing failed: {str(e)}")
+            self.logger.exception("Exception details:")
+            raise
+
+    def _run_pdf_processor(self, start_date=None, end_date=None, max_workers=None, force_reprocess=False):
+        """Run the PDF processor component."""
+        try:
+            self.logger.info("Starting PDF processing")
+            
+            # Create and configure the PDFProcessor
+            processor = PDFProcessorOrchestrator(logger=self.logger)
+            
+            # Process all PDF files
+            stats = processor.process_pdf_files(
+                output_dir=PROCESSED_DIR,
+                start_date=start_date,
+                end_date=end_date,
+                max_workers=max_workers,
+                force_reprocess=force_reprocess
+            )
+            
+            self.logger.info(f"PDF processing completed: {stats['processed_files']} succeeded, {stats['failed_files']} failed")
+            return stats
+        except Exception as e:
+            self.logger.error(f"PDF processing failed: {str(e)}")
+            self.logger.exception("Exception details:")
+            raise
+
+    def _run_data_aggregation(self, start_date=None, end_date=None):
+        """Run the data aggregation component."""
+        try:
+            self.logger.info("Starting data aggregation process")
+            
+            # Create and configure the DataAggregator
+            aggregator = DataAggregator(
+                input_dir=PROCESSED_DIR,
+                output_dir=CONSOLIDATED_DIR,
+                logger=self.logger
+            )
+            
+            # Generate consolidated dataset
+            result = aggregator.aggregate_data(
+                filter_date_start=start_date.strftime('%Y-%m-%d') if start_date else None,
+                filter_date_end=end_date.strftime('%Y-%m-%d') if end_date else None
+            )
+            
+            # Get statistics
+            stats = {
+                'files_processed': aggregator.stats['files_processed'],
+                'rows_processed': aggregator.stats['rows_processed'],
+                'rows_output': aggregator.stats['rows_output'],
+                'duplicates_removed': aggregator.stats['duplicates_removed']
+            }
+            
+            self.logger.info(f"Data aggregation completed: {stats['files_processed']} files processed, "
+                            f"{stats['rows_output']} rows in final dataset")
+            
+            return stats
+        except Exception as e:
+            self.logger.error(f"Data aggregation failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
 

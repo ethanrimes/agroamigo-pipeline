@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 from datetime import datetime
+import re
 from pathlib import Path
 import logging
 import json
@@ -96,6 +97,30 @@ class DataAggregator:
             error_msg = f"Error reading CSV file {file_path}: {str(e)}"
             self.logger.error(error_msg)
             self.stats['errors'].append(error_msg)
+            return None
+    
+    def _extract_date_from_filename(self, filename):
+        """
+        Extract date from filename with format yyyymmdd-restoffilename.
+        
+        Args:
+            filename (str): Filename to extract date from
+            
+        Returns:
+            datetime or None: Extracted date or None if no date found
+        """
+        # Look for the pattern yyyymmdd at the beginning of the filename
+        match = re.match(r'^(\d{4})(\d{2})(\d{2})[-_]?', filename)
+        
+        if match:
+            year, month, day = match.groups()
+            try:
+                return datetime(int(year), int(month), int(day))
+            except ValueError as e:
+                self.logger.warning(f"Invalid date in filename {filename}: {str(e)}")
+                return None
+        else:
+            self.logger.debug(f"No date pattern found in filename: {filename}")
             return None
     
     def _standardize_dataframe(self, df, source_file):
@@ -263,6 +288,7 @@ class DataAggregator:
             'rows_output': 0,
             'duplicates_removed': 0,
             'files_by_source': {},
+            'files_by_date': {},
             'errors': []
         }
         
@@ -270,10 +296,70 @@ class DataAggregator:
         csv_files = list(Path(self.input_dir).glob('**/*.csv'))
         self.logger.info(f"Found {len(csv_files)} CSV files in input directory")
         
-        # Read and process each CSV file
-        dataframes = []
+        # Convert filter dates to datetime objects if provided
+        filter_start_dt = None
+        filter_end_dt = None
+        if filter_date_start:
+            try:
+                filter_start_dt = datetime.strptime(filter_date_start, '%Y-%m-%d')
+                self.logger.debug(f"Converted filter_date_start to datetime: {filter_start_dt}")
+            except ValueError as e:
+                self.logger.error(f"Invalid filter_date_start format: {str(e)}")
+        
+        if filter_date_end:
+            try:
+                filter_end_dt = datetime.strptime(filter_date_end, '%Y-%m-%d')
+                self.logger.debug(f"Converted filter_date_end to datetime: {filter_end_dt}")
+            except ValueError as e:
+                self.logger.error(f"Invalid filter_date_end format: {str(e)}")
+        
+        # Filter CSV files by date in filename
+        filtered_csv_files = []
+        skipped_files = []
         
         for file_path in csv_files:
+            filename = os.path.basename(str(file_path))
+            file_date = self._extract_date_from_filename(filename)
+            
+            if file_date:
+                # Track files by date
+                date_str = file_date.strftime('%Y-%m-%d')
+                if date_str not in self.stats['files_by_date']:
+                    self.stats['files_by_date'][date_str] = 0
+                self.stats['files_by_date'][date_str] += 1
+                
+                # Apply date filtering if specified
+                if filter_start_dt and file_date < filter_start_dt:
+                    self.logger.debug(f"Skipping file {filename} - date {file_date} is before filter start {filter_start_dt}")
+                    skipped_files.append((filename, "before filter start"))
+                    continue
+                
+                if filter_end_dt and file_date > filter_end_dt:
+                    self.logger.debug(f"Skipping file {filename} - date {file_date} is after filter end {filter_end_dt}")
+                    skipped_files.append((filename, "after filter end"))
+                    continue
+                
+                # File passed date filtering, add to list
+                filtered_csv_files.append(file_path)
+                
+            else:
+                self.logger.warning(f"No date found in filename: {filename}")
+                if not filter_start_dt and not filter_end_dt:
+                    # If no date filters applied, include file anyway
+                    filtered_csv_files.append(file_path)
+                    self.logger.debug(f"Including file without date: {filename}")
+                else:
+                    # If date filters applied, skip files without dates
+                    skipped_files.append((filename, "no date in filename"))
+                    self.logger.debug(f"Skipping file without date: {filename}")
+        
+        # Log filtering results
+        self.logger.info(f"After date filtering: {len(filtered_csv_files)} files included, {len(skipped_files)} files skipped")
+        
+        # Read and process each filtered CSV file
+        dataframes = []
+        
+        for file_path in filtered_csv_files:
             file_str = str(file_path)
             filename = os.path.basename(file_str)
             
@@ -289,28 +375,9 @@ class DataAggregator:
             # Standardize DataFrame
             df = self._standardize_dataframe(df, file_str)
             
-            # Apply date filtering if specified
-            if filter_date_start or filter_date_end:
-                try:
-                    df['date'] = pd.to_datetime(df['date'])
-                    
-                    if filter_date_start:
-                        start_date = pd.to_datetime(filter_date_start)
-                        df = df[df['date'] >= start_date]
-                    
-                    if filter_date_end:
-                        end_date = pd.to_datetime(filter_date_end)
-                        df = df[df['date'] <= end_date]
-                    
-                    # Convert back to string format
-                    df['date'] = df['date'].dt.strftime('%Y-%m-%d')
-                    
-                except Exception as e:
-                    self.logger.warning(f"Error filtering by date in {filename}: {str(e)}")
-            
             # Skip empty DataFrames
             if df.empty:
-                self.logger.warning(f"No data after filtering in file: {filename}")
+                self.logger.warning(f"No data after standardization in file: {filename}")
                 continue
             
             # Track statistics
@@ -364,8 +431,8 @@ class DataAggregator:
         
         # Log summary statistics
         self.logger.info(f"Aggregation summary: {self.stats['files_processed']} files processed, "
-                       f"{self.stats['rows_processed']} rows processed, "
-                       f"{self.stats['rows_output']} rows output, "
-                       f"{self.stats['duplicates_removed']} duplicates removed")
+                         f"{self.stats['rows_processed']} rows processed, "
+                         f"{self.stats['rows_output']} rows output, "
+                         f"{self.stats['duplicates_removed']} duplicates removed")
         
         return combined_df

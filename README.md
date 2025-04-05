@@ -89,6 +89,8 @@ If you're setting up a custom directory structure where your web scraper writes 
 python main.py --components excel --start-date 2024-12-01 --end-date 2024-12-07
 python main.py --components pdf --start-date 2024-12-01 --end-date 2024-12-03
 python main.py --components scraper --start-date 2024-12-01 --end-date 2024-12-07
+python main.py --start-date 2024-11-01 --end-date 2024-12-01
+python main.py --components aggregator --start-date 2024-11-01 --end-date 2024-12-01
 
 # Run the full pipeline
 python -m agroamigo_pipeline.main

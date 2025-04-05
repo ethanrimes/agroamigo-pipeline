@@ -31,10 +31,10 @@ def _create_component_logger(component_name, log_level):
     if logger.handlers:
         logger.handlers.clear()
     
-    # Create file handler with rotation
+    # Create file handler with NO rotation, and overwrite mode
     log_file = os.path.join(log_dir, f"{component_name}.log")
-    file_handler = RotatingFileHandler(
-        log_file, maxBytes=10*1024*1024, backupCount=5, encoding='utf-8'
+    file_handler = logging.FileHandler(
+        log_file, mode='w', encoding='utf-8'  # 'w' mode for overwriting instead of appending
     )
     file_handler.setLevel(log_level)
     file_formatter = logging.Formatter(LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
@@ -80,7 +80,7 @@ def setup_logging(log_level=None):
     if log_level <= logging.DEBUG:
         root_logger.debug(f"Log directories configured:")
         for component, logger in loggers.items():
-            handlers = [h for h in logger.handlers if isinstance(h, RotatingFileHandler)]
+            handlers = [h for h in logger.handlers if isinstance(h, logging.FileHandler)]
             if handlers:
                 root_logger.debug(f"  {component}: {handlers[0].baseFilename}")
     
