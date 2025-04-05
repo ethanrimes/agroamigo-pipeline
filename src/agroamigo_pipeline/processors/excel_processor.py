@@ -13,6 +13,7 @@ from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension, generate_output_path
 from agroamigo_pipeline.utils.file_registry import FileRegistry
 from agroamigo_pipeline.utils.exceptions import ExcelProcessingError
+from agroamigo_pipeline.utils.date_utils import filter_files_by_date
 from agroamigo_pipeline.processors.excel_components.excel_reader import ExcelFileReader
 from agroamigo_pipeline.processors.excel_components.excel_transformer import ExcelDataTransformer
 
@@ -147,15 +148,17 @@ class ExcelProcessor:
         
         return stats
     
-    def process_excel_files(self, source_dir=None, output_dir=None, force_reprocess=False, max_workers=None):
+    def process_excel_files(self, source_dir=None, output_dir=None, start_date=None, end_date=None, force_reprocess=False, max_workers=None):
         """
         Process all Excel files in the source directory.
         
         Args:
             source_dir (str): Directory containing Excel files
             output_dir (str): Directory to save processed data
+            start_date (datetime): Start date for filtering files by filename
+            end_date (datetime): End date for filtering files by filename
             force_reprocess (bool): If True, reprocess files even if already processed
-            max_workers (int): Maximum number of worker threads
+            max_workers (int): Maximum number of worker threads (not used in this implementation)
             
         Returns:
             dict: Statistics about the processing
@@ -169,6 +172,7 @@ class ExcelProcessor:
         ensure_directory(output_dir)
         
         self.logger.info(f"Processing Excel files in {source_dir}")
+        self.logger.info(f"Date range filter: {start_date} to {end_date}")
         
         # Reset statistics
         self.stats = {
@@ -176,6 +180,7 @@ class ExcelProcessor:
             'processed_files': 0,
             'failed_files': 0,
             'skipped_files': 0,
+            'filtered_by_date': 0,
             'total_rows_processed': 0,
             'warnings': 0,
             'files_with_dates': 0,
@@ -184,12 +189,20 @@ class ExcelProcessor:
         
         # Get Excel files
         excel_files = get_files_by_extension(source_dir, ['.xls', '.xlsx'], recursive=True)
-        self.stats['total_files'] = len(excel_files)
-        
         self.logger.info(f"Found {len(excel_files)} Excel files in source directory")
         
+        # Filter files by date in filename
+        from agroamigo_pipeline.utils.date_utils import filter_files_by_date
+        filtered_excel_files = filter_files_by_date(excel_files, start_date, end_date)
+        
+        # Update statistics with filtered count
+        self.stats['total_files'] = len(excel_files)
+        self.stats['filtered_by_date'] = len(excel_files) - len(filtered_excel_files)
+        
+        self.logger.info(f"After date filtering: {len(filtered_excel_files)} Excel files to process")
+        
         # Process files sequentially (for simplicity and reliability)
-        for file_path in excel_files:
+        for file_path in filtered_excel_files:
             try:
                 stats = self.process_excel_file(file_path, output_dir, force_reprocess)
                 # Track date extraction success
@@ -204,7 +217,8 @@ class ExcelProcessor:
         
         # Log summary
         self.logger.info(f"Excel processing summary: {self.stats['processed_files']} processed, "
-                        f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
+                        f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped, "
+                        f"{self.stats['filtered_by_date']} filtered by date "
                         f"out of {self.stats['total_files']} total files")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
         self.logger.info(f"Successfully extracted dates from {self.stats['files_with_dates']} files, "

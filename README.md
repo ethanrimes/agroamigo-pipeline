@@ -86,8 +86,11 @@ If you're setting up a custom directory structure where your web scraper writes 
 ### Command Line Usage
 
 ```bash
+python main.py --components excel --start-date 2024-12-01 --end-date 2024-12-07
+
 # Run the full pipeline
 python -m agroamigo_pipeline.main
+
 
 # Run with date filtering
 python -m agroamigo_pipeline.main --start-date 2023-01-01 --end-date 2023-12-31

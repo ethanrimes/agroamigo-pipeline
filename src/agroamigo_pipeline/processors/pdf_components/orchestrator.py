@@ -16,6 +16,7 @@ from agroamigo_pipeline.config.settings import (
 )
 from agroamigo_pipeline.utils.logger import setup_logging, log_function_call, log_dataframe_info
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension, generate_output_path
+from agroamigo_pipeline.utils.date_utils import filter_files_by_date
 from agroamigo_pipeline.utils.file_registry import FileRegistry
 from agroamigo_pipeline.utils.exceptions import PDFProcessingError
 
@@ -511,8 +512,8 @@ class PDFProcessorOrchestrator:
         Args:
             pdf_files (list): List of PDF file paths to process
             output_dir (str): Directory to save processed data
-            start_date (datetime): Start date for filtering files
-            end_date (datetime): End date for filtering files
+            start_date (datetime): Start date for filtering files by filename
+            end_date (datetime): End date for filtering files by filename
             max_workers (int): Maximum number of worker threads
             force_reprocess (bool): If True, reprocess files even if already processed
             
@@ -523,12 +524,21 @@ class PDFProcessorOrchestrator:
         output_dir = output_dir or PROCESSED_DIR
         ensure_directory(output_dir)
         
-        # Get PDF files if not provided
+        # After getting PDF files but before filtering
         if pdf_files is None:
             self.logger.info(f"Finding PDF files in {PDF_DIR}")
             pdf_files = get_files_by_extension(PDF_DIR, ['.pdf'], recursive=True)
+            # Convert PosixPath objects to strings if necessary
+            pdf_files = [str(file_path) for file_path in pdf_files]
         
-        self.logger.info(f"Processing {len(pdf_files)} PDF files")
+        self.logger.info(f"Found {len(pdf_files)} PDF files")
+        self.logger.info(f"Date range filter: {start_date} to {end_date}")
+        
+        # Filter files by date in filename
+        from agroamigo_pipeline.utils.date_utils import filter_files_by_date
+        filtered_pdf_files = filter_files_by_date(pdf_files, start_date, end_date)
+        filtered_pdf_files = [str(file_path) for file_path in filtered_pdf_files]
+        self.logger.info(f"After date filtering: {len(filtered_pdf_files)} PDF files to process")
         
         # Reset statistics
         self.stats = {
@@ -536,6 +546,7 @@ class PDFProcessorOrchestrator:
             'processed_files': 0,
             'failed_files': 0,
             'skipped_files': 0,
+            'filtered_by_date': len(pdf_files) - len(filtered_pdf_files),
             'total_rows_processed': 0,
             'warnings': 0,
             'gpt4o_calls': 0,
@@ -543,10 +554,10 @@ class PDFProcessorOrchestrator:
         }
         
         # Set maximum number of workers
-        max_workers = max_workers or min(os.cpu_count(), len(pdf_files))
+        max_workers = max_workers or min(os.cpu_count(), len(filtered_pdf_files))
         
         # Determine if we can use concurrent processing
-        use_concurrent = max_workers > 1 and len(pdf_files) > 1
+        use_concurrent = max_workers > 1 and len(filtered_pdf_files) > 1
         
         if use_concurrent:
             self.logger.info(f"Using {max_workers} workers for parallel processing")
@@ -555,7 +566,7 @@ class PDFProcessorOrchestrator:
             with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
                 future_to_file = {
                     executor.submit(self.process_pdf_file, file_path, output_dir, force_reprocess): file_path
-                    for file_path in pdf_files
+                    for file_path in filtered_pdf_files
                 }
                 
                 for future in concurrent.futures.as_completed(future_to_file):
@@ -572,7 +583,7 @@ class PDFProcessorOrchestrator:
                         self.stats['failed_files'] += 1
         else:
             # Process files sequentially
-            for file_path in pdf_files:
+            for file_path in filtered_pdf_files:
                 try:
                     stats = self.process_pdf_file(file_path, output_dir, force_reprocess)
                     # Update overall stats if GPT extraction was used
@@ -585,7 +596,8 @@ class PDFProcessorOrchestrator:
         
         # Log summary
         self.logger.info(f"PDF processing summary: {self.stats['processed_files']} processed, "
-                        f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
+                        f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped, "
+                        f"{self.stats['filtered_by_date']} filtered by date "
                         f"out of {self.stats['total_files']} total files")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
         self.logger.info(f"Files using GPT extraction: {self.stats['files_using_gpt_extraction']} out of {self.stats['processed_files']} processed files")

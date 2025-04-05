@@ -6,15 +6,15 @@ from pathlib import Path
 dotenv.load_dotenv()
 
 # Base project directory (automatically detected based on module location)
-PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.absolute()
+PROJECT_ROOT = Path(__file__).parent.parent.parent.absolute()
 PARENT_ROOT = PROJECT_ROOT.parent
 # Data directories
 DATA_DIR = '/Users/ethankallett/Documents/Projects/AgroAmigo_DataScraping/Prices/Daily Prices'
 SOURCE_DIR = os.path.join(DATA_DIR, 'Source')  # Downloaded files from web scraper
-PDF_DIR = os.path.join(DATA_DIR, 'PDF_Files')  # Extracted PDF files
+PDF_DIR = os.path.join(DATA_DIR, 'PDF_Files/PDFs')  # Extracted PDF files
 PROCESSED_DIR = os.path.join(DATA_DIR, 'IndividualCSVs')  # Individual CSV files
 CONSOLIDATED_DIR = os.path.join(DATA_DIR, 'Consolidated')  # Final aggregated data
-TEMP_DIR = os.path.join(DATA_DIR, 'Temp')  # Temporary processing files
+TEMP_DIR = os.path.join(DATA_DIR, 'PDF_Files/temp')  # Temporary processing files
 
 # Log directories
 LOG_DIR = os.path.join(PARENT_ROOT, 'logs')

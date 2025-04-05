@@ -5,6 +5,7 @@ Global utilities for parsing dates in various formats.
 import re
 from datetime import datetime
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -86,3 +87,78 @@ def format_date(date_obj, format="%Y-%m-%d"):
                 return None
     
     return date_obj.strftime(format)
+
+
+def filter_files_by_date(file_paths, start_date=None, end_date=None):
+    """
+    Filter files by date in filename using the pattern yyyymmdd.
+    
+    Args:
+        file_paths (list): List of file paths to filter
+        start_date (datetime): Optional start date for filtering (inclusive)
+        end_date (datetime): Optional end date for filtering (inclusive)
+        
+    Returns:
+        list: Filtered list of file paths
+    """
+    if not start_date and not end_date:
+        logger.info("No date filter applied - returning all files")
+        return file_paths
+    
+    start_date_str = start_date.strftime('%Y-%m-%d') if start_date else "earliest"
+    end_date_str = end_date.strftime('%Y-%m-%d') if end_date else "latest"
+    logger.info(f"Filtering files by date range: {start_date_str} to {end_date_str}")
+    
+    filtered_files = []
+    skipped_files = []
+    
+    for file_path in file_paths:
+        filename = os.path.basename(file_path)
+        
+        # Look for date pattern in filename (YYYYMMDD)
+        date_match = re.search(r'(\d{4})(\d{2})(\d{2})', filename)
+        
+        if date_match:
+            year, month, day = date_match.groups()
+            try:
+                file_date = datetime(int(year), int(month), int(day))
+                
+                # Check if file is within date range
+                if start_date and file_date < start_date:
+                    skipped_files.append((filename, file_date, "before start date"))
+                    continue
+                    
+                if end_date and file_date > end_date:
+                    skipped_files.append((filename, file_date, "after end date"))
+                    continue
+                
+                # File is within date range, add to filtered list
+                filtered_files.append(file_path)
+                logger.debug(f"Included file in date range: {filename} ({file_date.strftime('%Y-%m-%d')})")
+                
+            except ValueError as e:
+                # Handle invalid dates
+                logger.warning(f"Skipping file with invalid date format: {filename} - {str(e)}")
+                skipped_files.append((filename, None, "invalid date format"))
+        else:
+            # No date pattern found
+            logger.debug(f"No date pattern found in filename: {filename}")
+            if start_date is None and end_date is None:
+                # If no date filters, include all files
+                filtered_files.append(file_path)
+            else:
+                # If date filters are applied, skip files without dates
+                skipped_files.append((filename, None, "no date in filename"))
+    
+    # Log summary
+    if skipped_files:
+        logger.info(f"Skipped {len(skipped_files)} files outside date range:")
+        for filename, date, reason in skipped_files[:5]:  # Log only first 5 to avoid excessive logging
+            date_str = date.strftime('%Y-%m-%d') if date else "N/A"
+            logger.info(f"  - {filename}: {date_str} ({reason})")
+        
+        if len(skipped_files) > 5:
+            logger.info(f"  ... and {len(skipped_files) - 5} more files")
+    
+    logger.info(f"Date filtering complete: {len(filtered_files)} files included, {len(skipped_files)} files excluded")
+    return filtered_files
