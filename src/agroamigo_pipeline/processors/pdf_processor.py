@@ -3,7 +3,7 @@ PDF processing module for Colombian Agricultural Price Data Pipeline.
 
 This module provides backward compatibility with the refactored modular implementation.
 It implements the same interface as the original PDFProcessor but delegates to the 
-new refactored implementation.
+new thread-safe PDFProcessorOrchestrator class.
 """
 
 from agroamigo_pipeline.processors.pdf_components import PDFProcessorOrchestrator
@@ -73,12 +73,59 @@ class PDFProcessor:
     
     def _process_pdf_with_gpt4o(self, file_path):
         """Delegate to the orchestrator's process_pdf_with_gpt4o method."""
-        return self.orchestrator.process_pdf_with_gpt4o(file_path)
+        # Use the new implementation that returns both the DataFrame and GPT call count
+        result, _ = self.orchestrator.process_pdf_with_gpt4o(
+            file_path, 
+            self.logger, 
+            self.orchestrator.timing_stats
+        )
+        return result
     
     def process_pdf_file(self, file_path, output_dir=None, force_reprocess=False):
-        """Delegate to the orchestrator's process_pdf_file method."""
-        return self.orchestrator.process_pdf_file(file_path, output_dir, force_reprocess)
+        """
+        Process a single PDF file and save results to CSV.
+        Simply pass to the orchestrator's process_single_pdf_file method.
+        """
+        # Check registry first
+        registry_info = {
+            'process': True,
+            'stats': None
+        }
+        if not force_reprocess and self.registry.file_processed(file_path):
+            file_info = self.registry.get_file_info(file_path)
+            registry_info = {
+                'process': False,
+                'stats': file_info['processing_history'][-1]['stats'] if file_info else None
+            }
+        
+        # Process the file
+        result = self.orchestrator.process_single_pdf_file(
+            file_path, 
+            output_dir, 
+            force_reprocess,
+            registry_info
+        )
+        
+        # Update registry if needed
+        if result['registry_update']:
+            self.registry.register_file(
+                result['registry_update']['file_path'],
+                output_path=result['registry_update']['output_path'],
+                status=result['registry_update']['status'],
+                error=result['registry_update']['error'],
+                stats=result['registry_update']['stats']
+            )
+        
+        # Return the stats
+        return result['stats']
     
     def process_pdf_files(self, pdf_files=None, output_dir=None, start_date=None, end_date=None, max_workers=None, force_reprocess=False):
         """Delegate to the orchestrator's process_pdf_files method."""
-        return self.orchestrator.process_pdf_files(pdf_files, output_dir, start_date, end_date, max_workers, force_reprocess)
+        return self.orchestrator.process_pdf_files(
+            pdf_files=pdf_files, 
+            output_dir=output_dir, 
+            start_date=start_date, 
+            end_date=end_date, 
+            max_workers=max_workers, 
+            force_reprocess=force_reprocess
+        )
