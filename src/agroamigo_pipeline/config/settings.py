@@ -6,18 +6,18 @@ from pathlib import Path
 dotenv.load_dotenv()
 
 # Base project directory (automatically detected based on module location)
-PROJECT_ROOT = Path(__file__).parent.parent.parent.absolute()
-
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.absolute()
+PARENT_ROOT = PROJECT_ROOT.parent
 # Data directories
-DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
-SOURCE_DIR = os.path.join(DATA_DIR, 'source')  # Downloaded files from web scraper
-PDF_DIR = os.path.join(DATA_DIR, 'pdf')  # Extracted PDF files
-PROCESSED_DIR = os.path.join(DATA_DIR, 'processed')  # Individual CSV files
-CONSOLIDATED_DIR = os.path.join(DATA_DIR, 'consolidated')  # Final aggregated data
-TEMP_DIR = os.path.join(DATA_DIR, 'temp')  # Temporary processing files
+DATA_DIR = '/Users/ethankallett/Documents/Projects/AgroAmigo_DataScraping/Prices/Daily Prices'
+SOURCE_DIR = os.path.join(DATA_DIR, 'Source')  # Downloaded files from web scraper
+PDF_DIR = os.path.join(DATA_DIR, 'PDF_Files')  # Extracted PDF files
+PROCESSED_DIR = os.path.join(DATA_DIR, 'IndividualCSVs')  # Individual CSV files
+CONSOLIDATED_DIR = os.path.join(DATA_DIR, 'Consolidated')  # Final aggregated data
+TEMP_DIR = os.path.join(DATA_DIR, 'Temp')  # Temporary processing files
 
 # Log directories
-LOG_DIR = os.path.join(PROJECT_ROOT, 'logs')
+LOG_DIR = os.path.join(PARENT_ROOT, 'logs')
 SCRAPER_LOG_DIR = os.path.join(LOG_DIR, 'scraper')
 EXTRACTOR_LOG_DIR = os.path.join(LOG_DIR, 'file_extractor')
 EXCEL_LOG_DIR = os.path.join(LOG_DIR, 'excel_processor')

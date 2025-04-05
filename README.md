@@ -1,3 +1,204 @@
+# AgroAmigo Pipeline
+
+This pipeline processes Colombian agricultural price data from various sources, extracting information from ZIP archives, Excel files, and PDFs to create a consolidated dataset.
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/agroamigo_pipeline.git
+cd agroamigo_pipeline
+
+# Install the package in development mode
+pip install -e .
+```
+
+## Directory Structure
+
+The pipeline uses several directories for different stages of processing:
+
+- **SOURCE_DIR**: Contains downloaded files from web scraper (original ZIP, Excel files)
+- **PDF_DIR**: Contains extracted PDF files from ZIP archives
+- **PROCESSED_DIR**: Contains individual CSV files after processing
+- **CONSOLIDATED_DIR**: Contains final aggregated data
+- **TEMP_DIR**: Used for temporary files during processing
+- **LOG_DIR**: Contains pipeline execution logs
+
+## Path Configuration
+
+There are two ways to configure the pipeline's paths:
+
+### 1. Environment Variables (Using .env File)
+
+Create a `.env` file in the project root with your custom paths:
+
+```
+# Custom base directories
+PROJECT_ROOT=/path/to/your/custom/project/root
+PARENT_ROOT=/path/to/parent/directory
+
+# Custom data directories
+DATA_DIR=/path/to/data
+SOURCE_DIR=/path/to/source/downloads
+PDF_DIR=/path/to/pdf/files
+PROCESSED_DIR=/path/to/processed/csv
+CONSOLIDATED_DIR=/path/to/consolidated/output
+TEMP_DIR=/path/to/temp/files
+
+# Custom log directory
+LOG_DIR=/path/to/logs
+```
+
+The pipeline uses `dotenv` to load these environment variables automatically.
+
+### 2. Directly Modifying settings.py
+
+You can directly edit `agroamigo_pipeline/config/settings.py` to update the paths:
+
+```python
+# Base project directory
+PROJECT_ROOT = "/path/to/your/custom/project/root"
+PARENT_ROOT = "/path/to/parent/directory"
+
+# Data directories
+DATA_DIR = "/path/to/data"
+SOURCE_DIR = "/path/to/source/downloads"  # Downloaded files from web scraper
+PDF_DIR = "/path/to/pdf/files"  # Extracted PDF files
+PROCESSED_DIR = "/path/to/processed/csv"  # Individual CSV files
+CONSOLIDATED_DIR = "/path/to/consolidated/output"  # Final aggregated data
+TEMP_DIR = "/path/to/temp/files"  # Temporary processing files
+
+# Log directories
+LOG_DIR = "/path/to/logs"
+```
+
+### Important Path Relationships
+
+If you're setting up a custom directory structure where your web scraper writes data to a specific location:
+
+1. The **SOURCE_DIR** should point to where your web scraper outputs data
+2. The **PDF_DIR** is where the extractor will save PDF files from ZIP archives
+3. The **PROCESSED_DIR** is where both the PDF processor and Excel processor will write output CSV files
+4. The **CONSOLIDATED_DIR** is where the final aggregated data will be saved
+
+## Running the Pipeline
+
+### Command Line Usage
+
+```bash
+# Run the full pipeline
+python -m agroamigo_pipeline.main
+
+# Run with date filtering
+python -m agroamigo_pipeline.main --start-date 2023-01-01 --end-date 2023-12-31
+
+# Run specific components only
+python -m agroamigo_pipeline.main --components extractor excel pdf aggregator
+
+# Control parallel processing
+python -m agroamigo_pipeline.main --workers 4
+
+# Force reprocessing of files (even if they've been processed before)
+python -m agroamigo_pipeline.main --force-reprocess
+
+# Set log level
+python -m agroamigo_pipeline.main --log-level DEBUG
+```
+
+### Python API Usage
+
+You can also run the pipeline from your own Python code:
+
+```python
+from agroamigo_pipeline.main import Pipeline
+from datetime import datetime
+
+# Initialize the pipeline
+pipeline = Pipeline(log_level="INFO")
+
+# Run with specific settings
+pipeline.run(
+    start_date=datetime(2023, 1, 1),
+    end_date=datetime(2023, 12, 31),
+    components=['extractor', 'excel', 'pdf', 'aggregator'],
+    max_workers=4,
+    force_reprocess=True
+)
+```
+
+## Component-Specific Instructions
+
+### Working with Existing Source Data
+
+If you already have data in your SOURCE_DIR (e.g., from a web scraper):
+
+1. **ZIP Extraction**: The extractor will process all ZIP files in the SOURCE_DIR, extracting PDFs to the PDF_DIR and keeping Excel files in the SOURCE_DIR.
+
+```bash
+python -m agroamigo_pipeline.main --components extractor
+```
+
+2. **Processing Excel and PDF Files**: After extraction (or if you already have Excel/PDF files), run:
+
+```bash
+python -m agroamigo_pipeline.main --components excel pdf
+```
+
+3. **Data Aggregation**: Combine all processed CSV files into a consolidated dataset:
+
+```bash
+python -m agroamigo_pipeline.main --components aggregator
+```
+
+### Controlling the Number of Files Processed
+
+To limit processing to a subset of files:
+
+1. **Date Filtering**: Use `--start-date` and `--end-date` to process only files within a specific date range:
+
+```bash
+python -m agroamigo_pipeline.main --start-date 2023-01-01 --end-date 2023-01-31
+```
+
+2. **File Registry**: The pipeline keeps track of processed files in `PROCESSING_REGISTRY` (default: `LOG_DIR/processing_registry.json`). Unless `--force-reprocess` is used, files that have already been processed will be skipped.
+
+3. **Component Selection**: Run only specific components to limit processing:
+
+```bash
+# Only run PDF processing
+python -m agroamigo_pipeline.main --components pdf
+
+# Only run Excel processing
+python -m agroamigo_pipeline.main --components excel
+```
+
+## Error Handling
+
+Errors during processing are logged to component-specific log files in the LOG_DIR. The pipeline will continue processing other files if an error occurs with a specific file.
+
+To see an aggregated view of errors:
+
+```bash
+python -m agroamigo_pipeline.main --components error
+```
+
+## Processing Flow
+
+1. **ZIP Extractor**: Processes ZIP files in SOURCE_DIR, extracting PDFs to PDF_DIR and keeping Excel files in SOURCE_DIR
+2. **Excel Processor**: Processes Excel files in SOURCE_DIR, generating CSV files in PROCESSED_DIR
+3. **PDF Processor**: Processes PDF files in PDF_DIR, generating CSV files in PROCESSED_DIR
+4. **Data Aggregator**: Combines all CSV files in PROCESSED_DIR into a consolidated dataset in CONSOLIDATED_DIR
+
+## Performance Considerations
+
+- PDF processing is CPU-intensive and can be parallelized using the `--workers` option
+- For large datasets, consider processing in batches by date range
+- Monitor the LOG_DIR for detailed logs and error information
+
+
+
+
+
 # Colombian Agricultural Price Data Pipeline
 
 A robust data collection and processing pipeline for Colombian agricultural price data.
