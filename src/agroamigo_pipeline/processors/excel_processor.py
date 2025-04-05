@@ -1,26 +1,24 @@
+"""
+Processor for Excel files with the specified format where columns are city/market combinations.
+"""
+
 import os
 import pandas as pd
-import numpy as np
-import re
-from pathlib import Path
 import logging
 from datetime import datetime
-import concurrent.futures
 import traceback
 
-from agroamigo_pipeline.config.settings import SOURCE_DIR, PROCESSED_DIR, MIN_UNIQUE_PRODUCTS, MAX_UNIQUE_PRODUCTS
-from agroamigo_pipeline.utils.logger import setup_logging, log_function_call, log_dataframe_info
+from agroamigo_pipeline.config.settings import SOURCE_DIR, PROCESSED_DIR
+from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension, generate_output_path
 from agroamigo_pipeline.utils.file_registry import FileRegistry
-from agroamigo_pipeline.utils.utils import normalize_string, extract_date_from_spanish_text, format_date, extract_geography_info, clean_price_value
 from agroamigo_pipeline.utils.exceptions import ExcelProcessingError
 from agroamigo_pipeline.processors.excel_components.excel_reader import ExcelFileReader
-from agroamigo_pipeline.processors.excel_components.metadata_extractor import MetadataExtractor
-from agroamigo_pipeline.processors.excel_components.data_transformer import ExcelDataTransformer
+from agroamigo_pipeline.processors.excel_components.excel_transformer import ExcelDataTransformer
 
 class ExcelProcessor:
     """
-    Process Excel files containing agricultural price data according to the 'anexo' format.
+    Process Excel files containing agricultural price data.
     """
     
     def __init__(self, logger=None):
@@ -42,8 +40,7 @@ class ExcelProcessor:
         
         # Initialize components
         self.reader = ExcelFileReader(logger=self.logger)
-        self.metadata_extractor = MetadataExtractor(logger=self.logger)
-        self.data_transformer = ExcelDataTransformer(logger=self.logger)
+        self.transformer = ExcelDataTransformer(logger=self.logger)
         
         # Initialize statistics dictionary
         self.stats = {
@@ -56,41 +53,6 @@ class ExcelProcessor:
         }
         
         self.logger.info("ExcelProcessor initialized")
-    
-    def _process_excel_to_dataframe(self, file_path):
-        """
-        Process an Excel file and extract structured data.
-        
-        Args:
-            file_path (str): Path to the Excel file
-            
-        Returns:
-            DataFrame: Processed data in standardized format
-        """
-        try:
-            # Read and prepare the Excel file
-            df = self.reader.read_and_prepare(file_path)
-            
-            # Also read the raw file for date extraction (without skiprows)
-            raw_df = None
-            try:
-                raw_df = pd.read_excel(file_path)
-            except Exception:
-                # If we can't read the raw file, we'll use the prepared one
-                pass
-            
-            # Extract metadata
-            metadata = self.metadata_extractor.extract_all(df, raw_df)
-            
-            # Transform the data
-            price_df = self.data_transformer.transform(df, metadata)
-            
-            return price_df
-            
-        except Exception as e:
-            self.logger.error(f"Error processing Excel file {file_path}: {str(e)}")
-            self.logger.debug(f"Error details: {traceback.format_exc()}")
-            raise ExcelProcessingError(f"Failed to process Excel file: {str(e)}")
     
     def process_excel_file(self, file_path, output_dir=None, force_reprocess=False):
         """
@@ -122,36 +84,30 @@ class ExcelProcessor:
             'file_path': file_path,
             'unique_products': 0,
             'unique_major_categories': 0,
-            'unique_subcategories': 0,
             'rows_processed': 0,
             'error_occurred': False,
             'errors_warnings': "",
-            'processing_time_seconds': 0
+            'processing_time_seconds': 0,
+            'extracted_date': None
         }
         
         start_time = datetime.now()
         
         try:
-            # Process Excel file
-            output_df = self._process_excel_to_dataframe(file_path)
+            # Read the Excel file using the reader component
+            df = self.reader.read_and_prepare(file_path)
+            
+            # Get the extracted date from the reader
+            extracted_date = self.reader.get_extracted_date()
+            stats['extracted_date'] = extracted_date.strftime('%Y-%m-%d') if extracted_date else None
+            
+            # Transform the data using the transformer component
+            output_df = self.transformer.transform(df, file_path)
             
             # Update statistics
             stats['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
             stats['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
-            stats['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns and not output_df['sub_category'].isna().all() else 0
             stats['rows_processed'] = len(output_df)
-            
-            # Check if we have enough unique products
-            if stats['unique_products'] < MIN_UNIQUE_PRODUCTS:
-                warning_msg = f"Warning: File has only {stats['unique_products']} unique products, which is below the minimum threshold of {MIN_UNIQUE_PRODUCTS}"
-                self.logger.warning(warning_msg)
-                stats['errors_warnings'] += warning_msg + "; "
-            
-            # Check if we have too many unique products (might indicate parsing error)
-            if stats['unique_products'] > MAX_UNIQUE_PRODUCTS:
-                warning_msg = f"Warning: File has {stats['unique_products']} unique products, which exceeds the maximum threshold of {MAX_UNIQUE_PRODUCTS}"
-                self.logger.warning(warning_msg)
-                stats['errors_warnings'] += warning_msg + "; "
             
             # Generate output path
             output_path = generate_output_path(file_path, output_dir, extension='.csv')
@@ -164,6 +120,7 @@ class ExcelProcessor:
             self.stats['total_rows_processed'] += stats['rows_processed']
             
             self.logger.info(f"Successfully processed Excel file {filename}: {stats['rows_processed']} rows, {stats['unique_products']} products")
+            self.logger.info(f"Extracted date: {stats['extracted_date']}")
             
         except Exception as e:
             stats['error_occurred'] = True
@@ -190,15 +147,13 @@ class ExcelProcessor:
         
         return stats
     
-    def process_excel_files(self, source_dir=None, output_dir=None, start_date=None, end_date=None, force_reprocess=False, max_workers=None):
+    def process_excel_files(self, source_dir=None, output_dir=None, force_reprocess=False, max_workers=None):
         """
         Process all Excel files in the source directory.
         
         Args:
             source_dir (str): Directory containing Excel files
             output_dir (str): Directory to save processed data
-            start_date (datetime): Start date for filtering files
-            end_date (datetime): End date for filtering files
             force_reprocess (bool): If True, reprocess files even if already processed
             max_workers (int): Maximum number of worker threads
             
@@ -222,7 +177,9 @@ class ExcelProcessor:
             'failed_files': 0,
             'skipped_files': 0,
             'total_rows_processed': 0,
-            'warnings': 0
+            'warnings': 0,
+            'files_with_dates': 0,
+            'files_without_dates': 0
         }
         
         # Get Excel files
@@ -231,46 +188,49 @@ class ExcelProcessor:
         
         self.logger.info(f"Found {len(excel_files)} Excel files in source directory")
         
-        # Set up parallel processing
-        max_workers = max_workers or min(os.cpu_count(), len(excel_files))
-        
-        # Determine if we can use concurrent processing (more than one file and multiple CPUs)
-        use_concurrent = max_workers > 1 and len(excel_files) > 1
-        
-        if use_concurrent:
-            self.logger.info(f"Using {max_workers} workers for parallel processing")
-            
-            # Process files concurrently
-            with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-                future_to_file = {
-                    executor.submit(self.process_excel_file, file_path, output_dir, force_reprocess): file_path
-                    for file_path in excel_files
-                }
-                
-                for future in concurrent.futures.as_completed(future_to_file):
-                    file_path = future_to_file[future]
-                    filename = os.path.basename(file_path)
-                    
-                    try:
-                        stats = future.result()
-                        # Stats are already aggregated in self.stats by each process_excel_file call
-                    except Exception as e:
-                        self.logger.error(f"Error processing {filename}: {str(e)}")
-                        self.stats['failed_files'] += 1
-        else:
-            # Process files sequentially
-            for file_path in excel_files:
-                try:
-                    self.process_excel_file(file_path, output_dir, force_reprocess)
-                except Exception as e:
-                    filename = os.path.basename(file_path)
-                    self.logger.error(f"Error processing {filename}: {str(e)}")
-                    self.stats['failed_files'] += 1
+        # Process files sequentially (for simplicity and reliability)
+        for file_path in excel_files:
+            try:
+                stats = self.process_excel_file(file_path, output_dir, force_reprocess)
+                # Track date extraction success
+                if stats.get('extracted_date'):
+                    self.stats['files_with_dates'] += 1
+                else:
+                    self.stats['files_without_dates'] += 1
+            except Exception as e:
+                filename = os.path.basename(file_path)
+                self.logger.error(f"Error processing {filename}: {str(e)}")
+                self.stats['failed_files'] += 1
         
         # Log summary
         self.logger.info(f"Excel processing summary: {self.stats['processed_files']} processed, "
                         f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
                         f"out of {self.stats['total_files']} total files")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
+        self.logger.info(f"Successfully extracted dates from {self.stats['files_with_dates']} files, "
+                        f"failed to extract dates from {self.stats['files_without_dates']} files")
         
         return self.stats
+
+    def get_statistics(self):
+        """
+        Get the current processing statistics.
+        
+        Returns:
+            dict: Dictionary containing processing statistics
+        """
+        return self.stats.copy()
+
+    def clear_statistics(self):
+        """
+        Reset the processing statistics.
+        """
+        self.stats = {
+            'total_files': 0,
+            'processed_files': 0,
+            'failed_files': 0,
+            'skipped_files': 0,
+            'total_rows_processed': 0,
+            'warnings': 0
+        }
+        self.logger.info("Processing statistics cleared")

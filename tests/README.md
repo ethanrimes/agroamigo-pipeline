@@ -14,6 +14,10 @@ python -m pytest tests/test_pdf_processor.py -v
 python -m pytest tests/test_pdf_processor.py::TestPDFProcessor::test_single_text_extraction_pdf -v
 python -m pytest tests/test_pdf_processor.py::TestPDFProcessor::test_metadata_extraction -v
 python -m pytest tests/test_pdf_processor.py::TestPDFProcessor::test_single_gpt4o_vision_pdf -v
+
+
+python -m pytest tests/test_excel_processor.py::test_process_single_excel_file -v
+python -m pytest tests/test_excel_processor.py::test_batch_process_excel_files -v
 ```
 
 ### 📝 Running Text Extraction Tests

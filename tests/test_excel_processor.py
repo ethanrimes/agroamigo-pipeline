@@ -1,165 +1,153 @@
 import os
 import pytest
 import pandas as pd
-from pathlib import Path
-import shutil
 import tempfile
-from datetime import datetime
+import shutil
+from pathlib import Path
+import filecmp
 
 from agroamigo_pipeline.processors.excel_processor import ExcelProcessor
 from agroamigo_pipeline.utils.file_registry import FileRegistry
 
-# Test data directory
-TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'data', 'excel')
+# Define test data directory paths
+TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'test_data', 'excel_processor')
+SOURCE_DIR = os.path.join(TEST_DATA_DIR, 'source')
+EXPECTED_DIR = os.path.join(TEST_DATA_DIR, 'expected')
+OUTPUT_DIR = os.path.join(TEST_DATA_DIR, 'outputs')
 
-# Ensure test data directory exists
-os.makedirs(TEST_DATA_DIR, exist_ok=True)
-
-@pytest.fixture
-def temp_dirs():
-    """Create temporary directories for testing."""
-    temp_source = tempfile.mkdtemp()
-    temp_output = tempfile.mkdtemp()
+@pytest.fixture(scope="function")
+def setup_test_environment():
+    """Create temporary output directory and clean it between tests"""
+    # Ensure output directory exists and is clean
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    yield temp_source, temp_output
+    # Clear any existing files in output directory
+    for file in os.listdir(OUTPUT_DIR):
+        file_path = os.path.join(OUTPUT_DIR, file)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
     
-    # Clean up
-    if os.path.exists(temp_source):
-        shutil.rmtree(temp_source)
-    if os.path.exists(temp_output):
-        shutil.rmtree(temp_output)
-
-@pytest.fixture
-def sample_excel_file(temp_dirs):
-    """Create a sample Excel file for testing."""
-    temp_source, _ = temp_dirs
+    # Use a temporary file for registry to avoid polluting the real registry
+    temp_registry_file = tempfile.mktemp(suffix='.json')
     
-    # Create test data
-    data = {
-        'Producto': ['Hortalizas y verduras', 'Tomate', 'Cebolla', 'Frutas frescas', 'Manzana', 'Banano'],
-        'Bogota, Corabastos': [None, 1500, 1200, None, 2000, 1000],
-        'Medellin, Plaza Minorista': [None, 1600, 1300, None, 2100, 1100]
+    # Return the test directories and temporary registry path
+    yield {
+        "source_dir": SOURCE_DIR,
+        "expected_dir": EXPECTED_DIR,
+        "output_dir": OUTPUT_DIR,
+        "registry_path": temp_registry_file
     }
     
-    df = pd.DataFrame(data)
-    
-    # Create header with date
-    header_df = pd.DataFrame({
-        'Header': ['', '', 'viernes 15 de octubre de 2021', '', 'Precio por kilogramo']
-    })
-    
-    # Save as Excel
-    file_path = os.path.join(temp_source, 'test_excel.xlsx')
-    with pd.ExcelWriter(file_path) as writer:
-        header_df.to_excel(writer, sheet_name='Sheet1', index=False)
-        df.to_excel(writer, sheet_name='Sheet1', startrow=len(header_df)+1, index=False)
-    
-    return file_path
+    # Clean up temp registry file after test
+    if os.path.exists(temp_registry_file):
+        os.remove(temp_registry_file)
 
-def test_date_extraction(sample_excel_file):
-    """Test date extraction from Excel file header."""
+def test_process_single_excel_file(setup_test_environment, monkeypatch):
+    """Test processing a single Excel file with validation against expected output"""
+    test_env = setup_test_environment
+    
+    # Patch the registry path to use our temporary file
+    monkeypatch.setattr('agroamigo_pipeline.utils.file_registry.PROCESSING_REGISTRY', 
+                        test_env["registry_path"])
+    
+    # Initialize the processor
     processor = ExcelProcessor()
-    df = pd.read_excel(sample_excel_file)
     
-    date = processor._extract_date_from_header(df)
+    # Get the test file
+    source_file = os.path.join(test_env["source_dir"], "20210524-mayoristas_mayo_24_2021.xlsx")
     
-    assert date is not None
-    assert isinstance(date, str)
-    assert date == '2021-10-15'
-
-def test_geography_parsing(sample_excel_file):
-    """Test geography parsing from column headers."""
-    processor = ExcelProcessor()
-    df = pd.read_excel(sample_excel_file, skiprows=5)  # Skip header rows
+    # Process the file
+    result = processor.process_excel_file(
+        file_path=source_file, 
+        output_dir=test_env["output_dir"]
+    )
     
-    geography_info = processor._extract_geography_from_columns(df)
+    # Check results
+    assert not result["error_occurred"]
+    assert result["unique_products"] == 6  # 3 fruits + 3 vegetables
+    assert result["unique_major_categories"] == 2  # Frutas and Hortalizas
     
-    assert len(geography_info) == 2
-    assert 'Bogota' in [g['city'] for g in geography_info]
-    assert 'Medellin' in [g['city'] for g in geography_info]
-    assert 'Corabastos' in [g['market'] for g in geography_info]
-    assert 'Plaza Minorista' in [g['market'] for g in geography_info]
-
-def test_category_detection(sample_excel_file):
-    """Test major category detection."""
-    processor = ExcelProcessor()
-    df = pd.read_excel(sample_excel_file, skiprows=5)  # Skip header rows
-    
-    major_categories = processor._identify_major_categories(df)
-    
-    assert len(major_categories) == 2
-    assert 'Hortalizas y verduras' in major_categories
-    assert 'Frutas frescas' in major_categories
-
-def test_product_category_mapping(sample_excel_file):
-    """Test mapping products to categories."""
-    processor = ExcelProcessor()
-    df = pd.read_excel(sample_excel_file, skiprows=5)  # Skip header rows
-    
-    major_categories = processor._identify_major_categories(df)
-    product_map = processor._map_products_to_categories(df, major_categories)
-    
-    assert len(product_map) == 4  # 4 products (excluding category rows)
-    assert product_map['Tomate'] == 'Hortalizas y verduras'
-    assert product_map['Cebolla'] == 'Hortalizas y verduras'
-    assert product_map['Manzana'] == 'Frutas frescas'
-    assert product_map['Banano'] == 'Frutas frescas'
-
-def test_end_to_end_processing(temp_dirs, sample_excel_file):
-    """Test end-to-end processing of an Excel file."""
-    temp_source, temp_output = temp_dirs
-    
-    processor = ExcelProcessor()
-    stats = processor.process_excel_file(sample_excel_file, temp_output)
-    
-    # Check if output file was created
-    output_files = list(Path(temp_output).glob('*.csv'))
+    # Verify output file exists
+    output_files = list(Path(test_env["output_dir"]).glob("*.csv"))
     assert len(output_files) == 1
     
-    # Check output data
-    output_df = pd.read_csv(output_files[0])
+    output_file = output_files[0]
+    expected_file = os.path.join(test_env["expected_dir"], "20210525-mayoristas_mayo_24_2021.csv")
     
-    # Verify schema
-    expected_columns = [
-        'date', 'city', 'market', 'major_category', 'sub_category', 
-        'product', 'presentation', 'units', 'daily_min', 'daily_max', 'source'
-    ]
-    for col in expected_columns:
-        assert col in output_df.columns
+    # Compare the output against expected file
+    df_output = pd.read_csv(output_file)
+    df_expected = pd.read_csv(expected_file)
     
-    # Verify data
-    assert len(output_df) == 8  # 4 products * 2 cities
-    assert set(output_df['major_category'].unique()) == {'Hortalizas y verduras', 'Frutas frescas'}
-    assert set(output_df['product'].unique()) == {'Tomate', 'Cebolla', 'Manzana', 'Banano'}
-    assert set(output_df['city'].unique()) == {'Bogota', 'Medellin'}
-    assert all(output_df['source'] == 'anexo')
+    # Sort both dataframes to ensure consistent comparison
+    df_output = df_output.sort_values(by=['product', 'city']).reset_index(drop=True)
+    df_expected = df_expected.sort_values(by=['product', 'city']).reset_index(drop=True)
     
-    # Verify stats
-    assert stats['unique_products'] == 4
-    assert stats['unique_major_categories'] == 2
-    assert stats['unique_subcategories'] == 0
-    assert not stats['error_occurred']
-
-def test_file_registry_integration(temp_dirs, sample_excel_file):
-    """Test integration with file registry to avoid duplicate processing."""
-    temp_source, temp_output = temp_dirs
+    # Check that dataframes match
+    pd.testing.assert_frame_equal(df_output, df_expected)
     
-    # Process file first time
-    processor = ExcelProcessor()
-    stats1 = processor.process_excel_file(sample_excel_file, temp_output)
-    
-    # Check file is in registry
+    # Verify FileRegistry integration
     registry = FileRegistry()
-    assert registry.file_processed(sample_excel_file)
+    assert registry.file_processed(source_file)
+    file_info = registry.get_file_info(source_file)
+    assert file_info['processing_history'][-1]['status'] == 'processed'
+
+def test_batch_process_excel_files(setup_test_environment, monkeypatch):
+    """Test batch processing of multiple Excel files with validation against expected outputs"""
+    test_env = setup_test_environment
     
-    # Process again without force_reprocess
-    stats2 = processor.process_excel_file(sample_excel_file, temp_output)
+    # Patch the registry path to use our temporary file
+    monkeypatch.setattr('agroamigo_pipeline.utils.file_registry.PROCESSING_REGISTRY', 
+                        test_env["registry_path"])
     
-    # Should return the previously saved stats, not process again
-    assert stats2 == registry.get_file_info(sample_excel_file)['processing_history'][-1]['stats']
+    # Initialize the processor
+    processor = ExcelProcessor()
     
-    # Process again with force_reprocess
-    stats3 = processor.process_excel_file(sample_excel_file, temp_output, force_reprocess=True)
+    # Process all files in the source directory
+    results = processor.process_excel_files(
+        source_dir=test_env["source_dir"],
+        output_dir=test_env["output_dir"]
+    )
     
-    # Should process again and update registry
-    assert stats3 != stats2
+    # Check processing results
+    assert results['total_files'] == 2  # We have 3 Excel files in the source directory
+    assert results['processed_files'] == 2
+    assert results['failed_files'] == 0
+    
+    # Verify output files exist
+    output_files = sorted(list(Path(test_env["output_dir"]).glob("*.csv")))
+    assert len(output_files) == 2
+    
+    # List of expected output files
+    expected_files = [
+        "20210525-mayoristas_mayo_24_2021.csv",
+        "20210525-mayoristas_mayo_25_2021.csv",
+    ]
+    
+    # Compare each output file with its expected version
+    for i, output_file in enumerate(output_files):
+        expected_file = os.path.join(test_env["expected_dir"], expected_files[i])
+        
+        df_output = pd.read_csv(output_file)
+        df_expected = pd.read_csv(expected_file)
+        
+        # Sort both dataframes to ensure consistent comparison
+        df_output = df_output.sort_values(by=['product', 'city']).reset_index(drop=True)
+        df_expected = df_expected.sort_values(by=['product', 'city']).reset_index(drop=True)
+        
+        # Check that dataframes match
+        pd.testing.assert_frame_equal(df_output, df_expected)
+    
+    # Verify all files are in the registry
+    registry = FileRegistry()
+    excel_files = list(Path(test_env["source_dir"]).glob("*.xlsx"))
+    for file_path in excel_files:
+        assert registry.file_processed(str(file_path))
+        
+    # Test reprocessing with force flag
+    force_results = processor.process_excel_files(
+        source_dir=test_env["source_dir"],
+        output_dir=test_env["output_dir"],
+        force_reprocess=True
+    )
+    
+    assert force_results['processed_files'] == 2  # All files should be reprocessed
