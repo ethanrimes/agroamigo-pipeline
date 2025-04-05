@@ -86,6 +86,24 @@ def setup_logging(log_level=None):
     
     return loggers
 
+def update_logger_level(logger, log_level):
+    """Update an existing logger's level and its handlers' levels."""
+    if not logger:
+        return
+        
+    # Update logger level
+    logger.setLevel(log_level)
+    
+    # Update handler levels
+    for handler in logger.handlers:
+        if isinstance(handler, logging.FileHandler):
+            handler.setLevel(log_level)
+        elif isinstance(handler, logging.StreamHandler):
+            # For console handlers, respect minimum INFO level for readability
+            handler.setLevel(max(logging.INFO, log_level))
+    
+    logger.debug(f"Logger level updated to {logging.getLevelName(log_level)}")
+
 def log_function_call(logger, func_name, args=None, kwargs=None):
     """Log function calls with parameters at DEBUG level."""
     if logger.level <= logging.DEBUG:

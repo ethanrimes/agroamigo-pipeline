@@ -71,7 +71,8 @@ class Pipeline:
             extractor = ZipExtractor(
                 source_dir=SOURCE_DIR,
                 pdf_dir=PDF_DIR, 
-                temp_dir=TEMP_DIR
+                temp_dir=TEMP_DIR,
+                logger=self.logger  # Pass the main logger to ensure consistent log level
             )
             
             # Process all ZIP files with date filtering
@@ -95,7 +96,7 @@ class Pipeline:
             self.logger.info("Starting error aggregation process")
             
             # Create error gatherer
-            error_gatherer = ErrorGatherer()
+            error_gatherer = ErrorGatherer(logger=self.logger)  # Pass logger to ensure consistent log level
             
             # Collect all errors from component registries
             error_df, summary_path = error_gatherer.collect_all_errors()
@@ -222,7 +223,8 @@ class Pipeline:
     def _run_web_scraper(self, start_date, end_date, max_workers=None):
         """Run the web scraper component."""
         try:
-            scraper = WebScraper(source_dir=SOURCE_DIR, max_workers=max_workers)
+            # Pass the log level to the web scraper
+            scraper = WebScraper(source_dir=SOURCE_DIR, max_workers=max_workers, logger=self.logger)
             stats = scraper.run(start_date=start_date, end_date=end_date, max_workers=max_workers)
             return stats
         except Exception as e:
@@ -235,7 +237,7 @@ class Pipeline:
         try:
             self.logger.info("Starting Excel processing")
             
-            # Create and configure the ExcelProcessor
+            # Create and configure the ExcelProcessor - pass our logger to ensure consistent log level
             processor = ExcelProcessor(logger=self.logger)
             
             # Process Excel files
@@ -259,7 +261,7 @@ class Pipeline:
         try:
             self.logger.info("Starting PDF processing")
             
-            # Create and configure the PDFProcessor
+            # Create and configure the PDFProcessor - pass our logger to ensure consistent log level
             processor = PDFProcessorOrchestrator(logger=self.logger)
             
             # Process all PDF files
@@ -283,7 +285,7 @@ class Pipeline:
         try:
             self.logger.info("Starting data aggregation process")
             
-            # Create and configure the DataAggregator
+            # Create and configure the DataAggregator - pass our logger to ensure consistent log level
             aggregator = DataAggregator(
                 input_dir=PROCESSED_DIR,
                 output_dir=CONSOLIDATED_DIR,

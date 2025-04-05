@@ -87,7 +87,7 @@ class PDFProcessorOrchestrator:
             'data_processing': []
         }
         
-        # Initialize component modules with debug flag
+        # Initialize component modules with debug flag and the parent logger level
         self.text_extractor = TextExtractor(logger=self.logger, timing_stats=self.timing_stats)
         self.metadata_extractor = MetadataExtractor(logger=self.logger)
         self.product_parser = ProductParser(logger=self.logger, timing_stats=self.timing_stats)
@@ -99,6 +99,7 @@ class PDFProcessorOrchestrator:
         self._ensure_all_directories()
         
         self.logger.info("PDFProcessorOrchestrator initialized")
+        self.logger.debug(f"Logger level: {logging.getLevelName(self.logger.level)}")
     
     def _ensure_all_directories(self):
         """Create all required directories upfront to avoid race conditions."""
@@ -286,11 +287,23 @@ class PDFProcessorOrchestrator:
         # Create thread-specific logger
         thread_id = threading.get_ident()
         thread_logger = logging.getLogger(f'pdf_processor_{thread_id}')
-        thread_logger.setLevel(self.logger.level)
+        thread_logger.setLevel(self.logger.level)  # Use the same level as parent logger
         
         # Add handlers to the logger
         for handler in self.logger.handlers:
-            thread_logger.addHandler(handler)
+            # Create a copy of the handler to avoid sharing handler instances
+            if isinstance(handler, logging.FileHandler):
+                file_handler = logging.FileHandler(
+                    handler.baseFilename, mode='a', encoding='utf-8'
+                )
+                file_handler.setLevel(self.logger.level)  # Use parent logger's level
+                file_handler.setFormatter(handler.formatter)
+                thread_logger.addHandler(file_handler)
+            elif isinstance(handler, logging.StreamHandler):
+                console_handler = logging.StreamHandler()
+                console_handler.setLevel(max(logging.INFO, self.logger.level))  # Console shows INFO or higher
+                console_handler.setFormatter(handler.formatter)
+                thread_logger.addHandler(console_handler)
         
         # Create thread-specific timing stats
         thread_timing_stats = {
@@ -303,6 +316,9 @@ class PDFProcessorOrchestrator:
         
         filename = os.path.basename(file_path)
         thread_logger.info(f"========== STARTING PDF PROCESSING: {filename} ==========")
+        thread_logger.debug(f"Thread logger using level: {logging.getLevelName(thread_logger.level)}")
+        
+        # Rest of the method would follow...
         
         # Check if file should be processed based on pre-checked registry info
         if not force_reprocess and not registry_info['process']:

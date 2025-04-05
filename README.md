@@ -90,26 +90,28 @@ python main.py --components excel --start-date 2024-12-01 --end-date 2024-12-07
 python main.py --components pdf --start-date 2024-12-01 --end-date 2024-12-03
 python main.py --components scraper --start-date 2024-12-01 --end-date 2024-12-07
 python main.py --start-date 2024-11-01 --end-date 2024-12-01
-python main.py --components aggregator --start-date 2024-11-01 --end-date 2024-12-01
+python main.py --start-date 2024-11-01 --end-date 2024-12-01 --force-reprocess
+python main.py --components extractor excel pdf error aggregator --start-date 2024-11-01 --end-date 2024-11-07 --force-reprocess --log-level WARNING
+python main.py --components extractor excel pdf error aggregator --force-reprocess --log-level WARNING
 
 # Run the full pipeline
-python -m agroamigo_pipeline.main
+python main.py
 
 
 # Run with date filtering
-python -m agroamigo_pipeline.main --start-date 2023-01-01 --end-date 2023-12-31
+python main.py --start-date 2023-01-01 --end-date 2023-12-31
 
 # Run specific components only
-python -m agroamigo_pipeline.main --components extractor excel pdf aggregator
+python main.py --components extractor excel pdf aggregator
 
 # Control parallel processing
-python -m agroamigo_pipeline.main --workers 4
+python main.py --workers 4
 
 # Force reprocessing of files (even if they've been processed before)
-python -m agroamigo_pipeline.main --force-reprocess
+python main.py --force-reprocess
 
 # Set log level
-python -m agroamigo_pipeline.main --log-level DEBUG
+python main.py --log-level DEBUG
 ```
 
 ### Python API Usage

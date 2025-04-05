@@ -9,8 +9,8 @@ dotenv.load_dotenv()
 PROJECT_ROOT = Path(__file__).parent.parent.parent.absolute()
 PARENT_ROOT = PROJECT_ROOT.parent
 # Data directories
-DATA_DIR = '/Users/ethankallett/Documents/Projects/AgroAmigo_DataScraping/Prices/Daily Prices'
-SOURCE_DIR = os.path.join(DATA_DIR, 'Source')  # Downloaded files from web scraper
+DATA_DIR = '/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data'
+SOURCE_DIR = os.path.join('/Users/ethankallett/Documents/Projects/AgroAmigo_DataScraping/Prices/Daily Prices/Source')  # It seems to be faster to download on Colombian VPN
 PDF_DIR = os.path.join(DATA_DIR, 'PDF_Files/PDFs')  # Extracted PDF files
 PROCESSED_DIR = os.path.join(DATA_DIR, 'IndividualCSVs')  # Individual CSV files
 CONSOLIDATED_DIR = os.path.join(DATA_DIR, 'Consolidated')  # Final aggregated data

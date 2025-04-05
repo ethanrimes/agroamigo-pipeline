@@ -439,15 +439,11 @@ class ZipExtractor:
                 for item in self.temp_dir.glob('**/*'):
                     if item.is_file():
                         stats['total'] += 1
-                        
-                        # Check for date in filename
-                        filename_has_date, _ = self._get_date_from_filename(item.name)
-                        
-                        # Add date prefix if filename doesn't already have a date
-                        new_filename = item.name
-                        if date_prefix and not filename_has_date:
-                            new_filename = f"{date_prefix_str}{item.name}"
-                        
+
+                        # Always prepend date prefix to filename
+                        date_prefix_str = f"{date_prefix}-" if date_prefix else ""
+                        new_filename = f"{date_prefix_str}{item.name}"
+
                         # Process based on file type
                         if item.suffix.lower() == '.pdf':
                             # Move to PDF directory
@@ -455,21 +451,22 @@ class ZipExtractor:
                             shutil.move(item, dest_path)
                             stats['pdf'] += 1
                             self.logger.debug(f"Moved PDF to: {dest_path}")
-                            
+
                         elif item.suffix.lower() in ['.xlsx', '.xls']:
                             # Move Excel files back to source directory
                             dest_path = self.source_dir / new_filename
                             shutil.move(item, dest_path)
                             stats['excel'] += 1
                             self.logger.debug(f"Moved Excel to: {dest_path}")
-                            
+
                         else:
-                            # Just move other files to temp root (flattening structure)
+                            # Move other files to temp root (flattening structure)
                             dest_path = self.temp_dir / new_filename
-                            if item != dest_path:  # Avoid moving to itself
+                            if item != dest_path:
                                 shutil.move(item, dest_path)
                             stats['other'] += 1
                             self.logger.debug(f"Moved other file to: {dest_path}")
+
                 
                 return stats
                 
