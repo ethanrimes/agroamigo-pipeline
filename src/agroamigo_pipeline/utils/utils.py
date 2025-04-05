@@ -122,6 +122,38 @@ def format_date(date_obj, format="%Y-%m-%d"):
     
     return date_obj.strftime(format)
 
+def clean_text(text):
+    """Clean and standardize text fields."""
+    if text is None:
+        return None
+    text = re.sub(r'\s+', ' ', str(text)).strip()
+    text = text.replace('Ó', 'O').replace('Á', 'A').replace('É', 'E').replace('Í', 'I').replace('Ú', 'U')
+    return format_text(text)
+
+def format_text(text, preserve_case=False):
+    """Format text to have first letter capitalized and rest lowercase."""
+    if not text:
+        return None
+    text = str(text).strip()
+    if len(text) == 0:
+        return None
+    if preserve_case:
+        return text
+    return text[0].upper() + text[1:].lower()
+
+def normalize_text(text):
+    """Remove accents and convert to lowercase for comparison"""
+    if not text:
+        return ""
+    text = text.lower()
+    replacements = {
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+        'ü': 'u', 'ñ': 'n'
+    }
+    for acc, non in replacements.items():
+        text = text.replace(acc, non)
+    return text
+
 def extract_geography_info(text):
     """
     Extract city and market information from text.

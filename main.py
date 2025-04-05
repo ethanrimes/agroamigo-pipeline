@@ -16,6 +16,8 @@ from agroamigo_pipeline.processors.pdf_processor import PDFProcessor
 from agroamigo_pipeline.processors.data_aggregator import DataAggregator
 from agroamigo_pipeline.error_handlers.error_gatherer import ErrorGatherer
 from agroamigo_pipeline.utils.parquet_registry import ParquetRegistry
+from agroamigo_pipeline.scraping.web_scraper import WebScraper
+from agroamigo_pipeline.utils.web_scraper_registry import WebScraperRegistry
 
 class Pipeline:
     """Main pipeline orchestration class."""
@@ -32,6 +34,9 @@ class Pipeline:
         
         # Initialize registry - use ParquetRegistry instead of FileRegistry
         self.registry = ParquetRegistry()
+        
+        # Initialize web scraper registry
+        self.web_scraper_registry = WebScraperRegistry()
         
         # Check if old JSON registry exists and migrate if needed
         self._migrate_registry_if_needed()
@@ -81,6 +86,13 @@ class Pipeline:
             # Run pipeline components in sequence
             results = {}
             
+            # Step 0: Web scraping (new component)
+            if not components or 'scraper' in components:
+                self.logger.info("Running web scraper...")
+                scraper_stats = self._run_web_scraper(start_date, end_date, max_workers)
+                results['scraper'] = scraper_stats
+                self.logger.info("Completed web scraping")
+            
             # Step 1: ZIP extraction
             if not components or 'extractor' in components:
                 self.logger.info("Running ZIP extraction...")
@@ -122,6 +134,12 @@ class Pipeline:
             if csv_path:
                 self.logger.info(f"Registry data exported to {csv_path}")
             
+            # Export web scraper registry data to CSV
+            self.logger.info("Exporting web scraper registry data to CSV...")
+            scraper_csv_path = self.web_scraper_registry.export_to_csv()
+            if scraper_csv_path:
+                self.logger.info(f"Web scraper registry data exported to {scraper_csv_path}")
+            
             self.logger.info("Pipeline execution completed successfully")
             return results
             
@@ -130,87 +148,14 @@ class Pipeline:
             self.logger.exception("Exception details:")
             raise
     
-    # The rest of the class remains the same, just replace any remaining FileRegistry references with ParquetRegistry
-    # No other changes are needed in the methods below as they use the registry through the same interface
-    
-    def _run_extractor(self, force_reprocess=False):
-        """Run the ZIP extractor component."""
+    def _run_web_scraper(self, start_date, end_date, max_workers=None):
+        """Run the web scraper component."""
         try:
-            extractor = ZipExtractor()
-            stats = extractor.process_zip_files(force_reprocess=force_reprocess)
+            scraper = WebScraper(source_dir=SOURCE_DIR, max_workers=max_workers)
+            stats = scraper.run(start_date=start_date, end_date=end_date, max_workers=max_workers)
             return stats
         except Exception as e:
-            self.logger.error(f"ZIP extraction failed: {str(e)}")
-            self.logger.exception("Exception details:")
-            raise
-    
-    def _run_excel_processor(self, start_date, end_date, force_reprocess=False):
-        """Run the Excel processor component."""
-        try:
-            processor = ExcelProcessor()
-            stats = processor.process_excel_files(
-                source_dir=SOURCE_DIR,
-                output_dir=PROCESSED_DIR,
-                start_date=start_date,
-                end_date=end_date,
-                force_reprocess=force_reprocess
-            )
-            return stats
-        except Exception as e:
-            self.logger.error(f"Excel processing failed: {str(e)}")
-            self.logger.exception("Exception details:")
-            raise
-    
-    def _run_pdf_processor(self, start_date, end_date, max_workers, force_reprocess=False):
-        """Run the PDF processor component."""
-        try:
-            # Get list of PDF files
-            pdf_files = list(Path(PDF_DIR).glob('**/*.pdf'))
-            self.logger.info(f"Found {len(pdf_files)} PDF files to process")
-            
-            processor = PDFProcessor()
-            stats = processor.process_pdf_files(
-                pdf_files=pdf_files,
-                output_dir=PROCESSED_DIR,
-                start_date=start_date,
-                end_date=end_date,
-                max_workers=max_workers,
-                force_reprocess=force_reprocess
-            )
-            return stats
-        except Exception as e:
-            self.logger.error(f"PDF processing failed: {str(e)}")
-            self.logger.exception("Exception details:")
-            raise
-    
-    def _run_error_aggregation(self):
-        """Run the error aggregation component."""
-        try:
-            aggregator = ErrorGatherer()
-            df = aggregator.consolidate_error_files()
-            return {
-                "total_errors": len(df),
-                "error_stats": aggregator.stats
-            }
-        except Exception as e:
-            self.logger.error(f"Error aggregation failed: {str(e)}")
-            self.logger.exception("Exception details:")
-            raise
-    
-    def _run_data_aggregation(self, start_date, end_date):
-        """Run the data aggregation component."""
-        try:
-            aggregator = DataAggregator()
-            df = aggregator.aggregate_data(
-                filter_date_start=start_date.strftime('%Y-%m-%d') if start_date else None,
-                filter_date_end=end_date.strftime('%Y-%m-%d') if end_date else None
-            )
-            return {
-                "rows_output": len(df),
-                "aggregation_stats": aggregator.stats
-            }
-        except Exception as e:
-            self.logger.error(f"Data aggregation failed: {str(e)}")
+            self.logger.error(f"Web scraping failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
 
@@ -221,7 +166,7 @@ def parse_args():
     parser.add_argument('--start-date', type=str, help='Start date (YYYY-MM-DD)')
     parser.add_argument('--end-date', type=str, help='End date (YYYY-MM-DD)')
     parser.add_argument('--components', type=str, nargs='+', 
-                      choices=['extractor', 'excel', 'pdf', 'error', 'aggregator'],
+                      choices=['extractor', 'excel', 'pdf', 'error', 'aggregator', 'scraper'],
                       help='Components to run (default: all)')
     parser.add_argument('--workers', type=int, default=MAX_WORKERS,
                       help=f'Number of worker processes (default: {MAX_WORKERS})')
