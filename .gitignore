@@ -15,3 +15,49 @@ src/data/*
 **/__pycache__/
 *.pyc
 
+
+# Ignore all files in logs, test_data, data, and registry directories
+logs/*
+!logs/.gitkeep
+
+registry/*
+!registry/.gitkeep
+
+src/logs/*
+!src/logs/.gitkeep
+
+tests/test_data/*
+!tests/test_data/.gitkeep
+
+src/data/*
+!src/data/.gitkeep
+
+# Ignore common file types in ignored folders
+logs/**/*.log
+logs/**/*.txt
+logs/**/*.csv
+logs/**/*.json
+
+registry/**/*.parquet
+registry/**/*.csv
+registry/**/*.json
+
+src/logs/**/*.log
+src/logs/**/*.txt
+src/logs/**/*.csv
+src/logs/**/*.json
+
+tests/test_data/**/*.csv
+tests/test_data/**/*.json
+tests/test_data/**/*.xlsx
+
+src/data/**/*.csv
+src/data/**/*.json
+src/data/**/*.xlsx
+
+# Ignore environment files
+.env
+
+# Ignore Python cache files
+**/__pycache__/
+*.pyc
