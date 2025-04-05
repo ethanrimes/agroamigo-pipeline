@@ -128,6 +128,129 @@ class PDFProcessorOrchestrator:
         self.logger.info(f"<---- Completed text extraction flow for: {filename}")
         return result
     
+    async def process_pdf_with_gpt4o_async(self, file_path):
+        """
+        Process PDF using GPT-4o mini for image-based extraction.
+        
+        Args:
+            file_path (str): Path to the PDF file
+            
+        Returns:
+            DataFrame: Processed data in standardized format
+        """
+        filename = os.path.basename(file_path)
+        self.logger.info(f"----> GPT-4o vision flow for: {filename}")
+        
+        try:
+            # First extract text to get metadata
+            self.logger.info(f"      Extracting text for metadata")
+            text_to_use = self.text_extractor.extract_text_with_pdfplumber(file_path)
+            self.logger.info(f"      Using text from pdfplumber for metadata")
+            
+            # Extract metadata from text
+            self.logger.info(f"      Extracting metadata from text")
+            metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, text_to_use)
+            self.logger.info(f"      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
+            
+            # Convert PDF to images
+            self.logger.info(f"      Converting PDF to images")
+            image_paths = self.image_handler.convert_pdf_to_images(file_path, save_copies=True)
+            self.logger.info(f"      PDF converted to {len(image_paths)} images")
+            
+            # Check if we need to extract header metadata
+            extract_header = metadata['city'] == 'Unknown' or metadata['market'] == 'Unknown'
+            
+            # Prepare image encoding and API requests
+            self.logger.info(f"      Preparing to process {len(image_paths)} images with GPT-4o mini")
+            
+            # Create tasks for async processing
+            import asyncio
+            import concurrent.futures
+            
+            async def process_all_images():
+                # First encode all images to base64
+                self.logger.info(f"      Encoding all images to base64")
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    base64_images = list(await asyncio.get_event_loop().run_in_executor(
+                        executor, 
+                        lambda: [self.image_handler.encode_image(img_path) for img_path in image_paths]
+                    ))
+                
+                self.logger.info(f"      All images encoded to base64")
+                
+                # Prepare tasks for all pages
+                tasks = []
+                for i, (image_path, base64_image) in enumerate(zip(image_paths, base64_images)):
+                    self.logger.info(f"      Creating GPT-4o task for image {i+1}/{len(image_paths)}")
+                    task = self.gpt_client.query_gpt4o_with_image_async(image_path, base64_image)
+                    tasks.append(task)
+                
+                # Add header extraction task if needed
+                header_task = None
+                if extract_header and len(image_paths) > 0:
+                    self.logger.info(f"      Creating additional task to extract header metadata from first page")
+                    header_task = self.gpt_client.query_gpt4o_with_image_async(
+                        image_paths[0], 
+                        base64_images[0], 
+                        prompt_type="header"
+                    )
+                    tasks.append(header_task)
+                
+                # Execute all tasks simultaneously
+                self.logger.info(f"      Executing {len(tasks)} GPT-4o requests asynchronously")
+                responses = await asyncio.gather(*tasks)
+                
+                # Separate the header response if it exists
+                if header_task:
+                    header_text = responses[-1]
+                    csv_texts = responses[:-1]
+                    self.logger.info(f"      Received header text: {header_text[:100]}...")
+                    self.logger.info(f"      Received {len(csv_texts)} CSV responses")
+                    
+                    # Update metadata using the header text if needed
+                    if metadata['city'] == 'Unknown' or metadata['market'] == 'Unknown':
+                        self.logger.info(f"      Updating metadata using extracted header")
+                        updated_metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, header_text)
+                        
+                        # Only update missing fields
+                        if metadata['city'] == 'Unknown' and updated_metadata['city'] != 'Unknown':
+                            metadata['city'] = updated_metadata['city']
+                            self.logger.info(f"      Updated city to: {metadata['city']}")
+                        
+                        if metadata['market'] == 'Unknown' and updated_metadata['market'] != 'Unknown':
+                            metadata['market'] = updated_metadata['market']
+                            self.logger.info(f"      Updated market to: {metadata['market']}")
+                        
+                        if metadata['date'] == datetime.now().strftime('%Y-%m-%d') and updated_metadata['date'] != metadata['date']:
+                            metadata['date'] = updated_metadata['date']
+                            self.logger.info(f"      Updated date to: {metadata['date']}")
+                else:
+                    csv_texts = responses
+                    self.logger.info(f"      Received {len(csv_texts)} CSV responses")
+                
+                return csv_texts, metadata
+            
+            # Run async processing
+            loop = asyncio.get_event_loop()
+            csv_texts, updated_metadata = loop.run_until_complete(process_all_images())
+            
+            self.stats['gpt4o_calls'] += len(csv_texts) + (1 if extract_header else 0)
+            
+            # Process the CSV texts
+            self.logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")
+            result = self.gpt_csv_parser.process_gpt4o_results(file_path, csv_texts, updated_metadata)
+            self.logger.info(f"      CSV processing complete, extracted {len(result) if result is not None else 0} rows")
+            
+            self.logger.info(f"<---- Completed GPT-4o vision flow for: {filename}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error processing PDF with GPT-4o mini: {str(e)}")
+            self.logger.info(f"Error details: {traceback.format_exc()}")
+            self.logger.info(f"<---- Failed GPT-4o vision flow for: {filename}")
+            return None
+
+
     def process_pdf_with_gpt4o(self, file_path):
         """
         Process PDF using GPT-4o mini for image-based extraction.
@@ -157,26 +280,60 @@ class PDFProcessorOrchestrator:
             image_paths = self.image_handler.convert_pdf_to_images(file_path, save_copies=True)
             self.logger.info(f"      PDF converted to {len(image_paths)} images")
             
-            # Process each page with GPT-4o mini
-            csv_texts = []
-            self.logger.info(f"      Processing images with GPT-4o mini")
+            # Check if we need to extract header metadata
+            need_header_extraction = metadata['city'] == 'Unknown' or metadata['market'] == 'Unknown'
             
-            for i, image_path in enumerate(image_paths):
-                self.logger.info(f"      Processing image {i+1}/{len(image_paths)}: {os.path.basename(image_path)}")
-                
-                # Encode the image to base64
-                self.logger.info(f"      Encoding image to base64")
-                base64_image = self.image_handler.encode_image(image_path)
-                
-                # Query GPT-4o mini with the image
-                self.logger.info(f"      Querying GPT-4o mini with image")
+            # Encode all images to base64
+            self.logger.info(f"      Encoding all images to base64")
+            base64_images = []
+            for img_path in image_paths:
+                base64_images.append(self.image_handler.encode_image(img_path))
+            self.logger.info(f"      All {len(base64_images)} images encoded")
+            
+            # Process images for tables using synchronous requests
+            csv_texts = []
+            self.logger.info(f"      Processing images for table extraction")
+            
+            for i, (image_path, base64_image) in enumerate(zip(image_paths, base64_images)):
+                self.logger.info(f"      Processing image {i+1}/{len(image_paths)} for table extraction")
                 csv_text = self.gpt_client.query_gpt4o_with_image(image_path, base64_image)
-                
                 if csv_text:
-                    self.logger.info(f"      Received response from GPT-4o mini, {len(csv_text)} characters")
+                    self.logger.info(f"      Successfully extracted table from image {i+1}")
                     csv_texts.append(csv_text)
                 else:
-                    self.logger.warning(f"      No text extracted from image {i+1}")
+                    self.logger.warning(f"      Failed to extract table from image {i+1}")
+            
+            # Process header if needed
+            if need_header_extraction and len(image_paths) > 0:
+                self.logger.info(f"      Extracting header data from first image")
+                header_text = self.gpt_client.query_gpt4o_with_image(
+                    image_paths[0], 
+                    base64_images[0], 
+                    prompt_type="header"
+                )
+                
+                if header_text:
+                    self.logger.info(f"      Successfully extracted header: {header_text[:100]}...")
+                    
+                    # Update metadata using the header text
+                    self.logger.info(f"      Updating metadata using extracted header")
+                    updated_metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, header_text)
+                    
+                    # Only update missing fields
+                    if metadata['city'] == 'Unknown' and updated_metadata['city'] != 'Unknown':
+                        metadata['city'] = updated_metadata['city']
+                        self.logger.info(f"      Updated city to: {metadata['city']}")
+                    
+                    if metadata['market'] == 'Unknown' and updated_metadata['market'] != 'Unknown':
+                        metadata['market'] = updated_metadata['market']
+                        self.logger.info(f"      Updated market to: {metadata['market']}")
+                    
+                    if metadata['date'] == datetime.now().strftime('%Y-%m-%d') and updated_metadata['date'] != metadata['date']:
+                        metadata['date'] = updated_metadata['date']
+                        self.logger.info(f"      Updated date to: {metadata['date']}")
+            
+            # Track GPT-4o calls
+            self.stats['gpt4o_calls'] += len(csv_texts) + (1 if need_header_extraction else 0)
             
             # Process the CSV texts
             self.logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")

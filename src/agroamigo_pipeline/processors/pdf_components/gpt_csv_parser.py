@@ -40,7 +40,7 @@ class GPTCSVParser:
     
     def process_csv_from_gpt4o(self, csv_text, metadata):
         """
-        Process CSV text extracted by GPT-4o mini.
+        Process CSV text extracted by GPT-4o mini using stack-based category tracking.
         
         Args:
             csv_text (str): CSV text extracted by GPT-4o mini
@@ -53,7 +53,7 @@ class GPTCSVParser:
         
         # Log the input CSV text
         self.logger.info(f"Processing CSV text from GPT-4o mini - {len(csv_text)} characters")
-        self.logger.info(f"CSV text length: {len(csv_text)} to process:\n{csv_text}")
+        self.logger.debug(f"CSV text to process:\n{csv_text}")
         num_lines = csv_text.count('\n') + 1 if csv_text else 0
         self.logger.info(f"Number of lines in CSV text: {num_lines}")
         
@@ -75,19 +75,24 @@ class GPTCSVParser:
             lines = csv_text.strip().split('\n')
             self.logger.info(f"Split CSV text into {len(lines)} lines")
             
-            # Track category hierarchy and processing stats
-            current_major_category = ""
-            current_sub_category = ""
+            # Initialize the category stack (max 2 items)
+            # First element is major category, second is subcategory
+            category_stack = []
+            
+            # Track if previous row had price data
+            previous_row_had_prices = None
+            
+            # Processing statistics
             processed_categories = 0
             processed_products = 0
             skipped_lines = 0
             price_errors = 0
             
             for line_idx, line in enumerate(lines):
-                self.logger.info(f"Processing line {line_idx+1}: {line}")
+                self.logger.debug(f"Processing line {line_idx+1}: {line}")
                 # Skip empty lines
                 if not line.strip():
-                    self.logger.info(f"Skipping empty line {line_idx+1}")
+                    self.logger.debug(f"Skipping empty line {line_idx+1}")
                     skipped_lines += 1
                     continue
                 
@@ -96,86 +101,106 @@ class GPTCSVParser:
                 
                 # Skip header line
                 if parts[0].lower() == 'producto':
-                    self.logger.info(f"Skipping header line: {line}")
+                    self.logger.debug(f"Skipping header line: {line}")
                     skipped_lines += 1
                     continue
                 
-                # If only one column has data, it might be a category
-                if len(parts) > 1 and all(not part.strip() for part in parts[1:]):
-                    category_line = parts[0].strip()
-                    
-                    # Determine if major or sub category
-                    if category_line.isupper() or any(keyword in category_line.lower() for keyword in 
-                                                    ['frutas', 'verduras', 'hortalizas', 'tuberculos']):
-                        current_major_category = category_line
-                        current_sub_category = ""
-                        self.logger.info(f"Detected major category: '{current_major_category}'")
-                        processed_categories += 1
-                    else:
-                        current_sub_category = category_line
-                        self.logger.info(f"Detected sub-category: '{current_sub_category}' under major category '{current_major_category}'")
-                        processed_categories += 1
-                    
-                    continue
+                # Check if this is a category line (only first column has data)
+                is_category_line = len(parts) > 1 and all(not part.strip() for part in parts[1:])
                 
-                # Extract product data
-                if len(parts) >= 5:  # Ensure we have enough columns
-                    product = parts[0].strip()
-                    presentation = parts[1].strip() if len(parts) > 1 else ""
-                    units = parts[2].strip() if len(parts) > 2 else ""
+                if is_category_line:
+                    category_name = parts[0].strip()
+                    self.logger.info(f"Found category line: '{category_name}'")
                     
-                    # Try to extract prices
-                    try:
-                        # Format with Ronda 1 and Ronda 2
-                        if len(parts) >= 7:
-                            min1 = clean_price_value(parts[3])
-                            max1 = clean_price_value(parts[4])
-                            min2 = clean_price_value(parts[5])
-                            max2 = clean_price_value(parts[6])
-                            
-                            # Calculate daily min and max
-                            valid_prices = [p for p in [min1, min2, max1, max2] if p is not None and p > 0]
-                            if valid_prices:
-                                daily_min = min(valid_prices)
-                                daily_max = max(valid_prices)
-                                self.logger.info(f"Extracted product '{product}' with prices - min1: {min1}, max1: {max1}, min2: {min2}, max2: {max2} -> daily min: {daily_min}, daily max: {daily_max}")
-                            else:
-                                self.logger.warning(f"No valid prices found for product '{product}' in line: {line}")
-                                price_errors += 1
-                                continue  # Skip if no valid prices
-                        
-                        # Simple format with just min/max
+                    # Stack management according to the requirements
+                    if len(category_stack) == 0:
+                        # Empty stack - add as major category
+                        category_stack.append(category_name)
+                        self.logger.info(f"Stack was empty -> Added major category: '{category_name}'")
+                    elif len(category_stack) == 1:
+                        # One item in stack - add as subcategory
+                        category_stack.append(category_name)
+                        self.logger.info(f"Stack had one item -> Added subcategory: '{category_name}'")
+                    elif len(category_stack) == 2:
+                        # Two items in stack already
+                        if previous_row_had_prices is True:
+                            # Previous row had prices, update subcategory
+                            category_stack[1] = category_name
+                            self.logger.info(f"Previous row had prices -> Updated subcategory to: '{category_name}'")
                         else:
-                            daily_min = clean_price_value(parts[3])
-                            daily_max = clean_price_value(parts[4])
-                            
-                            if daily_min is None or daily_max is None:
-                                self.logger.warning(f"Invalid price data for product '{product}' in line: {line}")
-                                price_errors += 1
-                                continue  # Skip if no valid prices
-                            
-                            self.logger.info(f"Extracted product '{product}' with prices - min: {daily_min}, max: {daily_max}")
-                        
-                        product_data.append({
-                            'product': product,
-                            'major_category': current_major_category,
-                            'sub_category': current_sub_category,
-                            'presentation': presentation,
-                            'units': units,
-                            'daily_min': daily_min,
-                            'daily_max': daily_max
-                        })
-                        processed_products += 1
+                            # Previous row was also a category, shift stack
+                            old_major = category_stack.pop(0)  # Remove old major
+                            new_major = category_stack[0]      # Current subcategory becomes new major
+                            category_stack = [new_major, category_name]  # Set new major and new sub
+                            self.logger.info(f"Previous row was a category -> Shifted stack: '{old_major}' out, '{new_major}' to major, '{category_name}' to sub")
                     
-                    except (ValueError, IndexError) as e:
-                        self.logger.warning(f"Error processing price data for '{product}' in line {line_idx+1}: {str(e)}")
-                        price_errors += 1
-                else:
-                    self.logger.warning(f"Line {line_idx+1} has insufficient columns ({len(parts)}): {line}")
-                    skipped_lines += 1
+                    processed_categories += 1
+                    previous_row_had_prices = False
+                    continue
+                
+                # This is a product line with price data
+                product = parts[0].strip()
+                presentation = parts[1].strip() if len(parts) > 1 else ""
+                units = parts[2].strip() if len(parts) > 2 else ""
+                
+                # Try to extract prices
+                try:
+                    # Get current categories from stack
+                    major_category = category_stack[0] if len(category_stack) > 0 else ""
+                    sub_category = category_stack[1] if len(category_stack) > 1 else ""
+                    
+                    # Format with Ronda 1 and Ronda 2
+                    if len(parts) >= 7:
+                        min1 = clean_price_value(parts[3])
+                        max1 = clean_price_value(parts[4])
+                        min2 = clean_price_value(parts[5])
+                        max2 = clean_price_value(parts[6])
+                        
+                        # Calculate daily min and max
+                        valid_prices = [p for p in [min1, min2, max1, max2] if p is not None and p > 0]
+                        if valid_prices:
+                            daily_min = min(valid_prices)
+                            daily_max = max(valid_prices)
+                            self.logger.debug(f"Extracted product '{product}' with prices - min1: {min1}, max1: {max1}, min2: {min2}, max2: {max2} -> daily min: {daily_min}, daily max: {daily_max}")
+                        else:
+                            self.logger.warning(f"No valid prices found for product '{product}' in line: {line}")
+                            price_errors += 1
+                            continue  # Skip if no valid prices
+                    
+                    # Simple format with just min/max
+                    else:
+                        daily_min = clean_price_value(parts[3])
+                        daily_max = clean_price_value(parts[4])
+                        
+                        if daily_min is None or daily_max is None:
+                            self.logger.warning(f"Invalid price data for product '{product}' in line: {line}")
+                            price_errors += 1
+                            continue  # Skip if no valid prices
+                        
+                        self.logger.debug(f"Extracted product '{product}' with prices - min: {daily_min}, max: {daily_max}")
+                    
+                    product_data.append({
+                        'product': product,
+                        'major_category': major_category,
+                        'sub_category': sub_category,
+                        'presentation': presentation,
+                        'units': units,
+                        'daily_min': daily_min,
+                        'daily_max': daily_max
+                    })
+                    
+                    self.logger.info(f"Added product '{product}' in category '{major_category}' > '{sub_category}'")
+                    processed_products += 1
+                    previous_row_had_prices = True
+                
+                except (ValueError, IndexError) as e:
+                    self.logger.warning(f"Error processing price data for '{product}' in line {line_idx+1}: {str(e)}")
+                    price_errors += 1
+                    previous_row_had_prices = False
             
             # Log processing summary
             self.logger.info(f"CSV processing summary: {processed_products} products, {processed_categories} categories, {skipped_lines} skipped lines, {price_errors} price errors")
+            self.logger.info(f"Final category stack state: {category_stack}")
             
             return product_data
             

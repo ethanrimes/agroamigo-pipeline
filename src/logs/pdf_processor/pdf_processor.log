@@ -5447,3 +5447,356 @@ Piña gold;Canastilla;20 Kilogramo;35.000;40.000;0;0
 2025-04-05 13:16:16 - pdf_processor - INFO - Used GPT extraction: True
 2025-04-05 13:16:16 - pdf_processor - INFO - Step 5: Registering processing results
 2025-04-05 13:16:16 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 13:49:13 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 13:49:13 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 13:49:13 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-05 13:49:13 - pdf_processor - INFO - Starting processing at: 2025-04-05 13:49:13.513181
+2025-04-05 13:49:13 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-05 13:49:13 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-05 13:49:13 - pdf_processor - INFO - pdfplumber extraction complete, extracted 0 characters
+2025-04-05 13:49:13 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-05 13:49:13 - pdf_processor - INFO -         Text is empty or None
+2025-04-05 13:49:13 - pdf_processor - INFO - Text is valid: False
+2025-04-05 13:49:13 - pdf_processor - INFO - Step 3B: Text is not valid, processing with GPT-4o vision
+2025-04-05 13:49:13 - pdf_processor - INFO - Converting PDF to images and processing with GPT-4o
+2025-04-05 13:49:13 - pdf_processor - INFO - ----> GPT-4o vision flow for: tunja_complejo_20250221.pdf
+2025-04-05 13:49:13 - pdf_processor - INFO -       Extracting text for metadata
+2025-04-05 13:49:13 - pdf_processor - INFO -       Using text from pdfplumber for metadata
+2025-04-05 13:49:13 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-05 13:49:13 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Unknown, market=Unknown
+2025-04-05 13:49:13 - pdf_processor - INFO -       Converting PDF to images
+2025-04-05 13:49:13 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/gpt4o_vision_test/tunja_complejo_20250221.pdf
+2025-04-05 13:49:13 - pdf_processor - INFO - Converted 1 pages to images
+2025-04-05 13:49:14 - pdf_processor - INFO - Saved page 1 to: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp8nsclos7/page_0.jpg
+2025-04-05 13:49:14 - pdf_processor - INFO - Created permanent images directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/permanent_images
+2025-04-05 13:49:14 - pdf_processor - INFO - Saved permanent copy of page 1 to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/permanent_images/tunja_complejo_20250221.pdf_page_0.jpg
+2025-04-05 13:49:14 - pdf_processor - INFO - PDF conversion completed in 0.55 seconds
+2025-04-05 13:49:14 - pdf_processor - INFO -       PDF converted to 1 images
+2025-04-05 13:49:14 - pdf_processor - INFO -       Preparing to process 1 images with GPT-4o mini
+2025-04-05 13:49:14 - pdf_processor - ERROR - Error processing PDF with GPT-4o mini: This event loop is already running
+2025-04-05 13:49:14 - pdf_processor - INFO - Error details: Traceback (most recent call last):
+  File "/Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/pdf_components/orchestrator.py", line 235, in process_pdf_with_gpt4o_async
+    csv_texts, updated_metadata = loop.run_until_complete(process_all_images())
+                                  ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ethankallett/miniforge3/envs/agroamigo_pipeline/lib/python3.13/asyncio/base_events.py", line 701, in run_until_complete
+    self._check_running()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ethankallett/miniforge3/envs/agroamigo_pipeline/lib/python3.13/asyncio/base_events.py", line 637, in _check_running
+    raise RuntimeError('This event loop is already running')
+RuntimeError: This event loop is already running
+
+2025-04-05 13:49:14 - pdf_processor - INFO - <---- Failed GPT-4o vision flow for: tunja_complejo_20250221.pdf
+2025-04-05 13:49:14 - pdf_processor - INFO - GPT-4o vision processing complete, extracted 0 rows
+2025-04-05 13:49:14 - pdf_processor - WARNING - No data extracted from PDF, no output file created
+2025-04-05 13:49:14 - pdf_processor - INFO - Total processing time: 0.56 seconds
+2025-04-05 13:49:14 - pdf_processor - INFO - Used GPT extraction: True
+2025-04-05 13:49:14 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-05 13:49:14 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 13:51:12 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 13:51:12 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 13:51:12 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-05 13:51:12 - pdf_processor - INFO - Starting processing at: 2025-04-05 13:51:12.238323
+2025-04-05 13:51:12 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-05 13:51:12 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-05 13:51:12 - pdf_processor - INFO - pdfplumber extraction complete, extracted 0 characters
+2025-04-05 13:51:12 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-05 13:51:12 - pdf_processor - INFO -         Text is empty or None
+2025-04-05 13:51:12 - pdf_processor - INFO - Text is valid: False
+2025-04-05 13:51:12 - pdf_processor - INFO - Step 3B: Text is not valid, processing with GPT-4o vision
+2025-04-05 13:51:12 - pdf_processor - INFO - Converting PDF to images and processing with GPT-4o
+2025-04-05 13:51:12 - pdf_processor - INFO - ----> GPT-4o vision flow for: tunja_complejo_20250221.pdf
+2025-04-05 13:51:12 - pdf_processor - INFO -       Extracting text for metadata
+2025-04-05 13:51:12 - pdf_processor - INFO -       Using text from pdfplumber for metadata
+2025-04-05 13:51:12 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-05 13:51:12 - pdf_processor - INFO -       Metadata extracted: date=2025-02-21, city=Unknown, market=Unknown
+2025-04-05 13:51:12 - pdf_processor - INFO -       Converting PDF to images
+2025-04-05 13:51:12 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/gpt4o_vision_test/tunja_complejo_20250221.pdf
+2025-04-05 13:51:12 - pdf_processor - INFO - Converted 1 pages to images
+2025-04-05 13:51:12 - pdf_processor - INFO - Saved page 1 to: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpjd_wi2ky/page_0.jpg
+2025-04-05 13:51:12 - pdf_processor - INFO - Created permanent images directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/permanent_images
+2025-04-05 13:51:12 - pdf_processor - INFO - Saved permanent copy of page 1 to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/permanent_images/tunja_complejo_20250221.pdf_page_0.jpg
+2025-04-05 13:51:12 - pdf_processor - INFO - PDF conversion completed in 0.75 seconds
+2025-04-05 13:51:12 - pdf_processor - INFO -       PDF converted to 1 images
+2025-04-05 13:51:12 - pdf_processor - INFO -       Encoding all images to base64
+2025-04-05 13:51:12 - pdf_processor - INFO -       All 1 images encoded
+2025-04-05 13:51:12 - pdf_processor - INFO -       Processing images for table extraction
+2025-04-05 13:51:12 - pdf_processor - INFO -       Processing image 1/1 for table extraction
+2025-04-05 13:51:12 - pdf_processor - INFO - Querying GPT-4o mini with image: page_0.jpg, prompt type: table
+2025-04-05 13:51:12 - pdf_processor - INFO - Sending request to GPT-4o mini API for page_0.jpg
+2025-04-05 13:51:32 - pdf_processor - INFO - Raw GPT-4o mini response received for page_0.jpg - 2432 characters
+2025-04-05 13:51:32 - pdf_processor - INFO - Saved raw GPT-4o mini response to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/gpt_responses/gpt_response_table_page_0.jpg_1743832292.txt
+2025-04-05 13:51:32 - pdf_processor - INFO - GPT-4o mini query for page_0.jpg completed in 19.04 seconds
+2025-04-05 13:51:32 - pdf_processor - INFO -       Successfully extracted table from image 1
+2025-04-05 13:51:32 - pdf_processor - INFO -       Extracting header data from first image
+2025-04-05 13:51:32 - pdf_processor - INFO - Querying GPT-4o mini with image: page_0.jpg, prompt type: header
+2025-04-05 13:51:32 - pdf_processor - INFO - Sending request to GPT-4o mini API for page_0.jpg
+2025-04-05 13:51:38 - pdf_processor - INFO - Raw GPT-4o mini response received for page_0.jpg - 138 characters
+2025-04-05 13:51:38 - pdf_processor - INFO - Saved raw GPT-4o mini response to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/gpt_responses/gpt_response_header_page_0.jpg_1743832298.txt
+2025-04-05 13:51:38 - pdf_processor - INFO - GPT-4o mini query for page_0.jpg completed in 6.22 seconds
+2025-04-05 13:51:38 - pdf_processor - INFO -       Successfully extracted header: ```
+PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Bole...
+2025-04-05 13:51:38 - pdf_processor - INFO -       Updating metadata using extracted header
+2025-04-05 13:51:38 - pdf_processor - INFO -       Updated city to: Tunja
+2025-04-05 13:51:38 - pdf_processor - INFO -       Updated market to: Complejo de Servicios del Sur
+2025-04-05 13:51:38 - pdf_processor - INFO -       Processing 1 CSV texts from GPT-4o mini
+2025-04-05 13:51:38 - pdf_processor - INFO -       -----> Processing GPT-4o results for: tunja_complejo_20250221.pdf
+2025-04-05 13:51:38 - pdf_processor - INFO -       Processing 1 CSV texts from GPT-4o mini
+2025-04-05 13:51:38 - pdf_processor - INFO -       Saved raw CSV texts to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/processed_data/raw_csv_texts_tunja_complejo_20250221.pdf_1743832298.json
+2025-04-05 13:51:38 - pdf_processor - INFO -       Processing CSV text 1/1 (2432 characters)
+2025-04-05 13:51:38 - pdf_processor - INFO - Processing CSV text from GPT-4o mini - 2432 characters
+2025-04-05 13:51:38 - pdf_processor - INFO - Number of lines in CSV text: 47
+2025-04-05 13:51:38 - pdf_processor - INFO - Split CSV text into 47 lines
+2025-04-05 13:51:38 - pdf_processor - WARNING - Error processing price data for '```csv' in line 1: list index out of range
+2025-04-05 13:51:38 - pdf_processor - INFO - Found category line: 'Carnes'
+2025-04-05 13:51:38 - pdf_processor - INFO - Stack was empty -> Added major category: 'Carnes'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Carne de cerdo' in category 'Carnes' > ''
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Carne de cerdo, costilla' in category 'Carnes' > ''
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Carne de cerdo, espinazo' in category 'Carnes' > ''
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Carne de cerdo, lomo sin hueso' in category 'Carnes' > ''
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Carne de cerdo, pernil sin hueso' in category 'Carnes' > ''
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Carne de cerdo, tocino barriga' in category 'Carnes' > ''
+2025-04-05 13:51:38 - pdf_processor - INFO - Found category line: 'Frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Stack had one item -> Added subcategory: 'Frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Found category line: 'Cítricos'
+2025-04-05 13:51:38 - pdf_processor - INFO - Previous row was a category -> Shifted stack: 'Carnes' out, 'Frutas' to major, 'Cítricos' to sub
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Limón tahití' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Mandarina arrayana' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Mandarina común' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Naranja valenciana' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Tangelo' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:51:38 - pdf_processor - INFO - Found category line: 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Previous row had prices -> Updated subcategory to: 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Aguacate hass' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Aguacate pelipita' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Banano urabá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Banano bocadillo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Banano criollo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Ciruela importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Ciruela roja' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Curuba' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Durazno nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Feijoa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Frambuesa' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Granadilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Guanábana' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Guayaba pera' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Kiwi' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Lulo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Mango tommy' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Manzana nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Manzana roja importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Manzana royal gala importada' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Manzana verde' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Maracuyá' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Melón cantalupo' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Mora de castilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Papaya amarilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Patilla' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Patilla baby' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Pera nacional' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - INFO - Added product 'Piña gold' in category 'Frutas' > 'Otras frutas'
+2025-04-05 13:51:38 - pdf_processor - WARNING - Error processing price data for '```' in line 47: list index out of range
+2025-04-05 13:51:38 - pdf_processor - INFO - CSV processing summary: 41 products, 4 categories, 0 skipped lines, 2 price errors
+2025-04-05 13:51:38 - pdf_processor - INFO - Final category stack state: ['Frutas', 'Otras frutas']
+2025-04-05 13:51:38 - pdf_processor - INFO -       Extracted 41 product entries from CSV text 1
+2025-04-05 13:51:38 - pdf_processor - INFO -       Saved extracted product data to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/processed_data/extracted_data_tunja_complejo_20250221.pdf_1743832298.json
+2025-04-05 13:51:38 - pdf_processor - INFO -       Converting parsed data to DataFrame
+2025-04-05 13:51:38 - pdf_processor - INFO -       Created DataFrame with 41 rows
+2025-04-05 13:51:38 - pdf_processor - INFO -       Saved final processed DataFrame to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/processed_data/final_df_tunja_complejo_20250221.pdf_1743832298.csv
+2025-04-05 13:51:38 - pdf_processor - INFO -       DataFrame statistics: {'total_rows': 41, 'unique_products': 40, 'unique_categories': 2, 'unique_subcategories': 3, 'min_price_range': np.float64(2.2), 'max_price_range': np.float64(190.0)}
+2025-04-05 13:51:38 - pdf_processor - INFO -       GPT-4o results processing completed in 0.02 seconds, extracted 41 rows
+2025-04-05 13:51:38 - pdf_processor - INFO -       <----- Completed GPT-4o results processing for: tunja_complejo_20250221.pdf
+2025-04-05 13:51:38 - pdf_processor - INFO -       CSV processing complete, extracted 41 rows
+2025-04-05 13:51:38 - pdf_processor - INFO - <---- Completed GPT-4o vision flow for: tunja_complejo_20250221.pdf
+2025-04-05 13:51:38 - pdf_processor - INFO - GPT-4o vision processing complete, extracted 41 rows
+2025-04-05 13:51:38 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-05 13:51:38 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/tunja_complejo_20250221.csv
+2025-04-05 13:51:38 - pdf_processor - INFO - Data statistics: 41 rows, 40 products, 2 major categories, 3 subcategories
+2025-04-05 13:51:38 - pdf_processor - INFO - Used GPT extraction: True
+2025-04-05 13:51:38 - pdf_processor - INFO - Total processing time: 26.04 seconds
+2025-04-05 13:51:38 - pdf_processor - INFO - Used GPT extraction: True
+2025-04-05 13:51:38 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-05 13:51:38 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: tunja_complejo_20250221.pdf ==========
+2025-04-05 13:57:01 - pdf_processor - INFO - PDFProcessorOrchestrator initialized
+2025-04-05 13:57:01 - pdf_processor - INFO - ========== STARTING PDF PROCESSING: reconstructed_from_images.pdf ==========
+2025-04-05 13:57:01 - pdf_processor - INFO - Output directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs
+2025-04-05 13:57:01 - pdf_processor - INFO - Starting processing at: 2025-04-05 13:57:01.233995
+2025-04-05 13:57:01 - pdf_processor - INFO - Step 1: Attempting text extraction from PDF
+2025-04-05 13:57:01 - pdf_processor - INFO - Extracting text using pdfplumber
+2025-04-05 13:57:01 - pdf_processor - INFO - pdfplumber extraction complete, extracted 0 characters
+2025-04-05 13:57:01 - pdf_processor - INFO - Step 2: Checking if text is valid
+2025-04-05 13:57:01 - pdf_processor - INFO -         Text is empty or None
+2025-04-05 13:57:01 - pdf_processor - INFO - Text is valid: False
+2025-04-05 13:57:01 - pdf_processor - INFO - Step 3B: Text is not valid, processing with GPT-4o vision
+2025-04-05 13:57:01 - pdf_processor - INFO - Converting PDF to images and processing with GPT-4o
+2025-04-05 13:57:01 - pdf_processor - INFO - ----> GPT-4o vision flow for: reconstructed_from_images.pdf
+2025-04-05 13:57:01 - pdf_processor - INFO -       Extracting text for metadata
+2025-04-05 13:57:01 - pdf_processor - INFO -       Using text from pdfplumber for metadata
+2025-04-05 13:57:01 - pdf_processor - INFO -       Extracting metadata from text
+2025-04-05 13:57:01 - pdf_processor - INFO -       Metadata extracted: date=2025-04-05, city=Unknown, market=Unknown
+2025-04-05 13:57:01 - pdf_processor - INFO -       Converting PDF to images
+2025-04-05 13:57:01 - pdf_processor - INFO - Converting PDF to images: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/gpt4o_vision_test/reconstructed_from_images.pdf
+2025-04-05 13:57:01 - pdf_processor - INFO - Converted 2 pages to images
+2025-04-05 13:57:01 - pdf_processor - INFO - Saved page 1 to: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp0wm1seoq/page_0.jpg
+2025-04-05 13:57:01 - pdf_processor - INFO - Created permanent images directory: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/permanent_images
+2025-04-05 13:57:01 - pdf_processor - INFO - Saved permanent copy of page 1 to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/permanent_images/reconstructed_from_images.pdf_page_0.jpg
+2025-04-05 13:57:01 - pdf_processor - INFO - Saved page 2 to: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp0wm1seoq/page_1.jpg
+2025-04-05 13:57:01 - pdf_processor - INFO - Saved permanent copy of page 2 to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/permanent_images/reconstructed_from_images.pdf_page_1.jpg
+2025-04-05 13:57:01 - pdf_processor - INFO - PDF conversion completed in 0.58 seconds
+2025-04-05 13:57:01 - pdf_processor - INFO -       PDF converted to 2 images
+2025-04-05 13:57:01 - pdf_processor - INFO -       Encoding all images to base64
+2025-04-05 13:57:01 - pdf_processor - INFO -       All 2 images encoded
+2025-04-05 13:57:01 - pdf_processor - INFO -       Processing images for table extraction
+2025-04-05 13:57:01 - pdf_processor - INFO -       Processing image 1/2 for table extraction
+2025-04-05 13:57:01 - pdf_processor - INFO - Querying GPT-4o mini with image: page_0.jpg, prompt type: table
+2025-04-05 13:57:01 - pdf_processor - INFO - Sending request to GPT-4o mini API for page_0.jpg
+2025-04-05 13:57:16 - pdf_processor - INFO - Raw GPT-4o mini response received for page_0.jpg - 2093 characters
+2025-04-05 13:57:16 - pdf_processor - INFO - Saved raw GPT-4o mini response to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/gpt_responses/gpt_response_table_page_0.jpg_1743832636.txt
+2025-04-05 13:57:16 - pdf_processor - INFO - GPT-4o mini query for page_0.jpg completed in 15.14 seconds
+2025-04-05 13:57:16 - pdf_processor - INFO -       Successfully extracted table from image 1
+2025-04-05 13:57:16 - pdf_processor - INFO -       Processing image 2/2 for table extraction
+2025-04-05 13:57:16 - pdf_processor - INFO - Querying GPT-4o mini with image: page_1.jpg, prompt type: table
+2025-04-05 13:57:16 - pdf_processor - INFO - Sending request to GPT-4o mini API for page_1.jpg
+2025-04-05 13:57:28 - pdf_processor - INFO - Raw GPT-4o mini response received for page_1.jpg - 1426 characters
+2025-04-05 13:57:28 - pdf_processor - INFO - Saved raw GPT-4o mini response to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/gpt_responses/gpt_response_table_page_1.jpg_1743832648.txt
+2025-04-05 13:57:28 - pdf_processor - INFO - GPT-4o mini query for page_1.jpg completed in 11.79 seconds
+2025-04-05 13:57:28 - pdf_processor - INFO -       Successfully extracted table from image 2
+2025-04-05 13:57:28 - pdf_processor - INFO -       Extracting header data from first image
+2025-04-05 13:57:28 - pdf_processor - INFO - Querying GPT-4o mini with image: page_0.jpg, prompt type: header
+2025-04-05 13:57:28 - pdf_processor - INFO - Sending request to GPT-4o mini API for page_0.jpg
+2025-04-05 13:57:37 - pdf_processor - INFO - Raw GPT-4o mini response received for page_0.jpg - 120 characters
+2025-04-05 13:57:37 - pdf_processor - INFO - Saved raw GPT-4o mini response to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/gpt_responses/gpt_response_header_page_0.jpg_1743832657.txt
+2025-04-05 13:57:37 - pdf_processor - INFO - GPT-4o mini query for page_0.jpg completed in 8.72 seconds
+2025-04-05 13:57:37 - pdf_processor - INFO -       Successfully extracted header: ```
+PRECIOS DE VENTA MAYORISTA
+Villavicencio, CAV
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de...
+2025-04-05 13:57:37 - pdf_processor - INFO -       Updating metadata using extracted header
+2025-04-05 13:57:37 - pdf_processor - INFO -       Updated city to: Villavicencio
+2025-04-05 13:57:37 - pdf_processor - INFO -       Updated market to: CAV
+2025-04-05 13:57:37 - pdf_processor - INFO -       Updated date to: 2025-02-21
+2025-04-05 13:57:37 - pdf_processor - INFO -       Processing 2 CSV texts from GPT-4o mini
+2025-04-05 13:57:37 - pdf_processor - INFO -       -----> Processing GPT-4o results for: reconstructed_from_images.pdf
+2025-04-05 13:57:37 - pdf_processor - INFO -       Processing 2 CSV texts from GPT-4o mini
+2025-04-05 13:57:37 - pdf_processor - INFO -       Saved raw CSV texts to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/processed_data/raw_csv_texts_reconstructed_from_images.pdf_1743832657.json
+2025-04-05 13:57:37 - pdf_processor - INFO -       Processing CSV text 1/2 (2093 characters)
+2025-04-05 13:57:37 - pdf_processor - INFO - Processing CSV text from GPT-4o mini - 2093 characters
+2025-04-05 13:57:37 - pdf_processor - INFO - Number of lines in CSV text: 43
+2025-04-05 13:57:37 - pdf_processor - INFO - Split CSV text into 43 lines
+2025-04-05 13:57:37 - pdf_processor - WARNING - Error processing price data for '```csv' in line 1: list index out of range
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Stack was empty -> Added major category: 'Frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Stack had one item -> Added subcategory: 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Limón tahití' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Limón común' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Limón mandarina' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Mandarina arrayana' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Naranja valencia' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Tangelo' in category 'Frutas' > 'Cítricos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Previous row had prices -> Updated subcategory to: 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Aguacate papelillo' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Banano urabá' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Borojo' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Curuba' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Fresa' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Guanábana' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Guayaba pera' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Kiwi' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Lulo' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Mango tommy' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Manzana roja importada' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Manzana royal gala importada' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Maracuyá' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Melón cantalupo' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Mora de castilla' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Papaya paulinia' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Patilla' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Pera importada' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Pitahaya' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Tomate de árbol' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Uva isabela' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Uva importada' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Uva red globe nacional' in category 'Frutas' > 'Otros frutas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Tubérculos, raíces y platanos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Previous row had prices -> Updated subcategory to: 'Tubérculos, raíces y platanos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Previous row was a category -> Shifted stack: 'Frutas' out, 'Tubérculos, raíces y platanos' to major, 'Otros tubérculos' to sub
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Arracacha amarilla' in category 'Tubérculos, raíces y platanos' > 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Plátano' in category 'Tubérculos, raíces y platanos' > 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Plátano' in category 'Tubérculos, raíces y platanos' > 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Plátano hartón verde' in category 'Tubérculos, raíces y platanos' > 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Papa' in category 'Tubérculos, raíces y platanos' > 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Papa superior' in category 'Tubérculos, raíces y platanos' > 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Yuca' in category 'Tubérculos, raíces y platanos' > 'Otros tubérculos'
+2025-04-05 13:57:37 - pdf_processor - WARNING - Error processing price data for '```' in line 43: list index out of range
+2025-04-05 13:57:37 - pdf_processor - INFO - CSV processing summary: 36 products, 5 categories, 0 skipped lines, 2 price errors
+2025-04-05 13:57:37 - pdf_processor - INFO - Final category stack state: ['Tubérculos, raíces y platanos', 'Otros tubérculos']
+2025-04-05 13:57:37 - pdf_processor - INFO -       Extracted 36 product entries from CSV text 1
+2025-04-05 13:57:37 - pdf_processor - INFO -       Processing CSV text 2/2 (1426 characters)
+2025-04-05 13:57:37 - pdf_processor - INFO - Processing CSV text from GPT-4o mini - 1426 characters
+2025-04-05 13:57:37 - pdf_processor - INFO - Number of lines in CSV text: 32
+2025-04-05 13:57:37 - pdf_processor - INFO - Split CSV text into 32 lines
+2025-04-05 13:57:37 - pdf_processor - WARNING - Error processing price data for '```' in line 1: list index out of range
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Verduras y hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Stack was empty -> Added major category: 'Verduras y hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Leguminosas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Stack had one item -> Added subcategory: 'Leguminosas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Arveja verde en vaina' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Frijol verde cargamanto' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Habichuela' in category 'Verduras y hortalizas' > 'Leguminosas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Previous row had prices -> Updated subcategory to: 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Ahuamango (sakata)' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Ajo' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Calabaza' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Choclo maíz' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Cídr' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Pepino cohombro' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Pepino de rellenar' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Pimentón' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Zanahorias' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Zanahoria' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Cebolla cabezona blanca' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Cebolla junca' in category 'Verduras y hortalizas' > 'Otras hortalizas y verduras'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Tomates'
+2025-04-05 13:57:37 - pdf_processor - INFO - Previous row had prices -> Updated subcategory to: 'Tomates'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Tomate chonto' in category 'Verduras y hortalizas' > 'Tomates'
+2025-04-05 13:57:37 - pdf_processor - INFO - Found category line: 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Previous row had prices -> Updated subcategory to: 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Acelga' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Apio' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Brócoli' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Cilantro' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Coliflor' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Espinaca' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Lechuga batavia' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Lechuga crespa verde' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - INFO - Added product 'Repollo blanco' in category 'Verduras y hortalizas' > 'Hortalizas'
+2025-04-05 13:57:37 - pdf_processor - WARNING - Error processing price data for '```' in line 32: list index out of range
+2025-04-05 13:57:37 - pdf_processor - INFO - CSV processing summary: 25 products, 5 categories, 0 skipped lines, 2 price errors
+2025-04-05 13:57:37 - pdf_processor - INFO - Final category stack state: ['Verduras y hortalizas', 'Hortalizas']
+2025-04-05 13:57:37 - pdf_processor - INFO -       Extracted 25 product entries from CSV text 2
+2025-04-05 13:57:37 - pdf_processor - INFO -       Saved extracted product data to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/processed_data/extracted_data_reconstructed_from_images.pdf_1743832657.json
+2025-04-05 13:57:37 - pdf_processor - INFO -       Converting parsed data to DataFrame
+2025-04-05 13:57:37 - pdf_processor - INFO -       Created DataFrame with 61 rows
+2025-04-05 13:57:37 - pdf_processor - INFO -       Saved final processed DataFrame to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/src/agroamigo_pipeline/processors/logs/processed_data/final_df_reconstructed_from_images.pdf_1743832657.csv
+2025-04-05 13:57:37 - pdf_processor - INFO -       DataFrame statistics: {'total_rows': 61, 'unique_products': 60, 'unique_categories': 3, 'unique_subcategories': 7, 'min_price_range': np.float64(1.0), 'max_price_range': np.float64(800.0)}
+2025-04-05 13:57:37 - pdf_processor - INFO -       GPT-4o results processing completed in 0.02 seconds, extracted 61 rows
+2025-04-05 13:57:37 - pdf_processor - INFO -       <----- Completed GPT-4o results processing for: reconstructed_from_images.pdf
+2025-04-05 13:57:37 - pdf_processor - INFO -       CSV processing complete, extracted 61 rows
+2025-04-05 13:57:37 - pdf_processor - INFO - <---- Completed GPT-4o vision flow for: reconstructed_from_images.pdf
+2025-04-05 13:57:37 - pdf_processor - INFO - GPT-4o vision processing complete, extracted 61 rows
+2025-04-05 13:57:37 - pdf_processor - INFO - Step 4: Saving extracted data to CSV
+2025-04-05 13:57:37 - pdf_processor - INFO - Saved output to: /Users/ethankallett/Documents/Projects/agroamigo_pipeline_project/tests/test_data/pdf_processor/outputs/reconstructed_from_images.csv
+2025-04-05 13:57:37 - pdf_processor - INFO - Data statistics: 61 rows, 60 products, 3 major categories, 7 subcategories
+2025-04-05 13:57:37 - pdf_processor - INFO - Used GPT extraction: True
+2025-04-05 13:57:37 - pdf_processor - INFO - Total processing time: 36.28 seconds
+2025-04-05 13:57:37 - pdf_processor - INFO - Used GPT extraction: True
+2025-04-05 13:57:37 - pdf_processor - INFO - Step 5: Registering processing results
+2025-04-05 13:57:37 - pdf_processor - INFO - ========== COMPLETED PDF PROCESSING: reconstructed_from_images.pdf ==========

@@ -1,0 +1,10 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp0wm1seoq/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 13:57:37
+Raw GPT-4o mini response:
+```
+PRECIOS DE VENTA MAYORISTA
+Villavicencio, CAV
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+21 de Febrero de 2025
+```

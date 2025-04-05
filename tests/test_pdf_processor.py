@@ -107,8 +107,8 @@ class TestPDFProcessor:
         """
         # Test data paths
         test_case_dir = TEST_DATA_DIR / "gpt4o_vision_test"
-        test_pdf = test_case_dir / "tunja_complejo_20250221.pdf"
-        expected_csv = test_case_dir / "expected_tunja_complejo_20250221.csv"
+        test_pdf = test_case_dir / "reconstructed_from_images.pdf"
+        expected_csv = test_case_dir / "expected_villavicencio_cav_20250221.csv"
         
         # Ensure output directory exists
         os.makedirs(OUTPUT_DIR, exist_ok=True)

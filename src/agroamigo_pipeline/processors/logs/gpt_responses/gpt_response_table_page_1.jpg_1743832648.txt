@@ -1,0 +1,36 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp0wm1seoq/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 13:57:28
+Raw GPT-4o mini response:
+```
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Bulto;50 Kilogramo;350.000;360.000;0;0
+Frijol verde cargamanto;Bulto;50 Kilogramo;180.000;200.000;0;0
+Habichuela;Bulto;60 Kilogramo;240.000;250.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ahuamango (sakata);Bulto;50 Kilogramo;60.000;70.000;0;0
+Ajo;Atado/manojo;10 Kilogramo;90.000;100.000;0;0
+Calabaza;Bols;20 Kilogramo;30.000;35.000;0;0
+Choclo maíz;Bulto;50 Kilogramo;160.000;180.000;0;0
+Cídr;Kilogramo;1 Kilogramo;800;1.000;0;0
+Pepino cohombro;Bulto;50 Kilogramo;140.000;160.000;0;0
+Pepino de rellenar;Bolsa;10 Kilogramo;20.000;25.000;0;0
+Pimentón;Bolsa;12 Kilogramo;50.000;50.000;0;0
+Zanahorias;Bulto;60 Kilogramo;90.000;100.000;0;0
+Zanahoria;Bulto;60 Kilogramo;100.000;110.000;0;0
+Cebolla cabezona blanca;Bulto;50 Kilogramo;60.000;70.000;0;0
+Cebolla junca;Atado/manojo;30 Kilogramo;80.000;90.000;0;0
+Tomates;;;;;;
+Tomate chonto;Canastilla;20 Kilogramo;100.000;105.000;0;0
+Hortalizas;;;;;;
+Acelga;Atado/manojo;10 Kilogramo;20.000;20.000;0;0
+Apio;Docena;10 Kilogramo;20.000;24.000;0;0
+Brócoli;Docena;15 Kilogramo;24.000;32.000;0;0
+Cilantro;Atado/manojo;10 Kilogramo;20.000;25.000;0;0
+Coliflor;Docena;10 Kilogramo;30.000;36.000;0;0
+Espinaca;Atado/manojo;10 Kilogramo;30.000;36.000;0;0
+Lechuga batavia;Docena;10 Kilogramo;24.000;32.000;0;0
+Lechuga crespa verde;Docena;2.5 Kilogramo;20.000;20.000;0;0
+Repollo blanco;Bulto;60 Kilogramo;90.000;100.000;0;0
+```
