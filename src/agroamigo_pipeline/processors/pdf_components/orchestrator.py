@@ -31,12 +31,13 @@ class PDFProcessorOrchestrator:
     Orchestrates the PDF processing workflow for Colombian agricultural price data.
     """
     
-    def __init__(self, logger=None):
+    def __init__(self, logger=None, save_debug_data=False):
         """
         Initialize the PDF processor orchestrator.
         
         Args:
             logger (Logger): Logger instance
+            save_debug_data (bool): Whether to save debug data (images, GPT responses, CSV data)
         """
         # Set up logger if not provided
         if logger is None:
@@ -44,6 +45,11 @@ class PDFProcessorOrchestrator:
             self.logger = logging_setup['pdf_processor']
         else:
             self.logger = logger
+            
+        # Debug flag
+        self.save_debug_data = save_debug_data
+        if self.save_debug_data:
+            self.logger.info("Debug mode enabled - will save intermediate data to permanent directories")
             
         # Initialize file registry
         self.registry = FileRegistry()
@@ -69,13 +75,13 @@ class PDFProcessorOrchestrator:
             'data_processing': []
         }
         
-        # Initialize component modules
+        # Initialize component modules with debug flag
         self.text_extractor = TextExtractor(logger=self.logger, timing_stats=self.timing_stats)
         self.metadata_extractor = MetadataExtractor(logger=self.logger)
         self.product_parser = ProductParser(logger=self.logger, timing_stats=self.timing_stats)
-        self.image_handler = ImageHandler(logger=self.logger, timing_stats=self.timing_stats)
-        self.gpt_client = GPTClient(logger=self.logger, timing_stats=self.timing_stats)
-        self.gpt_csv_parser = GPTCSVParser(logger=self.logger, timing_stats=self.timing_stats)
+        self.image_handler = ImageHandler(logger=self.logger, timing_stats=self.timing_stats, save_images=self.save_debug_data)
+        self.gpt_client = GPTClient(logger=self.logger, timing_stats=self.timing_stats, save_responses=self.save_debug_data)
+        self.gpt_csv_parser = GPTCSVParser(logger=self.logger, timing_stats=self.timing_stats, save_csv_data=self.save_debug_data)
         
         self.logger.info("PDFProcessorOrchestrator initialized")
     
@@ -148,7 +154,7 @@ class PDFProcessorOrchestrator:
             
             # Convert PDF to images
             self.logger.info(f"      Converting PDF to images")
-            image_paths = self.image_handler.convert_pdf_to_images(file_path)
+            image_paths = self.image_handler.convert_pdf_to_images(file_path, save_copies=True)
             self.logger.info(f"      PDF converted to {len(image_paths)} images")
             
             # Process each page with GPT-4o mini

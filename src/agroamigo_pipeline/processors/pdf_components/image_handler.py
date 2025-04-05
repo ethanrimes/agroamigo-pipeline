@@ -14,26 +14,36 @@ from pdf2image import convert_from_path
 class ImageHandler:
     """Handles PDF to image conversion and image encoding."""
     
-    def __init__(self, logger=None, timing_stats=None):
+    def __init__(self, logger=None, timing_stats=None, save_images=False):
         """
         Initialize the image handler.
         
         Args:
             logger (Logger): Logger instance
             timing_stats (dict): Dictionary to store timing statistics
+            save_images (bool): Whether to save images to a permanent directory
         """
         self.logger = logger or logging.getLogger(__name__)
         self.timing_stats = timing_stats or {
             'pdf_to_images': [],
             'image_encoding': []
         }
-    
-    def convert_pdf_to_images(self, pdf_path):
+        self.save_images = save_images
+        
+        # Create permanent directory for saved images if requested
+        if self.save_images:
+            self.images_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                        "logs", "permanent_images")
+            os.makedirs(self.images_dir, exist_ok=True)
+            self.logger.info(f"Will save images to permanent directory: {self.images_dir}")
+
+    def convert_pdf_to_images(self, pdf_path, save_copies=False):
         """
         Convert PDF to images and return paths to temporary image files.
         
         Args:
             pdf_path (str): Path to the PDF file
+            save_copies (bool): Whether to save copies of images regardless of self.save_images
             
         Returns:
             list: List of paths to temporary image files
@@ -48,7 +58,7 @@ class ImageHandler:
         try:
             # Convert PDF pages to images
             self.logger.debug("Starting PDF to image conversion")
-            images = convert_from_path(pdf_path)
+            images = convert_from_path(pdf_path, dpi=100)
             self.logger.info(f"Converted {len(images)} pages to images")
             
             image_paths = []
@@ -57,13 +67,31 @@ class ImageHandler:
                 image_path = os.path.join(temp_dir, f'page_{i}.jpg')
                 image.save(image_path, 'JPEG')
                 image_paths.append(image_path)
-                self.logger.debug(f"Saved page {i+1} to: {image_path}")
+                self.logger.info(f"Saved page {i+1} to: {image_path}")
+                
+                # Save to permanent directory if requested
+                if self.save_images or save_copies:
+                    # Ensure images_dir exists if save_copies is True but self.save_images was False
+                    if save_copies and not hasattr(self, 'images_dir'):
+                        self.images_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                            "logs", "permanent_images")
+                        os.makedirs(self.images_dir, exist_ok=True)
+                        self.logger.info(f"Created permanent images directory: {self.images_dir}")
+                    
+                    pdf_basename = os.path.basename(pdf_path)
+                    permanent_image_path = os.path.join(self.images_dir, f"{pdf_basename}_page_{i}.jpg")
+                    try:
+                        image.save(permanent_image_path, 'JPEG')
+                        self.logger.info(f"Saved permanent copy of page {i+1} to: {permanent_image_path}")
+                    except Exception as e:
+                        self.logger.warning(f"Failed to save permanent copy of image: {str(e)}")
             
             duration = time.time() - start_time
             self.timing_stats['pdf_to_images'].append({
                 'pdf': os.path.basename(pdf_path),
                 'pages': len(images),
-                'duration': duration
+                'duration': duration,
+                'temp_dir': temp_dir  # Include temp directory in stats for reference
             })
             self.logger.info(f"PDF conversion completed in {duration:.2f} seconds")
             

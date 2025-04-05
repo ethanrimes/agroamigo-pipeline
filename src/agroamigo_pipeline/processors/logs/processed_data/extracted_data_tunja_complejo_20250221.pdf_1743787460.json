@@ -1,0 +1,128 @@
+[
+  {
+    "product": "Carne de cerdo, costilla",
+    "major_category": "",
+    "sub_category": "Carne de cerdo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 20000.0,
+    "daily_max": 24000.0
+  },
+  {
+    "product": "Carne de cerdo, espinazo",
+    "major_category": "",
+    "sub_category": "Carne de cerdo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 14000.0,
+    "daily_max": 16000.0
+  },
+  {
+    "product": "Carne de cerdo, lomo sin hueso",
+    "major_category": "",
+    "sub_category": "Carne de cerdo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 20000.0,
+    "daily_max": 24000.0
+  },
+  {
+    "product": "Carne de cerdo, pernil sin hueso",
+    "major_category": "",
+    "sub_category": "Carne de cerdo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 20000.0,
+    "daily_max": 22000.0
+  },
+  {
+    "product": "Carne de cerdo, tocino barriga",
+    "major_category": "",
+    "sub_category": "Carne de cerdo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 15000.0,
+    "daily_max": 16000.0
+  },
+  {
+    "product": "Limón tahití",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Canastilla",
+    "units": "22 Kilogramo",
+    "daily_min": 40000.0,
+    "daily_max": 45000.0
+  },
+  {
+    "product": "Mandarina arrayana",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Canastilla",
+    "units": "22 Kilogramo",
+    "daily_min": 50000.0,
+    "daily_max": 60000.0
+  },
+  {
+    "product": "Mandarina común",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Canastilla",
+    "units": "22 Kilogramo",
+    "daily_min": 40000.0,
+    "daily_max": 45000.0
+  },
+  {
+    "product": "Naranja valencia",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 80000.0,
+    "daily_max": 90000.0
+  },
+  {
+    "product": "Tangelo",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Canastilla",
+    "units": "25 Kilogramo",
+    "daily_min": 90000.0,
+    "daily_max": 100000.0
+  },
+  {
+    "product": "Aguacate hass",
+    "major_category": "Otras frutas",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 6000.0,
+    "daily_max": 6000.0
+  },
+  {
+    "product": "Aguacate papelillo",
+    "major_category": "Otras frutas",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 7000.0,
+    "daily_max": 7500.0
+  },
+  {
+    "product": "Banano urabá",
+    "major_category": "Otras frutas",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "20 Kilogramo",
+    "daily_min": 45000.0,
+    "daily_max": 50000.0
+  },
+  {
+    "product": "Banano bocadillo",
+    "major_category": "Otras frutas",
+    "sub_category": "",
+    "presentation": "Canastilla",
+    "units": "20 Kilogramo",
+    "daily_min": 40000.0,
+    "daily_max": 45000.0
+  }
+]

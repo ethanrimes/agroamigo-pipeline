@@ -9,24 +9,34 @@ import pandas as pd
 import logging
 import traceback
 import os
+import json
 
 from agroamigo_pipeline.utils.utils import clean_price_value
 
 class GPTCSVParser:
     """Parses CSV text extracted by GPT-4o mini into structured data."""
     
-    def __init__(self, logger=None, timing_stats=None):
+    def __init__(self, logger=None, timing_stats=None, save_csv_data=False):
         """
         Initialize the GPT CSV parser.
         
         Args:
             logger (Logger): Logger instance
             timing_stats (dict): Dictionary to store timing statistics
+            save_csv_data (bool): Whether to save CSV data to a permanent directory
         """
         self.logger = logger or logging.getLogger(__name__)
         self.timing_stats = timing_stats or {
             'data_processing': []
         }
+        self.save_csv_data = save_csv_data
+        
+        # Create permanent directory for saved CSV data if requested
+        if self.save_csv_data:
+            self.csv_data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                           "logs", "permanent_csv_data")
+            os.makedirs(self.csv_data_dir, exist_ok=True)
+            self.logger.info(f"Will save CSV data to permanent directory: {self.csv_data_dir}")
     
     def process_csv_from_gpt4o(self, csv_text, metadata):
         """
@@ -41,17 +51,44 @@ class GPTCSVParser:
         """
         product_data = []
         
+        # Log the input CSV text
+        self.logger.info(f"Processing CSV text from GPT-4o mini - {len(csv_text)} characters")
+        self.logger.info(f"CSV text length: {len(csv_text)} to process:\n{csv_text}")
+        num_lines = csv_text.count('\n') + 1 if csv_text else 0
+        self.logger.info(f"Number of lines in CSV text: {num_lines}")
+        
+        # Save to permanent directory if requested
+        if self.save_csv_data:
+            timestamp = time.strftime('%Y%m%d_%H%M%S')
+            permanent_csv_file = os.path.join(self.csv_data_dir, f"permanent_csv_text_{timestamp}.txt")
+            try:
+                with open(permanent_csv_file, "w", encoding="utf-8") as f:
+                    f.write(f"CSV text ({len(csv_text)} characters):\n")
+                    f.write(f"Lines: {num_lines}\n\n")
+                    f.write(csv_text)
+                self.logger.info(f"Saved permanent copy of CSV text to: {permanent_csv_file}")
+            except Exception as e:
+                self.logger.warning(f"Failed to save permanent copy of CSV text: {str(e)}")
+
         try:
             # Split text into lines
             lines = csv_text.strip().split('\n')
+            self.logger.info(f"Split CSV text into {len(lines)} lines")
             
-            # Track category hierarchy
+            # Track category hierarchy and processing stats
             current_major_category = ""
             current_sub_category = ""
+            processed_categories = 0
+            processed_products = 0
+            skipped_lines = 0
+            price_errors = 0
             
-            for line in lines:
+            for line_idx, line in enumerate(lines):
+                self.logger.info(f"Processing line {line_idx+1}: {line}")
                 # Skip empty lines
                 if not line.strip():
+                    self.logger.info(f"Skipping empty line {line_idx+1}")
+                    skipped_lines += 1
                     continue
                 
                 # Split by semicolon
@@ -59,6 +96,8 @@ class GPTCSVParser:
                 
                 # Skip header line
                 if parts[0].lower() == 'producto':
+                    self.logger.info(f"Skipping header line: {line}")
+                    skipped_lines += 1
                     continue
                 
                 # If only one column has data, it might be a category
@@ -70,8 +109,12 @@ class GPTCSVParser:
                                                     ['frutas', 'verduras', 'hortalizas', 'tuberculos']):
                         current_major_category = category_line
                         current_sub_category = ""
+                        self.logger.info(f"Detected major category: '{current_major_category}'")
+                        processed_categories += 1
                     else:
                         current_sub_category = category_line
+                        self.logger.info(f"Detected sub-category: '{current_sub_category}' under major category '{current_major_category}'")
+                        processed_categories += 1
                     
                     continue
                 
@@ -95,7 +138,10 @@ class GPTCSVParser:
                             if valid_prices:
                                 daily_min = min(valid_prices)
                                 daily_max = max(valid_prices)
+                                self.logger.info(f"Extracted product '{product}' with prices - min1: {min1}, max1: {max1}, min2: {min2}, max2: {max2} -> daily min: {daily_min}, daily max: {daily_max}")
                             else:
+                                self.logger.warning(f"No valid prices found for product '{product}' in line: {line}")
+                                price_errors += 1
                                 continue  # Skip if no valid prices
                         
                         # Simple format with just min/max
@@ -104,7 +150,11 @@ class GPTCSVParser:
                             daily_max = clean_price_value(parts[4])
                             
                             if daily_min is None or daily_max is None:
+                                self.logger.warning(f"Invalid price data for product '{product}' in line: {line}")
+                                price_errors += 1
                                 continue  # Skip if no valid prices
+                            
+                            self.logger.info(f"Extracted product '{product}' with prices - min: {daily_min}, max: {daily_max}")
                         
                         product_data.append({
                             'product': product,
@@ -115,14 +165,23 @@ class GPTCSVParser:
                             'daily_min': daily_min,
                             'daily_max': daily_max
                         })
+                        processed_products += 1
                     
                     except (ValueError, IndexError) as e:
-                        self.logger.warning(f"Error processing price data for {product}: {str(e)}")
+                        self.logger.warning(f"Error processing price data for '{product}' in line {line_idx+1}: {str(e)}")
+                        price_errors += 1
+                else:
+                    self.logger.warning(f"Line {line_idx+1} has insufficient columns ({len(parts)}): {line}")
+                    skipped_lines += 1
+            
+            # Log processing summary
+            self.logger.info(f"CSV processing summary: {processed_products} products, {processed_categories} categories, {skipped_lines} skipped lines, {price_errors} price errors")
             
             return product_data
             
         except Exception as e:
-            self.logger.warning(f"Error processing CSV from GPT-4o: {str(e)}")
+            self.logger.error(f"Error processing CSV from GPT-4o: {str(e)}")
+            self.logger.error(f"Error details: {traceback.format_exc()}")
             return []
     
     def process_gpt4o_results(self, file_path, csv_texts, metadata):
@@ -141,25 +200,53 @@ class GPTCSVParser:
         filename = os.path.basename(file_path)
         self.logger.info(f"      -----> Processing GPT-4o results for: {filename}")
         
+        # Create log directory for detailed processing
+        log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs", "processed_data")
+        os.makedirs(log_dir, exist_ok=True)
+        
         try:
             # Process each CSV text and combine results
             all_product_data = []
-            self.logger.debug(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")
+            self.logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")
+            
+            # Save raw CSV texts for debugging
+            raw_csv_log_file = os.path.join(log_dir, f"raw_csv_texts_{filename}_{int(time.time())}.json")
+            try:
+                with open(raw_csv_log_file, "w", encoding="utf-8") as f:
+                    json.dump({
+                        "file_path": file_path,
+                        "metadata": metadata,
+                        "csv_texts": csv_texts
+                    }, f, indent=2, ensure_ascii=False)
+                self.logger.info(f"      Saved raw CSV texts to: {raw_csv_log_file}")
+            except Exception as e:
+                self.logger.warning(f"      Failed to save raw CSV texts to file: {str(e)}")
             
             for i, csv_text in enumerate(csv_texts):
                 if csv_text:
-                    self.logger.debug(f"      Processing CSV text {i+1}/{len(csv_texts)} ({len(csv_text)} characters)")
+                    self.logger.info(f"      Processing CSV text {i+1}/{len(csv_texts)} ({len(csv_text)} characters)")
                     product_data = self.process_csv_from_gpt4o(csv_text, metadata)
-                    self.logger.debug(f"      Extracted {len(product_data)} product entries from CSV text {i+1}")
+                    self.logger.info(f"      Extracted {len(product_data)} product entries from CSV text {i+1}")
                     all_product_data.extend(product_data)
+                else:
+                    self.logger.warning(f"      CSV text {i+1}/{len(csv_texts)} is empty or None")
             
             # If no products found, return empty DataFrame
             if not all_product_data:
                 self.logger.warning(f"      No product data extracted from PDF with GPT-4o mini")
                 return pd.DataFrame()
             
+            # Save extracted product data for debugging
+            extracted_data_log_file = os.path.join(log_dir, f"extracted_data_{filename}_{int(time.time())}.json")
+            try:
+                with open(extracted_data_log_file, "w", encoding="utf-8") as f:
+                    json.dump(all_product_data, f, indent=2, ensure_ascii=False)
+                self.logger.info(f"      Saved extracted product data to: {extracted_data_log_file}")
+            except Exception as e:
+                self.logger.warning(f"      Failed to save extracted product data to file: {str(e)}")
+            
             # Convert to DataFrame
-            self.logger.debug(f"      Converting parsed data to DataFrame")
+            self.logger.info(f"      Converting parsed data to DataFrame")
             output_data = []
             
             for product_entry in all_product_data:
@@ -181,7 +268,7 @@ class GPTCSVParser:
             
             # Create DataFrame from output data
             output_df = pd.DataFrame(output_data)
-            self.logger.debug(f"      Created DataFrame with {len(output_df)} rows")
+            self.logger.info(f"      Created DataFrame with {len(output_df)} rows")
             
             # Ensure all required columns exist
             required_columns = [
@@ -193,6 +280,25 @@ class GPTCSVParser:
                 if col not in output_df.columns:
                     output_df[col] = None if col in ['daily_min', 'daily_max'] else ""
             
+            # Save final processed DataFrame
+            final_df_log_file = os.path.join(log_dir, f"final_df_{filename}_{int(time.time())}.csv")
+            try:
+                output_df.to_csv(final_df_log_file, index=False)
+                self.logger.info(f"      Saved final processed DataFrame to: {final_df_log_file}")
+            except Exception as e:
+                self.logger.warning(f"      Failed to save final DataFrame to file: {str(e)}")
+            
+            # Log dataframe statistics
+            df_stats = {
+                "total_rows": len(output_df),
+                "unique_products": output_df['product'].nunique(),
+                "unique_categories": output_df['major_category'].nunique(),
+                "unique_subcategories": output_df['sub_category'].nunique(),
+                "min_price_range": output_df['daily_min'].min() if not output_df.empty else None,
+                "max_price_range": output_df['daily_max'].max() if not output_df.empty else None
+            }
+            self.logger.info(f"      DataFrame statistics: {df_stats}")
+            
             duration = time.time() - start_time
             self.logger.info(f"      GPT-4o results processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
             self.logger.info(f"      <----- Completed GPT-4o results processing for: {filename}")
@@ -201,6 +307,6 @@ class GPTCSVParser:
             
         except Exception as e:
             self.logger.error(f"      Error processing GPT-4o results for PDF {file_path}: {str(e)}")
-            self.logger.debug(f"      Error details: {traceback.format_exc()}")
+            self.logger.info(f"      Error details: {traceback.format_exc()}")
             self.logger.info(f"      <----- Failed GPT-4o results processing for: {filename}")
             return pd.DataFrame()
