@@ -313,7 +313,7 @@ class PDFProcessorOrchestrator:
         try:
             # Create thread-specific logger
             thread_name = threading.current_thread().name
-            thread_logger = logging.getLogger(f"{self.logger.name}.{thread_name}")
+            thread_logger = logging.getLogger(f"pdf_processor.{thread_name}")
             thread_logger.setLevel(self.logger.level)
             
             # Create thread-specific timing stats dict

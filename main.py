@@ -39,8 +39,10 @@ class Pipeline:
         """
         # Initialize logging
         self.log_level = log_level or getattr(logging, LOG_LEVEL)
-        logging_setup = setup_logging(self.log_level)
-        self.logger = logging_setup['scraper']  # Main logger
+        self.logging_setup = setup_logging(self.log_level)
+        
+        # Use the scraper logger for the pipeline itself
+        self.logger = self.logging_setup['scraper']
         
         # Ensure all directories exist
         ensure_directories()
@@ -55,7 +57,7 @@ class Pipeline:
         
         # Initialize the run statistics module
         self.run_statistics = RunStatistics(
-            logger=self.logger,
+            logger=self.logging_setup['error_handler'],  # Use error handler logger
             pipeline_run_id=PIPELINE_RUN_ID,
             start_timestamp=self.start_timestamp
         )
@@ -63,7 +65,7 @@ class Pipeline:
         self.logger.info(f"Pipeline initialized with run ID: {PIPELINE_RUN_ID}")
         self.logger.debug(f"Log level: {logging.getLevelName(self.log_level)}")
         self.logger.debug(f"Directories: SOURCE={SOURCE_DIR}, PDF={PDF_DIR}, "
-                       f"PROCESSED={PROCESSED_DIR}, CONSOLIDATED={CONSOLIDATED_DIR}")
+                    f"PROCESSED={PROCESSED_DIR}, CONSOLIDATED={CONSOLIDATED_DIR}")
     
     def run(self, start_date=None, end_date=None, components=None, max_workers=None, force_reprocess=False):
         """
@@ -162,19 +164,14 @@ class Pipeline:
     def _run_web_scraper(self, start_date, end_date, max_workers, force_reprocess):
         """
         Run the web scraper component.
-        
-        Args:
-            start_date (datetime): Start date for filtering 
-            end_date (datetime): End date for filtering
-            max_workers (int): Number of worker threads
-            force_reprocess (bool): Whether to force reprocessing
-            
-        Returns:
-            dict: Scraping statistics
         """
         try:
-            # Initialize web scraper
-            scraper = WebScraper(source_dir=SOURCE_DIR, max_workers=max_workers, logger=self.logger)
+            # Initialize web scraper with its own logger
+            scraper = WebScraper(
+                source_dir=SOURCE_DIR, 
+                max_workers=max_workers, 
+                logger=self.logging_setup['scraper']
+            )
             
             # Run scraper
             stats = scraper.run(start_date, end_date, max_workers, force_reprocess)
@@ -184,26 +181,18 @@ class Pipeline:
             self.logger.error(f"Web scraping failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
-    
+
     def _run_extractor(self, start_date, end_date, force_reprocess):
         """
         Run the ZIP extractor component.
-        
-        Args:
-            start_date (datetime): Start date for filtering
-            end_date (datetime): End date for filtering
-            force_reprocess (bool): Whether to force reprocessing
-            
-        Returns:
-            dict: Extraction statistics
         """
         try:
-            # Initialize ZIP extractor
+            # Initialize ZIP extractor with its own logger
             extractor = ZipExtractor(
                 source_dir=SOURCE_DIR,
                 pdf_dir=PDF_DIR,
                 temp_dir=TEMP_DIR,
-                logger=self.logger
+                logger=self.logging_setup['file_extractor']
             )
             
             # Process ZIP files
@@ -214,27 +203,18 @@ class Pipeline:
             self.logger.error(f"ZIP extraction failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
-    
+
     def _run_excel_processor(self, start_date, end_date, max_workers, force_reprocess):
         """
         Run the Excel processor component.
-        
-        Args:
-            start_date (datetime): Start date for filtering
-            end_date (datetime): End date for filtering
-            max_workers (int): Number of worker threads
-            force_reprocess (bool): Whether to force reprocessing
-            
-        Returns:
-            dict: Processing statistics
         """
         try:
-            # Initialize Excel processor
-            processor = ExcelProcessor(logger=self.logger)
+            # Initialize Excel processor with its own logger
+            processor = ExcelProcessor(logger=self.logging_setup['excel_processor'])
             
             # Process Excel files
             stats = processor.process_excel_files(
-                source_dir=SOURCE_DIR,  # Not used but kept for compatibility
+                source_dir=SOURCE_DIR,
                 output_dir=PROCESSED_DIR,
                 start_date=start_date,
                 end_date=end_date,
@@ -246,26 +226,17 @@ class Pipeline:
             self.logger.error(f"Excel processing failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
-    
+
     def _run_pdf_processor(self, start_date, end_date, max_workers, force_reprocess):
         """
         Run the PDF processor component.
-        
-        Args:
-            start_date (datetime): Start date for filtering
-            end_date (datetime): End date for filtering
-            max_workers (int): Number of worker threads
-            force_reprocess (bool): Whether to force reprocessing
-            
-        Returns:
-            dict: Processing statistics
         """
         try:
             # Use MAX_WORKERS from config if no max_workers specified
             max_workers = max_workers or MAX_WORKERS
             
-            # Initialize PDF processor
-            processor = PDFProcessor(logger=self.logger)
+            # Initialize PDF processor with its own logger
+            processor = PDFProcessor(logger=self.logging_setup['pdf_processor'])
             
             # Process PDF files
             stats = processor.process_pdf_files(
@@ -281,24 +252,17 @@ class Pipeline:
             self.logger.error(f"PDF processing failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
-    
+
     def _run_data_aggregation(self, start_date, end_date):
         """
         Run the data aggregation component.
-        
-        Args:
-            start_date (datetime): Start date for filtering
-            end_date (datetime): End date for filtering
-            
-        Returns:
-            dict: Aggregation statistics
         """
         try:
-            # Initialize data aggregator
+            # Initialize data aggregator with its own logger
             aggregator = DataAggregator(
                 input_dir=PROCESSED_DIR,
                 output_dir=CONSOLIDATED_DIR,
-                logger=self.logger
+                logger=self.logging_setup['data_aggregator']
             )
             
             # Aggregate data
@@ -313,17 +277,14 @@ class Pipeline:
             self.logger.error(f"Data aggregation failed: {str(e)}")
             self.logger.exception("Exception details:")
             raise
-    
+
     def _run_error_aggregation(self):
         """
         Run the error aggregation component.
-        
-        Returns:
-            dict: Error statistics
         """
         try:
-            # Initialize error gatherer
-            error_gatherer = ErrorGatherer(logger=self.logger)
+            # Initialize error gatherer with its own logger
+            error_gatherer = ErrorGatherer(logger=self.logging_setup['error_handler'])
             
             # Collect errors
             error_df, summary_path = error_gatherer.collect_all_errors()

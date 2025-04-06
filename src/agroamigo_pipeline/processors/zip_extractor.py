@@ -13,6 +13,7 @@ from datetime import datetime
 import time
 import pandas as pd
 import mimetypes
+import rarfile
 
 from agroamigo_pipeline.config.settings import (
     SOURCE_DIR, PDF_DIR, TEMP_DIR
@@ -142,24 +143,28 @@ class ZipExtractor:
         # Get PDF files directly from WebScraperRegistry (for direct PDF handling)
         pdf_files_df = self.webscraper_registry.get_files_by_type("pdf", with_errors=False)
         
-        # Filter by date if needed
+        # Get RAR files from WebScraperRegistry
+        rar_files_df = self.webscraper_registry.get_files_by_type("rar", with_errors=False)
+
+        # Add to date filtering section
         if start_date or end_date:
             if start_date:
                 zip_files_df = zip_files_df[zip_files_df['file_date'] >= pd.Timestamp(start_date)]
                 pdf_files_df = pdf_files_df[pdf_files_df['file_date'] >= pd.Timestamp(start_date)]
+                rar_files_df = rar_files_df[rar_files_df['file_date'] >= pd.Timestamp(start_date)]
             if end_date:
                 zip_files_df = zip_files_df[zip_files_df['file_date'] <= pd.Timestamp(end_date)]
                 pdf_files_df = pdf_files_df[pdf_files_df['file_date'] <= pd.Timestamp(end_date)]
-        
+                rar_files_df = rar_files_df[rar_files_df['file_date'] <= pd.Timestamp(end_date)]
+
         # Filter out files with empty download paths
-        zip_files_df = zip_files_df[zip_files_df['download_path'] != '']
-        pdf_files_df = pdf_files_df[pdf_files_df['download_path'] != '']
-        
-        self.logger.info(f"Found {len(zip_files_df)} ZIP files to process")
-        self.logger.info(f"Found {len(pdf_files_df)} direct PDF files to process")
-        
-        # Process each ZIP file
-        for _, row in zip_files_df.iterrows():
+        rar_files_df = rar_files_df[rar_files_df['download_path'] != '']
+
+        # Add to log message
+        self.logger.info(f"Found {len(rar_files_df)} RAR files to process")
+
+        # Add processing loop for RAR files (similar to ZIP processing)
+        for _, row in rar_files_df.iterrows():
             download_id = row['download_id']
             file_path = row['download_path']
             file_date = row['file_date']
@@ -176,7 +181,7 @@ class ZipExtractor:
                 # If all extractions failed, reprocess
                 self.logger.info(f"Re-extracting {os.path.basename(file_path)} due to previous errors")
             
-            # Process the ZIP file
+            # Process the RAR file (using the same method as ZIP since we updated it to handle both)
             self._process_single_zip(download_id, file_path, file_date)
         
         # Process each direct PDF file
@@ -368,8 +373,12 @@ class ZipExtractor:
             # Start timing
             start_time = time.time()
             
-            # Process the ZIP file
-            extracted_files = self._extract_zip(zip_path, date_from_filename)
+            if zip_path.suffix.lower() == '.rar':
+                # Use RAR extractor for RAR files
+                extracted_files = self._extract_rar(zip_path, date_from_filename)
+            else:
+                # Use ZIP extractor for ZIP files
+                extracted_files = self._extract_zip(zip_path, date_from_filename)
             
             # Calculate extraction duration
             extraction_duration = time.time() - start_time
@@ -608,3 +617,78 @@ class ZipExtractor:
                 if stats['processed'] > 0:
                     success_rate = (stats['success'] / stats['processed']) * 100
                     self.logger.info(f"  Success rate: {success_rate:.2f}%")
+
+
+
+    def _extract_rar(self, rar_path, date_prefix=None):
+        """
+        Extract files from a RAR archive.
+        
+        Args:
+            rar_path (Path): Path to the RAR file
+            date_prefix (str): Date string to prepend to extracted filenames
+            
+        Returns:
+            dict: Statistics on extracted files
+        """
+        stats = {
+            'total': 0, 
+            'pdf': 0, 
+            'excel': 0, 
+            'other': 0,
+            'file_paths': [],
+            'pdf_paths': [],
+            'excel_paths': []
+        }
+        
+        try:
+            with rarfile.RarFile(rar_path, 'r') as rar_ref:
+                # Extract all files to temp directory
+                rar_ref.extractall(self.temp_dir)
+                
+                # Add date prefix if available
+                date_prefix_str = ""
+                if date_prefix:
+                    date_prefix_str = f"{date_prefix}-"
+                
+                # Process extracted files
+                for item in self.temp_dir.glob('**/*'):
+                    if item.is_file():
+                        stats['total'] += 1
+
+                        # Always prepend date prefix to filename
+                        date_prefix_str = f"{date_prefix}-" if date_prefix else ""
+                        new_filename = f"{date_prefix_str}{item.name}"
+
+                        # Process based on file type
+                        if item.suffix.lower() == '.pdf':
+                            # Move to PDF directory
+                            dest_path = self.pdf_dir / new_filename
+                            shutil.move(item, dest_path)
+                            stats['pdf'] += 1
+                            stats['file_paths'].append(str(dest_path))
+                            stats['pdf_paths'].append(str(dest_path))
+                            self.logger.debug(f"Moved PDF from RAR to: {dest_path}")
+
+                        elif item.suffix.lower() in ['.xlsx', '.xls']:
+                            # Move Excel files back to source directory
+                            dest_path = self.source_dir / new_filename
+                            shutil.move(item, dest_path)
+                            stats['excel'] += 1
+                            stats['file_paths'].append(str(dest_path))
+                            stats['excel_paths'].append(str(dest_path))
+                            self.logger.debug(f"Moved Excel from RAR to: {dest_path}")
+
+                        else:
+                            # Move other files to temp root (flattening structure)
+                            dest_path = self.temp_dir / new_filename
+                            if item != dest_path:
+                                shutil.move(item, dest_path)
+                            stats['other'] += 1
+                            stats['file_paths'].append(str(dest_path))
+                            self.logger.debug(f"Moved other file from RAR to: {dest_path}")
+                
+                return stats
+                    
+        except Exception as e:
+            raise ExtractorError(f"Error extracting RAR file: {rar_path.name} - {str(e)}")

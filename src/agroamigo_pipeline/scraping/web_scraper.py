@@ -236,6 +236,8 @@ class WebScraper:
                             thread_logger.info(f"Successfully downloaded: {full_filename}")
                             
                             # Determine file type based on extension
+                            # In web_scraper.py, around line ~596
+                            # Determine file type based on extension
                             file_extension = os.path.splitext(filename.lower())[1]
                             if file_extension == '.zip':
                                 file_type = "zip"
@@ -243,6 +245,8 @@ class WebScraper:
                                 file_type = "excel"
                             elif file_extension == '.pdf':
                                 file_type = "pdf"
+                            elif file_extension == '.rar':  # Add RAR support
+                                file_type = "rar"
                             else:
                                 file_type = "other"
                                 thread_logger.warning(f"Unsupported file type: {file_extension} for {full_filename}")

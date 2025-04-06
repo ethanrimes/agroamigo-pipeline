@@ -25,7 +25,7 @@ def parse_spanish_date(text):
     
     # Spanish month names to numbers mapping
     month_mapping = {
-        'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4, 'mayo': 5, 'junio': 6,
+        'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4, 'mayo': 5, 'junio': 6, 'sepiembre': 9,
         'julio': 7, 'agosto': 8, 'septiembre': 9, 'octubre': 10, 'noviembre': 11, 'diciembre': 12
     }
     
@@ -219,7 +219,7 @@ def parse_spanish_date_scraper(date_string: str) -> datetime:
         'junio': 6, 'jun': 6,
         'julio': 7, 'jul': 7,
         'agosto': 8, 'ago': 8,
-        'septiembre': 9, 'sep': 9, 'sept': 9,
+        'septiembre': 9, 'sep': 9, 'sept': 9, 'sepiembre': 9,
         'octubre': 10, 'oct': 10,
         'noviembre': 11, 'nov': 11,
         'diciembre': 12, 'dic': 12
@@ -306,7 +306,8 @@ def parse_spanish_month_year(text: str) -> Tuple[int, int]:
     SPANISH_MONTHS = {
         'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4,
         'mayo': 5, 'junio': 6, 'julio': 7, 'agosto': 8,
-        'septiembre': 9, 'octubre': 10, 'noviembre': 11, 'diciembre': 12
+        'septiembre': 9, 'sepiembre': 9,  # Added misspelled version
+        'octubre': 10, 'noviembre': 11, 'diciembre': 12
     }
     
     logger.debug(f"Parsing month/year from text: '{text}'")
