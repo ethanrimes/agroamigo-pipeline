@@ -1,8 +1,0 @@
-Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpi62g4kav/page_3.jpg
-Prompt type: table
-Timestamp: 2025-04-05 21:34:39
-Raw GPT-4o mini response:
-```
-Frutas;;;;;;
-Repollo blanco;Bulto;30 Kilogramo;35.000;40.000;35.000;40.000
-```

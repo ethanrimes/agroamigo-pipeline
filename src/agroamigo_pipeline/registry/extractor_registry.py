@@ -42,14 +42,14 @@ class ZipExtractorRegistry(BaseRegistry):
         self.logger.debug("ZipExtractorRegistry initialized")
     
     def register_extraction(self, download_id, file_date, zip_file_path, extraction_dir_path,
-                          extracted_files=None, is_valid_zip=False, duration_seconds=0.0,
-                          error=None):
+                      extracted_files=None, is_valid_zip=False, duration_seconds=0.0,
+                      error=None):
         """
         Register a ZIP file extraction.
         
         Args:
             download_id (str): Download ID from WebScraperRegistry
-            file_date (datetime): Date associated with the file
+            file_date (datetime): Date associated with the file from WebScraperRegistry
             zip_file_path (str): Path to the ZIP file
             extraction_dir_path (str): Directory where files were extracted
             extracted_files (list): List of paths to extracted files
@@ -61,7 +61,7 @@ class ZipExtractorRegistry(BaseRegistry):
             str: Extraction ID
         """
         df = self.read()
-        
+            
         # Generate new extraction ID
         extraction_id = str(uuid.uuid4())
         
@@ -75,11 +75,15 @@ class ZipExtractorRegistry(BaseRegistry):
         # Set the current time
         current_time = datetime.now()
         
+        # Ensure file_date is properly stored as a timestamp
+        if not isinstance(file_date, pd.Timestamp):
+            file_date = pd.Timestamp(file_date)
+        
         # Create a new record
         new_record = {
             'extraction_id': extraction_id,
             'download_id': download_id,
-            'file_date': file_date if isinstance(file_date, pd.Timestamp) else pd.Timestamp(file_date),
+            'file_date': file_date,  # Preserve the date from WebScraperRegistry
             'zip_file_path': zip_file_path,
             'extraction_dir_path': extraction_dir_path,
             'extracted_files': extracted_files,

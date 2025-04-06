@@ -227,16 +227,30 @@ class DataAggregator:
             # Filter Excel files by parsed_date
             if not excel_df.empty:
                 if start_date:
-                    excel_df = excel_df[excel_df['parsed_date'] >= start_date]
+                    # Check both file_date and parsed_date, keep rows where either is within range
+                    date_filter = (excel_df['file_date'] >= start_date) | \
+                                (~pd.isna(excel_df['parsed_date']) & (excel_df['parsed_date'] >= start_date))
+                    excel_df = excel_df[date_filter]
+                
                 if end_date:
-                    excel_df = excel_df[excel_df['parsed_date'] <= end_date]
-            
-            # Filter PDF files by parsed_date
+                    # Check both file_date and parsed_date, keep rows where either is within range
+                    date_filter = (excel_df['file_date'] <= end_date) | \
+                                (~pd.isna(excel_df['parsed_date']) & (excel_df['parsed_date'] <= end_date))
+                    excel_df = excel_df[date_filter]
+
+            # Similarly for PDF files
             if not pdf_df.empty:
                 if start_date:
-                    pdf_df = pdf_df[pdf_df['parsed_date'] >= start_date]
+                    # Check both file_date and parsed_date, keep rows where either is within range
+                    date_filter = (pdf_df['file_date'] >= start_date) | \
+                                (~pd.isna(pdf_df['parsed_date']) & (pdf_df['parsed_date'] >= start_date))
+                    pdf_df = pdf_df[date_filter]
+                
                 if end_date:
-                    pdf_df = pdf_df[pdf_df['parsed_date'] <= end_date]
+                    # Check both file_date and parsed_date, keep rows where either is within range
+                    date_filter = (pdf_df['file_date'] <= end_date) | \
+                                (~pd.isna(pdf_df['parsed_date']) & (pdf_df['parsed_date'] <= end_date))
+                    pdf_df = pdf_df[date_filter]
         
         # Fall back to current month if no date range specified
         if not month_key:

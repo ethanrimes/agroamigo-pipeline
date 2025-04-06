@@ -107,7 +107,7 @@ class PDFProcessorRegistry(BaseRegistry):
             extraction_id (str): Extraction ID from ZipExtractorRegistry
             file_path (str): Path to the PDF file
             pdf_filename (str): Name of the PDF file
-            file_date (datetime, optional): Date associated with the file
+            file_date (datetime, optional): Date from filename associated with the file
             date_expanded (datetime, optional): When the PDF was extracted
             
         Returns:
@@ -136,17 +136,23 @@ class PDFProcessorRegistry(BaseRegistry):
                 # Generate a new pdf_id
                 pdf_id = str(uuid.uuid4())
             
+            # Ensure file_date is a proper timestamp
+            if file_date is None:
+                file_date = current_time
+            elif not isinstance(file_date, (pd.Timestamp, datetime)):
+                file_date = pd.to_datetime(file_date)
+            
             # Create a new record
             new_record = {
                 'pdf_id': pdf_id,
                 'extraction_id': extraction_id,
-                'file_date': file_date or current_time,
+                'file_date': file_date,  # Set the date from the filename here
                 'pdf_filename': pdf_filename,
                 'date_expanded': date_expanded or current_time,
                 'file_path': file_path,
                 'processing_status': 'not_processed',
                 'processed_date': pd.NaT,
-                'parsed_date': pd.NaT,
+                'parsed_date': pd.NaT,  # Will be filled later when content is parsed
                 'processing_duration_seconds': 0.0,
                 'unique_products': 0,
                 'unique_major_categories': 0,
@@ -235,6 +241,9 @@ class PDFProcessorRegistry(BaseRegistry):
             # Get current record for the PDF
             idx = pdf_idx[0]
             
+            # Preserve file_date from the original record
+            file_date = df.at[idx, 'file_date']
+            
             # Update statistics fields
             if 'unique_products' in results:
                 df.at[idx, 'unique_products'] = results['unique_products']
@@ -260,8 +269,13 @@ class PDFProcessorRegistry(BaseRegistry):
             if 'processed_csv_path' in results:
                 df.at[idx, 'processed_csv_path'] = results['processed_csv_path']
             
-            if 'parsed_date' in results:
-                df.at[idx, 'parsed_date'] = results['parsed_date']
+            # Handle parsed_date separately to ensure it's set correctly
+            if 'parsed_date' in results and results['parsed_date'] is not None:
+                # If we found a date in the PDF content, use it as parsed_date
+                if isinstance(results['parsed_date'], str):
+                    df.at[idx, 'parsed_date'] = pd.to_datetime(results['parsed_date'])
+                else:
+                    df.at[idx, 'parsed_date'] = results['parsed_date']
             
             if 'pipeline_run_id' in results:
                 df.at[idx, 'pipeline_run_id'] = results['pipeline_run_id']

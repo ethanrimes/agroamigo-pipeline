@@ -213,14 +213,17 @@ class ZipExtractor:
         Args:
             download_id (str): Download ID from WebScraperRegistry
             pdf_path (str): Path to the PDF file
-            file_date (datetime): Date associated with the file
+            file_date (datetime): Date associated with the file from WebScraperRegistry
         """
         pdf_path = Path(pdf_path)
         pdf_filename = pdf_path.name
         self.logger.info(f"Processing direct PDF: {pdf_filename}")
         
         # Extract date from filename
-        date_from_filename, _ = self._get_date_from_filename(pdf_filename)
+        date_from_filename, date_obj = self._get_date_from_filename(pdf_filename)
+        
+        # Use the date from filename if available, otherwise use the file_date from WebScraper
+        filename_date = date_obj if date_obj is not None else file_date
         
         # Initialize month_key for statistics
         month_key = "unknown"
@@ -265,10 +268,10 @@ class ZipExtractor:
             # Calculate extraction duration
             extraction_duration = time.time() - start_time
             
-            # Register extraction in registry
+            # Register extraction in registry with the filename_date
             extraction_id = self.extractor_registry.register_extraction(
                 download_id=download_id,
-                file_date=file_date,
+                file_date=filename_date,  # Use date from filename or from WebScraper
                 zip_file_path=str(pdf_path),  # Original path
                 extraction_dir_path=str(self.pdf_dir),
                 extracted_files=[str(dest_path)],
@@ -276,12 +279,12 @@ class ZipExtractor:
                 duration_seconds=extraction_duration
             )
             
-            # Register in PDF registry
+            # Register in PDF registry with the filename_date
             self.pdf_registry.register_pdf(
                 extraction_id=extraction_id,
                 file_path=str(dest_path),
                 pdf_filename=pdf_filename,
-                file_date=file_date,
+                file_date=filename_date,  # Use same date as extraction
                 date_expanded=datetime.now()
             )
             
@@ -298,7 +301,7 @@ class ZipExtractor:
             # Register error in registry
             self.extractor_registry.register_extraction(
                 download_id=download_id,
-                file_date=file_date,
+                file_date=filename_date,  # Use same date even for error cases
                 zip_file_path=str(pdf_path),
                 extraction_dir_path=str(self.pdf_dir),
                 error=str(e),
@@ -320,14 +323,17 @@ class ZipExtractor:
         Args:
             download_id (str): Download ID from WebScraperRegistry
             zip_path (str): Path to the ZIP file
-            file_date (datetime): Date associated with the file
+            file_date (datetime): Date associated with the file from WebScraperRegistry
         """
         zip_path = Path(zip_path)
         zip_filename = zip_path.name
         self.logger.info(f"Processing: {zip_filename}")
         
         # Extract date from filename
-        date_from_filename, _ = self._get_date_from_filename(zip_filename)
+        date_from_filename, date_obj = self._get_date_from_filename(zip_filename)
+        
+        # Use the date from filename if available, otherwise use the file_date from WebScraper
+        filename_date = date_obj if date_obj is not None else file_date
         
         # Initialize month_key for statistics
         month_key = "unknown"
@@ -368,10 +374,10 @@ class ZipExtractor:
             # Calculate extraction duration
             extraction_duration = time.time() - start_time
             
-            # Register extraction in registry
+            # Register extraction in registry - pass the filename_date
             extraction_id = self.extractor_registry.register_extraction(
                 download_id=download_id,
-                file_date=file_date,
+                file_date=filename_date,  # Use the date from filename or from WebScraper
                 zip_file_path=str(zip_path),
                 extraction_dir_path=str(self.pdf_dir),
                 extracted_files=extracted_files['file_paths'],
@@ -386,7 +392,7 @@ class ZipExtractor:
                     extraction_id=extraction_id,
                     file_path=pdf_path,
                     pdf_filename=pdf_filename,
-                    file_date=file_date,
+                    file_date=filename_date,  # Use the same date as extraction
                     date_expanded=datetime.now()
                 )
             
@@ -400,6 +406,25 @@ class ZipExtractor:
             self.monthly_stats[month_key]["excel_retained"] += extracted_files['excel']
             
             self.logger.info(f"Successfully processed {zip_filename} - extracted {extracted_files['total']} files")
+            
+        except Exception as e:
+            # Register error in registry
+            self.extractor_registry.register_extraction(
+                download_id=download_id,
+                file_date=filename_date,  # Use the same date even for error cases
+                zip_file_path=str(zip_path),
+                extraction_dir_path=str(self.pdf_dir),
+                error=str(e),
+                is_valid_zip=False,
+                duration_seconds=0.0
+            )
+            
+            # Update statistics
+            self.total_stats["failed"] += 1
+            self.monthly_stats[month_key]["failed"] += 1
+            
+            self.logger.error(f"Error processing {zip_filename}: {str(e)}")
+            self.logger.debug("Error details:", exc_info=True)
             
         except Exception as e:
             # Register error in registry

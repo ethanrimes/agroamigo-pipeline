@@ -110,10 +110,22 @@ class ExcelProcessor:
             # Read the Excel file using the reader component
             df = self.reader.read_and_prepare(file_path)
             
-            # Get the extracted date from the reader
+            # Add this code in the process_excel_file method where dates are extracted:
+
+            # In the try block where the Excel file is read
+            # Get the extracted date from the reader and store it
             extracted_date = self.reader.get_extracted_date()
             if extracted_date:
+                # Convert to pandas datetime if it's a string
+                if isinstance(extracted_date, str):
+                    extracted_date = pd.to_datetime(extracted_date)
+                
+                # Store in processing results as parsed_date
                 processing_results['parsed_date'] = extracted_date
+                self.logger.info(f"Extracted date from Excel content: {extracted_date}")
+            else:
+                # No content date found, we'll keep using the file_date from registry
+                self.logger.info("No date extracted from Excel content, using file_date from filename")
             
             # Transform the data using the transformer component
             output_df = self.transformer.transform(df, file_path)

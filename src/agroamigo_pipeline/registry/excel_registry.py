@@ -221,6 +221,9 @@ class ExcelProcessorRegistry(BaseRegistry):
         # Get current record for the Excel
         idx = excel_idx[0]
         
+        # Preserve file_date from the original record
+        file_date = df.at[idx, 'file_date']
+        
         # Update statistics fields
         if 'unique_products' in results:
             df.at[idx, 'unique_products'] = results['unique_products']
@@ -246,8 +249,13 @@ class ExcelProcessorRegistry(BaseRegistry):
         if 'processed_csv_path' in results:
             df.at[idx, 'processed_csv_path'] = results['processed_csv_path']
         
-        if 'parsed_date' in results:
-            df.at[idx, 'parsed_date'] = results['parsed_date']
+        # Handle parsed_date separately to ensure it's set correctly
+        if 'parsed_date' in results and results['parsed_date'] is not None:
+            # If we found a date in the Excel content, use it as parsed_date
+            if isinstance(results['parsed_date'], str):
+                df.at[idx, 'parsed_date'] = pd.to_datetime(results['parsed_date'])
+            else:
+                df.at[idx, 'parsed_date'] = results['parsed_date']
         
         if 'pipeline_run_id' in results:
             df.at[idx, 'pipeline_run_id'] = results['pipeline_run_id']
