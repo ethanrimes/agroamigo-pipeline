@@ -80,7 +80,9 @@ class GPTClient:
                 - Do not include any extra text, explanations, or characters — output only the raw CSV data as plain text.
 
                 Example format:
-
+                
+                
+                Producto;Presentacion;Unidades;Minimo;Maximo;Minimo;Maximo
                 Carnes;;;;;;
                 Carne de cerdo;;;;;;
                 Carne de cerdo;Kilogramo;1 Kilogramo;20.000;24.000;0;0

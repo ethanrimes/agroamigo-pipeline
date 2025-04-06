@@ -90,6 +90,7 @@ python main.py --force-reprocess
 
 # Set log level
 python main.py --log-level DEBUG
+
 ```
 
 ### Command-line Arguments
