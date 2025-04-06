@@ -255,3 +255,35 @@ class ZipExtractorRegistry(BaseRegistry):
         """
         df = self.read()
         return df[df['extraction_complete'] & ~df['error_occurred']]
+    
+
+    def export_to_csv(self):
+        """
+        Export the extractor registry to CSV without list columns.
+        
+        Returns:
+            str: Path to the CSV file or None if empty
+        """
+        df = self.read()
+        
+        if df.empty:
+            self.logger.warning(f"No data to export to CSV for {self.registry_name}")
+            return None
+        
+        # Create a copy for export
+        export_df = df.copy()
+        
+        # Specifically drop the extracted_files column
+        if 'extracted_files' in export_df.columns:
+            export_df = export_df.drop(columns=['extracted_files'])
+        
+        # Format datetime columns
+        for col in export_df.columns:
+            if pd.api.types.is_datetime64_dtype(export_df[col]):
+                export_df[col] = export_df[col].dt.strftime('%Y-%m-%d %H:%M:%S')
+        
+        # Export to CSV
+        export_df.to_csv(self.csv_path, index=False)
+        self.logger.info(f"Exported extractor registry to CSV: {self.csv_path}")
+        
+        return self.csv_path

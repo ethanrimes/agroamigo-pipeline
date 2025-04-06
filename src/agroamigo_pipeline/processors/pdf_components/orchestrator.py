@@ -13,6 +13,7 @@ from pathlib import Path
 import pandas as pd
 import time
 import queue
+import re
 
 try:
     from tqdm import tqdm
@@ -43,6 +44,12 @@ thread_local = threading.local()
 
 # Global stats dictionary for thread-safe updates
 global_stats_lock = threading.Lock()
+
+# Global registry lock for thread-safe registry operations
+registry_lock = threading.Lock()
+
+# Global output directory lock for thread-safe output directory creation
+output_dir_lock = threading.Lock()
 
 class PDFProcessorOrchestrator:
     """
@@ -304,33 +311,191 @@ class PDFProcessorOrchestrator:
             None: Results are placed in the queue
         """
         try:
-            # Process the PDF file
-            results = self.process_single_pdf_file(pdf_id, file_path, output_dir, force_reprocess)
+            # Create thread-specific logger
+            thread_name = threading.current_thread().name
+            thread_logger = logging.getLogger(f"{self.logger.name}.{thread_name}")
+            thread_logger.setLevel(self.logger.level)
             
-            # Put results in queue
+            # Create thread-specific timing stats dict
+            thread_timing_stats = {
+                'pdf_text_extraction': [],
+                'pdf_to_images': [],
+                'image_encoding': [],
+                'gpt4_query': [],
+                'data_processing': []
+            }
+            
+            # Check if file has already been processed - using registry lock
+            with registry_lock:
+                pdf_info = self.registry.get_pdf_by_id(pdf_id)
+                if pdf_info and pdf_info['processing_status'] == 'processed' and not force_reprocess:
+                    thread_logger.info(f"File already processed: {os.path.basename(file_path)}")
+                    with global_stats_lock:
+                        self.stats['skipped_files'] += 1
+                    
+                    # Put results in queue
+                    result_queue.put({
+                        'success': True,
+                        'pdf_id': pdf_id,
+                        'file_path': file_path,
+                        'results': None,
+                        'status': 'skipped'
+                    })
+                    return
+                
+                # Update registry status to 'processing'
+                self.registry.update_processing_status(pdf_id, 'processing')
+            
+            # Ensure output directory exists with lock
+            with output_dir_lock:
+                os.makedirs(output_dir, exist_ok=True)
+            
+            # Statistics dictionary
+            processing_results = {
+                'unique_products': 0,
+                'unique_major_categories': 0,
+                'unique_subcategories': 0,
+                'rows_processed': 0,
+                'error_occurred': False,
+                'error_warnings': "",
+                'processing_duration_seconds': 0.0,
+                'extraction_method': "",
+                'processed_csv_path': "",
+                'unique_cities_markets': 0,
+                'pipeline_run_id': PIPELINE_RUN_ID or ""
+            }
+            
+            start_time = datetime.now()
+            thread_logger.info(f"Starting processing {os.path.basename(file_path)} at: {start_time}")
+            
+            try:
+                # Try text extraction first
+                thread_logger.info(f"Attempting text extraction for {os.path.basename(file_path)}")
+                
+                text = self.text_extractor.extract_text_with_pdfplumber(file_path)
+                text_is_valid = self.text_extractor.assess_text_quality(text)
+                
+                if text_is_valid:
+                    # Process with text extraction
+                    output_df = self.process_pdf_with_text_extraction(file_path, text, thread_logger, thread_timing_stats)
+                    extraction_method = "text_extraction"
+                    
+                    # If text extraction failed, try GPT vision
+                    if output_df is None or output_df.empty:
+                        thread_logger.info(f"Text extraction didn't produce results, falling back to GPT vision")
+                        output_df, gpt4o_calls = self.process_pdf_with_gpt4o(file_path, thread_logger, thread_timing_stats)
+                        extraction_method = "gpt_vision"
+                        
+                        # Update global stats safely
+                        with global_stats_lock:
+                            self.stats['gpt4o_calls'] += gpt4o_calls
+                            self.stats['files_using_gpt_extraction'] += 1
+                else:
+                    thread_logger.info(f"Text extraction not valid, using GPT vision")
+                    # Use GPT vision
+                    output_df, gpt4o_calls = self.process_pdf_with_gpt4o(file_path, thread_logger, thread_timing_stats)
+                    extraction_method = "gpt_vision"
+                    
+                    # Update global stats safely
+                    with global_stats_lock:
+                        self.stats['gpt4o_calls'] += gpt4o_calls
+                        self.stats['files_using_gpt_extraction'] += 1
+                
+                # Check if we have results
+                if output_df is not None and not output_df.empty:
+                    # Create output path
+                    base_filename = os.path.splitext(os.path.basename(file_path))[0]
+                    output_csv = os.path.join(output_dir, f"{base_filename}.csv")
+                    
+                    # Create output directory if it doesn't exist (with lock)
+                    with output_dir_lock:
+                        os.makedirs(os.path.dirname(output_csv), exist_ok=True)
+                    
+                    # Save to CSV
+                    output_df.to_csv(output_csv, index=False)
+                    thread_logger.info(f"Saved output to: {output_csv}")
+                    
+                    # Update processing results
+                    processing_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
+                    processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
+                    processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
+                    processing_results['rows_processed'] = len(output_df)
+                    processing_results['extraction_method'] = extraction_method
+                    processing_results['processed_csv_path'] = output_csv
+                    
+                    # Count unique cities and markets
+                    if 'city' in output_df.columns and 'market' in output_df.columns:
+                        unique_city_markets = output_df[['city', 'market']].drop_duplicates()
+                        processing_results['unique_cities_markets'] = len(unique_city_markets)
+                    
+                    # Update global stats safely
+                    with global_stats_lock:
+                        self.stats['processed_files'] += 1
+                        self.stats['total_rows_processed'] += processing_results['rows_processed']
+                    
+                    thread_logger.info(
+                        f"Successfully processed {os.path.basename(file_path)}: "
+                        f"{processing_results['rows_processed']} rows, "
+                        f"{processing_results['unique_products']} products"
+                    )
+                else:
+                    processing_results['error_occurred'] = True
+                    processing_results['error_warnings'] = "No data extracted from PDF"
+                    thread_logger.warning(f"No data extracted from {os.path.basename(file_path)}")
+                    
+                    # Update global stats safely
+                    with global_stats_lock:
+                        self.stats['failed_files'] += 1
+                
+            except Exception as e:
+                processing_results['error_occurred'] = True
+                processing_results['error_warnings'] = str(e)
+                
+                thread_logger.error(f"Error processing PDF file {os.path.basename(file_path)}: {str(e)}")
+                thread_logger.debug(f"Error details: {traceback.format_exc()}")
+                
+                # Update global stats safely
+                with global_stats_lock:
+                    self.stats['failed_files'] += 1
+            
+            # Calculate processing time
+            processing_results['processing_duration_seconds'] = (datetime.now() - start_time).total_seconds()
+            
+            # Update registry with processing results - using registry lock
+            with registry_lock:
+                if processing_results['error_occurred']:
+                    self.registry.update_processing_status(pdf_id, 'error', error=processing_results['error_warnings'])
+                else:
+                    self.registry.update_processing_results(pdf_id, processing_results)
+            
+            # Place results in queue
             result_queue.put({
                 'success': True,
                 'pdf_id': pdf_id,
                 'file_path': file_path,
-                'results': results
+                'results': processing_results,
+                'status': 'processed' if not processing_results['error_occurred'] else 'error'
             })
+            
         except Exception as e:
             # Handle errors and put in queue
             self.logger.error(f"Error in worker processing {os.path.basename(file_path)}: {str(e)}")
             self.logger.debug(f"Error details: {traceback.format_exc()}")
             
-            # Update registry with error
-            try:
-                self.registry.update_processing_status(pdf_id, 'error', error=str(e))
-            except Exception as reg_err:
-                self.logger.error(f"Failed to update registry for {pdf_id}: {str(reg_err)}")
+            # Update registry with error - using registry lock
+            with registry_lock:
+                try:
+                    self.registry.update_processing_status(pdf_id, 'error', error=str(e))
+                except Exception as reg_err:
+                    self.logger.error(f"Failed to update registry for {pdf_id}: {str(reg_err)}")
             
             # Put error in queue
             result_queue.put({
                 'success': False,
                 'pdf_id': pdf_id,
                 'file_path': file_path,
-                'error': str(e)
+                'error': str(e),
+                'status': 'error'
             })
     
     def process_single_pdf_file(self, pdf_id, file_path, output_dir=None, force_reprocess=False):
@@ -366,7 +531,8 @@ class PDFProcessorOrchestrator:
         os.makedirs(output_dir, exist_ok=True)
         
         # Update registry status to 'processing'
-        self.registry.update_processing_status(pdf_id, 'processing')
+        with registry_lock:
+            self.registry.update_processing_status(pdf_id, 'processing')
         
         # Statistics dictionary
         processing_results = {
@@ -433,6 +599,10 @@ class PDFProcessorOrchestrator:
                 base_filename = os.path.splitext(filename)[0]
                 output_csv = os.path.join(output_dir, f"{base_filename}.csv")
                 
+                # Ensure output directory exists
+                with output_dir_lock:
+                    os.makedirs(os.path.dirname(output_csv), exist_ok=True)
+                
                 # Save to CSV
                 output_df.to_csv(output_csv, index=False)
                 self.logger.info(f"Saved output to: {output_csv}")
@@ -484,10 +654,11 @@ class PDFProcessorOrchestrator:
         processing_results['processing_duration_seconds'] = (datetime.now() - start_time).total_seconds()
         
         # Update registry with processing results
-        if processing_results['error_occurred']:
-            self.registry.update_processing_status(pdf_id, 'error', error=processing_results['error_warnings'])
-        else:
-            self.registry.update_processing_results(pdf_id, processing_results)
+        with registry_lock:
+            if processing_results['error_occurred']:
+                self.registry.update_processing_status(pdf_id, 'error', error=processing_results['error_warnings'])
+            else:
+                self.registry.update_processing_results(pdf_id, processing_results)
         
         return processing_results
     
@@ -507,7 +678,10 @@ class PDFProcessorOrchestrator:
         """
         # Set default values
         output_dir = output_dir or PROCESSED_DIR
-        os.makedirs(output_dir, exist_ok=True)
+        
+        # Ensure output directory exists (with lock)
+        with output_dir_lock:
+            os.makedirs(output_dir, exist_ok=True)
         
         # Reset statistics
         self.stats = {
@@ -523,22 +697,26 @@ class PDFProcessorOrchestrator:
             'total_duration_seconds': 0
         }
         
-        # Get PDF files from registry that need to be processed
-        if force_reprocess:
-            # Get all PDFs
-            pdf_df = self.registry.read()
-        else:
-            # Get only unprocessed PDFs or PDFs with errors
-            pdf_df = self.registry.read()
-            pdf_df = pdf_df[(pdf_df['processing_status'] == 'not_processed') | 
-                            (pdf_df['processing_status'] == 'error')]
-        
-        # Filter by date if needed
-        if start_date or end_date:
-            if start_date:
-                pdf_df = pdf_df[pdf_df['file_date'] >= pd.Timestamp(start_date)]
-            if end_date:
-                pdf_df = pdf_df[pdf_df['file_date'] <= pd.Timestamp(end_date)]
+        # Get PDF files from registry that need to be processed - with registry lock
+        with registry_lock:
+            if force_reprocess:
+                # Get all PDFs
+                pdf_df = self.registry.read()
+            else:
+                # Get only unprocessed PDFs or PDFs with errors
+                pdf_df = self.registry.read()
+                pdf_df = pdf_df[(pdf_df['processing_status'] == 'not_processed') | 
+                                (pdf_df['processing_status'] == 'error')]
+            
+            # Filter by date if needed
+            if start_date or end_date:
+                if start_date:
+                    pdf_df = pdf_df[pdf_df['file_date'] >= pd.Timestamp(start_date)]
+                if end_date:
+                    pdf_df = pdf_df[pdf_df['file_date'] <= pd.Timestamp(end_date)]
+            
+            # Make a local copy to avoid registry locking during processing
+            pdf_df = pdf_df.copy()
         
         total_pdfs = len(pdf_df)
         self.logger.info(f"Found {total_pdfs} PDF files to process")
@@ -553,17 +731,21 @@ class PDFProcessorOrchestrator:
             self.stats['total_duration_seconds'] = (self.stats['end_time'] - self.stats['start_time']).total_seconds()
             
             # Export registry to CSV
-            self.registry.export_to_csv()
+            with registry_lock:
+                self.registry.export_to_csv()
             
             return self.stats
         
         # Determine number of workers
         if max_workers is None or max_workers <= 0:
             # Default to number of CPUs if not specified
-            max_workers = os.cpu_count() or 4
+            max_workers = min(os.cpu_count() or 4, 8)  # Cap at 8 to avoid too many threads
         
         # Cap max_workers to the number of PDFs
         max_workers = min(max_workers, total_pdfs)
+        
+        # Create all required directories upfront to avoid race conditions
+        self._ensure_all_directories()
         
         # Sequential processing if only 1 worker or 1 file
         if max_workers == 1 or total_pdfs == 1:
@@ -671,15 +853,16 @@ class PDFProcessorOrchestrator:
                                     filename = os.path.basename(file_path)
                                     results = result['results']
                                     
-                                    if results is None:
+                                    if result['status'] == 'skipped':
                                         pbar.set_postfix(status="Skipped")
-                                    elif results.get('error_occurred', False):
+                                    elif result['status'] == 'error':
                                         pbar.set_postfix(status="Failed")
                                     else:
-                                        pbar.set_postfix(
-                                            rows=results.get('rows_processed', 0),
-                                            method=results.get('extraction_method', 'unknown')
-                                        )
+                                        if results:
+                                            pbar.set_postfix(
+                                                rows=results.get('rows_processed', 0),
+                                                method=results.get('extraction_method', 'unknown')
+                                            )
                                 else:
                                     # Handle error case
                                     pbar.set_postfix(status="Error")
@@ -749,14 +932,17 @@ class PDFProcessorOrchestrator:
                                 filename = os.path.basename(file_path)
                                 results = result['results']
                                 
-                                if results is None:
+                                if result['status'] == 'skipped':
                                     status = "Skipped"
-                                elif results.get('error_occurred', False):
+                                elif result['status'] == 'error':
                                     status = "Failed"
                                 else:
-                                    rows = results.get('rows_processed', 0)
-                                    method = results.get('extraction_method', 'unknown')
-                                    status = f"Processed ({rows} rows via {method})"
+                                    if results:
+                                        rows = results.get('rows_processed', 0)
+                                        method = results.get('extraction_method', 'unknown')
+                                        status = f"Processed ({rows} rows via {method})"
+                                    else:
+                                        status = "Processed (0 rows)"
                             else:
                                 # Handle error case
                                 status = "Error"
@@ -809,8 +995,15 @@ class PDFProcessorOrchestrator:
         self.stats['end_time'] = datetime.now()
         self.stats['total_duration_seconds'] = (self.stats['end_time'] - self.stats['start_time']).total_seconds()
         
-        # Export registry to CSV
-        self.registry.export_to_csv()
+        # Force a final read and write to ensure all records are properly saved
+        self.logger.info("Performing final registry synchronization...")
+        with registry_lock:
+            df = self.registry.read()
+            self.registry.write(df)
+            
+            # Export registry to CSV
+            self.logger.info("Exporting registry to CSV...")
+            self.registry.export_to_csv()
         
         # Log summary
         self.logger.info(f"PDF processing summary: {self.stats['processed_files']} processed, "

@@ -79,6 +79,7 @@ class RunStatistics:
         """
         Update all registry CSV files from their parquet sources.
         This keeps consistent CSV files at the top level of the registry directory.
+        Excludes list/array type fields from CSV outputs.
         
         Returns:
             dict: Statistics of CSV updates
@@ -86,6 +87,13 @@ class RunStatistics:
         log_function_call(self.logger, "update_registry_csvs")
         
         stats = {'updated': [], 'failed': []}
+        
+        # Define columns to exclude from CSV for each registry
+        columns_to_exclude = {
+            'extractor': ['extracted_files'],
+            'consolidation': ['excel_ids', 'pdf_ids'],
+            # Add other registry-specific columns to exclude as needed
+        }
         
         for registry_name, file_info in self.registry_files.items():
             # Use parquet files only from the parquet subdirectory
@@ -102,16 +110,39 @@ class RunStatistics:
                 # Read parquet file
                 df = pd.read_parquet(parquet_file)
                 
+                # Create a copy for export
+                export_df = df.copy()
+                
                 # Format timestamp columns for CSV readability
-                for col in df.columns:
-                    if pd.api.types.is_datetime64_dtype(df[col]):
-                        df[col] = df[col].dt.strftime('%Y-%m-%d %H:%M:%S')
-                    # Format list/array columns to be properly displayed in CSV
-                    elif not df.empty and isinstance(df[col].iloc[0] if not pd.isna(df[col].iloc[0]) else None, (list, tuple)):
-                        df[col] = df[col].apply(lambda x: str(x).replace("'", "").strip('[]()') if not pd.isna(x) else x)
+                for col in export_df.columns:
+                    if pd.api.types.is_datetime64_dtype(export_df[col]):
+                        export_df[col] = export_df[col].dt.strftime('%Y-%m-%d %H:%M:%S')
+                
+                # Remove specific list columns for this registry
+                exclude_cols = columns_to_exclude.get(registry_name, [])
+                for col in exclude_cols:
+                    if col in export_df.columns:
+                        export_df = export_df.drop(columns=[col])
+                        self.logger.debug(f"Excluded column '{col}' from {registry_name} CSV export")
+                
+                # Also remove any other list/array type columns that might exist
+                cols_to_drop = []
+                for col in export_df.columns:
+                    # Check if column contains any list/array values
+                    try:
+                        if not export_df.empty and export_df[col].apply(
+                            lambda x: isinstance(x, (list, tuple))).any():
+                            cols_to_drop.append(col)
+                    except:
+                        # Some types might cause errors in apply, just skip them
+                        continue
+                
+                if cols_to_drop:
+                    export_df = export_df.drop(columns=cols_to_drop)
+                    self.logger.debug(f"Dropped additional list columns from {registry_name} CSV: {cols_to_drop}")
                 
                 # Save to CSV
-                df.to_csv(csv_file, index=False)
+                export_df.to_csv(csv_file, index=False)
                 
                 stats['updated'].append(registry_name)
                 self.logger.info(f"Updated CSV from parquet: {registry_name}")

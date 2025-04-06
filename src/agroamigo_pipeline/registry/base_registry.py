@@ -202,29 +202,36 @@ class BaseRegistry:
     
     def export_to_csv(self):
         """
-        Export the registry data to CSV.
+        Export the registry data to CSV, excluding specific list-type columns.
         
         Returns:
             str: Path to the CSV file or None if empty
         """
         df = self.read()
         if not df.empty:
-            # Format dates for CSV
+            # Create a copy for export
             export_df = df.copy()
             
-            # Convert timestamps to string format for readability
+            # Specific columns to exclude from CSV export for different registry types
+            exclude_columns = {
+                'extraction': ['extracted_files'],
+                'consolidation': ['excel_ids', 'pdf_ids'],
+                # Add other registries and their list columns to exclude as needed
+            }
+            
+            # Get columns to exclude for this registry type
+            columns_to_exclude = exclude_columns.get(self.registry_name, [])
+            
+            # Remove the specified columns if they exist in the DataFrame
+            for col in columns_to_exclude:
+                if col in export_df.columns:
+                    export_df = export_df.drop(columns=[col])
+                    self.logger.debug(f"Excluded column '{col}' from CSV export")
+            
+            # Format datetime columns for CSV readability
             for col in export_df.columns:
                 if pd.api.types.is_datetime64_dtype(export_df[col]):
                     export_df[col] = export_df[col].dt.strftime('%Y-%m-%d %H:%M:%S')
-            
-            # Remove any legacy parquet files at the root level
-            legacy_path = self.registry_dir / f"{self.registry_name}_registry.parquet"
-            if os.path.exists(legacy_path):
-                try:
-                    os.remove(legacy_path)
-                    self.logger.info(f"Removed legacy registry file: {legacy_path}")
-                except Exception as e:
-                    self.logger.warning(f"Could not remove legacy registry file: {str(e)}")
             
             # Export the CSV to the registry root for easy access
             export_df.to_csv(self.csv_path, index=False)
