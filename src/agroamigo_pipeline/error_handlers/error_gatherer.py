@@ -16,7 +16,7 @@ from agroamigo_pipeline.config.settings import (
     ERROR_LOG_DIR, SCRAPER_LOG_DIR, EXTRACTOR_LOG_DIR, 
     EXCEL_LOG_DIR, PDF_LOG_DIR, MIN_UNIQUE_PRODUCTS,
     MAX_UNIQUE_PRODUCTS, MIN_MAJOR_CATEGORIES, MAX_MAJOR_CATEGORIES,
-    REGISTRY_DIR, REGISTRY_PARQUET
+    REGISTRY_DIR, REGISTRY_PARQUET, PIPELINE_RUN_ID
 )
 from agroamigo_pipeline.utils.logger import setup_logging, log_function_call, log_dataframe_info
 from agroamigo_pipeline.utils.path_manager import ensure_directory
@@ -50,9 +50,30 @@ class ErrorGatherer:
         
         # Define registry paths to scan - use the unified registry
         self.registry_files = {
-            'unified': Path(REGISTRY_PARQUET),
-            'scraper': self.registry_dir / 'scraper_registry.parquet',
-            'extractor': self.registry_dir / 'zip_registry.parquet'
+            'webscraper': self.registry_dir / 'webscraper_registry.parquet',
+            'extractor': self.registry_dir / 'extractor_registry.parquet',
+            'pdf': self.registry_dir / 'pdf_registry.parquet',
+            'excel': self.registry_dir / 'excel_registry.parquet',
+            'consolidation': self.registry_dir / 'consolidation_registry.parquet'
+        }
+        
+        # Define foreign key relationships for integrity checks
+        self.foreign_key_relationships = {
+            'pdf': {
+                'key_column': 'pdf_id',
+                'related_registry': 'extractor',
+                'related_key': 'pdf_id'
+            },
+            'excel': {
+                'key_column': 'excel_id',
+                'related_registry': 'extractor',
+                'related_key': 'excel_id'
+            },
+            'consolidation': {
+                'key_column': 'consolidated_id',
+                'related_registries': ['pdf', 'excel'],
+                'related_keys': ['pdf_id', 'excel_id']
+            }
         }
         
         # Initialize statistics
@@ -60,6 +81,7 @@ class ErrorGatherer:
             'total_errors': 0,
             'critical_errors': 0,
             'warnings': 0,
+            'integrity_errors': 0,
             'components': {}
         }
         
@@ -86,6 +108,7 @@ class ErrorGatherer:
             'total_files': 0,
             'error_files': 0,
             'warning_files': 0,
+            'integrity_errors': 0,
             'error_types': {}
         }
         
@@ -100,28 +123,18 @@ class ErrorGatherer:
                 df = pd.read_parquet(registry_path)
                 log_dataframe_info(self.logger, df, f"{component} registry")
                 
-                # For unified registry, filter by component type if needed
-                if component == 'unified':
-                    # Check if a component type column exists
-                    if 'component_type' in df.columns:
-                        # We can create separate stats for each component type
-                        component_types = df['component_type'].unique()
-                        for comp_type in component_types:
-                            self.logger.info(f"Processing component type: {comp_type}")
-                            type_df = df[df['component_type'] == comp_type]
-                            type_errors, type_stats = self._process_error_records(type_df, comp_type)
-                            errors.extend(type_errors)
-                            self.stats['components'][comp_type] = type_stats
-                    else:
-                        # Process all records without filtering
-                        type_errors, type_stats = self._process_error_records(df, 'unified')
-                        errors.extend(type_errors)
-                        self.stats['components']['unified'] = type_stats
-                else:
-                    # For component-specific registries
-                    comp_errors, comp_stats = self._process_error_records(df, component)
-                    errors.extend(comp_errors)
-                    component_stats = comp_stats
+                # Process error records
+                comp_errors, comp_stats = self._process_error_records(df, component)
+                errors.extend(comp_errors)
+                component_stats = comp_stats
+                
+                # Check for foreign key integrity errors
+                if component in self.foreign_key_relationships:
+                    integrity_errors, integrity_stats = self._check_foreign_key_integrity(df, component)
+                    errors.extend(integrity_errors)
+                    component_stats['integrity_errors'] = integrity_stats['integrity_errors']
+                    component_stats['error_types']['integrity_error'] = integrity_stats['integrity_errors']
+                    component_stats['error_files'] += integrity_stats['integrity_errors']
                 
             except Exception as e:
                 self.logger.error(f"Error reading registry file {registry_path}: {str(e)}")
@@ -135,6 +148,107 @@ class ErrorGatherer:
             self.logger.error(f"Error collecting errors from {component} registry: {str(e)}")
             self.logger.debug(f"Error details: {e}", exc_info=True)
             return errors, component_stats
+    
+    def _check_foreign_key_integrity(self, df, component):
+        """
+        Check for foreign key integrity issues in the registry.
+        
+        Args:
+            df (DataFrame): Registry DataFrame
+            component (str): Component name
+            
+        Returns:
+            tuple: (List of error entries, dict with integrity statistics)
+        """
+        self.logger.info(f"Checking foreign key integrity for {component}")
+        
+        integrity_errors = []
+        stats = {
+            'integrity_errors': 0
+        }
+        
+        try:
+            # Get relationship details
+            relationship = self.foreign_key_relationships[component]
+            key_column = relationship['key_column']
+            
+            # For PDF and Excel components, check relationship with extractor
+            if 'related_registry' in relationship:
+                related_registry = relationship['related_registry']
+                related_key = relationship['related_key']
+                
+                # Read related registry
+                related_registry_path = self.registry_files[related_registry]
+                if not os.path.exists(related_registry_path):
+                    self.logger.warning(f"Related registry file does not exist: {related_registry_path}")
+                    return integrity_errors, stats
+                
+                related_df = pd.read_parquet(related_registry_path)
+                
+                # Get set of keys from related registry
+                related_keys = set()
+                if related_key in related_df.columns:
+                    related_keys = set(related_df[related_key].dropna().unique())
+                
+                # Check current registry for orphaned records
+                if key_column in df.columns:
+                    # Find records that should have related entries but don't
+                    df_keys = set(df[key_column].dropna().unique())
+                    orphaned_keys = df_keys - related_keys
+                    
+                    if orphaned_keys:
+                        self.logger.warning(f"Found {len(orphaned_keys)} orphaned records in {component} registry")
+                        
+                        # Create error entries for each orphaned record
+                        for orphaned_key in orphaned_keys:
+                            orphaned_records = df[df[key_column] == orphaned_key]
+                            
+                            for _, row in orphaned_records.iterrows():
+                                # Get filename and path if available
+                                filename = row.get('filename', str(orphaned_key))
+                                if isinstance(filename, Path):
+                                    filename = str(filename)
+                                
+                                file_path = row.get('file_path', '')
+                                if isinstance(file_path, Path):
+                                    file_path = str(file_path)
+                                
+                                # Determine proper step name
+                                step_name = component
+                                if component == 'pdf':
+                                    step_name = 'pdf processing'
+                                elif component == 'excel':
+                                    step_name = 'excel processing'
+                                
+                                error_entry = {
+                                    'component': component,
+                                    'filename': filename,
+                                    'file_date': row.get('file_date', ''),
+                                    'step_of_error': step_name,
+                                    'error_message': f"Integrity error: {key_column} '{orphaned_key}' has no matching record in {related_registry} registry",
+                                    'file_path': file_path,
+                                    'error_type': 'integrity_error',
+                                    'pipeline_run_id': PIPELINE_RUN_ID or '',
+                                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                                }
+                                
+                                integrity_errors.append(error_entry)
+                    
+                    stats['integrity_errors'] = len(integrity_errors)
+            
+            # For consolidation component, check against both PDF and Excel
+            elif 'related_registries' in relationship:
+                # Not implementing consolidated integrity checks here as it's more complex
+                # Could be expanded in the future
+                pass
+            
+            self.logger.info(f"Found {stats['integrity_errors']} integrity errors in {component} registry")
+            return integrity_errors, stats
+            
+        except Exception as e:
+            self.logger.error(f"Error checking foreign key integrity for {component}: {str(e)}")
+            self.logger.debug(f"Error details: {e}", exc_info=True)
+            return integrity_errors, stats
     
     def _process_error_records(self, df, component_type):
         """
@@ -197,12 +311,6 @@ class ErrorGatherer:
                 file_date = row['date_from_filename']
             elif 'file_date' in row:
                 file_date = row['file_date']
-            elif filename:
-                # Try to extract date from filename (format: YYYYMMDD)
-                import re
-                date_match = re.search(r'(\d{4})(\d{2})(\d{2})', filename)
-                if date_match:
-                    file_date = ''.join(date_match.groups())
             
             # Determine error type
             error_type = "generic_error"
@@ -216,11 +324,14 @@ class ErrorGatherer:
             
             # Create error entry
             error_entry = {
+                'component': component_type,
                 'filename': filename,
-                'date_documented': file_date,
+                'file_date': file_date,
                 'step_of_error': step_name,
                 'error_message': error_message,
-                'filepath': file_path,
+                'file_path': file_path,
+                'error_type': error_type,
+                'pipeline_run_id': PIPELINE_RUN_ID or '',
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
             
@@ -245,6 +356,8 @@ class ErrorGatherer:
         # Reset statistics
         self.stats = {
             'total_errors': 0,
+            'critical_errors': 0,
+            'integrity_errors': 0,
             'components': {}
         }
         
@@ -255,10 +368,10 @@ class ErrorGatherer:
             errors, component_stats = self._collect_registry_errors(component, registry_path)
             all_errors.extend(errors)
             
-            # Only add this component's stats if it wasn't processed as part of unified
-            if component != 'unified' and component not in self.stats['components']:
-                self.stats['components'][component] = component_stats
-                self.stats['total_errors'] += component_stats['error_files']
+            # Add this component's stats
+            self.stats['components'][component] = component_stats
+            self.stats['total_errors'] += component_stats['error_files']
+            self.stats['integrity_errors'] += component_stats.get('integrity_errors', 0)
         
         # Generate timestamp for filenames
         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
@@ -278,15 +391,26 @@ class ErrorGatherer:
             # Save to CSV
             output_path = os.path.join(self.error_summary_dir, output_file)
             error_df.to_csv(output_path, index=False)
+            
+            # Save a copy to the main registry directory
+            main_output_path = os.path.join(self.registry_dir, "error_summary.csv")
+            error_df.to_csv(main_output_path, index=False)
+            
             self.logger.info(f"Saved consolidated errors to {output_path}")
             
             # Generate summary statistics text file
             summary_path = os.path.join(self.error_summary_dir, f"error_summary_{timestamp}.txt")
             self._write_summary_text_file(summary_path)
+            
+            # Save a copy to the main registry directory
+            main_summary_path = os.path.join(self.registry_dir, "error_statistics.txt")
+            self._write_summary_text_file(main_summary_path)
+            
             self.logger.info(f"Saved error summary to {summary_path}")
             
             # Log summary statistics
             self.logger.info(f"Error summary: {self.stats['total_errors']} total errors")
+            self.logger.info(f"Integrity errors: {self.stats['integrity_errors']}")
             
             for component, stats in self.stats['components'].items():
                 self.logger.info(f"{component}: {stats['error_files']} errors from {stats['total_files']} files")
@@ -299,7 +423,23 @@ class ErrorGatherer:
             summary_path = os.path.join(self.error_summary_dir, f"error_summary_{timestamp}.txt")
             self._write_summary_text_file(summary_path)
             
-            return pd.DataFrame(), summary_path
+            # Create empty error DataFrame
+            empty_df = pd.DataFrame(columns=[
+                'component', 'filename', 'file_date', 'step_of_error', 
+                'error_message', 'file_path', 'error_type', 'pipeline_run_id', 'timestamp'
+            ])
+            
+            # Save empty DataFrame to CSV
+            empty_output_path = os.path.join(self.error_summary_dir, f"error_summary_{timestamp}.csv")
+            empty_df.to_csv(empty_output_path, index=False)
+            
+            # Save a copy to the main registry directory
+            main_empty_path = os.path.join(self.registry_dir, "error_summary.csv")
+            empty_df.to_csv(main_empty_path, index=False)
+            
+            self.logger.info(f"Saved empty error summary to {empty_output_path}")
+            
+            return empty_df, summary_path
     
     def _write_summary_text_file(self, path):
         """
@@ -312,11 +452,13 @@ class ErrorGatherer:
             with open(path, 'w') as f:
                 f.write("AGROAMIGO PIPELINE ERROR SUMMARY\n")
                 f.write("===============================\n\n")
-                f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+                f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write(f"Pipeline Run ID: {PIPELINE_RUN_ID or 'Not specified'}\n\n")
                 
                 f.write("OVERALL STATISTICS\n")
                 f.write("-----------------\n")
-                f.write(f"Total errors: {self.stats['total_errors']}\n\n")
+                f.write(f"Total errors: {self.stats['total_errors']}\n")
+                f.write(f"Integrity errors: {self.stats['integrity_errors']}\n\n")
                 
                 # Write component-specific statistics
                 f.write("COMPONENT STATISTICS\n")
@@ -326,6 +468,8 @@ class ErrorGatherer:
                     f.write(f"\n{component.upper()}:\n")
                     f.write(f"  Total files processed: {stats['total_files']}\n")
                     f.write(f"  Files with errors: {stats['error_files']}\n")
+                    if 'integrity_errors' in stats:
+                        f.write(f"  Files with integrity errors: {stats['integrity_errors']}\n")
                     
                     if stats['total_files'] > 0:
                         error_rate = (stats['error_files'] / stats['total_files']) * 100
@@ -378,203 +522,35 @@ class ErrorGatherer:
         # Delegate to collect_all_errors for the actual work
         return self.collect_all_errors(output_file=output_file)[0]
     
-    def _collect_component_errors(self, component, log_dir):
+    def get_errors_from_last_run(self, pipeline_run_id=None):
         """
-        Collect errors from a specific component's log files.
+        Get errors from the last pipeline run.
         
         Args:
-            component (str): Component name
-            log_dir (str): Directory containing component logs
+            pipeline_run_id (str): Pipeline run ID to filter by
             
         Returns:
-            list: List of error entries
-            dict: Component statistics
+            DataFrame: Errors from the last run
         """
-        self.logger.info(f"Collecting errors from log files for component: {component}")
+        log_function_call(self.logger, "get_errors_from_last_run", kwargs={"pipeline_run_id": pipeline_run_id})
         
-        errors = []
-        component_stats = {
-            'total_files': 0,
-            'error_files': 0,
-            'warning_files': 0,
-            'error_types': {}
-        }
+        # Use current pipeline run ID if not provided
+        pipeline_run_id = pipeline_run_id or PIPELINE_RUN_ID
         
-        try:
-            # Check if the directory exists
-            if not os.path.exists(log_dir):
-                self.logger.warning(f"Log directory does not exist: {log_dir}")
-                return errors, component_stats
+        self.logger.info(f"Getting errors from run ID: {pipeline_run_id}")
+        
+        # First get all errors
+        all_errors_df, _ = self.collect_all_errors()
+        
+        if all_errors_df.empty:
+            self.logger.info("No errors found")
+            return all_errors_df
             
-            # Get all error log files
-            error_logs = []
-            
-            # Different components might have different log file patterns
-            if component == 'excel':
-                # For Excel processor, look for CSV logs
-                error_log_pattern = os.path.join(log_dir, "*.csv")
-                error_logs.extend(list(Path(log_dir).glob("*.csv")))
-                
-            elif component == 'pdf':
-                # For PDF processor, look for CSV logs
-                error_log_pattern = os.path.join(log_dir, "*.csv")
-                error_logs.extend(list(Path(log_dir).glob("*.csv")))
-                
-            else:
-                # For other components, look for JSON logs
-                error_log_pattern = os.path.join(log_dir, "*.json")
-                error_logs.extend(list(Path(log_dir).glob("*.json")))
-            
-            self.logger.debug(f"Found {len(error_logs)} error logs matching {error_log_pattern}")
-            
-            # Process each error log
-            for log_file in error_logs:
-                try:
-                    if str(log_file).endswith('.csv'):
-                        # Read CSV error log
-                        df = pd.read_csv(log_file)
-                        log_function_call(self.logger, "pd.read_csv", args=(log_file,))
-                        log_dataframe_info(self.logger, df, f"{component} error log")
-                        
-                        # Process each row
-                        for _, row in df.iterrows():
-                            component_stats['total_files'] += 1
-                            
-                            # Check for errors
-                            has_error = False
-                            
-                            if 'error_occurred' in row and row['error_occurred']:
-                                has_error = True
-                                error_msg = row.get('errors_warnings', 'Unknown error')
-                                
-                                # Count error types
-                                error_type = "generic_error"
-                                if 'unique_products' in row and row['unique_products'] < MIN_UNIQUE_PRODUCTS:
-                                    error_type = "too_few_products"
-                                elif 'unique_major_categories' in row and row['unique_major_categories'] < MIN_MAJOR_CATEGORIES:
-                                    error_type = "too_few_categories"
-                                
-                                component_stats['error_types'][error_type] = component_stats['error_types'].get(error_type, 0) + 1
-                                
-                            elif ('unique_products' in row and 
-                                  (row['unique_products'] < MIN_UNIQUE_PRODUCTS or 
-                                   row['unique_products'] > MAX_UNIQUE_PRODUCTS)):
-                                has_error = True
-                                error_type = "product_count_outside_range"
-                                error_message = f"Product count ({row['unique_products']}) outside acceptable range"
-                                component_stats['error_types'][error_type] = component_stats['error_types'].get(error_type, 0) + 1
-                                
-                            elif ('unique_major_categories' in row and 
-                                  (row['unique_major_categories'] < MIN_MAJOR_CATEGORIES or 
-                                   row['unique_major_categories'] > MAX_MAJOR_CATEGORIES)):
-                                has_error = True
-                                error_type = "category_count_outside_range"
-                                error_message = f"Category count ({row['unique_major_categories']}) outside acceptable range"
-                                component_stats['error_types'][error_type] = component_stats['error_types'].get(error_type, 0) + 1
-                            
-                            # Only add to errors if there's actually an error
-                            if has_error:
-                                component_stats['error_files'] += 1
-                                
-                                # Determine step name based on component
-                                step_name = component
-                                if component == 'excel':
-                                    step_name = 'excel processing'
-                                elif component == 'pdf':
-                                    step_name = 'pdf processing'
-                                
-                                # Create error entry
-                                error_entry = {
-                                    'filename': row.get('filename', os.path.basename(str(log_file))),
-                                    'date_documented': '',  # Extract date if possible
-                                    'step_of_error': step_name,
-                                    'error_message': error_message if 'error_message' in locals() else 'Unknown error',
-                                    'filepath': row.get('file_path', ''),
-                                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                                }
-                                
-                                errors.append(error_entry)
-                    
-                    elif str(log_file).endswith('.json'):
-                        # Read JSON error log
-                        with open(log_file, 'r', encoding='utf-8') as f:
-                            log_data = json.load(f)
-                            
-                        # Process the JSON data
-                        if isinstance(log_data, list):
-                            # Handle list of errors
-                            for entry in log_data:
-                                component_stats['total_files'] += 1
-                                
-                                if entry.get('errors') or entry.get('fatal'):
-                                    component_stats['error_files'] += 1
-                                    error_type = "generic_error"
-                                    
-                                    if entry.get('fatal'):
-                                        error_type = "fatal_error"
-                                    
-                                    component_stats['error_types'][error_type] = component_stats['error_types'].get(error_type, 0) + 1
-                                    
-                                    # Determine step name based on component
-                                    step_name = component
-                                    if component == 'extractor':
-                                        step_name = 'zip extraction'
-                                    elif component == 'scraper':
-                                        step_name = 'scraping'
-                                    
-                                    errors.append({
-                                        'filename': entry.get('filename', os.path.basename(str(log_file))),
-                                        'date_documented': '',  # Extract date if possible
-                                        'step_of_error': step_name,
-                                        'error_message': str(entry.get('errors', 'Unknown error')),
-                                        'filepath': entry.get('fullpath', ''),
-                                        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                                    })
-                                    
-                                elif entry.get('warnings'):
-                                    component_stats['warning_files'] += 1
-                        
-                        elif isinstance(log_data, dict):
-                            # Handle single error entry
-                            component_stats['total_files'] += 1
-                            
-                            if log_data.get('errors') or log_data.get('fatal'):
-                                component_stats['error_files'] += 1
-                                error_type = "generic_error"
-                                
-                                if log_data.get('fatal'):
-                                    error_type = "fatal_error"
-                                
-                                component_stats['error_types'][error_type] = component_stats['error_types'].get(error_type, 0) + 1
-                                
-                                # Determine step name based on component
-                                step_name = component
-                                if component == 'extractor':
-                                    step_name = 'zip extraction'
-                                elif component == 'scraper':
-                                    step_name = 'scraping'
-                                
-                                errors.append({
-                                    'filename': log_data.get('filename', os.path.basename(str(log_file))),
-                                    'date_documented': '',  # Extract date if possible
-                                    'step_of_error': step_name,
-                                    'error_message': str(log_data.get('errors', 'Unknown error')),
-                                    'filepath': log_data.get('fullpath', ''),
-                                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                                })
-                                
-                            elif log_data.get('warnings'):
-                                component_stats['warning_files'] += 1
-                
-                except Exception as e:
-                    self.logger.error(f"Error processing log file {log_file}: {str(e)}")
-                    self.logger.debug(f"Error details: {e}", exc_info=True)
-            
-            self.logger.info(f"Collected {len(errors)} errors from {component_stats['total_files']} files for component {component}")
-            
-            return errors, component_stats
-            
-        except Exception as e:
-            self.logger.error(f"Error collecting errors for component {component}: {str(e)}")
-            self.logger.debug(f"Error details: {e}", exc_info=True)
-            return errors, component_stats
+        # Filter by pipeline run ID if available
+        if pipeline_run_id and 'pipeline_run_id' in all_errors_df.columns:
+            filtered_df = all_errors_df[all_errors_df['pipeline_run_id'] == pipeline_run_id]
+            self.logger.info(f"Found {len(filtered_df)} errors for run ID {pipeline_run_id}")
+            return filtered_df
+        else:
+            self.logger.info(f"No pipeline run ID specified or column doesn't exist, returning all {len(all_errors_df)} errors")
+            return all_errors_df

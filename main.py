@@ -88,6 +88,7 @@ class Pipeline:
         
         # Use provided max_workers or default from settings
         max_workers = max_workers or MAX_WORKERS
+        self.logger.info(f"Using maximum of {max_workers} worker threads")
         
         try:
             # Run pipeline components in sequence
@@ -110,7 +111,7 @@ class Pipeline:
             # Step 2: Excel processing
             if not components or 'excel' in components:
                 self.logger.info("Running Excel processing...")
-                excel_stats = self._run_excel_processor(start_date, end_date, force_reprocess)
+                excel_stats = self._run_excel_processor(start_date, end_date, max_workers, force_reprocess)
                 results['excel'] = excel_stats
                 self.logger.info("Completed Excel processing")
             
@@ -214,13 +215,14 @@ class Pipeline:
             self.logger.exception("Exception details:")
             raise
     
-    def _run_excel_processor(self, start_date, end_date, force_reprocess):
+    def _run_excel_processor(self, start_date, end_date, max_workers, force_reprocess):
         """
         Run the Excel processor component.
         
         Args:
             start_date (datetime): Start date for filtering
             end_date (datetime): End date for filtering
+            max_workers (int): Number of worker threads
             force_reprocess (bool): Whether to force reprocessing
             
         Returns:
@@ -259,6 +261,9 @@ class Pipeline:
             dict: Processing statistics
         """
         try:
+            # Use MAX_WORKERS from config if no max_workers specified
+            max_workers = max_workers or MAX_WORKERS
+            
             # Initialize PDF processor
             processor = PDFProcessor(logger=self.logger)
             

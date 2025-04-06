@@ -239,6 +239,7 @@ class RunStatistics:
                         'error_message': error_message,
                         'file_path': file_path,
                         'error_type': error_type,
+                        'pipeline_run_id': self.pipeline_run_id,
                         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     }
                     
@@ -269,9 +270,9 @@ class RunStatistics:
         else:
             # Create empty CSV files
             pd.DataFrame(columns=['component', 'filename', 'file_date', 'step_of_error', 
-                                 'error_message', 'file_path', 'error_type', 'timestamp']).to_csv(csv_path, index=False)
+                                 'error_message', 'file_path', 'error_type', 'pipeline_run_id', 'timestamp']).to_csv(csv_path, index=False)
             pd.DataFrame(columns=['component', 'filename', 'file_date', 'step_of_error', 
-                                 'error_message', 'file_path', 'error_type', 'timestamp']).to_csv(csv_timestamped_path, index=False)
+                                 'error_message', 'file_path', 'error_type', 'pipeline_run_id', 'timestamp']).to_csv(csv_timestamped_path, index=False)
             self.logger.info(f"Created empty error summary CSV files")
         
         # Generate text summary
@@ -353,11 +354,13 @@ class RunStatistics:
         
         # Process each component
         for component in components:
-            if component not in self.registry_files:
-                self.logger.warning(f"Unknown component: {component}")
+            mapped_component = self._map_component_name(component)
+            
+            if mapped_component not in self.registry_files:
+                self.logger.warning(f"Unknown component: {component} (mapped to {mapped_component})")
                 continue
             
-            file_info = self.registry_files.get(component)
+            file_info = self.registry_files.get(mapped_component)
             if not file_info:
                 continue
                 
@@ -372,27 +375,28 @@ class RunStatistics:
                 df = pd.read_parquet(parquet_file)
                 
                 # Filter for records processed during this run
-                if 'last_processed' in df.columns:
-                    recent_df = df[df['last_processed'] >= self.start_timestamp]
-                elif 'processed_date' in df.columns:
-                    recent_df = df[df['processed_date'] >= self.start_timestamp]
-                elif 'date_expanded' in df.columns:
-                    recent_df = df[df['date_expanded'] >= self.start_timestamp]
-                elif 'consolidation_time' in df.columns:
-                    recent_df = df[df['consolidation_time'] >= self.start_timestamp]
+                if self.start_timestamp:
+                    for time_col in ['last_processed', 'processed_date', 'date_expanded', 'consolidation_time', 'download_timestamp']:
+                        if time_col in df.columns:
+                            recent_df = df[df[time_col] >= self.start_timestamp]
+                            self.logger.debug(f"Filtered {len(recent_df)}/{len(df)} records using {time_col} column")
+                            break
+                    else:
+                        # If no timestamp column found, use all records
+                        self.logger.warning(f"No timestamp column found in {mapped_component} registry")
+                        recent_df = df
                 else:
-                    # If no timestamp column found, use all records
-                    self.logger.warning(f"No timestamp column found in {component} registry")
+                    # If no start timestamp, use all records
                     recent_df = df
                 
                 # Get component-specific statistics
-                component_stats = self._get_component_statistics(component, recent_df)
+                component_stats = self._get_component_statistics(mapped_component, recent_df)
                 
                 # Store stats
-                run_stats['component_stats'][component] = component_stats
+                run_stats['component_stats'][mapped_component] = component_stats
                 
             except Exception as e:
-                self.logger.error(f"Error generating statistics for {component}: {str(e)}")
+                self.logger.error(f"Error generating statistics for {mapped_component}: {str(e)}")
         
         # Create statistics files
         csv_path = self.run_statistics_dir / f"run_statistics_{self.timestamp_str}.csv"
@@ -410,6 +414,18 @@ class RunStatistics:
         self.logger.info(f"Generated run statistics text report: {txt_path}")
         
         return csv_path, txt_path
+    
+    def _map_component_name(self, component):
+        """Map command-line component names to registry names."""
+        mapping = {
+            'scraper': 'webscraper',
+            'extractor': 'extractor',
+            'excel': 'excel',
+            'pdf': 'pdf',
+            'aggregator': 'consolidation',
+            'error': 'error',  # Not actually a registry
+        }
+        return mapping.get(component, component)
     
     def _get_component_statistics(self, component, df):
         """
