@@ -94,6 +94,7 @@ python main.py --start-date 2024-11-01 --end-date 2024-12-01 --force-reprocess
 python main.py --components scraper extractor excel pdf error aggregator --start-date 2023-07-01 --end-date 2023-07-07 --force-reprocess --log-level WARNING --workers 8
 python main.py --components extractor excel pdf error aggregator --force-reprocess --log-level WARNING
 python main.py --components scraper extractor excel pdf error aggregator --start-date 2024-01-01 --end-date 2024-12-31 --force-reprocess --log-level WARNING  --workers 8
+python main.py --components scraper extractor excel pdf error aggregator --log-level WARNING  --workers 8
 
 # Run the full pipeline
 python main.py

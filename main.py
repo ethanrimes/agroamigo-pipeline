@@ -343,8 +343,8 @@ def parse_args():
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description='Colombian Agricultural Price Data Pipeline')
     
-    parser.add_argument('--start-date', type=str, help='Start date (YYYY-MM-DD)')
-    parser.add_argument('--end-date', type=str, help='End date (YYYY-MM-DD)')
+    parser.add_argument('--start-date', type=str, default='2000-01-01', help='Start date (YYYY-MM-DD)')
+    parser.add_argument('--end-date', type=str, default='2100-12-31', help='End date (YYYY-MM-DD)')
     parser.add_argument('--components', type=str, nargs='+', 
                       choices=['scraper', 'extractor', 'excel', 'pdf', 'aggregator', 'error'],
                       help='Components to run (default: all)')

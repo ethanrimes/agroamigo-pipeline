@@ -33,7 +33,7 @@ class GPTClient:
             os.makedirs(self.responses_dir, exist_ok=True)
             self.logger.info(f"Will save GPT-4o responses to permanent directory: {self.responses_dir}")
     
-    def query_gpt4o_with_image(self, image_path, base64_image=None, prompt_type="table"):
+    def query_gpt4o_with_image(self, image_path, base64_image=None, prompt_type="table", source_pdf_path=None):
         """
         Query GPT-4o mini with an image to extract text data.
         
@@ -41,6 +41,7 @@ class GPTClient:
             image_path (str): Path to the image file
             base64_image (str): Pre-encoded base64 image data (optional)
             prompt_type (str): Type of prompt to use - "table" or "header"
+            source_pdf_path (str): Path to the source PDF file (for logging purposes)
             
         Returns:
             str: Extracted text from the image
@@ -50,7 +51,8 @@ class GPTClient:
             return None
         
         start_time = time.time()
-        self.logger.info(f"Querying GPT-4o mini with image: {os.path.basename(image_path)}, prompt type: {prompt_type}")
+        pdf_filename = os.path.basename(source_pdf_path) if source_pdf_path else "unknown_pdf"
+        self.logger.info(f"Querying GPT-4o mini with image: {os.path.basename(image_path)} from PDF: {pdf_filename}, prompt type: {prompt_type}")
         
         try:
             # Use provided base64 image or assume it needs to be encoded
@@ -125,7 +127,7 @@ class GPTClient:
             }
             
             # Make API request
-            self.logger.info(f"Sending request to GPT-4o mini API for {os.path.basename(image_path)}")
+            self.logger.info(f"Sending request to GPT-4o mini API for {os.path.basename(image_path)} from PDF: {pdf_filename}")
             response = requests.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers=headers,
@@ -142,38 +144,41 @@ class GPTClient:
             content = response_json['choices'][0]['message']['content']
             
             # Log the raw response
-            self.logger.info(f"Raw GPT-4o mini response received for {os.path.basename(image_path)} - {len(content)} characters")
+            self.logger.info(f"Raw GPT-4o mini response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(content)} characters")
             self.logger.debug(f"GPT-4o mini raw response (first 200 chars): {content[:200]}...")
             
             # Save raw response to files
-            self._save_response(image_path, content, prompt_type)
+            self._save_response(image_path, content, prompt_type, source_pdf_path)
             
             duration = time.time() - start_time
             self.timing_stats['gpt4_query'].append({
                 'image': os.path.basename(image_path),
+                'pdf': pdf_filename,
                 'prompt_type': prompt_type,
                 'duration': duration
             })
-            self.logger.info(f"GPT-4o mini query for {os.path.basename(image_path)} completed in {duration:.2f} seconds")
+            self.logger.info(f"GPT-4o mini query for {os.path.basename(image_path)} from PDF: {pdf_filename} completed in {duration:.2f} seconds")
             
             return content
             
         except Exception as e:
-            self.logger.error(f"Failed to query GPT-4o mini for {os.path.basename(image_path)}: {str(e)}")
+            self.logger.error(f"Failed to query GPT-4o mini for {os.path.basename(image_path)} from PDF: {pdf_filename}: {str(e)}")
             self.logger.error(f"Error details: {traceback.format_exc()}")
             return None
     
-    def _save_response(self, image_path, content, prompt_type):
+    def _save_response(self, image_path, content, prompt_type, source_pdf_path=None):
         """Helper method to save responses to log files"""
         image_basename = os.path.basename(image_path)
+        pdf_filename = os.path.basename(source_pdf_path) if source_pdf_path else "unknown_pdf"
         
         # Save to log directory
         log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs", "gpt_responses")
         os.makedirs(log_dir, exist_ok=True)
         
-        log_file = os.path.join(log_dir, f"gpt_response_{prompt_type}_{image_basename}_{int(time.time())}.txt")
+        log_file = os.path.join(log_dir, f"gpt_response_{prompt_type}_{pdf_filename}_{image_basename}_{int(time.time())}.txt")
         try:
             with open(log_file, "w", encoding="utf-8") as f:
+                f.write(f"Source PDF: {source_pdf_path}\n")
                 f.write(f"Image: {image_path}\n")
                 f.write(f"Prompt type: {prompt_type}\n")
                 f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -186,9 +191,10 @@ class GPTClient:
         # Save to permanent directory if requested
         if self.save_responses:
             timestamp = time.strftime('%Y%m%d_%H%M%S')
-            permanent_log_file = os.path.join(self.responses_dir, f"permanent_response_{prompt_type}_{image_basename}_{timestamp}.txt")
+            permanent_log_file = os.path.join(self.responses_dir, f"permanent_response_{prompt_type}_{pdf_filename}_{image_basename}_{timestamp}.txt")
             try:
                 with open(permanent_log_file, "w", encoding="utf-8") as f:
+                    f.write(f"Source PDF: {source_pdf_path}\n")
                     f.write(f"Image: {image_path}\n")
                     f.write(f"Prompt type: {prompt_type}\n")
                     f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
