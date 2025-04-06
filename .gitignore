@@ -61,3 +61,15 @@ src/data/**/*.xlsx
 # Ignore Python cache files
 **/__pycache__/
 *.pyc
+
+# Ignore registry directory and its contents
+registry/
+registry/**/*.parquet
+registry/**/*.csv
+registry/**/*.json
+registry/**/*.txt
+
+src/agroamigo_pipeline/processors/logs/**
+
+# Ignore all contents of logs/
+src/agroamigo_pipeline/processors/logs/*
