@@ -1,5 +1,6 @@
 """
 Registry for tracking ZIP file extractions.
+Updated to include error_occurred and timestamp columns.
 """
 
 import os
@@ -16,31 +17,109 @@ class ZipExtractorRegistry(BaseRegistry):
     """Registry to track ZIP file extractions."""
     
     def __init__(self, logger=None):
-        """Initialize the ZIP extractor registry."""
-        # Define schema for ZIP extractor registry
+        """Initialize the extractor registry."""
+        # Define schema for extractor registry
         schema = pa.schema([
             ('extraction_id', pa.string()),  # Primary key
-            ('download_id', pa.string()),  # Foreign key to WebScraperRegistry
+            ('download_id', pa.string()),    # Foreign key to WebScraperRegistry
             ('file_date', pa.timestamp('ns')),
             ('zip_file_path', pa.string()),
             ('extraction_dir_path', pa.string()),
-            ('extracted_file_paths', pa.list_(pa.string())),
-            ('last_expanded', pa.timestamp('ns')),
-            ('extraction_duration_seconds', pa.float64()),
-            ('expansion_errors', pa.bool_()),
-            ('expansion_error_messages', pa.string()),
-            ('num_contained_files', pa.int32()),
+            ('extracted_files', pa.list_(pa.string())),
+            ('extraction_complete', pa.bool_()),
+            ('date_expanded', pa.timestamp('ns')),
             ('is_valid_zip', pa.bool_()),
-            ('extraction_complete', pa.bool_())
+            ('extraction_duration_seconds', pa.float64()),
+            ('num_contained_files', pa.int32()),
+            ('expansion_errors', pa.bool_()),  # Keep for backward compatibility
+            ('error_message', pa.string()),
+            ('error_occurred', pa.bool_()),    # New column that replaces expansion_errors
+            ('timestamp', pa.timestamp('ns'))  # Timestamp for when extraction was performed
         ])
         
         # Initialize base registry
         super().__init__("extractor", schema, logger)
         self.logger.debug("ZipExtractorRegistry initialized")
     
+    def register_extraction(self, download_id, file_date, zip_file_path, extraction_dir_path,
+                          extracted_files=None, is_valid_zip=False, duration_seconds=0.0,
+                          error=None):
+        """
+        Register a ZIP file extraction.
+        
+        Args:
+            download_id (str): Download ID from WebScraperRegistry
+            file_date (datetime): Date associated with the file
+            zip_file_path (str): Path to the ZIP file
+            extraction_dir_path (str): Directory where files were extracted
+            extracted_files (list): List of paths to extracted files
+            is_valid_zip (bool): Whether the ZIP file was valid
+            duration_seconds (float): Time taken for extraction in seconds
+            error (str): Error message if extraction failed
+            
+        Returns:
+            str: Extraction ID
+        """
+        df = self.read()
+        
+        # Generate new extraction ID
+        extraction_id = str(uuid.uuid4())
+        
+        # Ensure extracted_files is a list
+        if extracted_files is None:
+            extracted_files = []
+        
+        # Count contained files
+        num_contained_files = len(extracted_files)
+        
+        # Set the current time
+        current_time = datetime.now()
+        
+        # Create a new record
+        new_record = {
+            'extraction_id': extraction_id,
+            'download_id': download_id,
+            'file_date': file_date if isinstance(file_date, pd.Timestamp) else pd.Timestamp(file_date),
+            'zip_file_path': zip_file_path,
+            'extraction_dir_path': extraction_dir_path,
+            'extracted_files': extracted_files,
+            'extraction_complete': error is None,
+            'date_expanded': current_time,
+            'is_valid_zip': is_valid_zip,
+            'extraction_duration_seconds': duration_seconds,
+            'num_contained_files': num_contained_files,
+            'expansion_errors': error is not None,  # Keep for backward compatibility
+            'error_message': error or '',
+            'error_occurred': error is not None,    # New field
+            'timestamp': current_time              # New field
+        }
+        
+        # Append new record
+        new_df = pd.DataFrame([new_record])
+        updated_df = pd.concat([df, new_df], ignore_index=True)
+        
+        # Write updated DataFrame
+        self.write(updated_df)
+        self.logger.debug(f"Registered extraction for {os.path.basename(zip_file_path)}")
+        
+        return extraction_id
+    
+    def get_extractions_by_download_id(self, download_id):
+        """
+        Get extractions by download ID.
+        
+        Args:
+            download_id (str): Download ID from WebScraperRegistry
+            
+        Returns:
+            pd.DataFrame: Matching extraction records
+        """
+        df = self.read()
+        return df[df['download_id'] == download_id]
+    
     def get_extraction_by_id(self, extraction_id):
         """
-        Get an extraction record by its ID.
+        Get extraction record by extraction ID.
         
         Args:
             extraction_id (str): Extraction ID
@@ -57,146 +136,64 @@ class ZipExtractorRegistry(BaseRegistry):
         # Convert to dictionary
         return matches.iloc[0].to_dict()
     
-    def get_extractions_by_download_id(self, download_id):
+    def get_extractions_by_date_range(self, start_date=None, end_date=None):
         """
-        Get extraction records by download ID.
+        Get extractions within a date range.
         
         Args:
-            download_id (str): Download ID from WebScraperRegistry
+            start_date (datetime): Start date (inclusive)
+            end_date (datetime): End date (inclusive)
             
         Returns:
-            pd.DataFrame: Matching extraction records
+            pd.DataFrame: Extractions within the date range
         """
         df = self.read()
-        return df[df['download_id'] == download_id]
+        
+        # Apply date filters if specified
+        if start_date:
+            df = df[df['file_date'] >= pd.Timestamp(start_date)]
+        
+        if end_date:
+            df = df[df['file_date'] <= pd.Timestamp(end_date)]
+        
+        return df
     
-    def get_extractions_by_path(self, zip_file_path):
+    def update_extraction_status(self, extraction_id, status, error=None):
         """
-        Get extraction records by ZIP file path.
+        Update the status of an extraction.
         
         Args:
-            zip_file_path (str): Path to the ZIP file
+            extraction_id (str): Extraction ID
+            status (bool): Whether extraction is complete
+            error (str): Error message if status is False
             
         Returns:
-            pd.DataFrame: Matching extraction records
-        """
-        df = self.read()
-        return df[df['zip_file_path'] == zip_file_path]
-    
-    def register_extraction(self, download_id, file_date, zip_file_path, extraction_dir_path, 
-                          extracted_files=None, error=None, is_valid_zip=True, duration_seconds=0.0):
-        """
-        Register a ZIP file extraction.
-        
-        Args:
-            download_id (str): Download ID from WebScraperRegistry
-            file_date (datetime): Date associated with the file
-            zip_file_path (str): Path to the ZIP file
-            extraction_dir_path (str): Directory where files were extracted
-            extracted_files (list, optional): List of paths to extracted files
-            error (str, optional): Error message if extraction failed
-            is_valid_zip (bool): Whether the file is a valid ZIP
-            duration_seconds (float): Duration of extraction in seconds
-            
-        Returns:
-            str: Extraction ID
+            bool: True if successful, False if extraction not found
         """
         df = self.read()
         
-        current_time = datetime.now()
+        # Find the extraction
+        extraction_idx = df.index[df['extraction_id'] == extraction_id].tolist()
         
-        # Check if file has already been extracted
-        existing_extractions = df[df['zip_file_path'] == zip_file_path]
+        if not extraction_idx:
+            self.logger.warning(f"Extraction with ID {extraction_id} not found in registry")
+            return False
         
-        if not existing_extractions.empty:
-            # Get the existing extraction_id
-            extraction_id = existing_extractions.iloc[0]['extraction_id']
-            
-            # Remove old record(s)
-            df = df[df['zip_file_path'] != zip_file_path]
-        else:
-            # Generate a new extraction_id
-            extraction_id = str(uuid.uuid4())
+        # Update status
+        df.at[extraction_idx[0], 'extraction_complete'] = status
         
-        # Ensure extracted_files is a list
-        if extracted_files is None:
-            extracted_files = []
-        
-        # Create a new record
-        new_record = {
-            'extraction_id': extraction_id,
-            'download_id': download_id,
-            'file_date': file_date,
-            'zip_file_path': zip_file_path,
-            'extraction_dir_path': extraction_dir_path,
-            'extracted_file_paths': extracted_files,
-            'last_expanded': current_time,
-            'extraction_duration_seconds': duration_seconds,
-            'expansion_errors': error is not None,
-            'expansion_error_messages': error or '',
-            'num_contained_files': len(extracted_files),
-            'is_valid_zip': is_valid_zip,
-            'extraction_complete': (error is None) and is_valid_zip
-        }
-        
-        # Append new record
-        new_df = pd.DataFrame([new_record])
-        updated_df = pd.concat([df, new_df], ignore_index=True)
+        # Update error fields if applicable
+        if not status and error:
+            df.at[extraction_idx[0], 'expansion_errors'] = True    # Keep for backward compatibility
+            df.at[extraction_idx[0], 'error_occurred'] = True      # New field
+            df.at[extraction_idx[0], 'error_message'] = error
+            df.at[extraction_idx[0], 'timestamp'] = datetime.now()  # Update timestamp
         
         # Write updated DataFrame
-        self.write(updated_df)
-        self.logger.debug(f"Registered extraction for: {os.path.basename(zip_file_path)}")
+        self.write(df)
+        self.logger.debug(f"Updated extraction {extraction_id} status to {status}")
         
-        return extraction_id
-    
-    def get_pending_extractions(self):
-        """
-        Get ZIP files that need to be extracted.
-        
-        Returns:
-            pd.DataFrame: Records of ZIP files that need extraction
-        """
-        df = self.read()
-        return df[~df['extraction_complete']]
-    
-    def get_successful_extractions(self):
-        """
-        Get successfully extracted ZIP files.
-        
-        Returns:
-            pd.DataFrame: Successfully extracted ZIP files
-        """
-        df = self.read()
-        return df[df['extraction_complete'] & ~df['expansion_errors']]
-    
-    def get_extracted_files(self, with_file_types=None):
-        """
-        Get all extracted files, optionally filtering by file type.
-        
-        Args:
-            with_file_types (list, optional): List of file extensions to filter by (e.g., ['.pdf', '.xlsx'])
-            
-        Returns:
-            list: Paths to extracted files
-        """
-        df = self.read()
-        successful = df[df['extraction_complete'] & ~df['expansion_errors']]
-        
-        all_files = []
-        for _, row in successful.iterrows():
-            file_paths = row['extracted_file_paths']
-            all_files.extend(file_paths)
-        
-        # Filter by file type if specified
-        if with_file_types:
-            filtered_files = []
-            for file_path in all_files:
-                ext = os.path.splitext(file_path)[1].lower()
-                if ext in with_file_types:
-                    filtered_files.append(file_path)
-            return filtered_files
-        
-        return all_files
+        return True
     
     def get_statistics(self):
         """
@@ -212,50 +209,49 @@ class ZipExtractorRegistry(BaseRegistry):
                 'total_extractions': 0,
                 'successful_extractions': 0,
                 'failed_extractions': 0,
-                'success_rate': 0,
                 'total_files_extracted': 0,
-                'avg_files_per_zip': 0
+                'avg_files_per_extraction': 0,
+                'avg_extraction_time': 0,
+                'error_rate': 0
             }
         
-        successful = (df['extraction_complete'] & ~df['expansion_errors']).sum()
-        failed = df['expansion_errors'].sum()
+        # Calculate statistics
         total = len(df)
-        
-        # Total files extracted
+        successful = df['extraction_complete'].sum()
+        failed = total - successful
         total_files = df['num_contained_files'].sum()
+        
+        # Calculate averages
+        avg_files = total_files / successful if successful > 0 else 0
+        avg_time = df[df['extraction_complete']]['extraction_duration_seconds'].mean()
+        error_rate = (failed / total * 100) if total > 0 else 0
         
         return {
             'total_extractions': total,
             'successful_extractions': successful,
             'failed_extractions': failed,
-            'success_rate': (successful / total * 100) if total > 0 else 0,
             'total_files_extracted': total_files,
-            'avg_files_per_zip': (total_files / total) if total > 0 else 0
+            'avg_files_per_extraction': avg_files,
+            'avg_extraction_time': avg_time,
+            'error_rate': error_rate
         }
     
-    def get_extractions_by_date_range(self, start_date=None, end_date=None, with_errors=False):
+    def get_pending_extractions(self):
         """
-        Get extractions within a date range.
+        Get extractions that have not been completed.
         
-        Args:
-            start_date (datetime, optional): Start date (inclusive)
-            end_date (datetime, optional): End date (inclusive)
-            with_errors (bool): If True, include extractions with errors
-            
         Returns:
-            pd.DataFrame: Extractions within the date range
+            pd.DataFrame: Pending extraction records
         """
         df = self.read()
+        return df[~df['extraction_complete']]
+    
+    def get_successful_extractions(self):
+        """
+        Get successful extractions.
         
-        # Apply error filter
-        if not with_errors:
-            df = df[~df['expansion_errors']]
-        
-        # Apply date filters if specified
-        if start_date:
-            df = df[df['file_date'] >= pd.Timestamp(start_date)]
-        
-        if end_date:
-            df = df[df['file_date'] <= pd.Timestamp(end_date)]
-        
-        return df
+        Returns:
+            pd.DataFrame: Successful extraction records
+        """
+        df = self.read()
+        return df[df['extraction_complete'] & ~df['error_occurred']]

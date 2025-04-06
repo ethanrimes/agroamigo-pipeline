@@ -1,6 +1,7 @@
 """
 Updated ZIP extractor for processing ZIP files.
 Uses the new registry system for tracking extractions.
+Also handles PDF files directly downloaded from the web scraper.
 """
 
 import os
@@ -11,6 +12,7 @@ from pathlib import Path
 from datetime import datetime
 import time
 import pandas as pd
+import mimetypes
 
 from agroamigo_pipeline.config.settings import (
     SOURCE_DIR, PDF_DIR, TEMP_DIR
@@ -23,7 +25,8 @@ from agroamigo_pipeline.registry.extractor_registry import ZipExtractorRegistry
 from agroamigo_pipeline.registry.pdf_registry import PDFProcessorRegistry
 
 class ZipExtractor:
-    """Extract and process ZIP files containing PDFs and other documents."""
+    """Extract and process ZIP files containing PDFs and other documents.
+    Also handles standalone PDF files from the web scraper."""
     
     def __init__(self, source_dir=None, pdf_dir=None, temp_dir=None, logger=None):
         """
@@ -64,6 +67,7 @@ class ZipExtractor:
             "failed": 0,
             "skipped": 0,
             "pdf_extracted": 0,
+            "direct_pdfs_processed": 0,
             "excel_retained": 0
         }
         
@@ -103,6 +107,7 @@ class ZipExtractor:
     def process_all_zips(self, start_date=None, end_date=None, force_reprocess=False):
         """
         Process all ZIP files in the source directory within the specified date range.
+        Also processes direct PDF files downloaded by the web scraper.
         
         Args:
             start_date (datetime): Optional start date for filtering files (inclusive)
@@ -126,24 +131,32 @@ class ZipExtractor:
             "failed": 0,
             "skipped": 0,
             "pdf_extracted": 0,
+            "direct_pdfs_processed": 0,
             "excel_retained": 0
         }
         self.monthly_stats = {}
         
-        # Get ZIP files from WebScraperRegistry instead of file system
+        # Get ZIP files from WebScraperRegistry
         zip_files_df = self.webscraper_registry.get_files_by_type("zip", with_errors=False)
+        
+        # Get PDF files directly from WebScraperRegistry (for direct PDF handling)
+        pdf_files_df = self.webscraper_registry.get_files_by_type("pdf", with_errors=False)
         
         # Filter by date if needed
         if start_date or end_date:
             if start_date:
                 zip_files_df = zip_files_df[zip_files_df['file_date'] >= pd.Timestamp(start_date)]
+                pdf_files_df = pdf_files_df[pdf_files_df['file_date'] >= pd.Timestamp(start_date)]
             if end_date:
                 zip_files_df = zip_files_df[zip_files_df['file_date'] <= pd.Timestamp(end_date)]
+                pdf_files_df = pdf_files_df[pdf_files_df['file_date'] <= pd.Timestamp(end_date)]
         
-        # Filter out files with empty download paths (should not happen with with_errors=False, but just in case)
+        # Filter out files with empty download paths
         zip_files_df = zip_files_df[zip_files_df['download_path'] != '']
+        pdf_files_df = pdf_files_df[pdf_files_df['download_path'] != '']
         
         self.logger.info(f"Found {len(zip_files_df)} ZIP files to process")
+        self.logger.info(f"Found {len(pdf_files_df)} direct PDF files to process")
         
         # Process each ZIP file
         for _, row in zip_files_df.iterrows():
@@ -166,6 +179,24 @@ class ZipExtractor:
             # Process the ZIP file
             self._process_single_zip(download_id, file_path, file_date)
         
+        # Process each direct PDF file
+        for _, row in pdf_files_df.iterrows():
+            download_id = row['download_id']
+            file_path = row['download_path']
+            file_date = row['file_date']
+            
+            # Check if already processed in extractor registry unless force_reprocess is True
+            existing_extractions = self.extractor_registry.get_extractions_by_download_id(download_id)
+            if not existing_extractions.empty and not force_reprocess:
+                # Check if any extraction is completed successfully
+                if any(existing_extractions['extraction_complete'] & ~existing_extractions['expansion_errors']):
+                    self.logger.info(f"Skipping PDF {os.path.basename(file_path)} - already processed successfully")
+                    self.total_stats["skipped"] += 1
+                    continue
+            
+            # Process the PDF file directly
+            self._process_single_pdf(download_id, file_path, file_date)
+        
         # Export registries to CSV
         self.extractor_registry.export_to_csv()
         self.pdf_registry.export_to_csv()
@@ -174,6 +205,113 @@ class ZipExtractor:
         self._log_statistics()
         
         return self.total_stats
+    
+    def _process_single_pdf(self, download_id, pdf_path, file_date):
+        """
+        Process a single PDF file directly downloaded from web scraper.
+        
+        Args:
+            download_id (str): Download ID from WebScraperRegistry
+            pdf_path (str): Path to the PDF file
+            file_date (datetime): Date associated with the file
+        """
+        pdf_path = Path(pdf_path)
+        pdf_filename = pdf_path.name
+        self.logger.info(f"Processing direct PDF: {pdf_filename}")
+        
+        # Extract date from filename
+        date_from_filename, _ = self._get_date_from_filename(pdf_filename)
+        
+        # Initialize month_key for statistics
+        month_key = "unknown"
+        if date_from_filename:
+            try:
+                year = date_from_filename[:4]
+                month = date_from_filename[4:6]
+                month_key = f"{year}-{month}"
+            except:
+                pass
+        
+        # Initialize statistics for this month if not exists
+        if month_key not in self.monthly_stats:
+            self.monthly_stats[month_key] = {
+                "processed": 0,
+                "success": 0,
+                "failed": 0,
+                "skipped": 0,
+                "pdf_extracted": 0,
+                "direct_pdfs_processed": 0,
+                "excel_retained": 0
+            }
+        
+        # Increment processed count
+        self.total_stats["processed"] += 1
+        self.monthly_stats[month_key]["processed"] += 1
+        
+        try:
+            # Start timing
+            start_time = time.time()
+            
+            # Verify it's actually a PDF
+            if not self._is_pdf_file(pdf_path):
+                raise ExtractorError(f"Not a valid PDF file: {pdf_filename}")
+            
+            # Destination path in PDF directory
+            dest_path = self.pdf_dir / pdf_filename
+            
+            # Copy the PDF to the PDF directory
+            shutil.copy2(pdf_path, dest_path)
+            
+            # Calculate extraction duration
+            extraction_duration = time.time() - start_time
+            
+            # Register extraction in registry
+            extraction_id = self.extractor_registry.register_extraction(
+                download_id=download_id,
+                file_date=file_date,
+                zip_file_path=str(pdf_path),  # Original path
+                extraction_dir_path=str(self.pdf_dir),
+                extracted_files=[str(dest_path)],
+                is_valid_zip=True,  # Not a ZIP but successful process
+                duration_seconds=extraction_duration
+            )
+            
+            # Register in PDF registry
+            self.pdf_registry.register_pdf(
+                extraction_id=extraction_id,
+                file_path=str(dest_path),
+                pdf_filename=pdf_filename,
+                file_date=file_date,
+                date_expanded=datetime.now()
+            )
+            
+            # Update statistics
+            self.total_stats["success"] += 1
+            self.total_stats["direct_pdfs_processed"] += 1
+            
+            self.monthly_stats[month_key]["success"] += 1
+            self.monthly_stats[month_key]["direct_pdfs_processed"] += 1
+            
+            self.logger.info(f"Successfully processed direct PDF: {pdf_filename}")
+            
+        except Exception as e:
+            # Register error in registry
+            self.extractor_registry.register_extraction(
+                download_id=download_id,
+                file_date=file_date,
+                zip_file_path=str(pdf_path),
+                extraction_dir_path=str(self.pdf_dir),
+                error=str(e),
+                is_valid_zip=False,
+                duration_seconds=0.0
+            )
+            
+            # Update statistics
+            self.total_stats["failed"] += 1
+            self.monthly_stats[month_key]["failed"] += 1
+            
+            self.logger.error(f"Error processing PDF {pdf_filename}: {str(e)}")
+            self.logger.debug("Error details:", exc_info=True)
     
     def _process_single_zip(self, download_id, zip_path, file_date):
         """
@@ -209,6 +347,7 @@ class ZipExtractor:
                 "failed": 0,
                 "skipped": 0,
                 "pdf_extracted": 0,
+                "direct_pdfs_processed": 0,
                 "excel_retained": 0
             }
         
@@ -418,6 +557,7 @@ class ZipExtractor:
         self.logger.info(f"Failed to process: {self.total_stats['failed']}")
         self.logger.info(f"Skipped due to date filter: {self.total_stats['skipped']}")
         self.logger.info(f"PDF files extracted: {self.total_stats['pdf_extracted']}")
+        self.logger.info(f"Direct PDF files processed: {self.total_stats['direct_pdfs_processed']}")
         self.logger.info(f"Excel files retained: {self.total_stats['excel_retained']}")
         
         if self.total_stats['processed'] > 0:
@@ -437,6 +577,7 @@ class ZipExtractor:
                 self.logger.info(f"  Failed to process: {stats['failed']}")
                 self.logger.info(f"  Skipped: {stats.get('skipped', 0)}")
                 self.logger.info(f"  PDF files extracted: {stats['pdf_extracted']}")
+                self.logger.info(f"  Direct PDF files processed: {stats['direct_pdfs_processed']}")
                 self.logger.info(f"  Excel files retained: {stats['excel_retained']}")
                 
                 if stats['processed'] > 0:

@@ -54,9 +54,15 @@ class RunStatistics:
         self.run_statistics_dir = self.registry_dir / 'run_statistics'
         self.error_summaries_dir = self.registry_dir / 'error_summaries'
         
+        # Create subdirectories for CSV and text reports
+        self.run_csv_dir = self.run_statistics_dir / 'csv'
+        self.run_text_dir = self.run_statistics_dir / 'text'
+        
         os.makedirs(self.parquet_dir, exist_ok=True)
         os.makedirs(self.run_statistics_dir, exist_ok=True)
         os.makedirs(self.error_summaries_dir, exist_ok=True)
+        os.makedirs(self.run_csv_dir, exist_ok=True)
+        os.makedirs(self.run_text_dir, exist_ok=True)
         
         # Track registry files and their corresponding CSV names
         self.registry_files = {
@@ -82,7 +88,8 @@ class RunStatistics:
         stats = {'updated': [], 'failed': []}
         
         for registry_name, file_info in self.registry_files.items():
-            parquet_file = self.registry_dir / file_info['parquet']
+            # Use parquet files only from the parquet subdirectory
+            parquet_file = self.parquet_dir / file_info['parquet']
             csv_file = self.registry_dir / file_info['csv']
             
             # Check if parquet file exists
@@ -99,14 +106,12 @@ class RunStatistics:
                 for col in df.columns:
                     if pd.api.types.is_datetime64_dtype(df[col]):
                         df[col] = df[col].dt.strftime('%Y-%m-%d %H:%M:%S')
+                    # Format list/array columns to be properly displayed in CSV
+                    elif not df.empty and isinstance(df[col].iloc[0] if not pd.isna(df[col].iloc[0]) else None, (list, tuple)):
+                        df[col] = df[col].apply(lambda x: str(x).replace("'", "").strip('[]()') if not pd.isna(x) else x)
                 
                 # Save to CSV
                 df.to_csv(csv_file, index=False)
-                
-                # Move parquet file to parquet subdirectory if it's not already there
-                if parquet_file.parent == self.registry_dir:
-                    parquet_dest = self.parquet_dir / file_info['parquet']
-                    shutil.copy2(parquet_file, parquet_dest)
                 
                 stats['updated'].append(registry_name)
                 self.logger.info(f"Updated CSV from parquet: {registry_name}")
@@ -126,6 +131,10 @@ class RunStatistics:
         """
         log_function_call(self.logger, "generate_error_summary")
         
+        # Use standard names for run error files
+        run_error_csv = f"run_errors_{self.timestamp_str}.csv"
+        run_error_summary = f"run_error_summary_{self.timestamp_str}.txt"
+        
         # Track all errors and statistics
         all_errors = []
         error_stats = {
@@ -135,7 +144,8 @@ class RunStatistics:
         
         # Process each registry file to extract errors
         for registry_name, file_info in self.registry_files.items():
-            parquet_file = self.registry_dir / file_info['parquet']
+            # Use only parquet files from the parquet subdirectory
+            parquet_file = self.parquet_dir / file_info['parquet']
             
             if not parquet_file.exists():
                 self.logger.warning(f"Parquet file not found: {parquet_file}")
@@ -144,6 +154,19 @@ class RunStatistics:
             try:
                 # Read the registry
                 df = pd.read_parquet(parquet_file)
+                
+                # Apply timestamp filtering - only include errors from this run
+                if self.start_timestamp:
+                    # Try different timestamp columns based on registry type
+                    timestamp_column = None
+                    for col_name in ['last_processed', 'processed_date', 'date_expanded', 'download_timestamp', 'consolidation_time']:
+                        if col_name in df.columns:
+                            timestamp_column = col_name
+                            break
+                    
+                    if timestamp_column:
+                        df = df[df[timestamp_column] >= self.start_timestamp]
+                        self.logger.debug(f"Filtered {registry_name} registry by {timestamp_column} >= {self.start_timestamp}")
                 
                 component_stats = {
                     'total_files': len(df),
@@ -252,32 +275,23 @@ class RunStatistics:
             except Exception as e:
                 self.logger.error(f"Error processing registry {registry_name}: {str(e)}")
         
-        # Create error summary CSV
-        csv_path = self.registry_dir / f"error_summary.csv"
-        txt_path = self.registry_dir / f"error_statistics.txt"
-        
-        # Create timestamped copies in the error_summaries directory
-        csv_timestamped_path = self.error_summaries_dir / f"error_summary_{self.timestamp_str}.csv"
-        txt_timestamped_path = self.error_summaries_dir / f"error_statistics_{self.timestamp_str}.txt"
+        # Generate CSV path
+        csv_path = self.run_csv_dir / run_error_csv
+        txt_path = self.run_text_dir / run_error_summary
         
         # Generate CSV if there are errors
         if all_errors:
             error_df = pd.DataFrame(all_errors)
             error_df.to_csv(csv_path, index=False)
-            error_df.to_csv(csv_timestamped_path, index=False)
-            self.logger.info(f"Created error summary CSV: {csv_path}")
-            self.logger.info(f"Created timestamped error summary CSV: {csv_timestamped_path}")
+            self.logger.info(f"Created run error summary CSV: {csv_path}")
         else:
             # Create empty CSV files
             pd.DataFrame(columns=['component', 'filename', 'file_date', 'step_of_error', 
                                  'error_message', 'file_path', 'error_type', 'pipeline_run_id', 'timestamp']).to_csv(csv_path, index=False)
-            pd.DataFrame(columns=['component', 'filename', 'file_date', 'step_of_error', 
-                                 'error_message', 'file_path', 'error_type', 'pipeline_run_id', 'timestamp']).to_csv(csv_timestamped_path, index=False)
-            self.logger.info(f"Created empty error summary CSV files")
+            self.logger.info(f"Created empty run error summary CSV file")
         
         # Generate text summary
         self._write_error_summary_text(txt_path, error_stats)
-        self._write_error_summary_text(txt_timestamped_path, error_stats)
         
         return csv_path, txt_path
     
@@ -291,10 +305,11 @@ class RunStatistics:
         """
         try:
             with open(path, 'w') as f:
-                f.write("AGROAMIGO PIPELINE ERROR SUMMARY\n")
-                f.write("===============================\n\n")
+                f.write("AGROAMIGO PIPELINE RUN ERROR SUMMARY\n")
+                f.write("==================================\n\n")
                 f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-                f.write(f"Pipeline Run ID: {self.pipeline_run_id or 'Not specified'}\n\n")
+                f.write(f"Pipeline Run ID: {self.pipeline_run_id or 'Not specified'}\n")
+                f.write(f"Run started at: {self.start_timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
                 
                 f.write("OVERALL STATISTICS\n")
                 f.write("-----------------\n")
@@ -364,7 +379,7 @@ class RunStatistics:
             if not file_info:
                 continue
                 
-            parquet_file = self.registry_dir / file_info['parquet']
+            parquet_file = self.parquet_dir / file_info['parquet']
             
             if not parquet_file.exists():
                 self.logger.warning(f"Parquet file not found: {parquet_file}")
@@ -376,12 +391,15 @@ class RunStatistics:
                 
                 # Filter for records processed during this run
                 if self.start_timestamp:
+                    time_col_found = False
                     for time_col in ['last_processed', 'processed_date', 'date_expanded', 'consolidation_time', 'download_timestamp']:
                         if time_col in df.columns:
                             recent_df = df[df[time_col] >= self.start_timestamp]
                             self.logger.debug(f"Filtered {len(recent_df)}/{len(df)} records using {time_col} column")
+                            time_col_found = True
                             break
-                    else:
+                    
+                    if not time_col_found:
                         # If no timestamp column found, use all records
                         self.logger.warning(f"No timestamp column found in {mapped_component} registry")
                         recent_df = df
@@ -398,9 +416,13 @@ class RunStatistics:
             except Exception as e:
                 self.logger.error(f"Error generating statistics for {mapped_component}: {str(e)}")
         
-        # Create statistics files
-        csv_path = self.run_statistics_dir / f"run_statistics_{self.timestamp_str}.csv"
-        txt_path = self.run_statistics_dir / f"run_report_{self.timestamp_str}.txt"
+        # Create filenames with timestamp
+        csv_filename = f"run_statistics_{self.timestamp_str}.csv"
+        txt_filename = f"run_report_{self.timestamp_str}.txt"
+        
+        # Create statistics files in the appropriate subdirectories
+        csv_path = self.run_csv_dir / csv_filename
+        txt_path = self.run_text_dir / txt_filename
         
         # Create flattened statistics for CSV
         flat_stats = self._flatten_statistics(run_stats)
@@ -482,6 +504,10 @@ class RunStatistics:
             if 'num_contained_files' in df.columns:
                 stats['detailed_metrics']['total_extracted_files'] = df['num_contained_files'].sum()
                 stats['detailed_metrics']['avg_files_per_zip'] = df['num_contained_files'].mean()
+            # Count direct PDF processing
+            direct_pdfs = len(df[df['is_valid_zip'] == True])
+            if direct_pdfs > 0:
+                stats['detailed_metrics']['direct_pdfs_processed'] = direct_pdfs
                 
         elif component in ['pdf', 'excel']:
             if 'processing_duration_seconds' in df.columns:
@@ -541,14 +567,23 @@ class RunStatistics:
             detailed = stats.get('detailed_metrics', {})
             if component == 'webscraper':
                 flat_stats[f'{component}_avg_download_duration'] = detailed.get('avg_download_duration', 0)
+                if 'file_types' in detailed:
+                    for ftype, count in detailed['file_types'].items():
+                        flat_stats[f'{component}_file_type_{ftype}'] = count
             elif component == 'extractor':
                 flat_stats[f'{component}_total_extracted_files'] = detailed.get('total_extracted_files', 0)
+                flat_stats[f'{component}_direct_pdfs_processed'] = detailed.get('direct_pdfs_processed', 0)
             elif component in ['pdf', 'excel']:
                 flat_stats[f'{component}_total_rows'] = detailed.get('total_rows', 0)
                 flat_stats[f'{component}_avg_products'] = detailed.get('avg_products', 0)
+                if 'extraction_methods' in detailed:
+                    for method, count in detailed['extraction_methods'].items():
+                        flat_stats[f'{component}_method_{method}'] = count
             elif component == 'consolidation':
                 flat_stats[f'{component}_total_consolidated_rows'] = detailed.get('total_consolidated_rows', 0)
                 flat_stats[f'{component}_total_duplicates_removed'] = detailed.get('total_duplicates_removed', 0)
+                flat_stats[f'{component}_total_excel_files'] = detailed.get('total_excel_files', 0)
+                flat_stats[f'{component}_total_pdf_files'] = detailed.get('total_pdf_files', 0)
         
         return flat_stats
     
@@ -596,6 +631,15 @@ class RunStatistics:
                             else:
                                 f.write(f"    {metric}: {value}\n")
                 
+                # Write summary of errors
+                if any(stats.get('error_records', 0) > 0 for stats in run_stats.get('component_stats', {}).values()):
+                    f.write("\nERROR SUMMARY\n")
+                    f.write("=============\n")
+                    f.write("* A separate detailed error report is available in the error_summaries directory\n")
+                    for component, stats in sorted(run_stats.get('component_stats', {}).items()):
+                        if stats.get('error_records', 0) > 0:
+                            f.write(f"  {component}: {stats.get('error_records', 0)} errors\n")
+                
                 f.write("\n\nEnd of report\n")
                 
         except Exception as e:
@@ -636,5 +680,119 @@ class RunStatistics:
             'txt': str(run_txt_path)
         }
         
+        # 4. Generate global status files
+        self._generate_global_status_files()
+        
         self.logger.info("Completed end-of-run processing")
         return results
+        
+    def _generate_global_status_files(self):
+        """
+        Generate global status files that provide overall pipeline health metrics.
+        These are summary files that show the current state of the pipeline across runs.
+        """
+        log_function_call(self.logger, "generate_global_status_files")
+        
+        # Create a status file at the root of registry directory
+        status_file = self.registry_dir / "pipeline_status.txt"
+        status_csv = self.registry_dir / "pipeline_status.csv"
+        
+        try:
+            # Gather overall statistics
+            overall_stats = {
+                'last_run_id': self.pipeline_run_id,
+                'last_run_time': self.start_timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                'component_stats': {}
+            }
+            
+            # Get statistics for each component
+            for component_name, file_info in self.registry_files.items():
+                parquet_file = self.parquet_dir / file_info['parquet']
+                
+                if not parquet_file.exists():
+                    continue
+                    
+                try:
+                    # Read the registry
+                    df = pd.read_parquet(parquet_file)
+                    
+                    # Get basic stats
+                    error_column = None
+                    for col in df.columns:
+                        if 'error_occurred' in col.lower():
+                            error_column = col
+                            break
+                    
+                    component_stats = {
+                        'total_records': len(df),
+                        'error_records': df[error_column].sum() if error_column else 0,
+                        'success_rate': 0
+                    }
+                    
+                    if component_stats['total_records'] > 0 and error_column:
+                        component_stats['success_rate'] = ((component_stats['total_records'] - component_stats['error_records']) / 
+                                                         component_stats['total_records'] * 100)
+                    
+                    # Get last processed timestamp
+                    timestamp_column = None
+                    for col_name in ['last_processed', 'processed_date', 'date_expanded', 'download_timestamp', 'consolidation_time']:
+                        if col_name in df.columns:
+                            timestamp_column = col_name
+                            break
+                    
+                    if timestamp_column and not df.empty:
+                        last_timestamp = df[timestamp_column].max()
+                        component_stats['last_updated'] = last_timestamp.strftime('%Y-%m-%d %H:%M:%S') if last_timestamp else "Unknown"
+                    
+                    overall_stats['component_stats'][component_name] = component_stats
+                    
+                except Exception as e:
+                    self.logger.error(f"Error getting stats for {component_name}: {str(e)}")
+            
+            # Write text status file
+            with open(status_file, 'w') as f:
+                f.write("AGROAMIGO PIPELINE STATUS\n")
+                f.write("=========================\n\n")
+                f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write(f"Last Pipeline Run ID: {overall_stats['last_run_id'] or 'Unknown'}\n")
+                f.write(f"Last Pipeline Run Time: {overall_stats['last_run_time']}\n\n")
+                
+                f.write("COMPONENT STATUS\n")
+                f.write("===============\n\n")
+                
+                for component, stats in sorted(overall_stats['component_stats'].items()):
+                    f.write(f"{component.upper()}:\n")
+                    f.write(f"  Total Records: {stats['total_records']}\n")
+                    f.write(f"  Success Rate: {stats['success_rate']:.2f}%\n")
+                    if 'last_updated' in stats:
+                        f.write(f"  Last Updated: {stats['last_updated']}\n")
+                    f.write("\n")
+                
+                # Add overall health assessment
+                health_status = "GOOD"
+                if any(stats['success_rate'] < 90 for stats in overall_stats['component_stats'].values()):
+                    health_status = "FAIR"
+                if any(stats['success_rate'] < 70 for stats in overall_stats['component_stats'].values()):
+                    health_status = "POOR"
+                    
+                f.write("OVERALL HEALTH: " + health_status + "\n")
+            
+            # Create CSV version
+            flat_status = {
+                'last_run_id': overall_stats['last_run_id'],
+                'last_run_time': overall_stats['last_run_time'],
+                'overall_health': health_status
+            }
+            
+            # Add component stats to flattened structure
+            for component, stats in overall_stats['component_stats'].items():
+                for key, value in stats.items():
+                    flat_status[f"{component}_{key}"] = value
+            
+            # Save to CSV
+            pd.DataFrame([flat_status]).to_csv(status_csv, index=False)
+            
+            self.logger.info(f"Generated global status files: {status_file}, {status_csv}")
+            
+        except Exception as e:
+            self.logger.error(f"Error generating global status files: {str(e)}")

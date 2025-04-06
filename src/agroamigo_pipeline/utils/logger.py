@@ -10,20 +10,25 @@ from agroamigo_pipeline.config.settings import (
 
 def _create_component_logger(component_name, log_level):
     """Create a logger for a specific component."""
-    # Map component names to log directories
+    # Map component names to log directories and proper logger names
     dir_map = {
-        'scraper': SCRAPER_LOG_DIR,
-        'file_extractor': EXTRACTOR_LOG_DIR,
-        'excel_processor': EXCEL_LOG_DIR,
-        'pdf_processor': PDF_LOG_DIR,
-        'error_handler': ERROR_LOG_DIR,
-        'data_aggregator': AGGREGATOR_LOG_DIR
+        'scraper': {'dir': SCRAPER_LOG_DIR, 'name': 'scraper'},
+        'file_extractor': {'dir': EXTRACTOR_LOG_DIR, 'name': 'file_extractor'},
+        'excel_processor': {'dir': EXCEL_LOG_DIR, 'name': 'excel_processor'},
+        'pdf_processor': {'dir': PDF_LOG_DIR, 'name': 'pdf_processor'},
+        'error_handler': {'dir': ERROR_LOG_DIR, 'name': 'error_handler'},
+        'data_aggregator': {'dir': AGGREGATOR_LOG_DIR, 'name': 'data_aggregator'}
     }
-    log_dir = dir_map.get(component_name, LOG_DIR)
+    
+    # Get directory and ensure it exists
+    log_info = dir_map.get(component_name, {'dir': LOG_DIR, 'name': component_name})
+    log_dir = log_info['dir']
+    logger_name = log_info['name']
+    
     os.makedirs(log_dir, exist_ok=True)
     
-    # Create logger
-    logger = logging.getLogger(component_name)
+    # Create logger with the proper unique name
+    logger = logging.getLogger(logger_name)
     logger.setLevel(log_level)
     logger.propagate = False  # Don't propagate to root logger
     
@@ -32,7 +37,7 @@ def _create_component_logger(component_name, log_level):
         logger.handlers.clear()
     
     # Create file handler with NO rotation, and overwrite mode
-    log_file = os.path.join(log_dir, f"{component_name}.log")
+    log_file = os.path.join(log_dir, f"{logger_name}.log")
     file_handler = logging.FileHandler(
         log_file, mode='w', encoding='utf-8'  # 'w' mode for overwriting instead of appending
     )

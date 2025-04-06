@@ -1,9 +1,11 @@
 """
 Registry for tracking data consolidation.
+Updated to include the consolidated_id column.
 """
 
 import os
 import pandas as pd
+import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 from datetime import datetime
@@ -20,7 +22,8 @@ class ConsolidationRegistry(BaseRegistry):
         # Define schema for consolidation registry
         schema = pa.schema([
             ('consolidation_id', pa.string()),  # Primary key
-            ('pipeline_run_id', pa.string()),  # ID of the pipeline run
+            ('consolidated_id', pa.string()),   # Added ID column for unique identification
+            ('pipeline_run_id', pa.string()),   # ID of the pipeline run
             ('consolidation_time', pa.timestamp('ns')),
             ('consolidation_duration_seconds', pa.float64()),
             ('main_csv_path', pa.string()),
@@ -54,6 +57,25 @@ class ConsolidationRegistry(BaseRegistry):
         """
         df = self.read()
         matches = df[df['consolidation_id'] == consolidation_id]
+        
+        if matches.empty:
+            return None
+        
+        # Convert to dictionary
+        return matches.iloc[0].to_dict()
+    
+    def get_consolidation_by_consolidated_id(self, consolidated_id):
+        """
+        Get a consolidation record by its consolidated ID.
+        
+        Args:
+            consolidated_id (str): Consolidated ID
+            
+        Returns:
+            dict: Consolidation record or None if not found
+        """
+        df = self.read()
+        matches = df[df['consolidated_id'] == consolidated_id]
         
         if matches.empty:
             return None
@@ -121,16 +143,24 @@ class ConsolidationRegistry(BaseRegistry):
         """
         df = self.read()
         
-        # Generate a new consolidation_id
+        # Generate new IDs
         consolidation_id = str(uuid.uuid4())
+        consolidated_id = str(uuid.uuid4())
         
-        # Ensure lists are not None
-        excel_ids = excel_ids or []
-        pdf_ids = pdf_ids or []
+        # Ensure lists are not None and handle empty arrays safely
+        excel_ids = excel_ids if excel_ids is not None else []
+        pdf_ids = pdf_ids if pdf_ids is not None else []
         
+        # Convert lists to arrays if they're empty
+        if len(excel_ids) == 0:
+            excel_ids = []
+        if len(pdf_ids) == 0:
+            pdf_ids = []
+            
         # Create a new record
         new_record = {
             'consolidation_id': consolidation_id,
+            'consolidated_id': consolidated_id,        # New unique ID
             'pipeline_run_id': pipeline_run_id,
             'consolidation_time': datetime.now(),
             'consolidation_duration_seconds': duration_seconds,
@@ -248,8 +278,12 @@ class ConsolidationRegistry(BaseRegistry):
         pdf_ids = []
         
         for _, row in successful.iterrows():
-            excel_ids.extend(row['excel_ids'])
-            pdf_ids.extend(row['pdf_ids'])
+            # Handle potentially empty arrays safely
+            if isinstance(row['excel_ids'], list) and len(row['excel_ids']) > 0:
+                excel_ids.extend(row['excel_ids'])
+            
+            if isinstance(row['pdf_ids'], list) and len(row['pdf_ids']) > 0:
+                pdf_ids.extend(row['pdf_ids'])
         
         # Remove duplicates
         excel_ids = list(set(excel_ids))

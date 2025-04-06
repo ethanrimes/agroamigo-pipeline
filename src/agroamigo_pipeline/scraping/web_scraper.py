@@ -235,8 +235,17 @@ class WebScraper:
                             download_duration = time.time() - download_start
                             thread_logger.info(f"Successfully downloaded: {full_filename}")
                             
-                            # Determine file type (zip or excel)
-                            file_type = "zip" if filename.lower().endswith('.zip') else "excel"
+                            # Determine file type based on extension
+                            file_extension = os.path.splitext(filename.lower())[1]
+                            if file_extension == '.zip':
+                                file_type = "zip"
+                            elif file_extension in ['.xlsx', '.xls']:
+                                file_type = "excel"
+                            elif file_extension == '.pdf':
+                                file_type = "pdf"
+                            else:
+                                file_type = "other"
+                                thread_logger.warning(f"Unsupported file type: {file_extension} for {full_filename}")
                             
                             # Register successful download in registry
                             self.registry.register_download_attempt(
@@ -254,8 +263,17 @@ class WebScraper:
                             error_message = str(e)
                             thread_logger.error(f"Error downloading {full_url}: {error_message}")
                             
-                            # Determine file type (zip or excel)
-                            file_type = "zip" if filename.lower().endswith('.zip') else "excel"
+                            # Determine file type based on extension
+                            file_extension = os.path.splitext(filename.lower())[1]
+                            if file_extension == '.zip':
+                                file_type = "zip"
+                            elif file_extension in ['.xlsx', '.xls']:
+                                file_type = "excel"
+                            elif file_extension == '.pdf':
+                                file_type = "pdf"
+                            else:
+                                file_type = "other"
+                                error_message += f" (Unsupported file type: {file_extension})"
                             
                             # Register failed download in registry
                             self.registry.register_download_attempt(
@@ -296,12 +314,11 @@ class WebScraper:
         Returns:
             list: List of URLs to process
         """
-        log_function_call(self.logger, "get_navigation_links", args=(start_date, end_date))
+        self.logger.info("Fetching navigation links from main page")
         
         base_url = "https://www.dane.gov.co"
         main_url = f"{base_url}/index.php/estadisticas-por-tema/agropecuario/sistema-de-informacion-de-precios-sipsa/componente-precios-mayoristas"
         
-        self.logger.info("Fetching navigation links from main page")
         response = requests.get(main_url)
         soup = BeautifulSoup(response.content, 'html.parser')
         
@@ -316,13 +333,23 @@ class WebScraper:
         pre_containers = soup.select('div#cnpv > pre')
         
         if not pre_containers:
-            pre_containers = [soup.select_one('div[itemprop="articleBody"] > div#cnpv > pre')]
+            pre_containers = soup.select('div[itemprop="articleBody"] div#cnpv > pre')
+        
+        if not pre_containers:
+            # Try more flexible selectors
+            pre_containers = soup.select('div#cnpv')
+            if pre_containers:
+                pre_in_cnpv = pre_containers[0].find_all('pre')
+                if pre_in_cnpv:
+                    pre_containers = pre_in_cnpv
+        
+        thread_logger.info(f"Found {len(pre_containers)} pre containers")
         
         for container in pre_containers:
             if not container:
                 continue
                 
-            thread_logger.info("CNPV container with pre elements found on page")
+            thread_logger.info("Processing pre container")
 
             # Process links directly from the pre container
             links_in_container = container.find_all('a')
@@ -333,38 +360,85 @@ class WebScraper:
                 if href:
                     total_links_found += 1
                     try:
-                        # Try to parse the date directly from the URL
+                        # Try to parse the date directly from the link text or href
                         link_text = link.text.strip()
                         page_date = None
                         
-                        # Try to parse the date from the link text
+                        # Try various date parsing approaches
                         try:
+                            # First try direct parsing from link text
                             page_date = parse_spanish_date_scraper(link_text)
                         except ValueError:
                             try:
-                                # Try to parse date from href
+                                # Try to parse from href
                                 page_date = parse_spanish_date_scraper(href)
                             except ValueError:
-                                thread_logger.warning(f"Could not parse date from link: {link_text} or href: {href}")
-                                continue
+                                # Try to extract year/month from href and use first day of month
+                                year_month_match = re.search(r'(\d{4})[-_]?(\d{2})', href)
+                                if year_month_match:
+                                    year = int(year_month_match.group(1))
+                                    month = int(year_month_match.group(2))
+                                    # Use first day of month
+                                    page_date = datetime(year, month, 1)
+                                else:
+                                    # If all else fails, try to extract year from link text or href
+                                    year_match = re.search(r'(\d{4})', link_text)
+                                    if not year_match:
+                                        year_match = re.search(r'(\d{4})', href)
+                                    
+                                    if year_match:
+                                        year = int(year_match.group(1))
+                                        # If we can find a month name in the text
+                                        month_names = [
+                                            "enero", "febrero", "marzo", "abril", "mayo", "junio",
+                                            "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+                                        ]
+                                        for i, month_name in enumerate(month_names, 1):
+                                            if month_name in link_text.lower():
+                                                page_date = datetime(year, i, 1)
+                                                break
                         
+                        # If we found a date, check if it's in range
                         if page_date:
                             thread_logger.debug(f"Found link for date {page_date}: {href}")
                             
-                            if start_date <= page_date <= end_date:
+                            # More lenient date range check - any overlap with the month
+                            # This is a critical fix to ensure we capture pages that might have data within our range
+                            page_month_start = datetime(page_date.year, page_date.month, 1)
+                            if page_date.month == 12:
+                                page_month_end = datetime(page_date.year + 1, 1, 1)
+                            else:
+                                page_month_end = datetime(page_date.year, page_date.month + 1, 1)
+                            
+                            # Check if there's any overlap between the page's month and our date range
+                            date_overlap = (
+                                (start_date <= page_month_end) and (end_date >= page_month_start)
+                            )
+                            
+                            if date_overlap:
                                 full_url = urljoin(base_url, href)
                                 links.append(full_url)
                                 links_in_date_range += 1
                                 thread_logger.info(f"Added link for date {page_date} (within range)")
                             else:
                                 thread_logger.debug(f"Skipping link for date {page_date} (outside range)")
+                        else:
+                            # If we can't determine the date, include it by default
+                            # This ensures we don't miss any potentially relevant pages
+                            thread_logger.warning(f"Could not determine date for link {href} - including by default")
+                            full_url = urljoin(base_url, href)
+                            links.append(full_url)
+                            links_in_date_range += 1
+                            
                     except Exception as e:
-                        thread_logger.warning(f"Skipping invalid date format in URL: {href}, Error: {str(e)}")
-                        continue
+                        thread_logger.warning(f"Error processing link {href}: {str(e)}")
+                        # Include links we can't process by default
+                        full_url = urljoin(base_url, href)
+                        links.append(full_url)
+                        links_in_date_range += 1
 
-        # Add current month's page if within date range
-        current_date = datetime.now()
-        if start_date <= current_date <= end_date:
+        # Always add current month's page as it might contain relevant data
+        if main_url not in links:
             links.append(main_url)
             links_in_date_range += 1
             thread_logger.info("Added main URL to links (current month)")
@@ -375,6 +449,8 @@ class WebScraper:
             f"- Links within date range: {links_in_date_range}\n"
             f"- Date range: {start_date.date()} to {end_date.date()}"
         )
+        
+        self.logger.info(f"Found {links_in_date_range} pages to process within date range")
         return links
     
     def run(self, start_date, end_date, max_workers=None, force_reprocess=False):

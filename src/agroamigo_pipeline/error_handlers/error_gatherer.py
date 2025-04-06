@@ -16,7 +16,7 @@ from agroamigo_pipeline.config.settings import (
     ERROR_LOG_DIR, SCRAPER_LOG_DIR, EXTRACTOR_LOG_DIR, 
     EXCEL_LOG_DIR, PDF_LOG_DIR, MIN_UNIQUE_PRODUCTS,
     MAX_UNIQUE_PRODUCTS, MIN_MAJOR_CATEGORIES, MAX_MAJOR_CATEGORIES,
-    REGISTRY_DIR, REGISTRY_PARQUET, PIPELINE_RUN_ID
+    REGISTRY_DIR, PIPELINE_RUN_ID
 )
 from agroamigo_pipeline.utils.logger import setup_logging, log_function_call, log_dataframe_info
 from agroamigo_pipeline.utils.path_manager import ensure_directory
@@ -48,26 +48,32 @@ class ErrorGatherer:
         self.error_summary_dir = self.registry_dir / 'error_summaries'
         ensure_directory(self.error_summary_dir)
         
-        # Define registry paths to scan - use the unified registry
+        # Define registry paths to scan - use only the parquet subdirectory
         self.registry_files = {
-            'webscraper': self.registry_dir / 'webscraper_registry.parquet',
-            'extractor': self.registry_dir / 'extractor_registry.parquet',
-            'pdf': self.registry_dir / 'pdf_registry.parquet',
-            'excel': self.registry_dir / 'excel_registry.parquet',
-            'consolidation': self.registry_dir / 'consolidation_registry.parquet'
+            'webscraper': self.registry_dir / 'parquet' / 'webscraper_registry.parquet',
+            'extractor': self.registry_dir / 'parquet' / 'extractor_registry.parquet',
+            'pdf': self.registry_dir / 'parquet' / 'pdf_registry.parquet',
+            'excel': self.registry_dir / 'parquet' / 'excel_registry.parquet',
+            'consolidation': self.registry_dir / 'parquet' / 'consolidation_registry.parquet'
         }
         
         # Define foreign key relationships for integrity checks
+        # Updated to correctly reference PDF and Excel to WebScraper registry
         self.foreign_key_relationships = {
             'pdf': {
-                'key_column': 'pdf_id',
+                'key_column': 'extraction_id',
                 'related_registry': 'extractor',
-                'related_key': 'pdf_id'
+                'related_key': 'extraction_id'
             },
             'excel': {
-                'key_column': 'excel_id',
-                'related_registry': 'extractor',
-                'related_key': 'excel_id'
+                'key_column': 'download_id',
+                'related_registry': 'webscraper',
+                'related_key': 'download_id'
+            },
+            'extractor': {
+                'key_column': 'download_id',
+                'related_registry': 'webscraper',
+                'related_key': 'download_id'
             },
             'consolidation': {
                 'key_column': 'consolidated_id',
@@ -168,33 +174,54 @@ class ErrorGatherer:
         }
         
         try:
+            # Skip if there are no foreign key relationships defined for this component
+            if component not in self.foreign_key_relationships:
+                return integrity_errors, stats
+            
             # Get relationship details
             relationship = self.foreign_key_relationships[component]
             key_column = relationship['key_column']
             
-            # For PDF and Excel components, check relationship with extractor
+            # Skip check if the key column doesn't exist
+            if key_column not in df.columns:
+                self.logger.warning(f"Key column '{key_column}' not found in {component} registry")
+                return integrity_errors, stats
+            
+            # For simple one-to-one relationships
             if 'related_registry' in relationship:
                 related_registry = relationship['related_registry']
                 related_key = relationship['related_key']
                 
-                # Read related registry
-                related_registry_path = self.registry_files[related_registry]
-                if not os.path.exists(related_registry_path):
+                # Skip if the related registry doesn't exist 
+                related_registry_path = self.registry_files.get(related_registry)
+                if not related_registry_path or not os.path.exists(related_registry_path):
                     self.logger.warning(f"Related registry file does not exist: {related_registry_path}")
                     return integrity_errors, stats
                 
-                related_df = pd.read_parquet(related_registry_path)
-                
-                # Get set of keys from related registry
-                related_keys = set()
-                if related_key in related_df.columns:
+                try:
+                    related_df = pd.read_parquet(related_registry_path)
+                    
+                    # Check if related key column exists
+                    if related_key not in related_df.columns:
+                        self.logger.warning(f"Related key column '{related_key}' not found in {related_registry} registry")
+                        return integrity_errors, stats
+                    
+                    # Get set of keys from related registry
                     related_keys = set(related_df[related_key].dropna().unique())
-                
-                # Check current registry for orphaned records
-                if key_column in df.columns:
-                    # Find records that should have related entries but don't
+                    
+                    # Get set of keys from current registry
                     df_keys = set(df[key_column].dropna().unique())
+                    
+                    # Find orphaned keys (keys in current registry that don't exist in related registry)
                     orphaned_keys = df_keys - related_keys
+                    
+                    # PDF registry is a special case - we should not report missing extraction_id as an error
+                    # This is common with manually added PDFs or registry rebuilds
+                    if component == 'pdf' and key_column == 'extraction_id':
+                        # For PDF registry, just log it but don't count as errors
+                        if orphaned_keys:
+                            self.logger.info(f"Found {len(orphaned_keys)} PDFs with extraction_id not in extractor registry - this is normal for direct PDFs")
+                        return integrity_errors, stats
                     
                     if orphaned_keys:
                         self.logger.warning(f"Found {len(orphaned_keys)} orphaned records in {component} registry")
@@ -205,13 +232,24 @@ class ErrorGatherer:
                             
                             for _, row in orphaned_records.iterrows():
                                 # Get filename and path if available
-                                filename = row.get('filename', str(orphaned_key))
-                                if isinstance(filename, Path):
-                                    filename = str(filename)
+                                filename = ''
+                                for fname_col in ['filename', 'pdf_filename', 'zip_file_path']:
+                                    if fname_col in row and row[fname_col]:
+                                        filename = row[fname_col]
+                                        if isinstance(filename, Path):
+                                            filename = str(filename)
+                                        break
                                 
-                                file_path = row.get('file_path', '')
-                                if isinstance(file_path, Path):
-                                    file_path = str(file_path)
+                                if not filename and orphaned_key:
+                                    filename = str(orphaned_key)
+                                
+                                file_path = ''
+                                for path_col in ['file_path', 'download_path', 'zip_file_path', 'extraction_dir_path']:
+                                    if path_col in row and row[path_col]:
+                                        file_path = row[path_col]
+                                        if isinstance(file_path, Path):
+                                            file_path = str(file_path)
+                                        break
                                 
                                 # Determine proper step name
                                 step_name = component
@@ -219,6 +257,8 @@ class ErrorGatherer:
                                     step_name = 'pdf processing'
                                 elif component == 'excel':
                                     step_name = 'excel processing'
+                                elif component == 'extractor':
+                                    step_name = 'zip extraction'
                                 
                                 error_entry = {
                                     'component': component,
@@ -235,7 +275,10 @@ class ErrorGatherer:
                                 integrity_errors.append(error_entry)
                     
                     stats['integrity_errors'] = len(integrity_errors)
-            
+                
+                except Exception as e:
+                    self.logger.error(f"Error processing relation {component} -> {related_registry}: {str(e)}")
+                    
             # For consolidation component, check against both PDF and Excel
             elif 'related_registries' in relationship:
                 # Not implementing consolidated integrity checks here as it's more complex
@@ -287,8 +330,8 @@ class ErrorGatherer:
             step_name = 'pdf processing'
         elif component_type == 'excel':
             step_name = 'excel processing'
-        elif component_type == 'scraper':
-            step_name = 'scraping'
+        elif component_type == 'webscraper':
+            step_name = 'web scraping'
         
         # Process each error record
         for _, row in error_df.iterrows():
@@ -344,7 +387,7 @@ class ErrorGatherer:
         Collect errors from all components and generate consolidated error report.
         
         Args:
-            output_file (str): Name of output file (default: consolidated_errors_{timestamp}.csv)
+            output_file (str): Name of output file
             
         Returns:
             tuple: (DataFrame of errors, path to summary file)
@@ -373,38 +416,27 @@ class ErrorGatherer:
             self.stats['total_errors'] += component_stats['error_files']
             self.stats['integrity_errors'] += component_stats.get('integrity_errors', 0)
         
-        # Generate timestamp for filenames
-        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        # Use standard filenames without timestamps
+        error_csv = "errors.csv"
+        error_summary = "error_summary.txt"
         
         # Create DataFrame from all errors
         if all_errors:
             error_df = pd.DataFrame(all_errors)
             log_dataframe_info(self.logger, error_df, "consolidated_errors")
             
-            # Generate output filename
-            if output_file is None:
-                output_file = f"consolidated_errors_{timestamp}.csv"
-            
             # Ensure the directory exists
             os.makedirs(self.error_summary_dir, exist_ok=True)
             
-            # Save to CSV
-            output_path = os.path.join(self.error_summary_dir, output_file)
-            error_df.to_csv(output_path, index=False)
+            # Save to CSV in error_summaries directory with standard name
+            error_csv_path = os.path.join(self.error_summary_dir, error_csv)
+            error_df.to_csv(error_csv_path, index=False)
             
-            # Save a copy to the main registry directory
-            main_output_path = os.path.join(self.registry_dir, "error_summary.csv")
-            error_df.to_csv(main_output_path, index=False)
-            
-            self.logger.info(f"Saved consolidated errors to {output_path}")
+            self.logger.info(f"Saved consolidated errors to {error_csv_path}")
             
             # Generate summary statistics text file
-            summary_path = os.path.join(self.error_summary_dir, f"error_summary_{timestamp}.txt")
+            summary_path = os.path.join(self.error_summary_dir, error_summary)
             self._write_summary_text_file(summary_path)
-            
-            # Save a copy to the main registry directory
-            main_summary_path = os.path.join(self.registry_dir, "error_statistics.txt")
-            self._write_summary_text_file(main_summary_path)
             
             self.logger.info(f"Saved error summary to {summary_path}")
             
@@ -420,7 +452,7 @@ class ErrorGatherer:
             self.logger.info("No errors found across all components")
             
             # Still write empty summary file
-            summary_path = os.path.join(self.error_summary_dir, f"error_summary_{timestamp}.txt")
+            summary_path = os.path.join(self.error_summary_dir, error_summary)
             self._write_summary_text_file(summary_path)
             
             # Create empty error DataFrame
@@ -429,15 +461,11 @@ class ErrorGatherer:
                 'error_message', 'file_path', 'error_type', 'pipeline_run_id', 'timestamp'
             ])
             
-            # Save empty DataFrame to CSV
-            empty_output_path = os.path.join(self.error_summary_dir, f"error_summary_{timestamp}.csv")
-            empty_df.to_csv(empty_output_path, index=False)
+            # Save empty DataFrame to CSV with standard name
+            error_csv_path = os.path.join(self.error_summary_dir, error_csv)
+            empty_df.to_csv(error_csv_path, index=False)
             
-            # Save a copy to the main registry directory
-            main_empty_path = os.path.join(self.registry_dir, "error_summary.csv")
-            empty_df.to_csv(main_empty_path, index=False)
-            
-            self.logger.info(f"Saved empty error summary to {empty_output_path}")
+            self.logger.info(f"Saved empty error summary to {error_csv_path}")
             
             return empty_df, summary_path
     

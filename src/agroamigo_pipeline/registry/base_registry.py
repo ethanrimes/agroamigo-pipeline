@@ -30,7 +30,15 @@ class BaseRegistry:
         
         # Set up file paths
         self.registry_dir = Path(REGISTRY_DIR)
-        self.parquet_path = self.registry_dir / f"{registry_name}_registry.parquet"
+        
+        # Create parquet subdirectory and always store parquet files there
+        self.parquet_dir = self.registry_dir / 'parquet'
+        os.makedirs(self.parquet_dir, exist_ok=True)
+        
+        # Set the parquet file path to always point to the subdirectory
+        self.parquet_path = self.parquet_dir / f"{registry_name}_registry.parquet"
+        
+        # CSV path remains at the root of the registry directory for easy access
         self.csv_path = self.registry_dir / f"{registry_name}_summary.csv"
         
         # Ensure registry directory exists
@@ -42,6 +50,43 @@ class BaseRegistry:
         # Create empty registry if it doesn't exist
         if not os.path.exists(self.parquet_path) and self.schema:
             self._create_empty_registry()
+        
+        # Check for legacy location and migrate if needed
+        self._migrate_legacy_parquet()
+    
+    def _migrate_legacy_parquet(self):
+        """Check for parquet file in legacy location and migrate if needed."""
+        legacy_path = self.registry_dir / f"{self.registry_name}_registry.parquet"
+        
+        # If the file exists in the old location but not in the new location, move it
+        if os.path.exists(legacy_path) and not os.path.exists(self.parquet_path):
+            try:
+                # Ensure the parquet directory exists
+                os.makedirs(self.parquet_dir, exist_ok=True)
+                
+                # Move the file from legacy to new location
+                shutil.move(legacy_path, self.parquet_path)
+                self.logger.info(f"Migrated registry from {legacy_path} to {self.parquet_path}")
+            except Exception as e:
+                self.logger.error(f"Error migrating registry file: {str(e)}")
+        
+        # If both legacy and new location have files, use the newer one and delete the older one
+        elif os.path.exists(legacy_path) and os.path.exists(self.parquet_path):
+            try:
+                # Compare modification times to determine which is newer
+                legacy_mtime = os.path.getmtime(legacy_path)
+                new_mtime = os.path.getmtime(self.parquet_path)
+                
+                if legacy_mtime > new_mtime:
+                    # Legacy is newer, so replace the new one
+                    shutil.move(legacy_path, self.parquet_path)
+                    self.logger.info(f"Replaced registry with newer version from {legacy_path}")
+                else:
+                    # New one is newer, so remove the legacy one
+                    os.remove(legacy_path)
+                    self.logger.info(f"Removed outdated legacy registry from {legacy_path}")
+            except Exception as e:
+                self.logger.error(f"Error resolving registry file conflict: {str(e)}")
     
     def _create_empty_registry(self):
         """Create an empty Parquet registry file with the defined schema."""
@@ -56,6 +101,11 @@ class BaseRegistry:
         
         # Convert to Arrow table and write to Parquet
         table = pa.Table.from_pandas(empty_df, schema=self.schema)
+        
+        # Ensure the parquet directory exists
+        os.makedirs(os.path.dirname(self.parquet_path), exist_ok=True)
+        
+        # Write to the correct location
         pq.write_table(table, self.parquet_path)
         
         self.logger.info(f"Created empty registry at {self.parquet_path}")
@@ -136,11 +186,16 @@ class BaseRegistry:
             # Ensure we have only the defined columns in the correct order
             df = df[[field.name for field in self.schema]]
             
+            # Ensure the parquet directory exists
+            os.makedirs(os.path.dirname(self.parquet_path), exist_ok=True)
+            
             # Write to Parquet
             table = pa.Table.from_pandas(df, schema=self.schema)
             pq.write_table(table, self.parquet_path)
         else:
             # If no schema defined, just write the DataFrame as is
+            # Ensure the parquet directory exists
+            os.makedirs(os.path.dirname(self.parquet_path), exist_ok=True)
             df.to_parquet(self.parquet_path)
         
         self.logger.debug(f"Updated registry with {len(df)} records")
@@ -162,18 +217,16 @@ class BaseRegistry:
                 if pd.api.types.is_datetime64_dtype(export_df[col]):
                     export_df[col] = export_df[col].dt.strftime('%Y-%m-%d %H:%M:%S')
             
-            # Ensure parquet directory exists
-            parquet_dir = self.registry_dir / 'parquet'
-            os.makedirs(parquet_dir, exist_ok=True)
+            # Remove any legacy parquet files at the root level
+            legacy_path = self.registry_dir / f"{self.registry_name}_registry.parquet"
+            if os.path.exists(legacy_path):
+                try:
+                    os.remove(legacy_path)
+                    self.logger.info(f"Removed legacy registry file: {legacy_path}")
+                except Exception as e:
+                    self.logger.warning(f"Could not remove legacy registry file: {str(e)}")
             
-            # Move parquet file to subdirectory
-            new_parquet_path = parquet_dir / f"{self.registry_name}_registry.parquet"
-            if self.parquet_path != new_parquet_path:
-                # Copy the file to the new location
-                shutil.copy2(self.parquet_path, new_parquet_path)
-                # Update the path
-                self.parquet_path = new_parquet_path
-            
+            # Export the CSV to the registry root for easy access
             export_df.to_csv(self.csv_path, index=False)
             self.logger.info(f"Exported registry to CSV: {self.csv_path}")
             return self.csv_path
