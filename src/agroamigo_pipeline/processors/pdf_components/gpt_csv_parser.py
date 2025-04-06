@@ -10,6 +10,7 @@ import logging
 import traceback
 import os
 import json
+import re
 
 from agroamigo_pipeline.utils.utils import clean_price_value
 
@@ -54,8 +55,16 @@ class GPTCSVParser:
         # Log the input CSV text
         self.logger.info(f"Processing CSV text from GPT-4o mini - {len(csv_text)} characters")
         self.logger.debug(f"CSV text to process:\n{csv_text}")
+        
+        if csv_text:
+            # Remove opening triple backticks or "plaintext"/"text"
+            csv_text = re.sub(r'^(?:```|plaintext|text)\s*\n', '', csv_text)
+            # Remove closing triple backticks or "plaintext"/"text"
+            csv_text = re.sub(r'\n(?:```|plaintext|text)\s*$', '', csv_text)
+
+        
         num_lines = csv_text.count('\n') + 1 if csv_text else 0
-        self.logger.info(f"Number of lines in CSV text: {num_lines}")
+        self.logger.info(f"Number of lines in CSV text after cleaning: {num_lines}")
         
         # Save to permanent directory if requested
         if self.save_csv_data:

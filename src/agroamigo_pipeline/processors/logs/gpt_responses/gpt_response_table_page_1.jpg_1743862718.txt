@@ -1,0 +1,30 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpaqkon6h4/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:18:38
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Choclo maíz;Bulto;62,5 Kilogramo;60.000;80.000;0;0
+Pepino cohombro;Bolsa;12,5 Kilogramo;28.000;30.000;0;0
+Pepino de rellenar;Arroba;12,5 Kilogramo;16.000;20.000;0;0
+Pimiento;Caja de cartón;14 Kilogramo;24.000;28.000;0;0
+Rábano rojo;Atado/manojo;2 Kilogramo;7.000;8.000;0;0
+Remolacha;Atado/manojo;62,5 Kilogramo;75.000;88.000;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;62,5 Kilogramo;115.000;115.000;0;0
+Cebollas;;;;;;
+Cebolla cabeza blanca;Bulto;50 Kilogramo;45.000;55.000;0;0
+Cebolla cabeza roja;Bulto;45 Kilogramo;110.000;120.000;0;0
+Tomate chonto;Canastilla;23 Kilogramo;40.000;45.000;0;0
+Tomate cherry;Canastilla;22 Kilogramo;50.000;60.000;0;0
+Hortalizas;;;;;;
+Apio;Docena;10 Kilogramo;16.000;18.000;0;0
+Brócoli;Docena;10 Kilogramo;36.000;38.000;0;0
+Cilantro;Atado/manojo;1,5 Kilogramo;17.000;18.000;0;0
+Coliflor;Docena;10 Kilogramo;21.000;22.000;0;0
+Espinaca;Atado/manojo;8,5 Kilogramo;38.000;39.000;0;0
+Lechuga batavia;Docena;12,5 Kilogramo;14.000;16.000;0;0
+Lechuga crespa verde;Bolsa;3,5 Kilogramo;12.000;14.000;0;0
+Perjil;Atado/manojo;3 Kilogramo;14.000;20.000;0;0
+Repollo blanco;Bulto;75 Kilogramo;110.000;130.000;0;0
+```

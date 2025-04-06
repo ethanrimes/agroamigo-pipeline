@@ -1,0 +1,47 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpelsmfzyl/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:36:08
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Canastilla;25 Kilogramo;65.000;70.000;0;0
+Limón mandarina;25 Kilogramo;25.000;30.000;0;0
+Limón tahití;Canastilla;25 Kilogramo;75.000;85.000;0;0
+Mandarina arrayana;Canastilla;25 Kilogramo;75.000;80.000;0;0
+Naranja valencia;Canastilla;25 Kilogramo;40.000;45.000;0;0
+Tangelo;Canastilla;25 Kilogramo;40.000;45.000;0;0
+Otros frutas;;;;;;
+Aguacate papacillo;Kilogramo;1 Kilogramo;6.000;8.000;0;0
+Banano crillo;1 Kilogramo;3.000;3.500;0;0
+Banano urabá;Caja de madera;25 Kilogramo;55.000;60.000;0;0
+Borojo;Kilogramo;1 Kilogramo;10.000;12.000;0;0
+Curuba;Caja de cartón;25 Kilogramo;15.000;18.000;0;0
+Guanábana;Kilogramo;1 Kilogramo;12.000;15.000;0;0
+Kiwi;Canastilla;10 Kilogramo;75.000;85.000;0;0
+Lulo;Canastilla;25 Kilogramo;75.000;80.000;0;0
+Mango tommy;Canastilla;25 Kilogramo;75.000;80.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;135.000;140.000;0;0
+Manzana royal gala importada;Caja de cartón;19 Kilogramo;130.000;135.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;140.000;145.000;0;0
+Maracuyá;Bolsa;10 Kilogramo;32.000;35.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;3.000;3.500;0;0
+Mora de castilla;Canastilla;10 Kilogramo;10.000;12.000;0;0
+Papaya paulinia;Canastilla;20 Kilogramo;30.000;35.000;0;0
+Papaya tainung;Canastilla;20 Kilogramo;30.000;35.000;0;0
+Patilla;Kilogramo;1 Kilogramo;11.000;12.000;0;0
+Pera importada;Caja de cartón;20 Kilogramo;110.000;120.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;30.000;35.000;0;0
+Tomate de árbol;Canastilla;25 Kilogramo;75.000;80.000;0;0
+Uva importada;Canastilla;8 Kilogramo;95.000;100.000;0;0
+Uva isabel;Caja de cartón;24 Unidad 500 GR;38.000;42.000;0;0
+Uva red globe nacional;Caja de cartón;8 Kilogramo;56.000;58.000;0;0
+Uva red globe nacional;Caja de madera;11 Kilogramo;66.000;70.000;0;0
+Tubérculos, raíces y plátanos;;;;;;
+Arracacha amarilla;Bulto;50 Kilogramo;60.000;70.000;0;0
+Plátano;Docena;1,5 Kilogramo;3.000;3.500;0;0
+Plátano hartón verde;Arroba;12,5 Kilogramo;25.000;27.000;0;0
+Papa;Bulto;50 Kilogramo;120.000;130.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;55.000;60.000;0;0
+Yuca;Yuca llanera;Bolsa;30 Kilogramo;40.000;42.000;0;0
+```

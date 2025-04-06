@@ -1,0 +1,19 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpm_6_10sk/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:56:37
+Raw GPT-4o mini response:
+```plaintext
+Zanahorias;;;;;;
+Zanahoria;Bulto;50 Kilogramo;48.000;55.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca pastusa;Bulto;48 Kilogramo;40.000;45.000;0;0
+Cebolla junca pastusa;Atado/manojo;22.5 Kilogramo;40.000;46.000;0;0
+Tomates;;;;;;
+Tomate larga vida;Canastilla;20 Kilogramo;45.000;46.000;0;0
+Hortalizas;;;;;;
+Acelga;Atado/manojo;2 Kilogramo;5.000;7.000;0;0
+Brócoli;Kilogramo;1 Kilogramo;5.000;7.000;0;0
+Cilantro;Atado/manojo;1 Kilogramo;5.000;7.000;0;0
+Espinaca;Atado/manojo;1 Kilogramo;5.000;7.000;0;0
+Perejil;Atado/manojo;1 Kilogramo;5.000;7.000;0;0
+```

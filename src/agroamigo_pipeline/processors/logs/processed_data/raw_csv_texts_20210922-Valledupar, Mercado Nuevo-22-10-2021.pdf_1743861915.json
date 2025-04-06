@@ -1,0 +1,12 @@
+{
+  "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data/PDF_Files/PDFs/20210922-Valledupar, Mercado Nuevo-22-10-2021.pdf",
+  "metadata": {
+    "date": "2021-09-22",
+    "city": "Valledupar",
+    "market": "Mercado Nuevo",
+    "source": "informes por ciudades"
+  },
+  "csv_texts": [
+    "```\nFrutas;;;;;;\nCítricos;;;;;;\nLimón común;Bulto;50 Kilogramo;140.000;140.000;0;0\nLimón común;Canastilla;25 Kilogramo;70.000;70.000;0;0\nNaranja común;Kilogramo;1 Kilogramo;480;480;0;0\nNaranja valenciana;Kilogramo;1 Kilogramo;1.120;1.120;0;0\nOtras frutas;;;;;;\nAguacate papacillo;Kilogramo;1 Kilogramo;5.500;6.000;0;0\nManzana no importada;Caja de cartón;20 Kilogramo;120.000;120.000;0;0\nManzana verde;Caja de cartón;19 Kilogramo;135.000;140.000;0;0\nPapaya tahitiana;Kilogramo;1 Kilogramo;4.000;4.000;0;0\nPapaya;Canastilla;22 Kilogramo;40.000;40.000;0;0\nUva importada;Kilogramo;1 Kilogramo;None;None;0;0\nPlátano;;;;;;\nPlátano hartón verde;Kilogramo;1 Kilogramo;1.500;1.500;0;0\nPapa;;;;;;\nPapa criolla limpia;Bulto;50 Kilogramo;200.000;200.000;0;0\nPapa única;Bulto;50 Kilogramo;48.000;48.000;0;0\nYuca;;;;;;\nYuca criolla;Bulto;40 Kilogramo;37.000;42.000;0;0\nVerduras y hortalizas;;;;;;\nOtras hortalizas y verduras;;;;;;\nPimentón;Caja de cartón;12 Kilogramo;35.000;40.000;0;0\nCebollas;;;;;;\nCebolla cabezona roja;Bulto;8 Kilogramo;22.000;22.000;0;0\nCebolla cabeza roja;Bulto;45 Kilogramo;100.000;110.000;0;0\nTomates;;;;;;\nTomate chonto;Caja de cartón;25 Kilogramo;50.000;60.000;0;0\nHortalizas;;;;;;\nCilantro;Kilogramo;1 Kilogramo;3.000;3.000;0;0\n```"
+  ]
+}

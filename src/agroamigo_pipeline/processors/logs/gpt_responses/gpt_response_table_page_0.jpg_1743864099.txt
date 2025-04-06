@@ -1,0 +1,52 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpaxxqowjv/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:41:39
+Raw GPT-4o mini response:
+```csv
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bulto;70 Kilogramo;160.000;170.000;160.000;170.000
+Limón común;Kilogramo;1 Kilogramo;2.700;2.700;2.700;2.700
+Limón mandarina;Kilogramo;1 Kilogramo;1.200;1.200;1.200;1.200
+Limón tahití;Kilogramo;1 Kilogramo;1.200;1.200;1.200;1.200
+Mandarina oneco;Kilogramo;1 Kilogramo;1.300;1.300;1.300;1.300
+Naranja valenciana;Kilogramo;1 Kilogramo;1.200;1.200;1.200;1.200
+Tangelo;Kilogramo;1 Kilogramo;1.300;1.300;1.300;1.300
+Otras frutas;;;;;;
+Aguacate hass;Kilogramo;1 Kilogramo;3.700;4.500;3.700;4.500
+Aguacate papillo;Kilogramo;1 Kilogramo;5.500;6.500;5.500;6.500
+Banana bocadillo;Kilogramo;1 Kilogramo;1.600;1.600;1.600;1.600
+Banano criollo;Kilogramo;1 Kilogramo;1.600;1.600;1.600;1.600
+Borojo;Kilogramo;1 Kilogramo;6.000;6.200;6.000;6.200
+Coco;Kilogramo;1 Kilogramo;6.000;6.200;6.000;6.200
+Coco;Bulto;52 Kilogramo;280.000;280.000;280.000;280.000
+Curuba;Kilogramo;1 Kilogramo;1.600;1.600;1.600;1.600
+Durazno nacional;Kilogramo;1 Kilogramo;1.600;1.600;1.600;1.600
+Fresa;Kilogramo;1 Kilogramo;1.800;1.800;1.800;1.800
+Granadilla;Caja de cartón;13 Kilogramo;45.000;50.000;45.000;50.000
+Granadilla;Kilogramo;1 Kilogramo;3.000;3.000;3.000;3.000
+Guanábana;Kilogramo;1 Kilogramo;3.800;4.000;3.800;4.000
+Guayaba manzana;Kilogramo;1 Kilogramo;2.800;3.000;2.800;3.000
+Guayaba pera;Kilogramo;1 Kilogramo;2.300;2.500;2.300;2.500
+Guayaba pera valluna;Kilogramo;1 Kilogramo;2.500;2.500;2.500;2.500
+Gulupa;Kilogramo;1 Kilogramo;4.000;4.500;4.000;4.500
+Higo;Kilogramo;1 Kilogramo;4.000;4.500;4.000;4.500
+Kiwi;Caja de cartón;10 Kilogramo;75.000;80.000;75.000;80.000
+Lulo;Kilogramo;1 Kilogramo;2.400;2.400;2.400;2.400
+Mango de azúcar;Kilogramo;1 Kilogramo;2.000;2.000;2.000;2.000
+Mango tommy;Kilogramo;1 Kilogramo;2.400;2.400;2.400;2.400
+Manzana nacional;Kilogramo;1 Kilogramo;3.700;3.700;3.700;3.700
+Manzana roja importada;Caja de cartón;19 Kilogramo;125.000;130.000;125.000;130.000
+Manzana royal gala importada;Caja de cartón;19 Kilogramo;120.000;120.000;120.000;120.000
+Manzana verde importada;Caja de cartón;19 Kilogramo;140.000;150.000;140.000;150.000
+Macerado;Antioqueño;Bolsa;10 Kilogramo;25.000;25.000;25.000;25.000
+Melón cantalupo;Kilogramo;1 Kilogramo;2.900;3.000;2.900;3.000
+Mora de castilla;Kilogramo;1 Kilogramo;2.000;2.000;2.000;2.000
+Papaya hawaiana;Caja de madera;28 Kilogramo;50.000;55.000;50.000;55.000
+Papaya maradol;Kilogramo;1 Kilogramo;2.500;2.900;2.500;2.900
+Papaya tainung;Kilogramo;1 Kilogramo;2.000;2.000;2.000;2.000
+Patilla;Kilogramo;1 Kilogramo;2.000;2.000;2.000;2.000
+Patilla baby;Kilogramo;1 Kilogramo;2.300;2.400;2.300;2.400
+Pera importada;Caja de cartón;19 Kilogramo;115.000;120.000;115.000;120.000
+Pera nacional;Canastilla;24 Kilogramo;70.000;80.000;70.000;80.000
+```

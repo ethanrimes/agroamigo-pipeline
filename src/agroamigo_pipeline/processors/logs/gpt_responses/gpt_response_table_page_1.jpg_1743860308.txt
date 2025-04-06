@@ -1,0 +1,43 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp6e3bq6b6/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:38:28
+Raw GPT-4o mini response:
+```plaintext
+Tubérculos, raíces y platanos;;;;;;
+Arracacha amarilla;Bulto;62,5 Kilogramo;55.000;60.000;0;0
+Plátano;Bulto;62,5 Kilogramo;140.000;145.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;60.000;65.000;0;0
+Papa agridulce;Bulto;50 Kilogramo;55.000;60.000;0;0
+Yuca;Bulto;50 Kilogramo;45.000;50.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Bulto;50 Kilogramo;100.000;100.000;0;0
+Frijol verde en vaina;Bulto;50 Kilogramo;120.000;120.000;0;0
+Habichuela;Saco;20 Kilogramo;50.000;50.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ayuyama;Kilogramo;1 Kilogramo;9.000;16.000;0;0
+Ahuyamín (sakata);Bulto;50 Kilogramo;36.000;40.000;0;0
+Ajo importado;Caja de cartón;20 Kilogramo;78.000;80.000;0;0
+Calabacín;Kilogramo;1 Kilogramo;2.000;2.500;0;0
+Choclo mazorca;Bulto;62,5 Kilogramo;68.000;82.000;0;0
+Pepino cohombro;Bulto;25 Kilogramo;25.000;30.000;0;0
+Pimentón;Canastilla;10 Kilogramo;28.000;30.000;0;0
+Pimentón verde;Canastilla;10 Kilogramo;28.000;30.000;0;0
+Rábano rojo;Kilogramo;1 Kilogramo;3.000;3.500;0;0
+Remolacha;Kilogramo;1 Kilogramo;3.000;3.500;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;60 Kilogramo;113.000;113.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;45.000;47.000;0;0
+Cebolla cabezona roja importada;Bulto;48 Kilogramo;135.000;135.000;0;0
+Cebolla cabezona roja oceánica;Bulto;48 Kilogramo;96.000;100.000;0;0
+Cebolla junca;Bulto;32 Kilogramo;25.000;30.000;0;0
+Tomates;;;;;;
+Tomate riñón;Canastilla;22 Kilogramo;45.000;50.000;0;0
+Tomate cherry;Canastilla;22 Kilogramo;35.000;40.000;0;0
+Hortalizas;;;;;;
+Acelga;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Apio;Atado/manojo;1 Kilogramo;1.500;1.500;0;0
+Brócoli;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Cilantro;Atado/manojo;1 Kilogramo;4.000;5.000;0;0
+```

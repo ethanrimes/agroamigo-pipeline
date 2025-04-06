@@ -1,0 +1,51 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpaqkon6h4/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:18:27
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bolsa;12,5 Kilogramo;22.000;28.000;0;0
+Mandarina arrayana;Canastilla;22 Kilogramo;40.000;50.000;0;0
+Naranja sweet;Bulto;40 Kilogramo;40.000;45.000;0;0
+Aguacate papelillo;Kilogramo;1 Kilogramo;30.000;30.000;0;0
+Banano criollo;Canastilla;25 Kilogramo;30.000;30.000;0;0
+Ciruela roja;Canastilla;25 Kilogramo;30.000;30.000;0;0
+Curuba;Canastilla;25 Kilogramo;35.000;40.000;0;0
+Fresa;Caja de cartón;15 Kilogramo;35.000;40.000;0;0
+Granadilla;Caja de cartón;15 Kilogramo;35.000;40.000;0;0
+Kiwi;Caja de cartón;10 Kilogramo;40.000;45.000;0;0
+Lulo;Canastilla;10 Kilogramo;35.000;40.000;0;0
+Mango;Caja de cartón;19 Kilogramo;120.000;140.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;156.000;166.000;0;0
+Maracuyá huilense;Bolsa;12,5 Kilogramo;42.000;45.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Mora de castilla;Canastilla;12,5 Kilogramo;28.000;35.000;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;18.000;20.000;0;0
+Pera importada;Caja de cartón;18 Kilogramo;124.000;135.000;0;0
+Piña;Kilogramo;1 Kilogramo;1.400;1.400;0;0
+Tomate de árbol;Canastilla;25 Kilogramo;65.000;68.000;0;0
+Uva roja;Kilogramo;1 Kilogramo;7.300;8.000;0;0
+Uva verde;Kilogramo;1 Kilogramo;9.500;11.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Arracacha amarilla;Bulto;62,5 Kilogramo;70.000;70.000;0;0
+Plátano;;;;;;
+Plátano hartón maduro;Kilogramo;1 Kilogramo;1.100;1.300;0;0
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.000;1.000;0;0
+Papa;;;;;;
+Papa criolla limpia;Bulto;50 Kilogramo;120.000;132.000;0;0
+Papa r-12 negra;Bulto;50 Kilogramo;65.000;66.000;0;0
+Papa superior;Bulto;50 Kilogramo;65.000;66.000;0;0
+Papa junca;Bulto;50 Kilogramo;64.000;67.000;0;0
+Yuca;Bols;12,5 Kilogramo;25.000;32.000;0;0
+Yuca rica;Bols;12,5 Kilogramo;25.000;32.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Arroba;12,5 Kilogramo;35.000;35.000;0;0
+Frijol verde en vaina;Arroba;12,5 Kilogramo;40.000;45.000;0;0
+Habichuela;Arroba;12,5 Kilogramo;40.000;45.000;0;0
+Otros hortalizas y verduras;;;;;;
+Ahuyama (sakata);Bols;12,5 Kilogramo;15.000;20.000;0;0
+Ajo importado;Caja de cartón;10 Kilogramo;87.000;88.000;0;0
+```

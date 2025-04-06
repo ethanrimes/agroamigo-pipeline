@@ -1,0 +1,49 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpqxi1ik6e/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:15:02
+Raw GPT-4o mini response:
+```csv
+Granos y cereales;;;;;;
+Cereales;;;;;;
+Arroz de primera;Bolsa;25 Unidad 500 GR;27.000;28.000;0;0
+Maíz amarillo cáscara;Bulto;62 Kilogramo;93.000;95.000;0;0
+Maíz blanco trillado;Bulto;50 Kilogramo;108.000;110.000;0;0
+Granos;;;;;;
+Frijol pinta calima;Arroba;12,5 Kilogramo;67.000;70.000;0;0
+Garbanzos importados;Arroba;12,5 Kilogramo;55.000;65.000;0;0
+Lenteja importada;Bols;12,5 Kilogramo;68.000;69.000;0;0
+Lácteos y huevos;;;;;;
+Huevos;;;;;;
+Huevo rojo;Unidad;1 Unidad;300;320;0;0
+Huevo blanco;Unidad;1 Unidad;270;280;0;0
+Huevo rojo extra;Unidad;1 Unidad;290;300;0;0
+Pescados y congelados;;;;;;
+Basa, entero congelado importado;Caja de cartón;10 Kilogramo;107.000;120.000;0;0
+Cachama de cultivo fresco;Libra;500 Gramo;4.000;4.800;0;0
+Tilapia roja entera fresca;Libra;500 Gramo;4.000;4.800;0;0
+Procesados;;;;;;
+Otros procesados;;;;;;
+Avena en hojuelas;Bolsa;54 Unidad 180 GR;86.400;91.800;0;0
+Avena molida;Bolsa;54 Unidad 180 GR;86.400;91.800;0;0
+Café instantáneo;Caja de cartón;12 Unidad 170 GR;150.000;156.000;0;0
+Café molido;Bolsa;24 Unidad 500 GR;228.000;0;0;0
+Chocolate dulce;Caja de cartón;24 Kilogramo;273.680;288.000;0;0
+Cola (bolis);Caja de cartón;16 Unidad 500 GR;124.800;0;0;0
+Fécula de maíz;Caja de cartón;40 Unidad 380 GR;300.000;320.000;0;0
+Galletas saladas;Caja de cartón;24 Unidad 500 GR;79.200;0;0;0
+Gelatina;Caja de cartón;48 Unidad 40 GR;0;0;0;0
+Harina de trigo;Bolsa;12,5 Kilogramo;37.000;38.000;0;0
+Harina precocida de maíz;Bolsa;24 Unidad 500 GR;33.000;35.000;0;0
+Lomos de atún en lata;Caja;48 Unidad 170 GR;206.400;210.000;0;0
+Pastas alimenticias;Bolsa;24 Unidad 250 GR;37.000;38.000;0;0
+Sal yodada;Bolsa;25 Unidad 500 GR;18.000;20.000;0;0
+Azúcar;;;;;;
+Azúcar refinada;Bulto;50 Kilogramo;145.000;150.000;0;0
+Panelas;;;;;;
+Panelas cuadradas;Caja de cartón;40 Unidad 500 GR;76.000;80.000;0;0
+Aceites y grasas;;;;;;
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;85.000;87.000;0;0
+Aceite vegetal mezcla;Caja de cartón;24 Unidad 500 CC;92.000;93.000;0;0
+Manteca;Caja de cartón;40 Unidad 250 GR;77.000;84.000;0;0
+Margarina;Caja de cartón;24 Unidad 500 GR;100.000;112.800;0;0
+```

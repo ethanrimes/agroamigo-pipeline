@@ -1,0 +1,45 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp3qqxxr7v/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:54:31
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Guayaba común;Canastilla;25 Kilogramo;40.000;41.000;0;0
+Guayaba pera de madera;10 Kilogramo;22.000;25.000;0;0
+Lulo;Kilogramo;1 Kilogramo;5.400;5.500;0;0
+Mango de azúcar;Canastilla;25 Kilogramo;130.000;135.000;0;0
+Mango tommy;Kilogramo;1 Kilogramo;140.000;145.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;60.000;62.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;60.000;62.000;0;0
+Maracuyá;Bulto;15 Kilogramo;60.000;65.000;0;0
+Maracuyá valluno;Bolsa;12.5 Kilogramo;60.000;65.000;0;0
+Papaya tayrona;Kilogramo;1 Kilogramo;2.500;3.000;0;0
+Piña perolera;Manzana;32 Kilogramo;32.000;33.000;0;0
+Granos y cereales;;;;;;
+Cereales;;;;;;
+Arroz de primera;Bulto;45 Kilogramo;101.500;103.000;0;0
+Arroz de segunda;Bulto;45 Kilogramo;90.800;93.000;0;0
+Arroz excelsos;Bolsa;25 Kilogramo;32.000;32.000;0;0
+Maíz amarillo trillado;Bulto;40 Kilogramo;88.000;88.991;0;0
+Maíz blanco trillado;Bulto;40 Kilogramo;90.000;90.000;0;0
+Granos;;;;;;
+Frijol cabeza negra importado;Kilogramo;1 Kilogramo;5.600;5.800;0;0
+Frijol palomito importado;Kilogramo;1 Kilogramo;5.100;5.300;0;0
+Frijol zargazo;Kilogramo;1 Kilogramo;5.100;5.300;0;0
+Lenteja importada;Kilogramo;1 Kilogramo;5.140;5.300;0;0
+Lácteos y huevos;;;;;;
+Leche en polvo;Caja de cartón;32 Unidad 360 GR;348.400;350.350;0;0
+Queso costeño;Kilogramo;1 Kilogramo;15.000;15.000;0;0
+Procesados;;;;;;
+Avena molida;Bolsa;48 Unidad 200 GR;89.100;89.700;0;0
+Café instantáneo;Caja de cartón;24 Unidad 85 GR;185.100;185.100;0;0
+Café molido;Bolsa;24 Unidad 500 GR;128.700;230.711;0;0
+Chocolate dulce;Caja de cartón;24 Unidad 500 GR;151.500;151.500;0;0
+Fécula de maíz;Caja de cartón;24 Unidad 600 GR;139.900;140.000;0;0
+Galletas dulces;Caja de cartón;24 Unidad 415 GR;184.100;187.000;0;0
+Galletas saladas;Caja de cartón;48 Unidad 110 GR;185.000;185.000;0;0
+Gelatina;Bolsa;12 Kilogramo;12.000;12.000;0;0
+Harina;Bolsa;12 Kilogramo;12.000;12.000;0;0
+Harina precocida de maíz;Bolsa;12 Kilogramo;12.000;12.000;0;0
+Jugo de frutas;Caja;24 Unidad 215 CC;45.700;45.700;0;0
+```

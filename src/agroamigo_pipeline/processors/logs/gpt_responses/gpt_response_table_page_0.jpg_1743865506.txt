@@ -1,0 +1,40 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp4ladk0f6/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:05:06
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Otros frutas;;;;;;
+Guayaba pera;Caja de cartón;10 Kilogramo;24.000;25.000;0;0
+Lulo;Kilogramo;1 Kilogramo;5.100;5.200;0;0
+Maracuyá valluno;Bolsa;10 Kilogramo;28.000;30.000;0;0
+Mora de castilla;Bolsa;2,5 Kilogramo;20.000;22.000;0;0
+Mora de castilla;Caja;12,5 Kilogramo;41.000;42.000;0;0
+Piña perolera;Caja;24;21.000;22.000;0;0
+Tomate de árbol;Kilogramo;1 Kilogramo;2.400;2.500;0;0
+Otros tubérculos;;;;;;
+Yuca;Kilogramo;1 Kilogramo;0;0;0;0
+Leguminosas;;;;;;
+Arveja verde en vaina;Kilogramo;1 Kilogramo;6.900;7.000;0;0
+Frijol verde en vaina;Kilogramo;1 Kilogramo;7.000;7.200;0;0
+Habichuela;Saco;20 Kilogramo;70.000;72.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ajo importado;Caja de cartón;10 Kilogramo;78.000;80.000;0;0
+Pepino cohombro;Bulto;50 Kilogramo;80.000;84.000;0;0
+Pimentón;Caja de cartón;1 Kilogramo;24.000;25.000;0;0
+Remolacha;Bulto;60 Kilogramo;58.000;60.000;0;0
+Zanahorias;Bulto;60 Kilogramo;106.000;108.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;46 Kilogramo;126.000;127.000;0;0
+Cebolla cabezona roja peruana;Atado/manojo;30 Kilogramo;33.000;35.000;0;0
+Tomates;;;;;;
+Tomate chonto;Caja de cartón;25 Kilogramo;64.000;66.000;0;0
+Tomate riñón;Caja de cartón;22 Kilogramo;0;0;0;0
+Hortalizas;;;;;;
+Apio;Atado/manojo;10 Kilogramo;16.000;17.000;0;0
+Brócoli;Kilogramo;5.600;5.700;0;0
+Coliflor;Kilogramo;1 Kilogramo;5.000;5.100;0;0
+Espinaca;Kilogramo;1 Kilogramo;5.000;5.100;0;0
+Lechuga;Kilogramo;1 Kilogramo;5.000;5.100;0;0
+Repollo blanco;Bulto;70 Kilogramo;112.000;114.000;0;0
+```

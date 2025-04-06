@@ -1,0 +1,47 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp2eq57rax/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:51:58
+Raw GPT-4o mini response:
+```plaintext
+Carnes;;;;;;
+Carne de cerdo;Kilogramo;1 Kilogramo;15.000;16.000;0;0
+Carne de cerdo, costilla;Kilogramo;1 Kilogramo;11.000;12.000;0;0
+Carne de cerdo, lomo sin hueso;Kilogramo;1 Kilogramo;18.000;19.000;0;0
+Carne de cerdo, pernil;Kilogramo;1 Kilogramo;14.000;15.000;0;0
+Carne de cerdo, tocino;Kilogramo;1 Kilogramo;12.000;None;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón tahití;Bulto;62,5 Kilogramo;190.000;None;0;0
+Limón tahití;Bulto;22 Kilogramo;65.000;70.000;0;0
+Mandarina arrayana;Canastilla;22 Kilogramo;50.000;60.000;0;0
+Mandarina común;Canastilla;22 Kilogramo;40.000;45.000;0;0
+Naranja valencia;Bulto;50 Kilogramo;45.000;50.000;0;0
+Tangelo;Canastilla;25 Kilogramo;35.000;40.000;0;0
+Otras frutas;;;;;;
+Aguacate hass;Kilogramo;1 Kilogramo;3.800;4.000;0;0
+Aguacate papelillo;Kilogramo;1 Kilogramo;None;None;0;0
+Banano bocadillo;Canastilla;20 Kilogramo;27.000;29.000;0;0
+Banano criollo;Caja de cartón;20 Kilogramo;32.000;33.000;0;0
+Banano urabá;Caja de cartón;20 Kilogramo;28.000;None;0;0
+Ciruela roja;Canastilla;22 Kilogramo;35.000;None;0;0
+Curuba;Canastilla;22 Kilogramo;40.000;45.000;0;0
+Durazno nacional;Canastilla;22 Kilogramo;None;None;0;0
+Feijoa;Canastilla;22 Kilogramo;75.000;78.000;0;0
+Fresa;Canastilla;7 Kilogramo;None;None;0;0
+Grandilla;Caja de cartón;15 Kilogramo;55.000;None;0;0
+Guanábana;Kilogramo;1 Kilogramo;3.500;3.600;0;0
+Guayaba pera de madera;Caja de;8 Kilogramo;12.000;12.000;0;0
+Guayaba pera;Canastilla;10 Kilogramo;None;None;0;0
+Kiwi;Canastilla;10 Kilogramo;85.000;None;0;0
+Lulo;Canastilla;22 Kilogramo;25.000;25.000;0;0
+Mango común;Canastilla;22 Kilogramo;25.000;None;0;0
+Mango manzano;Canastilla;22 Kilogramo;35.000;None;0;0
+Mango reina;Canastilla;22 Kilogramo;None;None;0;0
+Mango tommy;Canastilla;22 Kilogramo;48.000;50.000;0;0
+Manzana nacional;Canastilla;22 Kilogramo;45.000;None;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;130.000;140.000;0;0
+Manzana royal gala importada;Caja de cartón;22 Kilogramo;None;None;0;0
+Maracuyá;Bolsa;10 Kilogramo;32.000;None;0;0
+Melón cantalup;Canastilla;22 Kilogramo;48.000;None;0;0
+Mora de castilla;Canastilla;10 Kilogramo;25.000;28.000;0;0
+```

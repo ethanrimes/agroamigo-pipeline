@@ -1,16 +1,25 @@
-import os
-import pandas as pd
-import numpy as np
-from datetime import datetime
-import re
-from pathlib import Path
-import logging
-import json
+"""
+Updated data aggregator for Colombian agricultural price data.
+Uses the new registry system for tracking consolidation.
+"""
 
-from agroamigo_pipeline.config.settings import PROCESSED_DIR, CONSOLIDATED_DIR
-from agroamigo_pipeline.utils.logger import setup_logging, log_function_call, log_dataframe_info
-from agroamigo_pipeline.utils.path_manager import ensure_directory
-from agroamigo_pipeline.utils.file_registry import FileRegistry
+import os
+import logging
+import traceback
+from datetime import datetime
+import time
+import uuid
+from pathlib import Path
+import pandas as pd
+
+from agroamigo_pipeline.config.settings import (
+    PROCESSED_DIR, CONSOLIDATED_DIR, PIPELINE_RUN_ID
+)
+from agroamigo_pipeline.utils.logger import setup_logging
+from agroamigo_pipeline.utils.exceptions import DataAggregationError
+from agroamigo_pipeline.registry.pdf_registry import PDFProcessorRegistry
+from agroamigo_pipeline.registry.excel_registry import ExcelProcessorRegistry
+from agroamigo_pipeline.registry.consolidation_registry import ConsolidationRegistry
 
 class DataAggregator:
     """
@@ -38,11 +47,13 @@ class DataAggregator:
         self.output_dir = output_dir or CONSOLIDATED_DIR
         
         # Ensure directories exist
-        ensure_directory(self.input_dir)
-        ensure_directory(self.output_dir)
+        os.makedirs(self.input_dir, exist_ok=True)
+        os.makedirs(self.output_dir, exist_ok=True)
         
-        # Initialize file registry
-        self.registry = FileRegistry()
+        # Initialize registries
+        self.pdf_registry = PDFProcessorRegistry(logger=self.logger)
+        self.excel_registry = ExcelProcessorRegistry(logger=self.logger)
+        self.consolidation_registry = ConsolidationRegistry(logger=self.logger)
         
         # Initialize statistics
         self.stats = {
@@ -50,78 +61,14 @@ class DataAggregator:
             'rows_processed': 0,
             'rows_output': 0,
             'duplicates_removed': 0,
-            'files_by_source': {},
+            'excel_files': 0,
+            'pdf_files': 0,
             'errors': []
         }
         
         self.logger.info("DataAggregator initialized")
         self.logger.debug(f"Using input directory: {self.input_dir}")
         self.logger.debug(f"Using output directory: {self.output_dir}")
-    
-    def _validate_schema(self, df, expected_columns):
-        """
-        Validate that DataFrame has the expected schema.
-        
-        Args:
-            df (DataFrame): DataFrame to validate
-            expected_columns (list): List of expected column names
-            
-        Returns:
-            bool: True if schema is valid, False otherwise
-        """
-        if set(expected_columns).issubset(set(df.columns)):
-            return True
-        
-        missing_columns = set(expected_columns) - set(df.columns)
-        self.logger.warning(f"Missing columns in DataFrame: {missing_columns}")
-        return False
-    
-    def _read_csv_file(self, file_path):
-        """
-        Read a CSV file into a DataFrame with error handling.
-        
-        Args:
-            file_path (str): Path to the CSV file
-            
-        Returns:
-            DataFrame: The loaded DataFrame or None if error
-        """
-        try:
-            df = pd.read_csv(file_path)
-            
-            # Add source filename column for reference
-            df['source_filename'] = os.path.basename(file_path)
-            
-            return df
-        except Exception as e:
-            error_msg = f"Error reading CSV file {file_path}: {str(e)}"
-            self.logger.error(error_msg)
-            self.stats['errors'].append(error_msg)
-            return None
-    
-    def _extract_date_from_filename(self, filename):
-        """
-        Extract date from filename with format yyyymmdd-restoffilename.
-        
-        Args:
-            filename (str): Filename to extract date from
-            
-        Returns:
-            datetime or None: Extracted date or None if no date found
-        """
-        # Look for the pattern yyyymmdd at the beginning of the filename
-        match = re.match(r'^(\d{4})(\d{2})(\d{2})[-_]?', filename)
-        
-        if match:
-            year, month, day = match.groups()
-            try:
-                return datetime(int(year), int(month), int(day))
-            except ValueError as e:
-                self.logger.warning(f"Invalid date in filename {filename}: {str(e)}")
-                return None
-        else:
-            self.logger.debug(f"No date pattern found in filename: {filename}")
-            return None
     
     def _standardize_dataframe(self, df, source_file):
         """
@@ -141,14 +88,11 @@ class DataAggregator:
                 'product', 'presentation', 'units', 'daily_min', 'daily_max', 'source'
             ]
             
-            # Check if DataFrame has the required columns
-            if not self._validate_schema(df, expected_columns):
-                # If missing columns, try to map or add default values
-                for col in expected_columns:
-                    if col not in df.columns:
-                        df[col] = None
-                
-                self.logger.warning(f"Added missing columns to DataFrame from {os.path.basename(source_file)}")
+            # Add missing columns if needed
+            for col in expected_columns:
+                if col not in df.columns:
+                    df[col] = None
+                    self.logger.warning(f"Added missing column '{col}' to data from {os.path.basename(source_file)}")
             
             # Standardize date format
             if 'date' in df.columns:
@@ -174,7 +118,7 @@ class DataAggregator:
             # Ensure all string columns are actually strings
             string_columns = [
                 'city', 'market', 'major_category', 'sub_category', 
-                'product', 'presentation', 'units', 'source', 'source_filename'
+                'product', 'presentation', 'units', 'source'
             ]
             for col in string_columns:
                 if col in df.columns:
@@ -226,58 +170,20 @@ class DataAggregator:
             self.stats['errors'].append(error_msg)
             return df
     
-    def _resolve_conflicting_data(self, df):
+    def aggregate_data(self, filter_date_start=None, filter_date_end=None, output_file=None, update_registries=True):
         """
-        Resolve conflicting data in the DataFrame.
-        
-        Args:
-            df (DataFrame): DataFrame to resolve conflicts in
-            
-        Returns:
-            DataFrame: DataFrame with conflicts resolved
-        """
-        try:
-            # For conflicting price data, we can use the approach:
-            # - When multiple sources report the same product/date/market, average the prices
-            
-            # Group by all non-price columns and calculate mean for price columns
-            groupby_columns = [
-                'date', 'city', 'market', 'major_category', 'sub_category', 
-                'product', 'presentation', 'units', 'source'
-            ]
-            
-            df = df.groupby(groupby_columns, as_index=False).agg({
-                'daily_min': 'mean',
-                'daily_max': 'mean',
-                'source_filename': lambda x: ', '.join(sorted(set(x)))
-            })
-            
-            return df
-            
-        except Exception as e:
-            error_msg = f"Error resolving conflicting data: {str(e)}"
-            self.logger.error(error_msg)
-            self.stats['errors'].append(error_msg)
-            return df
-    
-    def aggregate_data(self, filter_date_start=None, filter_date_end=None, output_file=None):
-        """
-        Aggregate all processed CSV files into a consolidated dataset.
+        Aggregate processed CSV files from Excel and PDF registries into a consolidated dataset.
         
         Args:
             filter_date_start (str): Filter data starting from this date (YYYY-MM-DD)
             filter_date_end (str): Filter data up to this date (YYYY-MM-DD)
-            output_file (str): Name of output file (default: consolidated_{timestamp}.csv)
+            output_file (str): Name of output file (default: consolidated_YYYYMM.csv)
+            update_registries (bool): Whether to update registry status
             
         Returns:
             DataFrame: Consolidated data
         """
-        log_function_call(self.logger, "aggregate_data", 
-                         kwargs={"filter_date_start": filter_date_start,
-                                 "filter_date_end": filter_date_end,
-                                 "output_file": output_file})
-        
-        self.logger.info(f"Aggregating data from {self.input_dir}")
+        self.logger.info(f"Aggregating data from registries")
         if filter_date_start or filter_date_end:
             self.logger.info(f"Filtering data between {filter_date_start or 'beginning'} and {filter_date_end or 'end'}")
         
@@ -287,150 +193,210 @@ class DataAggregator:
             'rows_processed': 0,
             'rows_output': 0,
             'duplicates_removed': 0,
-            'files_by_source': {},
-            'files_by_date': {},
+            'excel_files': 0,
+            'pdf_files': 0,
             'errors': []
         }
         
-        # Get all CSV files in the input directory
-        csv_files = list(Path(self.input_dir).glob('**/*.csv'))
-        self.logger.info(f"Found {len(csv_files)} CSV files in input directory")
+        # Start timer
+        start_time = time.time()
         
-        # Convert filter dates to datetime objects if provided
-        filter_start_dt = None
-        filter_end_dt = None
-        if filter_date_start:
-            try:
-                filter_start_dt = datetime.strptime(filter_date_start, '%Y-%m-%d')
-                self.logger.debug(f"Converted filter_date_start to datetime: {filter_start_dt}")
-            except ValueError as e:
-                self.logger.error(f"Invalid filter_date_start format: {str(e)}")
+        # Create consolidation ID for this run
+        consolidation_id = str(uuid.uuid4())
         
-        if filter_date_end:
-            try:
-                filter_end_dt = datetime.strptime(filter_date_end, '%Y-%m-%d')
-                self.logger.debug(f"Converted filter_date_end to datetime: {filter_end_dt}")
-            except ValueError as e:
-                self.logger.error(f"Invalid filter_date_end format: {str(e)}")
+        # Get processed Excel files from registry
+        excel_df = self.excel_registry.get_processed_excels(include_errors=False)
         
-        # Filter CSV files by date in filename
-        filtered_csv_files = []
-        skipped_files = []
+        # Get processed PDF files from registry
+        pdf_df = self.pdf_registry.get_processed_pdfs(include_errors=False)
         
-        for file_path in csv_files:
-            filename = os.path.basename(str(file_path))
-            file_date = self._extract_date_from_filename(filename)
+        # Filter by date if specified
+        month_key = None
+        if filter_date_start or filter_date_end:
+            # Convert filter dates to pandas datetime
+            start_date = pd.to_datetime(filter_date_start) if filter_date_start else None
+            end_date = pd.to_datetime(filter_date_end) if filter_date_end else None
             
-            if file_date:
-                # Track files by date
-                date_str = file_date.strftime('%Y-%m-%d')
-                if date_str not in self.stats['files_by_date']:
-                    self.stats['files_by_date'][date_str] = 0
-                self.stats['files_by_date'][date_str] += 1
-                
-                # Apply date filtering if specified
-                if filter_start_dt and file_date < filter_start_dt:
-                    self.logger.debug(f"Skipping file {filename} - date {file_date} is before filter start {filter_start_dt}")
-                    skipped_files.append((filename, "before filter start"))
-                    continue
-                
-                if filter_end_dt and file_date > filter_end_dt:
-                    self.logger.debug(f"Skipping file {filename} - date {file_date} is after filter end {filter_end_dt}")
-                    skipped_files.append((filename, "after filter end"))
-                    continue
-                
-                # File passed date filtering, add to list
-                filtered_csv_files.append(file_path)
-                
-            else:
-                self.logger.warning(f"No date found in filename: {filename}")
-                if not filter_start_dt and not filter_end_dt:
-                    # If no date filters applied, include file anyway
-                    filtered_csv_files.append(file_path)
-                    self.logger.debug(f"Including file without date: {filename}")
+            # Determine month key for output filename
+            if start_date and start_date.year == (end_date.year if end_date else start_date.year):
+                if end_date and start_date.month == end_date.month:
+                    month_key = f"{start_date.year}-{start_date.month:02d}"
                 else:
-                    # If date filters applied, skip files without dates
-                    skipped_files.append((filename, "no date in filename"))
-                    self.logger.debug(f"Skipping file without date: {filename}")
+                    month_key = f"{start_date.year}"
+            
+            # Filter Excel files by parsed_date
+            if not excel_df.empty:
+                if start_date:
+                    excel_df = excel_df[excel_df['parsed_date'] >= start_date]
+                if end_date:
+                    excel_df = excel_df[excel_df['parsed_date'] <= end_date]
+            
+            # Filter PDF files by parsed_date
+            if not pdf_df.empty:
+                if start_date:
+                    pdf_df = pdf_df[pdf_df['parsed_date'] >= start_date]
+                if end_date:
+                    pdf_df = pdf_df[pdf_df['parsed_date'] <= end_date]
         
-        # Log filtering results
-        self.logger.info(f"After date filtering: {len(filtered_csv_files)} files included, {len(skipped_files)} files skipped")
+        # Fall back to current month if no date range specified
+        if not month_key:
+            now = datetime.now()
+            month_key = f"{now.year}-{now.month:02d}"
         
-        # Read and process each filtered CSV file
+        # Generate output filename if not provided
+        if output_file is None:
+            output_file = f"consolidated_{month_key}.csv"
+        
+        self.logger.info(f"Found {len(excel_df)} Excel files and {len(pdf_df)} PDF files to consolidate")
+        
+        # Initialize lists to collect DataFrames, IDs and paths
         dataframes = []
+        excel_ids = []
+        pdf_ids = []
+        excel_paths = []
+        pdf_paths = []
         
-        for file_path in filtered_csv_files:
-            file_str = str(file_path)
-            filename = os.path.basename(file_str)
+        # Process Excel files
+        for _, row in excel_df.iterrows():
+            csv_path = row['processed_csv_path']
+            excel_id = row['excel_id']
             
-            self.logger.debug(f"Processing file: {filename}")
-            
-            # Read CSV file
-            df = self._read_csv_file(file_str)
-            
-            if df is None or df.empty:
-                self.logger.warning(f"Empty or invalid CSV file: {filename}")
+            if not csv_path or not os.path.exists(csv_path):
+                self.logger.warning(f"CSV file not found: {csv_path}")
                 continue
             
-            # Standardize DataFrame
-            df = self._standardize_dataframe(df, file_str)
+            try:
+                # Read CSV file
+                df = pd.read_csv(csv_path)
+                
+                # Add source identifier
+                df['source'] = 'excel'
+                
+                # Standardize DataFrame
+                df = self._standardize_dataframe(df, csv_path)
+                
+                # Add to collection
+                dataframes.append(df)
+                excel_ids.append(excel_id)
+                excel_paths.append(csv_path)
+                
+                # Update statistics
+                self.stats['files_processed'] += 1
+                self.stats['excel_files'] += 1
+                self.stats['rows_processed'] += len(df)
+                
+                self.logger.debug(f"Added Excel file: {os.path.basename(csv_path)} with {len(df)} rows")
+                
+            except Exception as e:
+                error_msg = f"Error processing Excel CSV {csv_path}: {str(e)}"
+                self.logger.error(error_msg)
+                self.stats['errors'].append(error_msg)
+        
+        # Process PDF files
+        for _, row in pdf_df.iterrows():
+            csv_path = row['processed_csv_path']
+            pdf_id = row['pdf_id']
             
-            # Skip empty DataFrames
-            if df.empty:
-                self.logger.warning(f"No data after standardization in file: {filename}")
+            if not csv_path or not os.path.exists(csv_path):
+                self.logger.warning(f"CSV file not found: {csv_path}")
                 continue
             
-            # Track statistics
-            self.stats['files_processed'] += 1
-            self.stats['rows_processed'] += len(df)
-            
-            # Track files by source
-            source = df['source'].iloc[0] if 'source' in df.columns and not df.empty else 'unknown'
-            if source not in self.stats['files_by_source']:
-                self.stats['files_by_source'][source] = 0
-            self.stats['files_by_source'][source] += 1
-            
-            dataframes.append(df)
-            
-            self.logger.debug(f"Processed file {filename}: {len(df)} rows")
+            try:
+                # Read CSV file
+                df = pd.read_csv(csv_path)
+                
+                # Add source identifier
+                df['source'] = 'pdf'
+                
+                # Standardize DataFrame
+                df = self._standardize_dataframe(df, csv_path)
+                
+                # Add to collection
+                dataframes.append(df)
+                pdf_ids.append(pdf_id)
+                pdf_paths.append(csv_path)
+                
+                # Update statistics
+                self.stats['files_processed'] += 1
+                self.stats['pdf_files'] += 1
+                self.stats['rows_processed'] += len(df)
+                
+                self.logger.debug(f"Added PDF file: {os.path.basename(csv_path)} with {len(df)} rows")
+                
+            except Exception as e:
+                error_msg = f"Error processing PDF CSV {csv_path}: {str(e)}"
+                self.logger.error(error_msg)
+                self.stats['errors'].append(error_msg)
         
-        # If no valid data was found, return empty DataFrame
+        # Check if we have any data to consolidate
         if not dataframes:
-            self.logger.warning("No valid data found in input files")
+            self.logger.warning("No data to consolidate")
+            # Register consolidation with error
+            self.consolidation_registry.register_consolidation(
+                pipeline_run_id=PIPELINE_RUN_ID or "",
+                main_csv_path="",
+                month_key=month_key,
+                filter_date_start=filter_date_start,
+                filter_date_end=filter_date_end,
+                error="No data to consolidate"
+            )
             return pd.DataFrame()
         
         # Combine all DataFrames
+        self.logger.info(f"Combining {len(dataframes)} DataFrames")
         combined_df = pd.concat(dataframes, ignore_index=True)
         
         # Remove duplicates
+        self.logger.info(f"Removing duplicates from {len(combined_df)} rows")
         combined_df = self._remove_duplicates(combined_df)
-        
-        # Resolve conflicting data
-        combined_df = self._resolve_conflicting_data(combined_df)
         
         # Update statistics
         self.stats['rows_output'] = len(combined_df)
         
-        # Generate output filename
-        if output_file is None:
-            timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-            output_file = f"consolidated_{timestamp}.csv"
-        
+        # Generate output path
         output_path = os.path.join(self.output_dir, output_file)
         
         # Save to CSV
         combined_df.to_csv(output_path, index=False)
         self.logger.info(f"Saved consolidated data to {output_path}")
         
-        # Generate statistics file
-        stats_path = os.path.join(self.output_dir, f"stats_{datetime.now().strftime('%Y%m%d%H%M%S')}.json")
-        with open(stats_path, 'w', encoding='utf-8') as f:
-            json.dump(self.stats, f, indent=2)
+        # Calculate duration
+        duration_seconds = time.time() - start_time
         
-        self.logger.info(f"Saved aggregation statistics to {stats_path}")
+        # Register consolidation in registry
+        consolidation_id = self.consolidation_registry.register_consolidation(
+            pipeline_run_id=PIPELINE_RUN_ID or "",
+            main_csv_path=output_path,
+            month_key=month_key,
+            excel_ids=excel_ids,
+            pdf_ids=pdf_ids,
+            filter_date_start=filter_date_start,
+            filter_date_end=filter_date_end,
+            num_excel_files=len(excel_ids),
+            num_pdf_files=len(pdf_ids),
+            total_rows=len(combined_df),
+            duration_seconds=duration_seconds,
+            duplicates_removed=self.stats['duplicates_removed']
+        )
+        
+        # Mark files as consolidated in their respective registries
+        if update_registries:
+            self.logger.info("Updating registry status for consolidated files")
+            
+            # Update Excel files
+            for excel_id in excel_ids:
+                self.excel_registry.mark_as_consolidated(excel_id, True)
+            
+            # Update PDF files
+            for pdf_id in pdf_ids:
+                self.pdf_registry.mark_as_consolidated(pdf_id, True)
+        
+        # Export registry to CSV
+        self.consolidation_registry.export_to_csv()
         
         # Log summary statistics
-        self.logger.info(f"Aggregation summary: {self.stats['files_processed']} files processed, "
+        self.logger.info(f"Consolidation summary: {self.stats['files_processed']} files processed "
+                         f"({self.stats['excel_files']} Excel, {self.stats['pdf_files']} PDF), "
                          f"{self.stats['rows_processed']} rows processed, "
                          f"{self.stats['rows_output']} rows output, "
                          f"{self.stats['duplicates_removed']} duplicates removed")

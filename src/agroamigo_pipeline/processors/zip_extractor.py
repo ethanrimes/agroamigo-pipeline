@@ -1,5 +1,6 @@
 """
-Process and extract zip files for the Colombian Agricultural Price Data Pipeline.
+Updated ZIP extractor for processing ZIP files.
+Uses the new registry system for tracking extractions.
 """
 
 import os
@@ -8,17 +9,18 @@ import logging
 import shutil
 from pathlib import Path
 from datetime import datetime
+import time
 import pandas as pd
-import pyarrow as pa
-import pyarrow.parquet as pq
 
 from agroamigo_pipeline.config.settings import (
-    SOURCE_DIR, PDF_DIR, TEMP_DIR, REGISTRY_DIR,
-    EXTRACTOR_LOG_DIR
+    SOURCE_DIR, PDF_DIR, TEMP_DIR
 )
 from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.utils.date_utils import parse_spanish_date, filter_files_by_date
 from agroamigo_pipeline.utils.exceptions import ExtractorError
+from agroamigo_pipeline.registry.webscraper_registry import WebScraperRegistry
+from agroamigo_pipeline.registry.extractor_registry import ZipExtractorRegistry
+from agroamigo_pipeline.registry.pdf_registry import PDFProcessorRegistry
 
 class ZipExtractor:
     """Extract and process ZIP files containing PDFs and other documents."""
@@ -50,14 +52,10 @@ class ZipExtractor:
         else:
             self.logger = logger
             
-        # Set up error tracking
-        self.registry_dir = Path(REGISTRY_DIR)
-        self.registry_path = self.registry_dir / 'zip_registry.parquet'
-        self.csv_path = self.registry_dir / 'zip_summary.csv'
-        
-        # Create error log directory
-        self.log_dir = Path(EXTRACTOR_LOG_DIR)
-        os.makedirs(self.log_dir, exist_ok=True)
+        # Initialize registries
+        self.webscraper_registry = WebScraperRegistry(logger=self.logger)
+        self.extractor_registry = ZipExtractorRegistry(logger=self.logger)
+        self.pdf_registry = PDFProcessorRegistry(logger=self.logger) 
         
         # Statistics tracking
         self.total_stats = {
@@ -72,125 +70,10 @@ class ZipExtractor:
         # Monthly statistics
         self.monthly_stats = {}
         
-        # Initialize registry
-        self._init_registry()
-        
         self.logger.info("ZipExtractor initialized")
         self.logger.debug(f"Source directory: {self.source_dir}")
         self.logger.debug(f"PDF directory: {self.pdf_dir}")
         self.logger.debug(f"Temp directory: {self.temp_dir}")
-    
-    def _init_registry(self):
-        """Initialize the registry schema and file."""
-        # Define schema for the registry
-        self.registry_schema = pa.schema([
-            ('filename', pa.string()),  # ZIP filename
-            ('source_path', pa.string()),  # Full source path
-            ('date_processed', pa.timestamp('ns')),  # When processed
-            ('date_from_filename', pa.string()),  # Date extracted from filename (YYYYMMDD)
-            ('status', pa.string()),  # 'success', 'error', 'skipped', etc.
-            ('error_occurred', pa.bool_()),  # Whether an error occurred
-            ('error_message', pa.string()),  # Error message if any
-            ('destination_path', pa.string()),  # Where file was saved (if success)
-            ('files_extracted', pa.int32()),  # Number of files extracted
-            ('pdf_count', pa.int32()),  # Number of PDFs extracted
-            ('excel_count', pa.int32()),  # Number of Excel files retained
-            ('month_key', pa.string())  # Month key for grouping (YYYY-MM)
-        ])
-        
-        # Create registry directory if it doesn't exist
-        os.makedirs(self.registry_dir, exist_ok=True)
-        
-        # Create empty registry if it doesn't exist
-        if not os.path.exists(self.registry_path):
-            self._create_empty_registry()
-    
-    def _create_empty_registry(self):
-        """Create an empty Parquet registry file with the schema."""
-        # Create empty DataFrame with proper column types
-        empty_df = pd.DataFrame({
-            'filename': pd.Series([], dtype='string'),
-            'source_path': pd.Series([], dtype='string'),
-            'date_processed': pd.Series([], dtype='datetime64[ns]'),
-            'date_from_filename': pd.Series([], dtype='string'),
-            'status': pd.Series([], dtype='string'),
-            'error_occurred': pd.Series([], dtype='bool'),
-            'error_message': pd.Series([], dtype='string'),
-            'destination_path': pd.Series([], dtype='string'),
-            'files_extracted': pd.Series([], dtype='int32'),
-            'pdf_count': pd.Series([], dtype='int32'),
-            'excel_count': pd.Series([], dtype='int32'),
-            'month_key': pd.Series([], dtype='string')
-        })
-        
-        # Convert to Arrow table and write to Parquet
-        table = pa.Table.from_pandas(empty_df, schema=self.registry_schema)
-        pq.write_table(table, self.registry_path)
-        
-        self.logger.info(f"Created empty registry at {self.registry_path}")
-    
-    def _read_registry(self):
-        """Read the registry from Parquet file."""
-        if not os.path.exists(self.registry_path):
-            self._create_empty_registry()
-            return pd.DataFrame(columns=self.registry_schema.names)
-        
-        try:
-            return pd.read_parquet(self.registry_path)
-        except Exception as e:
-            self.logger.error(f"Error reading registry: {str(e)}")
-            self._create_empty_registry()
-            return pd.DataFrame(columns=self.registry_schema.names)
-    
-    def _write_registry(self, df):
-        """Write the registry DataFrame to Parquet file."""
-        # Ensure all required columns exist with correct types
-        for col in self.registry_schema.names:
-            if col not in df.columns:
-                # Add missing columns with appropriate default values
-                if 'int' in str(self.registry_schema.field(col).type):
-                    df[col] = 0
-                elif 'bool' in str(self.registry_schema.field(col).type):
-                    df[col] = False
-                elif 'timestamp' in str(self.registry_schema.field(col).type):
-                    df[col] = pd.NaT
-                else:
-                    df[col] = ''
-        
-        # Convert timestamp columns to correct format
-        for col in ['date_processed']:
-            if col in df.columns:
-                df[col] = pd.to_datetime(df[col], errors='coerce')
-        
-        # Ensure integer columns are correctly typed
-        for col in ['files_extracted', 'pdf_count', 'excel_count']:
-            if col in df.columns:
-                df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0).astype('int32')
-        
-        # Ensure we have only the defined columns in the correct order
-        df = df[self.registry_schema.names]
-        
-        # Write to Parquet
-        table = pa.Table.from_pandas(df, schema=self.registry_schema)
-        pq.write_table(table, self.registry_path)
-    
-    def export_to_csv(self):
-        """Export the registry data to CSV."""
-        df = self._read_registry()
-        if not df.empty:
-            # Format dates for CSV
-            export_df = df.copy()
-            
-            # Convert timestamps to string format for readability
-            if 'date_processed' in export_df.columns:
-                export_df['date_processed'] = export_df['date_processed'].dt.strftime('%Y-%m-%d %H:%M:%S')
-            
-            export_df.to_csv(self.csv_path, index=False)
-            self.logger.info(f"Exported ZIP extractor registry to CSV: {self.csv_path}")
-            return self.csv_path
-        else:
-            self.logger.warning("No ZIP extractor data to export to CSV")
-            return None
     
     def _get_date_from_filename(self, filename):
         """
@@ -236,10 +119,6 @@ class ZipExtractor:
         end_date_str = end_date.strftime('%Y-%m-%d') if end_date else "latest"
         self.logger.info(f"Date filter: {start_date_str} to {end_date_str}")
         
-        # Get list of ZIP files
-        zip_files = list(self.source_dir.glob('*.zip'))
-        self.logger.info(f"Found {len(zip_files)} ZIP files")
-        
         # Reset statistics
         self.total_stats = {
             "processed": 0,
@@ -251,71 +130,66 @@ class ZipExtractor:
         }
         self.monthly_stats = {}
         
-        # Filter files by date using our date_utils function
-        filtered_zip_files = []
+        # Get ZIP files from WebScraperRegistry instead of file system
+        zip_files_df = self.webscraper_registry.get_files_by_type("zip", with_errors=False)
         
-        for zip_path in zip_files:
-            # Extract date from filename
-            date_str, file_date = self._get_date_from_filename(zip_path.name)
+        # Filter by date if needed
+        if start_date or end_date:
+            if start_date:
+                zip_files_df = zip_files_df[zip_files_df['file_date'] >= pd.Timestamp(start_date)]
+            if end_date:
+                zip_files_df = zip_files_df[zip_files_df['file_date'] <= pd.Timestamp(end_date)]
+        
+        # Filter out files with empty download paths (should not happen with with_errors=False, but just in case)
+        zip_files_df = zip_files_df[zip_files_df['download_path'] != '']
+        
+        self.logger.info(f"Found {len(zip_files_df)} ZIP files to process")
+        
+        # Process each ZIP file
+        for _, row in zip_files_df.iterrows():
+            download_id = row['download_id']
+            file_path = row['download_path']
+            file_date = row['file_date']
             
-            # Skip files without a valid date if date filtering is enabled
-            if (start_date or end_date) and not file_date:
-                self.logger.debug(f"Skipping {zip_path.name}: No valid date in filename")
-                continue
-                
-            # Check if file is within date range
-            if start_date and file_date and file_date < start_date:
-                self.logger.debug(f"Skipping {zip_path.name}: Date {file_date.strftime('%Y-%m-%d')} is before start date {start_date_str}")
-                self.total_stats["skipped"] += 1
-                continue
-                
-            if end_date and file_date and file_date > end_date:
-                self.logger.debug(f"Skipping {zip_path.name}: Date {file_date.strftime('%Y-%m-%d')} is after end date {end_date_str}")
-                self.total_stats["skipped"] += 1
-                continue
-                
-            # File is within date range, add to filtered list
-            filtered_zip_files.append(zip_path)
-            self.logger.debug(f"Included file in date range: {zip_path.name}")
+            # Check if already processed in extractor registry unless force_reprocess is True
+            existing_extractions = self.extractor_registry.get_extractions_by_download_id(download_id)
+            if not existing_extractions.empty and not force_reprocess:
+                # Check if any extraction is completed successfully
+                if any(existing_extractions['extraction_complete'] & ~existing_extractions['expansion_errors']):
+                    self.logger.info(f"Skipping {os.path.basename(file_path)} - already extracted successfully")
+                    self.total_stats["skipped"] += 1
+                    continue
+                    
+                # If all extractions failed, reprocess
+                self.logger.info(f"Re-extracting {os.path.basename(file_path)} due to previous errors")
+            
+            # Process the ZIP file
+            self._process_single_zip(download_id, file_path, file_date)
         
-        # Log filtered files count
-        self.logger.info(f"After date filtering: {len(filtered_zip_files)} ZIP files to process, {self.total_stats['skipped']} skipped")
-        
-        # Process each filtered ZIP file
-        for zip_path in filtered_zip_files:
-            self._process_single_zip(zip_path, force_reprocess)
-        
-        # Export to CSV
-        self.export_to_csv()
+        # Export registries to CSV
+        self.extractor_registry.export_to_csv()
+        self.pdf_registry.export_to_csv()
         
         # Log statistics
         self._log_statistics()
         
         return self.total_stats
     
-    def _process_single_zip(self, zip_path, force_reprocess=False):
+    def _process_single_zip(self, download_id, zip_path, file_date):
         """
         Process a single ZIP file.
         
         Args:
-            zip_path (Path): Path to the ZIP file
-            force_reprocess (bool): If True, reprocess files even if already processed
+            download_id (str): Download ID from WebScraperRegistry
+            zip_path (str): Path to the ZIP file
+            file_date (datetime): Date associated with the file
         """
+        zip_path = Path(zip_path)
         zip_filename = zip_path.name
         self.logger.info(f"Processing: {zip_filename}")
         
-        # Check if already processed and not forcing reprocess
-        registry_df = self._read_registry()
-        existing_entry = registry_df[registry_df['filename'] == zip_filename]
-        if not existing_entry.empty and not force_reprocess:
-            if not existing_entry.iloc[0]['error_occurred']:
-                self.logger.info(f"Skipping {zip_filename} - already processed successfully")
-                return
-            else:
-                self.logger.info(f"Reprocessing {zip_filename} due to previous error")
-        
         # Extract date from filename
-        date_from_filename, file_date = self._get_date_from_filename(zip_filename)
+        date_from_filename, _ = self._get_date_from_filename(zip_filename)
         
         # Initialize month_key for statistics
         month_key = "unknown"
@@ -342,35 +216,40 @@ class ZipExtractor:
         self.total_stats["processed"] += 1
         self.monthly_stats[month_key]["processed"] += 1
         
-        # Initialize record
-        record = {
-            'filename': zip_filename,
-            'source_path': str(zip_path),
-            'date_processed': datetime.now(),
-            'date_from_filename': date_from_filename or '',
-            'status': 'processing',
-            'error_occurred': False,
-            'error_message': '',
-            'destination_path': '',
-            'files_extracted': 0,
-            'pdf_count': 0,
-            'excel_count': 0,
-            'month_key': month_key
-        }
-        
         try:
             # Clean up temp directory
             self._clean_temp_directory()
             
+            # Start timing
+            start_time = time.time()
+            
             # Process the ZIP file
             extracted_files = self._extract_zip(zip_path, date_from_filename)
             
-            # Update record with success
-            record['status'] = 'success'
-            record['files_extracted'] = extracted_files['total']
-            record['pdf_count'] = extracted_files['pdf']
-            record['excel_count'] = extracted_files['excel']
-            record['destination_path'] = str(self.pdf_dir)
+            # Calculate extraction duration
+            extraction_duration = time.time() - start_time
+            
+            # Register extraction in registry
+            extraction_id = self.extractor_registry.register_extraction(
+                download_id=download_id,
+                file_date=file_date,
+                zip_file_path=str(zip_path),
+                extraction_dir_path=str(self.pdf_dir),
+                extracted_files=extracted_files['file_paths'],
+                is_valid_zip=True,
+                duration_seconds=extraction_duration
+            )
+            
+            # Register each extracted PDF file in the PDF registry
+            for pdf_path in extracted_files['pdf_paths']:
+                pdf_filename = os.path.basename(pdf_path)
+                self.pdf_registry.register_pdf(
+                    extraction_id=extraction_id,
+                    file_path=pdf_path,
+                    pdf_filename=pdf_filename,
+                    file_date=file_date,
+                    date_expanded=datetime.now()
+                )
             
             # Update statistics
             self.total_stats["success"] += 1
@@ -384,10 +263,16 @@ class ZipExtractor:
             self.logger.info(f"Successfully processed {zip_filename} - extracted {extracted_files['total']} files")
             
         except Exception as e:
-            # Update record with error
-            record['status'] = 'error'
-            record['error_occurred'] = True
-            record['error_message'] = str(e)
+            # Register error in registry
+            self.extractor_registry.register_extraction(
+                download_id=download_id,
+                file_date=file_date,
+                zip_file_path=str(zip_path),
+                extraction_dir_path=str(self.pdf_dir),
+                error=str(e),
+                is_valid_zip=False,
+                duration_seconds=0.0
+            )
             
             # Update statistics
             self.total_stats["failed"] += 1
@@ -395,9 +280,6 @@ class ZipExtractor:
             
             self.logger.error(f"Error processing {zip_filename}: {str(e)}")
             self.logger.debug("Error details:", exc_info=True)
-        
-        # Update registry with this record
-        self._update_registry(record)
     
     def _clean_temp_directory(self):
         """Clean up the temporary directory."""
@@ -423,7 +305,15 @@ class ZipExtractor:
         Returns:
             dict: Statistics on extracted files
         """
-        stats = {'total': 0, 'pdf': 0, 'excel': 0, 'other': 0}
+        stats = {
+            'total': 0, 
+            'pdf': 0, 
+            'excel': 0, 
+            'other': 0,
+            'file_paths': [],
+            'pdf_paths': [],
+            'excel_paths': []
+        }
         
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
@@ -450,6 +340,8 @@ class ZipExtractor:
                             dest_path = self.pdf_dir / new_filename
                             shutil.move(item, dest_path)
                             stats['pdf'] += 1
+                            stats['file_paths'].append(str(dest_path))
+                            stats['pdf_paths'].append(str(dest_path))
                             self.logger.debug(f"Moved PDF to: {dest_path}")
 
                         elif item.suffix.lower() in ['.xlsx', '.xls']:
@@ -457,6 +349,8 @@ class ZipExtractor:
                             dest_path = self.source_dir / new_filename
                             shutil.move(item, dest_path)
                             stats['excel'] += 1
+                            stats['file_paths'].append(str(dest_path))
+                            stats['excel_paths'].append(str(dest_path))
                             self.logger.debug(f"Moved Excel to: {dest_path}")
 
                         else:
@@ -465,6 +359,7 @@ class ZipExtractor:
                             if item != dest_path:
                                 shutil.move(item, dest_path)
                             stats['other'] += 1
+                            stats['file_paths'].append(str(dest_path))
                             self.logger.debug(f"Moved other file to: {dest_path}")
 
                 
@@ -481,7 +376,15 @@ class ZipExtractor:
                 dest_path = self.pdf_dir / dest_filename
                 shutil.copy2(zip_path, dest_path)
                 
-                stats = {'total': 1, 'pdf': 1, 'excel': 0, 'other': 0}
+                stats = {
+                    'total': 1, 
+                    'pdf': 1, 
+                    'excel': 0, 
+                    'other': 0,
+                    'file_paths': [str(dest_path)],
+                    'pdf_paths': [str(dest_path)],
+                    'excel_paths': []
+                }
                 self.logger.info(f"Found PDF file with .zip extension: {zip_path.name}")
                 return stats
             else:
@@ -503,26 +406,6 @@ class ZipExtractor:
                 return header == b'%PDF-'
         except:
             return False
-    
-    def _update_registry(self, record):
-        """
-        Update the registry with a new record.
-        
-        Args:
-            record (dict): Record to add to registry
-        """
-        registry_df = self._read_registry()
-        
-        # Remove existing entry if any
-        filename = record['filename']
-        registry_df = registry_df[registry_df['filename'] != filename]
-        
-        # Add new record
-        new_df = pd.DataFrame([record])
-        updated_df = pd.concat([registry_df, new_df], ignore_index=True)
-        
-        # Write back to registry
-        self._write_registry(updated_df)
     
     def _log_statistics(self):
         """Log processing statistics."""
@@ -559,32 +442,3 @@ class ZipExtractor:
                 if stats['processed'] > 0:
                     success_rate = (stats['success'] / stats['processed']) * 100
                     self.logger.info(f"  Success rate: {success_rate:.2f}%")
-                    
-        # Write the detailed summary to a log file
-        log_path = self.log_dir / f"zip_extraction_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-        try:
-            with open(log_path, 'w') as f:
-                f.write("=== ZIP EXTRACTION SUMMARY ===\n\n")
-                f.write(f"Total files processed: {self.total_stats['processed']}\n")
-                f.write(f"Successfully processed: {self.total_stats['success']}\n")
-                f.write(f"Failed to process: {self.total_stats['failed']}\n")
-                f.write(f"Skipped due to date filter: {self.total_stats['skipped']}\n\n")
-                
-                f.write("=== MONTHLY BREAKDOWN ===\n")
-                for month, stats in sorted(self.monthly_stats.items()):
-                    if month == "unknown":
-                        continue
-                    f.write(f"\n{month}:\n")
-                    f.write(f"  Files processed: {stats['processed']}\n")
-                    f.write(f"  Successfully processed: {stats['success']}\n")
-                    f.write(f"  Failed to process: {stats['failed']}\n")
-                    f.write(f"  PDF files extracted: {stats['pdf_extracted']}\n")
-                    f.write(f"  Excel files retained: {stats['excel_retained']}\n")
-                    
-                    if stats['processed'] > 0:
-                        success_rate = (stats['success'] / stats['processed']) * 100
-                        f.write(f"  Success rate: {success_rate:.2f}%\n")
-            
-            self.logger.info(f"Detailed statistics written to {log_path}")
-        except Exception as e:
-            self.logger.warning(f"Failed to write detailed statistics to log file: {str(e)}")

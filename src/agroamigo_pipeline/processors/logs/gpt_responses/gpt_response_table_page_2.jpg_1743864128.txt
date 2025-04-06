@@ -1,0 +1,21 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpaxxqowjv/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:42:08
+Raw GPT-4o mini response:
+```
+Hortalizas;;;;;;
+Cebolla cabezona blanca;Bulto;48 Kilogramo;45.000;48.000;45.000;48.000
+Cebolla cabezona roja importada;Bulto;46 Kilogramo;130.000;135.000;130.000;135.000
+Cebolla junca;Atado/manojo;17 Kilogramo;30.000;32.000;30.000;32.000
+Cebolla junca;Atado/manojo;11 Kilogramo;30.000;32.000;30.000;32.000
+Tomate;Kilogramo;1 Kilogramo;2.500;2.700;2.500;2.700
+Tomate regional;Kilogramo;1 Kilogramo;3.000;3.200;3.000;3.200
+Tomate larga vida;Kilogramo;1 Kilogramo;2.000;2.800;2.000;2.800
+Espinaca;Kilogramo;1 Kilogramo;2.000;2.000;2.000;2.000
+Lechuga batavia;Caja de cartón;14 Kilogramo;8.000;9.000;8.000;9.000
+Lechuga batavia;Caja de cartón;16 Kilogramo;11.000;12.000;11.000;12.000
+Lechuga crespa verde;Kilogramo;1 Kilogramo;1.300;1.500;1.400;1.500
+Perejil;Kilogramo;1 Kilogramo;4.000;4.300;4.000;4.300
+Repollo blanco;Bulto;30 Kilogramo;12.000;14.000;12.000;14.000
+Repollo morado;Bulto;45 Kilogramo;75.000;80.000;75.000;80.000
+```

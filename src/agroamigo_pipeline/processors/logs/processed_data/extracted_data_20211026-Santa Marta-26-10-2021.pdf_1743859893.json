@@ -1,0 +1,119 @@
+[
+  {
+    "product": "Banano criollo",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Bolsa",
+    "units": "17 Kilogramo",
+    "daily_min": 10.0,
+    "daily_max": 11.0
+  },
+  {
+    "product": "Maracuyá santandereano",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Bolsa",
+    "units": "15 Kilogramo",
+    "daily_min": 55.0,
+    "daily_max": 55.0
+  },
+  {
+    "product": "Mora de castilla",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Caja de cartón",
+    "units": "12,5 Kilogramo",
+    "daily_min": 38.0,
+    "daily_max": 40.0
+  },
+  {
+    "product": "Tomate de árbol",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Caja de cartón",
+    "units": "25 Kilogramo",
+    "daily_min": 70.0,
+    "daily_max": 70.0
+  },
+  {
+    "product": "Plátano hartón verde",
+    "major_category": "Frutas",
+    "sub_category": "Plátano",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 1.8,
+    "daily_max": 1.8
+  },
+  {
+    "product": "Papa",
+    "major_category": "Frutas",
+    "sub_category": "Plátano",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 160.0,
+    "daily_max": 160.0
+  },
+  {
+    "product": "Pimentón",
+    "major_category": "Leguminosas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Caja de cartón",
+    "units": "12 Kilogramo",
+    "daily_min": 24.0,
+    "daily_max": 25.0
+  },
+  {
+    "product": "Remolacha",
+    "major_category": "Leguminosas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "60 Kilogramo",
+    "daily_min": 60.0,
+    "daily_max": 60.0
+  },
+  {
+    "product": "Zanahorias",
+    "major_category": "Leguminosas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "60 Kilogramo",
+    "daily_min": 80.0,
+    "daily_max": 80.0
+  },
+  {
+    "product": "Cebolla cabezona blanca",
+    "major_category": "Leguminosas",
+    "sub_category": "Cebollas",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 50.0,
+    "daily_max": 50.0
+  },
+  {
+    "product": "Apio",
+    "major_category": "Leguminosas",
+    "sub_category": "Hortalizas",
+    "presentation": "Docena",
+    "units": "15 Kilogramo",
+    "daily_min": 32.0,
+    "daily_max": 32.0
+  },
+  {
+    "product": "Lechuga batavia",
+    "major_category": "Leguminosas",
+    "sub_category": "Hortalizas",
+    "presentation": "Caja de cartón",
+    "units": "12 Kilogramo",
+    "daily_min": 28.0,
+    "daily_max": 28.0
+  },
+  {
+    "product": "Repollo blanco",
+    "major_category": "Leguminosas",
+    "sub_category": "Hortalizas",
+    "presentation": "Bulto",
+    "units": "70 Kilogramo",
+    "daily_min": 100.0,
+    "daily_max": 100.0
+  }
+]

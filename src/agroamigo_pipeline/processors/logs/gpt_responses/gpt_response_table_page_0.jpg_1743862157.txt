@@ -1,0 +1,43 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpl8cxabdn/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:09:17
+Raw GPT-4o mini response:
+```plaintext
+Carnes;;;;;;
+Pollo;;;;;;
+Pechuga de pollo;Kilogramo;1 Kilogramo;10.000;10.600;0;0
+Pierna pernil con rabadilla;Kilogramo;1 Kilogramo;3.500;3.800;0;0
+Pollo entero congelado sin vísceras;Kilogramo;1 Kilogramo;8.000;8.200;0;0
+Frutas;;;;;;
+Banano criollo;Bolsa;17 Kilogramo;10.000;11.000;0;0
+Maracuyá santanderano;Bolsa;15 Kilogramo;54.000;60.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;38.000;40.000;0;0
+Mora de castilla;Caja de cartón;12.5 Kilogramo;38.000;40.000;0;0
+Piña gold;Kilogramo;1 Kilogramo;1.500;1.800;0;0
+Tomate de árbol;Caja de cartón;25 Kilogramo;70.000;75.000;0;0
+Arroz de primera;Bulto;50 Kilogramo;95.000;99.800;0;0
+Arroz excelso;Bolsa;12.5 Kilogramo;30.000;33.200;0;0
+Granos;;;;;;
+Arveja verde seca importada;Bolsa;25 Unidad 220 GR;16.000;17.500;0;0
+Frijol cabeza negra importado;Bolsa;25 Unidad 220 GR;27.600;30.000;0;0
+Frijol palmito importado;Bolsa;25 Unidad 220 GR;24.500;26.000;0;0
+Lenteja importada;Bolsa;25 Unidad 220 GR;19.000;22.000;0;0
+Lácteos y huevos;;;;;;
+Queso costeño;Kilogramo;1 Kilogramo;15.000;15.000;0;0
+Pescados;;;;;;
+Bocachico importado congelado;Caja de cartón;20 Kilogramo;180.000;190.000;0;0
+Bocachico importado congelado;Kilogramo;1 Kilogramo;9.000;9.500;0;0
+Pargo rojo platero;Kilogramo;1 Kilogramo;32.000;35.000;0;0
+Sierra entera congelada;Kilogramo;1 Kilogramo;16.000;16.000;0;0
+Procesados;;;;;;
+Otros procesados;;;;;;
+Arveja enlatada;Caja de cartón;48 Unidad 310 GR;91.200;94.000;0;0
+Café instantáneo;Caja de cartón;24 Unidad 85 GR;160.800;171.600;0;0
+Café molido;Bolsa;24 Unidad 500 GR;8.700;9.000;0;0
+Chocolate dulce;Caja de cartón;10 Unidad 50 GR;10.000;10.000;0;0
+Fécula de maíz;Caja de cartón;48 Unidad 90 GR;143.000;144.000;0;0
+Galletas dulces;Caja de cartón;24 Unidad 600 GR;43.200;44.000;0;0
+Galletas saladas;Caja de cartón;48 Unidad 110 GR;43.200;44.000;0;0
+Galletas saladas;Caja de cartón;48 Unidad 300 GR;81.000;82.000;0;0
+Gelatina;Caja de cartón;48 Unidad 40 GR;46.000;48.000;0;0
+```

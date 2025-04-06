@@ -1,0 +1,44 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpup4v8mgi/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:16:42
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Piña perolera;Caja de madera;28 Kilogramo;40.000;45.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;6.500;7.500;0;0
+Tomate de árbol;Canastilla;25 Kilogramo;60.000;65.000;0;0
+Uva roja;Kilogramo;1 Kilogramo;7.000;8.000;0;0
+Granos y cereales;;;;;;
+Cereales;;;;;;
+Arroz de primera;Bolsa;25 Unidad 500 GR;27.000;28.000;0;0
+Maíz amarillo cáscara;Bolsa;62 Kilogramo;0;0;0;0
+Maíz blanco trillado;Bulto;50 Kilogramo;108.000;0;0;0
+Frijol niña calima;Arroba;12,5 Kilogramo;64.000;70.000;0;0
+Lácteos y huevos;;;;;;
+Huevo rojo b;Unidad;1 Unidad;280;300;0;0
+Huevo rojo extra;Unidad;1 Unidad;417;435;0;0
+Pescados;;;;;;
+Bagre rayado entero fresco;Libra;500 Gramo;7.000;8.000;0;0
+Basa, entero congelado importado;Caja de cartón;10 Kilogramo;110.000;120.000;0;0
+Cachama de cultivo fresca;Bulto;500 Gramo;4.500;4.600;0;0
+Tilapia roja entera fresca;Libra;500 Gramo;4.000;4.200;0;0
+Procesados;;;;;;
+Otros procesados;;;;;;
+Avena en hojuelas;Bolsa;54 Unidad 180 GR;81.000;91.800;0;0
+Avena molida;Bolsa;54 Unidad 180 GR;81.000;91.800;0;0
+Café instantáneo;Caja de cartón;12 Unidad 500 GR;153.900;162.000;0;0
+Café molido;Caja de cartón;24 Kilogramo;228.000;232.800;0;0
+Chocolate dulce;Caja de cartón;24 Kilogramo;273.600;280.800;0;0
+Fécula de maíz;Caja de cartón;40 Unidad 380 GR;300.000;320.000;0;0
+Galletas saladas;Bolsa;12 Unidad 40 GR;48.000;0;0;0
+Harina de trigo;Bolsa;12,5 Kilogramo;37.000;0;0;0
+Harina precocida de maíz;Bolsa;24 Unidad 500 GR;0;0;0;0
+Lomitos de atún en lata;Caja de cartón;48 Unidad 170 GR;206.400;216.000;0;0
+Pastas alimenticias;Bolsa;24 Unidad 250 GR;37.000;38.000;0;0
+Sal yodada;Bulto;25 Unidad 500 GR;0;0;0;0
+Azúcar;;;;;;
+Azúcar refinada;Bulto;50 Kilogramo;143.000;150.000;0;0
+Panelas;;;;;;
+Panelas cuadradas morena;Caja de cartón;40 Unidad 500 GR;78.000;80.000;0;0
+Aceites y grasas;;;;;;
+```

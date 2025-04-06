@@ -1,25 +1,29 @@
 """
-Processor for Excel files with the specified format where columns are city/market combinations.
+Updated Excel processor for Colombian agricultural price data.
+Uses the new registry system for tracking Excel processing.
 """
 
 import os
-import pandas as pd
 import logging
-from datetime import datetime
 import traceback
+from datetime import datetime
+import time
+from pathlib import Path
+import pandas as pd
 
-from agroamigo_pipeline.config.settings import SOURCE_DIR, PROCESSED_DIR
+from agroamigo_pipeline.config.settings import (
+    SOURCE_DIR, PROCESSED_DIR, PIPELINE_RUN_ID
+)
 from agroamigo_pipeline.utils.logger import setup_logging
-from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension, generate_output_path
-from agroamigo_pipeline.utils.parquet_registry import ParquetRegistry  # Changed from FileRegistry
 from agroamigo_pipeline.utils.exceptions import ExcelProcessingError
-from agroamigo_pipeline.utils.date_utils import filter_files_by_date
+from agroamigo_pipeline.registry.webscraper_registry import WebScraperRegistry
+from agroamigo_pipeline.registry.excel_registry import ExcelProcessorRegistry
 from agroamigo_pipeline.processors.excel_components.excel_reader import ExcelFileReader
 from agroamigo_pipeline.processors.excel_components.excel_transformer import ExcelDataTransformer
 
 class ExcelProcessor:
     """
-    Process Excel files containing agricultural price data.
+    Process Excel files containing Colombian agricultural price data.
     """
     
     def __init__(self, logger=None):
@@ -36,63 +40,71 @@ class ExcelProcessor:
         else:
             self.logger = logger
             
-        # Initialize registry - changed to ParquetRegistry
-        self.registry = ParquetRegistry()
+        # Initialize registries
+        self.webscraper_registry = WebScraperRegistry(logger=self.logger)
+        self.registry = ExcelProcessorRegistry(logger=self.logger)
         
-        # Initialize components
+        # Initialize component modules
         self.reader = ExcelFileReader(logger=self.logger)
         self.transformer = ExcelDataTransformer(logger=self.logger)
         
-        # Initialize statistics dictionary
+        # Initialize statistics
         self.stats = {
             'total_files': 0,
             'processed_files': 0,
             'failed_files': 0,
             'skipped_files': 0,
-            'total_rows_processed': 0,
-            'warnings': 0
+            'total_rows_processed': 0
         }
         
         self.logger.info("ExcelProcessor initialized")
     
-    def process_excel_file(self, file_path, output_dir=None, force_reprocess=False):
+    def process_excel_file(self, excel_id, file_path, output_dir=None, force_reprocess=False):
         """
         Process a single Excel file and save results to CSV.
         
         Args:
+            excel_id (str): Excel ID from the registry
             file_path (str): Path to the Excel file
-            output_dir (str): Directory to save processed data (default: PROCESSED_DIR)
+            output_dir (str): Directory to save processed data
             force_reprocess (bool): If True, reprocess file even if already processed
             
         Returns:
-            dict: Statistics about the processing
+            dict: Processing results
         """
         filename = os.path.basename(file_path)
         self.logger.info(f"Processing Excel file: {filename}")
         
         # Check if file has already been processed
-        if not force_reprocess and self.registry.file_processed(file_path):
+        excel_info = self.registry.get_excel_by_id(excel_id)
+        
+        if excel_info and excel_info['processing_status'] == 'processed' and not force_reprocess:
             self.logger.info(f"File already processed: {filename}")
-            return self.registry.get_file_info(file_path)['processing_history'][-1]['stats']
+            return None
         
         # Set default output directory
         output_dir = output_dir or PROCESSED_DIR
-        ensure_directory(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
         
-        # Statistics dictionary
-        stats = {
-            'filename': filename,
-            'file_path': file_path,
+        # Update registry status to 'processing'
+        self.registry.update_processing_status(excel_id, 'processing')
+        
+        # Processing results dictionary
+        processing_results = {
             'unique_products': 0,
             'unique_major_categories': 0,
+            'unique_subcategories': 0,
             'rows_processed': 0,
             'error_occurred': False,
-            'errors_warnings': "",
-            'processing_time_seconds': 0,
-            'extracted_date': None
+            'error_warnings': "",
+            'processing_duration_seconds': 0.0,
+            'extraction_method': "excel_parsing",
+            'processed_csv_path': "",
+            'unique_cities_markets': 0,
+            'pipeline_run_id': PIPELINE_RUN_ID or ""
         }
         
-        start_time = datetime.now()
+        start_time = time.time()
         
         try:
             # Read the Excel file using the reader component
@@ -100,79 +112,78 @@ class ExcelProcessor:
             
             # Get the extracted date from the reader
             extracted_date = self.reader.get_extracted_date()
-            stats['extracted_date'] = extracted_date.strftime('%Y-%m-%d') if extracted_date else None
+            if extracted_date:
+                processing_results['parsed_date'] = extracted_date
             
             # Transform the data using the transformer component
             output_df = self.transformer.transform(df, file_path)
             
-            # Update statistics
-            stats['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
-            stats['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
-            stats['rows_processed'] = len(output_df)
-            
-            # Generate output path
-            output_path = generate_output_path(file_path, output_dir, extension='.csv')
+            # Create output path
+            base_filename = os.path.splitext(filename)[0]
+            output_csv = os.path.join(output_dir, f"{base_filename}.csv")
             
             # Save to CSV
-            output_df.to_csv(output_path, index=False)
+            output_df.to_csv(output_csv, index=False)
             
-            # Update overall statistics
+            # Update processing results
+            processing_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
+            processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
+            processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
+            processing_results['rows_processed'] = len(output_df)
+            processing_results['processed_csv_path'] = output_csv
+            
+            # Count unique cities and markets
+            if 'city' in output_df.columns and 'market' in output_df.columns:
+                unique_city_markets = output_df[['city', 'market']].drop_duplicates()
+                processing_results['unique_cities_markets'] = len(unique_city_markets)
+            
+            # Update statistics
             self.stats['processed_files'] += 1
-            self.stats['total_rows_processed'] += stats['rows_processed']
+            self.stats['total_rows_processed'] += processing_results['rows_processed']
             
-            self.logger.info(f"Successfully processed Excel file {filename}: {stats['rows_processed']} rows, {stats['unique_products']} products")
-            self.logger.info(f"Extracted date: {stats['extracted_date']}")
+            self.logger.info(
+                f"Successfully processed {filename}: "
+                f"{processing_results['rows_processed']} rows, "
+                f"{processing_results['unique_products']} products"
+            )
             
         except Exception as e:
-            stats['error_occurred'] = True
-            stats['errors_warnings'] += str(e)
+            processing_results['error_occurred'] = True
+            processing_results['error_warnings'] = str(e)
             
             self.logger.error(f"Error processing Excel file {filename}: {str(e)}")
             self.logger.debug(f"Error details: {traceback.format_exc()}")
             
-            # Update overall statistics
             self.stats['failed_files'] += 1
-            output_path = None
         
         # Calculate processing time
-        stats['processing_time_seconds'] = (datetime.now() - start_time).total_seconds()
+        processing_results['processing_duration_seconds'] = time.time() - start_time
         
-        # Register processed file
-        self.registry.register_file(
-            file_path,
-            output_path=output_path,
-            status="processed" if not stats['error_occurred'] else "error",
-            error=stats['errors_warnings'] if stats['error_occurred'] else None,
-            stats=stats
-        )
+        # Update registry with processing results
+        if processing_results['error_occurred']:
+            self.registry.update_processing_status(excel_id, 'error', error=processing_results['error_warnings'])
+        else:
+            self.registry.update_processing_results(excel_id, processing_results)
         
-        return stats
+        return processing_results
     
-    def process_excel_files(self, source_dir=None, output_dir=None, start_date=None, end_date=None, force_reprocess=False, max_workers=None):
+    def process_excel_files(self, source_dir=None, output_dir=None, start_date=None, end_date=None, force_reprocess=False):
         """
-        Process all Excel files in the source directory.
+        Process Excel files from the webscraper registry.
         
         Args:
-            source_dir (str): Directory containing Excel files
+            source_dir (str): Directory containing Excel files (not used, kept for API compatibility)
             output_dir (str): Directory to save processed data
-            start_date (datetime): Start date for filtering files by filename
-            end_date (datetime): End date for filtering files by filename
+            start_date (datetime): Start date for filtering files
+            end_date (datetime): End date for filtering files
             force_reprocess (bool): If True, reprocess files even if already processed
-            max_workers (int): Maximum number of worker threads (not used in this implementation)
             
         Returns:
-            dict: Statistics about the processing
+            dict: Processing statistics
         """
-        # Set default directories
-        source_dir = source_dir or SOURCE_DIR
+        # Set default output directory
         output_dir = output_dir or PROCESSED_DIR
-        
-        # Ensure directories exist
-        ensure_directory(source_dir)
-        ensure_directory(output_dir)
-        
-        self.logger.info(f"Processing Excel files in {source_dir}")
-        self.logger.info(f"Date range filter: {start_date} to {end_date}")
+        os.makedirs(output_dir, exist_ok=True)
         
         # Reset statistics
         self.stats = {
@@ -180,71 +191,71 @@ class ExcelProcessor:
             'processed_files': 0,
             'failed_files': 0,
             'skipped_files': 0,
-            'filtered_by_date': 0,
-            'total_rows_processed': 0,
-            'warnings': 0,
-            'files_with_dates': 0,
-            'files_without_dates': 0
+            'total_rows_processed': 0
         }
         
-        # Get Excel files
-        excel_files = get_files_by_extension(source_dir, ['.xls', '.xlsx'], recursive=True)
-        self.logger.info(f"Found {len(excel_files)} Excel files in source directory")
+        # Get Excel files from webscraper registry
+        excel_files_df = self.webscraper_registry.get_files_by_type("excel", with_errors=False)
         
-        # Filter files by date in filename
-        from agroamigo_pipeline.utils.date_utils import filter_files_by_date
-        filtered_excel_files = filter_files_by_date(excel_files, start_date, end_date)
+        # Filter by date if needed
+        if start_date or end_date:
+            if start_date:
+                excel_files_df = excel_files_df[excel_files_df['file_date'] >= pd.Timestamp(start_date)]
+            if end_date:
+                excel_files_df = excel_files_df[excel_files_df['file_date'] <= pd.Timestamp(end_date)]
         
-        # Update statistics with filtered count
-        self.stats['total_files'] = len(excel_files)
-        self.stats['filtered_by_date'] = len(excel_files) - len(filtered_excel_files)
+        # Filter out files with empty download paths
+        excel_files_df = excel_files_df[excel_files_df['download_path'] != '']
         
-        self.logger.info(f"After date filtering: {len(filtered_excel_files)} Excel files to process")
+        self.logger.info(f"Found {len(excel_files_df)} Excel files to process")
+        self.stats['total_files'] = len(excel_files_df)
         
-        # Process files sequentially (for simplicity and reliability)
-        for file_path in filtered_excel_files:
+        # Process each Excel file
+        for _, row in excel_files_df.iterrows():
+            download_id = row['download_id']
+            file_path = row['download_path']
+            file_date = row['file_date']
+            filename = row['filename']
+            
+            # Check if already in Excel registry
+            existing_excel = self.registry.get_excel_by_download_id(download_id)
+            
+            if not existing_excel.empty and not force_reprocess:
+                # Check if any existing Excel has been processed successfully
+                successful_excel = existing_excel[existing_excel['processing_status'] == 'processed']
+                if not successful_excel.empty:
+                    self.logger.info(f"Skipping {filename} - already processed successfully")
+                    self.stats['skipped_files'] += 1
+                    continue
+            
+            # Register this Excel file in the registry if needed
+            if existing_excel.empty:
+                excel_id = self.registry.register_excel(
+                    download_id=download_id,
+                    file_path=file_path,
+                    filename=filename,
+                    file_date=file_date
+                )
+            else:
+                excel_id = existing_excel.iloc[0]['excel_id']
+            
+            # Process the Excel file
             try:
-                stats = self.process_excel_file(file_path, output_dir, force_reprocess)
-                # Track date extraction success
-                if stats.get('extracted_date'):
-                    self.stats['files_with_dates'] += 1
-                else:
-                    self.stats['files_without_dates'] += 1
+                results = self.process_excel_file(excel_id, file_path, output_dir, force_reprocess)
+                if results is None:
+                    self.stats['skipped_files'] += 1
             except Exception as e:
-                filename = os.path.basename(file_path)
                 self.logger.error(f"Error processing {filename}: {str(e)}")
+                self.registry.update_processing_status(excel_id, 'error', error=str(e))
                 self.stats['failed_files'] += 1
+        
+        # Export registry to CSV
+        self.registry.export_to_csv()
         
         # Log summary
         self.logger.info(f"Excel processing summary: {self.stats['processed_files']} processed, "
-                        f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped, "
-                        f"{self.stats['filtered_by_date']} filtered by date "
-                        f"out of {self.stats['total_files']} total files")
+                       f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
+                       f"out of {self.stats['total_files']} total files")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
-        self.logger.info(f"Successfully extracted dates from {self.stats['files_with_dates']} files, "
-                        f"failed to extract dates from {self.stats['files_without_dates']} files")
         
         return self.stats
-
-    def get_statistics(self):
-        """
-        Get the current processing statistics.
-        
-        Returns:
-            dict: Dictionary containing processing statistics
-        """
-        return self.stats.copy()
-
-    def clear_statistics(self):
-        """
-        Reset the processing statistics.
-        """
-        self.stats = {
-            'total_files': 0,
-            'processed_files': 0,
-            'failed_files': 0,
-            'skipped_files': 0,
-            'total_rows_processed': 0,
-            'warnings': 0
-        }
-        self.logger.info("Processing statistics cleared")

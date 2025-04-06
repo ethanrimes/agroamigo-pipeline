@@ -1,0 +1,48 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpup4v8mgi/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:17:02
+Raw GPT-4o mini response:
+```plaintext
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;85.000;87.000;0;0
+Aceite vegetal mezcla;Caja de cartón;24 Unidad 500 CC;92.000;93.000;0;0
+Manteca;Caja de cartón;24 Unidad 250 GR;78.000;83.000;0;0
+Margarina;Caja de cartón;24 Unidad 500 GR;97.000;120.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tuberculos;;;;;;
+Arrachera amarilla;Bulto;62,5 Kilogramo;60.000;65.000;0;0
+Plátano;Kilogramo;1 Kilogramo;0;0;0;0
+Plátano guineo;Kilogramo;1 Kilogramo;0;0;0;0
+Plátano hartón maduro;Kilogramo;1 Kilogramo;0;0;0;0
+Yuca;Bolsas;12,5 Kilogramo;25.000;30.000;0;0
+Yuca ica;Bolsas;12,5 Kilogramo;25.000;30.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Aveja verde en vaina;Arroba;12,5 Kilogramo;28.000;30.000;0;0
+Frijol verde en vaina;Arroba;12,5 Kilogramo;45.000;50.000;0;0
+Habichuela;Arroba;12,5 Kilogramo;22.000;0;0;0
+Otras hortalizas y verduras;;;;;;
+Ayuyama (sakata);Bolsas;12,5 Kilogramo;16.000;18.000;0;0
+Chócolo mazorca;Bulto;62,5 Kilogramo;0;0;0;0
+Pepino cobombro;Bolsas;12,5 Kilogramo;25.000;30.000;0;0
+Pepino de rellenar;Arroba;12,5 Kilogramo;0;0;0;0
+Pimentón;Caja de cartón;14 Kilogramo;25.000;30.000;0;0
+Rábano rojo;Atado/manojo;2 Kilogramo;0;0;0;0
+Remolacha;Bulto;62,5 Kilogramo;60.000;80.000;0;0
+Zanahorias;Bulto;62,5 Kilogramo;100.000;0;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca bogotana;Bulto;50 Kilogramo;38.000;42.000;0;0
+Cebolla cabezona roja;Bulto;45 Kilogramo;0;0;0;0
+Cebolla junco aquitina;Atado/manojo;30 Kilogramo;20.000;0;0;0
+Tomates;;;;;;
+Tomate chonto;Canastilla;23 Kilogramo;42.000;45.000;0;0
+Tomate largo;Canastilla;22 Kilogramo;50.000;0;0;0
+Hortalizas;;;;;;
+Acelga;Atado/manojo;8 Kilogramo;15.000;0;0;0
+Apio;Docena;10 Kilogramo;0;0;0;0
+Brócoli;Docena;10 Kilogramo;0;0;0;0
+Cilantro;Atado/manojo;12,5 Kilogramo;0;0;0;0
+Coliflor;Atado/manojo;12,5 Kilogramo;0;0;0;0
+Espinaca;Bolsas;12,5 Kilogramo;0;0;0;0
+Lechuga batavia;Docena;12,5 Kilogramo;10.000;0;0;0
+Lechuga crespa verde;Bolsas;3,5 Kilogramo;10.000;0;0;0
+```

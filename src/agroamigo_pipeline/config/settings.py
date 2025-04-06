@@ -1,3 +1,7 @@
+"""
+Configuration settings for the AgroAmigo pipeline.
+"""
+
 import os
 import dotenv
 from pathlib import Path
@@ -8,9 +12,10 @@ dotenv.load_dotenv()
 # Base project directory (automatically detected based on module location)
 PROJECT_ROOT = Path(__file__).parent.parent.parent.absolute()
 PARENT_ROOT = PROJECT_ROOT.parent
+
 # Data directories
 DATA_DIR = '/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data'
-SOURCE_DIR = os.path.join('/Users/ethankallett/Documents/Projects/AgroAmigo_DataScraping/Prices/Daily Prices/Source')  # It seems to be faster to download on Colombian VPN
+SOURCE_DIR = os.path.join(DATA_DIR, 'Source')
 PDF_DIR = os.path.join(DATA_DIR, 'PDF_Files/PDFs')  # Extracted PDF files
 PROCESSED_DIR = os.path.join(DATA_DIR, 'IndividualCSVs')  # Individual CSV files
 CONSOLIDATED_DIR = os.path.join(DATA_DIR, 'Consolidated')  # Final aggregated data
@@ -27,13 +32,7 @@ AGGREGATOR_LOG_DIR = os.path.join(LOG_DIR, 'data_aggregator')
 
 # Path to the registry files
 REGISTRY_DIR = os.path.join(PARENT_ROOT, 'registry')
-PROCESSING_REGISTRY = os.path.join(LOG_DIR, 'processing_registry.json')  # Legacy JSON registry
-REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'processing_registry.parquet')  # Main unified registry
-REGISTRY_CSV = os.path.join(REGISTRY_DIR, 'processing_summary.csv')
-
-# Component-specific registries
-SCRAPER_REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'scraper_registry.parquet')
-ZIP_REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'zip_registry.parquet')
+REGISTRY_PARQUET = os.path.join(REGISTRY_DIR, 'parquet')
 
 # Processing parameters
 MAX_WORKERS = os.cpu_count()  # Use all available cores for PDF processing
@@ -51,6 +50,9 @@ LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
 LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
+# Pipeline configuration
+PIPELINE_RUN_ID = None  # Will be set at runtime
+
 def ensure_directories():
     """Ensure all required directories exist."""
     directories = [
@@ -61,7 +63,6 @@ def ensure_directories():
     
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-
 
 # Initialize directories when module is imported
 ensure_directories()

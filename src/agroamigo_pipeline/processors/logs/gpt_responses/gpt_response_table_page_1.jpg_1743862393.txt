@@ -1,0 +1,42 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpdd3v_rc3/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:13:13
+Raw GPT-4o mini response:
+```
+Café instantáneo;Caja de cartón;18 Unidad 85 GR;143.000;146.200;0;0
+Café molido;Bolsa;25 Unidad 500 GR;218.000;223.400;0;0
+Chocolate amargo;Caja de cartón;100 Unidad 250 GR;572.000;576.100;0;0
+Fécula de maíz;Caja de cartón;40 Unidad 380 GR;275.900;280.000;0;0
+Salchichas;Caja de cartón;48 Unidad 300 GR;84.800;0;0;0
+Gelatina;Bolsa;24 Unidad 40 GR;0;0;0;0
+Harina de trigo;Bolsa;1.25 Kilogramo;32.000;33.200;0;0
+Jugo instantáneo (sobre);Bolsa;25 Unidad 500 GR;33.600;34.500;0;0
+Lomos de atún en lata;Caja de cartón;24 Unidad 160 GR;0;0;0;0
+Mayonesa doypack;Caja de cartón;24 Unidad 400 GR;0;0;0;0
+Mayonesa doy pack;Caja de cartón;24 Unidad 400 GR;0;0;0;0
+Salsa de tomate doy pack;Caja de cartón;24 Unidad 400 GR;113.900;114.000;0;0
+Sardinas en lata;Caja de cartón;48 Unidad 425 GR;192.000;194.000;0;0
+Azúcar;Bulto;50 Kilogramo;136.000;138.000;0;0
+Panel;Caja de cartón;24 Unidad 500 GR;52.000;53.000;0;0
+Aceites y grasas;;;;;;
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;61.000;63.000;0;0
+Aceite vegetal mezcla;Caja de cartón;24 Unidad 500 CC;63.500;64.000;0;0
+Manteca;Caja de cartón;24 Unidad 250 GR;0;0;0;0
+Margarina;Caja de cartón;40 Unidad 250 GR;185.800;191.200;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Arracacha amarilla;Canastilla;25 Kilogramo;45.000;48.000;0;0
+Ulluco;Bolsa;60 Kilogramo;100.000;0;0;0
+Plátano;Caja de cartón;25 Kilogramo;0;0;0;0
+Plátano hartón verde;Caja de cartón;25 Kilogramo;30.000;32.000;0;0
+Papa;Bulto;50 Kilogramo;50.000;53.000;0;0
+Papa criolla sucia;Bulto;60 Kilogramo;120.000;122.000;0;0
+Papa parda pastusa;Bulto;60 Kilogramo;60.000;62.000;0;0
+Papa suprema;Bulto;50 Kilogramo;43.000;45.000;0;0
+Papa única;Bulto;50 Kilogramo;48.000;0;0;0
+Yuca;Bulto;60 Kilogramo;50.000;53.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina pastusa;Bulto;50 Kilogramo;100.000;105.000;0;0
+Frijol verde cargamanto;Bulto;50 Kilogramo;150.000;160.000;0;0
+```

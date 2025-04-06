@@ -1,0 +1,27 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp1sjir1zy/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:17:21
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Frutas;;;;;;
+Frijol verde en vaina;Atado/manojo;1 Kilogramo;3.500;3.800;0;0
+Habichuela;Arroba;12.5 Kilogramo;30.000;35.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ahyama;Kilogramo;1 Kilogramo;1.400;1.500;0;0
+Ajo;Atado/manojo;9 Kilogramo;60.000;62.000;0;0
+Cebolla importada;Cartón;10 Kilogramo;90.000;100.000;0;0
+Pepino cohombro;Kilogramo;1 Kilogramo;2.500;2.700;0;0
+Pimentón;Kilogramo;1 Kilogramo;2.500;2.600;0;0
+Zanahorias;Kilogramo;1 Kilogramo;1.500;1.600;0;0
+Zanahoria bogotana;Bulto;60 Kilogramo;120.000;120.000;0;0
+Cebollas;Bulto;50 Kilogramo;50.000;60.000;0;0
+Cebolla cabezona blanca;Bulto;50 Kilogramo;50.000;60.000;0;0
+Cebolla junca;Atado/manojo;1 Kilogramo;2.000;2.200;0;0
+Tomates;Kilogramo;1 Kilogramo;1.800;2.000;0;0
+Tomate chonto;Kilogramo;1 Kilogramo;1.800;2.000;0;0
+Cilantro;Atado/manojo;2 Kilogramo;6.000;7.000;0;0
+Colliflor;Docena;12 Kilogramo;30.000;32.000;0;0
+Lechuga batavia;Docena;12 Kilogramo;18.000;20.000;0;0
+Repollo blanco;Bulto;25 Kilogramo;25.000;30.000;0;0
+```

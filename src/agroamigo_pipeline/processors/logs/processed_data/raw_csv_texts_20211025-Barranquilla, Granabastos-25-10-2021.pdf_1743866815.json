@@ -1,0 +1,12 @@
+{
+  "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data/PDF_Files/PDFs/20211025-Barranquilla, Granabastos-25-10-2021.pdf",
+  "metadata": {
+    "date": "2021-10-25",
+    "city": "Barranquilla",
+    "market": "Granabastos",
+    "source": "informes por ciudades"
+  },
+  "csv_texts": [
+    "```\nFrutas;;;;;;\nOtras frutas;;;;;;\nGuayaba pera;Caja de cartón;10 Kilogramo;24.000;25.000;0;0\nLulo;Kilogramo;1 Kilogramo;5.400;5.500;0;0\nMaracuyá valluno;Bolsa;10 Kilogramo;30.000;31.000;0;0\nMora de castilla;Bolsa;2,5 Kilogramo;11.000;12.000;0;0\nPiña perolera;Caja de;12,5 Kilogramo;42.000;43.000;0;0\nTomate de árbol;Kilogramo;1 Kilogramo;2.700;0;0;0\nTubérculos, raíces y platanos;;;;;;\nPapa;Bulto;50 Kilogramo;192.000;195.000;0;0\nPapa criolla limpia;Bulto;50 Kilogramo;51.000;52.000;0;0\nPapa única;Bulto;50 Kilogramo;51.000;52.000;0;0\nYuca;Bulto;50 Kilogramo;56.000;57.000;0;0\nArveja verde en vaina;Kilogramo;1 Kilogramo;7.000;7.100;0;0\nFrijol verde en vaina;Kilogramo;1 Kilogramo;7.300;7.400;0;0\nHabichuela;Saco;20 Kilogramo;76.000;78.000;0;0\nOtras hortalizas y verduras;;;;;;\nAjo importado;Caja de cartón;10 Kilogramo;77.000;78.000;0;0\nPepino cohombro;Bulto;50 Kilogramo;78.000;80.000;0;0\nPimentón;Caja de cartón;12 Kilogramo;24.000;0;0;0\nRemolacha;Bulto;60 Kilogramo;56.000;0;0;0\nZanahorias;;;;;;\nZanahoria bogotana;Bulto;60 Kilogramo;94.000;96.000;0;0\nCebollas;;;;;;\nCebolla cabeza blanca;Bulto;50 Kilogramo;50.000;52.000;0;0\nCebolla cabezona roja peruana;Bulto;46 Kilogramo;128.000;0;0;0\nCebolla junca berlín;Atado/manojo;30 Kilogramo;35.000;37.000;0;0\nTomates;;;;;;\nTomate chonto;Caja de cartón;25 Kilogramo;48.000;0;0;0\nTomate rogrande bumangües;Caja de cartón;22 Kilogramo;50.000;52.000;0;0\nHortalizas;;;;;;\nApio;Atado/manojo;10 Kilogramo;19.000;20.000;0;0\nBrócoli;Kilogramo;1 Kilogramo;5.500;5.600;0;0\nColiflor;Kilogramo;1 Kilogramo;5.500;0;0;0\nEspinaca;Kilogramo;1 Kilogramo;4.000;4.400;0;0\nLechuga batavia;Kilogramo;1.500;0;0;0;0\nRepollo blanco;Bulto;70 Kilogramo;113.000;115.000;0;0\n```"
+  ]
+}

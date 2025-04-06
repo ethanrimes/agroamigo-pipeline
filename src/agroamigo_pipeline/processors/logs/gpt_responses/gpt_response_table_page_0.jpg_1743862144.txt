@@ -1,0 +1,40 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpg4op7lw2/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:09:04
+Raw GPT-4o mini response:
+```plaintext
+Carnes;;;;;;
+Carne de res;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, bola de brazo;Kilogramo;1 Kilogramo;22.000;23.500;0;0
+Carne de res, cadera;Kilogramo;1 Kilogramo;22.000;23.000;0;0
+Carne de res, chatas;Kilogramo;1 Kilogramo;27.000;28.500;0;0
+Carne de res, falda;Kilogramo;1 Kilogramo;18.000;19.000;0;0
+Carne de res, morcillo;Kilogramo;1 Kilogramo;18.000;19.000;0;0
+Carne de res, pecho;Kilogramo;1 Kilogramo;28.000;29.000;0;0
+Carne de res, punta de anca;Kilogramo;1 Kilogramo;22.000;23.000;0;0
+Carne de cerdo, brazo sin hueso;Kilogramo;1 Kilogramo;17.000;18.500;0;0
+Carne de cerdo, costilla;Kilogramo;1 Kilogramo;15.000;15.000;0;0
+Carne de cerdo, espinazo;Kilogramo;1 Kilogramo;9.000;10.000;0;0
+Carne de cerdo, lomo sin hueso;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de cerdo, pernil sin hueso;Kilogramo;1 Kilogramo;17.000;18.000;0;0
+Carne de cerdo, tocino papada;Kilogramo;1 Kilogramo;11.000;12.000;0;0
+Pollo;;;;;;
+Alas de pollo con costillar;Libra;500 Gramo;3.400;3.600;0;0
+Pechuga de pollo;Libra;500 Gramo;5.750;5.900;0;0
+Pierna pernil con rabadilla;Libra;500 Gramo;3.000;3.300;0;0
+Perniles de pollo;Libra;500 Gramo;3.500;3.600;0;0
+Pollo entero congelado sin vísceras;Libra;500 Gramo;4.300;4.600;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bulto;60 Kilogramo;150.000;160.000;0;0
+Limón tahití;Kilogramo;1 Kilogramo;2.400;2.600;0;0
+Mandarina arrayana;Canastilla;20 Kilogramo;27.000;30.000;0;0
+Mandarina oneco;Canastilla;20 Kilogramo;27.000;30.000;0;0
+Naranja sweet;Bulto;50 Kilogramo;47.000;50.000;0;0
+Otras frutas;;;;;;
+Aguacate papelillo;Kilogramo;1 Kilogramo;4.700;None;0;0
+Banano criollo;Caja de 15 Kilogramo;17.000;18.000;0;0
+Coco;Docena;18 Kilogramo;38.000;None;0;0
+Fresa;Kilogramo;1 Kilogramo;4.200;None;0;0
+Granadilla;Caja de cartón;15 Kilogramo;50.000;None;0;0
+```

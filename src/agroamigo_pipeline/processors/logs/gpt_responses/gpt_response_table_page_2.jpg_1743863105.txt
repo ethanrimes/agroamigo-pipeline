@@ -1,0 +1,48 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp32uqw0a6/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:25:05
+Raw GPT-4o mini response:
+```plaintext
+Vinagre;;;;;;
+Azúcar;;;;;;
+Azúcar refinada;Bolsa;25 Unidad 1 KG;0;0;87.000;92.500
+Azúcar sulfitada;Bulto;50 Kilogramo;0;0;149.500;154.500
+Panel;Caja cuadrada blanca;7 Kilogramo;0;0;26.300;28.000
+Panel;Caja cuadrada morena;15 Kilogramo;0;0;65.450;0
+Aceites y grasas;;;;;;
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 900 CC;0;0;85.150;93.000
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 450 CC;0;0;0;0
+Margarina;Caja de cartón;10 Kilogramo;0;0;124.700;137.000
+Otros tubérculos;;;;;;
+Arracacha amarilla;Bulto;62,5 Kilogramo;55.000;60.000;55.000;60.000
+Plátano;Bulto;62,5 Kilogramo;0;0;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;140.000;148.000;140.000;148.000
+Papa parda pastusa;Bulto;50 Kilogramo;48.000;52.000;47.000;0
+Papa única;Bulto;50 Kilogramo;45.000;47.000;0;0
+Yuca crujilla;Bolsa;42 Kilogramo;60.000;70.000;60.000;70.000
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Bulto;50 Kilogramo;100.000;115.000;100.000;115.000
+Frijol verde en vaina;Bulto;50 Kilogramo;120.000;130.000;120.000;130.000
+Habichuela;Saco;20 Kilogramo;50.000;0;0;0
+Otras hortalizas y verduras;;;;;;
+Ahuayma;Kilogramo;1 Kilogramo;0;0;0;0
+Ahuaymín (sakata);Bulto;50 Kilogramo;36.000;40.000;36.000;40.000
+Ajo importado;Caja de cartón;1 Kilogramo;0;0;0;0
+Chócolo mazorca;Bulto;25 Kilogramo;0;0;0;0
+Pepino cohombro;Bulto;25 Kilogramo;0;0;0;0
+Pimentón;Canastilla;10 Kilogramo;0;0;0;0
+Pimentón verde;Canastilla;13 Kilogramo;0;0;0;0
+Rábano rojo;Kilogramo;1 Kilogramo;0;0;0;0
+Remolacha;Bulto;60 Kilogramo;84.000;87.000;84.000;87.000
+Zanahorias;;;;;;
+Zanahoria;Bulto;60 Kilogramo;113.000;115.000;113.000;115.000
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;40.000;45.000;0;0
+Cebolla cabezona roja;Bulto;48 Kilogramo;135.000;140.000;0;0
+Cebolla cabezona roja importada;Bulto;48 Kilogramo;95.000;100.000;0;0
+Cebolla;Bulto;50 Kilogramo;30.000;0;0;0
+Tomates;;;;;;
+Tomate riñón;Canastilla;22 Kilogramo;45.000;0;0;0
+Tomate riograndense;Canastilla;22 Kilogramo;35.000;40.000;35.000;40.000
+```

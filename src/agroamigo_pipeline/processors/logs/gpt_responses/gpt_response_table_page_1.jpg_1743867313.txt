@@ -1,0 +1,38 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpplwwc9d2/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:35:13
+Raw GPT-4o mini response:
+```csv
+Tubérculos, raíces y otros;;;;;;
+Jugo instantáneo (sobre);Caja de cartón;20 Unidad 18 GR;8.900;9.000;0;0
+Lomitos de atún en lata;Caja de cartón;48 Unidad 170 GR;180.000;192.000;0;0
+Pastas alimenticias;Bolsa;12,5 Kilogramo;14.000;16.000;0;0
+Sal yodada;Bolsa;12,5 Kilogramo;17.000;19.000;0;0
+Sardinas en lata;Bolsa;12 Unidad 425 GR;179.000;190.000;0;0
+Vinagre;Caja de cartón;24 Unidad 500 CC;14.600;15.000;0;0
+Azúcar;Caja de cartón;24 Unidad 500 GR;43.800;45.000;0;0
+Azúcar refinada;Bulto;50 Kilogramo;140.300;140.300;0;0
+Panelas;Caja de cartón;10 Kilogramo;30.000;30.000;0;0
+Aceite y grasas;;;;;;
+Aceite vegetal;Bulto;12 Unidad 900 CC;80.000;90.000;0;0
+Aceite vegetal mezcla;Bulto;12 Unidad 1000;70.000;70.000;0;0
+Margarina;Caja de cartón;12 Unidad 1000;70.000;70.000;0;0
+Plátano;;;;;;
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.800;1.800;0;0
+Papa;;;;;;
+Papa criolla limpia;Bulto;50 Kilogramo;170.000;180.000;0;0
+Papa rubí;Bulto;50 Kilogramo;53.000;55.000;0;0
+Verduras y hortalizas;;;;;;
+Pepino cohombro;Bulto;50 Kilogramo;80.000;90.000;0;0
+Pimiento;Caja de cartón;12 Kilogramo;24.000;25.000;0;0
+Remolacha;Bulto;60 Kilogramo;80.000;80.000;0;0
+Zanahorias;Bulto;60 Kilogramo;110.000;110.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;50.000;50.000;0;0
+Tomates;;;;;;
+Tomate chonto;Caja de cartón;25 Kilogramo;50.000;50.000;0;0
+Hortalizas;;;;;;
+Apio;Docena;15 Kilogramo;30.000;30.000;0;0
+Lechuga batavia;Caja de cartón;12 Kilogramo;25.000;25.000;0;0
+Repollo blanco;Bulto;70 Kilogramo;110.000;110.000;0;0
+```

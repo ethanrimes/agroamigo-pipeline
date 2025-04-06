@@ -1,0 +1,42 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpw8b50_3w/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:05:40
+Raw GPT-4o mini response:
+```plaintext
+Otros procesados;;;;;;
+Bagre rayado entero fresco;Arroba;12,5 Kilogramo;210.000;220.000;0;0
+Cachama de cultivo fresca;Arroba;12,5 Kilogramo;100.000;110.000;0;0
+Tilapia roja enter fresca;Arroba;12,5 Kilogramo;110.000;110.000;0;0
+Avena en hojuelas;Bolsa;12 Unidad 180 GR;17.500;18.450;0;0
+Avena molida;Bolsa;12 Unidad 180 GR;17.500;18.450;0;0
+Café molido;Bolsa;10 Unidad 500 GR;9.500;9.750;0;0
+Chocolate amargo;Bolsa;1 Unidad;1.900;2.150;0;0
+Galletas dulces;Bolsa;1 Unidad 50 GR;1.900;2.150;0;0
+Gelatina;Caja de cartón;24 Unidad 50 GR;3.500;3.600;0;0
+Gelatina;Caja de cartón;20 Unidad 18 GR;8.480;8.800;0;0
+Mayonesa de pay pack;Unidad;1 Unidad 200 GR;2.250;2.500;0;0
+Pastas alimenticias;Bolsa;24 Unidad 250 GR;36.700;37.900;0;0
+Sal yodada;Bolsa;25 Unidad 500 GR;17.200;17.500;0;0
+Salsa de tomate doy pack;Unidad;1 Unidad 200 GR;1.900;2.150;0;0
+Azúcar;;;;;;
+Azúcar morena;Bolsa;25 Kilogramo;80.000;83.000;0;0
+Azúcar sulfitada;Bolsa;50 Kilogramo;142.000;143.000;0;0
+Panelas;;;;;;
+Panela;Bolsa;36 Kilogramo;125.000;0;0;0
+Aceites y grasas;;;;;;
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;89.000;93.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Arrachera amarilla;Bulto;62,5 Kilogramo;30.000;40.000;0;0
+Plátano;;;;;;
+Plátano hartón maduro;Kilogramo;1 Kilogramo;1.200;1.300;0;0
+Plátano hartón verde;Kilogramo;1 Kilogramo;22.000;22.000;0;0
+Papa;;;;;;
+Papa criolla limpia;Arroba;12,5 Kilogramo;35.000;38.000;0;0
+Papa roja limpia;Bolsa;50 Kilogramo;130.000;135.000;0;0
+Papa superior;Bolsa;50 Kilogramo;50.000;0;0;0
+Yuca;;;;;;
+Yuca;Bolsa;30 Kilogramo;28.000;0;0;0
+Legumbres;;;;;;
+Arveja verde en vaina;Arroba;12,5 Kilogramo;25.000;30.000;0;0
+```

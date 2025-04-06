@@ -1,0 +1,12 @@
+{
+  "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data/PDF_Files/PDFs/20230215-Barranquilla, Barranquillita-15-02-2023.pdf",
+  "metadata": {
+    "date": "2023-02-15",
+    "city": "Barranquilla",
+    "market": "Barranquillita",
+    "source": "informes por ciudades"
+  },
+  "csv_texts": [
+    "```\nFrutas;;;;;;\nCítricos;;;;;;\nLimón tahití;Canastilla;22 Kilogramo;40.000;45.000;0;0\nMandarina arrayana;Canastilla;22 Kilogramo;50.000;60.000;0;0\n```"
+  ]
+}

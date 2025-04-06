@@ -1,26 +1,26 @@
 """
-Web scraper for Colombian agricultural price data.
+Updated web scraper for Colombian agricultural price data.
+Uses the new registry system for tracking downloads.
 """
 
 import os
 import queue
 import threading
-import argparse
-from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor
+import time
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import re
 from lxml import etree
 import logging
-from typing import List, Dict, Tuple, Optional
-from pathlib import Path
+from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
+import uuid
 
 from agroamigo_pipeline.config.settings import SOURCE_DIR
 from agroamigo_pipeline.utils.logger import setup_logging, log_function_call
 from agroamigo_pipeline.utils.date_utils import parse_spanish_date_scraper, parse_spanish_month_year
-from agroamigo_pipeline.utils.web_scraper_registry import WebScraperRegistry
+from agroamigo_pipeline.registry.webscraper_registry import WebScraperRegistry
 
 class ThreadLogger:
     """Logger wrapper for thread-safe logging to a queue"""
@@ -76,26 +76,30 @@ def log_consumer(log_queue, logger):
 class WebScraper:
     """Web scraper for Colombian agricultural price data."""
     
-    def __init__(self, source_dir=SOURCE_DIR, max_workers=4):
+    def __init__(self, source_dir=SOURCE_DIR, max_workers=4, logger=None):
         """
         Initialize the web scraper.
         
         Args:
             source_dir (str): Directory to save downloaded files
             max_workers (int): Number of worker threads for parallel downloads
+            logger (logging.Logger): Logger instance
         """
         self.source_dir = source_dir
         self.max_workers = max_workers
         
         # Initialize logging
-        logging_setup = setup_logging()
-        self.logger = logging_setup['scraper']
+        if logger is None:
+            logging_setup = setup_logging()
+            self.logger = logging_setup['scraper']
+        else:
+            self.logger = logger
         
         # Ensure source directory exists
         os.makedirs(source_dir, exist_ok=True)
         
         # Initialize registry
-        self.registry = WebScraperRegistry()
+        self.registry = WebScraperRegistry(logger=self.logger)
         
         # Create log queue for thread-safe logging
         self.log_queue = queue.Queue()
@@ -105,7 +109,7 @@ class WebScraper:
         
         self.logger.info(f"Web scraper initialized with source directory: {source_dir}")
     
-    def process_daily_price_page(self, url, start_date, end_date, existing_files, log_queue):
+    def process_daily_price_page(self, url, start_date, end_date, force_reprocess, log_queue):
         """
         Process a single page of daily price data.
         
@@ -113,7 +117,7 @@ class WebScraper:
             url (str): The URL to process
             start_date (datetime): Start date for filtering
             end_date (datetime): End date for filtering
-            existing_files (set): Set of already downloaded files
+            force_reprocess (bool): Whether to force reprocessing of previously downloaded files
             log_queue (Queue): Queue for logging messages
             
         Returns:
@@ -160,14 +164,6 @@ class WebScraper:
             if not found_table:
                 thread_logger.error("Could not find data table, skipping page")
                 return failed_downloads, {current_month_key: stats} if current_month_key else {}
-            
-            # Log table details
-            thread_logger.info(f"""
-            Table details:
-            - Number of rows: {len(found_table.find_all('tr'))}
-            - Number of headers: {len(found_table.find_all('th'))}
-            - Number of cells: {len(found_table.find_all('td'))}
-            """)
             
             # Process the found table
             thread_logger.info("Beginning to process table rows")
@@ -220,62 +216,65 @@ class WebScraper:
                         full_filename = f"{date_prefix}-{filename}"
                         download_path = os.path.join(self.source_dir, full_filename)
                         
-                        if full_filename in existing_files:
-                            thread_logger.debug(f"File exists: {full_filename}")
+                        # Check registry instead of checking file system directly
+                        if self.registry.file_exists(full_filename) and not force_reprocess:
+                            thread_logger.debug(f"File exists in registry: {full_filename}")
+                            stats['already_downloaded'] += 1
+                            continue
+                        
+                        try:
+                            thread_logger.info(f"Downloading file: {full_filename}")
+                            download_start = time.time()
+                            file_response = requests.get(full_url, stream=True)
+                            file_response.raise_for_status()
                             
-                            # Register in registry as successful (even though we didn't download it again)
+                            filepath = os.path.join(self.source_dir, full_filename)
+                            with open(filepath, 'wb') as f:
+                                for chunk in file_response.iter_content(chunk_size=8192):
+                                    f.write(chunk)
+                            download_duration = time.time() - download_start
+                            thread_logger.info(f"Successfully downloaded: {full_filename}")
+                            
+                            # Determine file type (zip or excel)
+                            file_type = "zip" if filename.lower().endswith('.zip') else "excel"
+                            
+                            # Register successful download in registry
                             self.registry.register_download_attempt(
                                 filename=full_filename,
                                 file_date=current_row_date,
                                 url=full_url,
-                                download_path=download_path,
+                                file_type=file_type,
+                                download_path=filepath,
+                                month_key=current_month_key,
+                                duration_seconds=download_duration
+                            )
+                            
+                            stats['new_downloads'] += 1
+                        except Exception as e:
+                            error_message = str(e)
+                            thread_logger.error(f"Error downloading {full_url}: {error_message}")
+                            
+                            # Determine file type (zip or excel)
+                            file_type = "zip" if filename.lower().endswith('.zip') else "excel"
+                            
+                            # Register failed download in registry
+                            self.registry.register_download_attempt(
+                                filename=full_filename,
+                                file_date=current_row_date,
+                                url=full_url,
+                                file_type=file_type,
+                                error=error_message,
                                 month_key=current_month_key
                             )
                             
-                            stats['already_downloaded'] += 1
-                        else:
-                            try:
-                                thread_logger.info(f"Downloading file: {full_filename}")
-                                file_response = requests.get(full_url, stream=True)
-                                file_response.raise_for_status()
-                                
-                                filepath = os.path.join(self.source_dir, full_filename)
-                                with open(filepath, 'wb') as f:
-                                    for chunk in file_response.iter_content(chunk_size=8192):
-                                        f.write(chunk)
-                                thread_logger.info(f"Successfully downloaded: {full_filename}")
-                                
-                                # Register successful download in registry
-                                self.registry.register_download_attempt(
-                                    filename=full_filename,
-                                    file_date=current_row_date,
-                                    url=full_url,
-                                    download_path=filepath,
-                                    month_key=current_month_key
-                                )
-                                
-                                stats['new_downloads'] += 1
-                            except Exception as e:
-                                error_message = str(e)
-                                thread_logger.error(f"Error downloading {full_url}: {error_message}")
-                                
-                                # Register failed download in registry
-                                self.registry.register_download_attempt(
-                                    filename=full_filename,
-                                    file_date=current_row_date,
-                                    url=full_url,
-                                    error=error_message,
-                                    month_key=current_month_key
-                                )
-                                
-                                # Track the failed download
-                                failed_downloads.append({
-                                    'url': full_url,
-                                    'filename': full_filename,
-                                    'month_key': current_month_key,
-                                    'error': error_message
-                                })
-                                stats['failed_downloads'] += 1
+                            # Track the failed download
+                            failed_downloads.append({
+                                'url': full_url,
+                                'filename': full_filename,
+                                'month_key': current_month_key,
+                                'error': error_message
+                            })
+                            stats['failed_downloads'] += 1
                     else:
                         thread_logger.warning(f"Link found without href attribute: {link_text}")
         except Exception as e:
@@ -316,20 +315,6 @@ class WebScraper:
         # Get all pre containers using direct selector
         pre_containers = soup.select('div#cnpv > pre')
         
-        thread_logger.info(f"""
-        Pre container summary:
-        - Number of pre containers found: {len(pre_containers)}
-        - Container details:""")
-        
-        for i, container in enumerate(pre_containers, 1):
-            link_count = len(container.find_all('a'))
-            container_text = container.get_text().strip()[:100]  # First 100 chars for preview
-            thread_logger.info(f"""
-            Container {i}:
-            - Links found: {link_count}
-            - Preview: {container_text}...""")
-
-        # Use the first successful method (original selector) as fallback
         if not pre_containers:
             pre_containers = [soup.select_one('div[itemprop="articleBody"] > div#cnpv > pre')]
         
@@ -338,7 +323,6 @@ class WebScraper:
                 continue
                 
             thread_logger.info("CNPV container with pre elements found on page")
-            thread_logger.debug(f"CNPV container HTML: {container.prettify()}")
 
             # Process links directly from the pre container
             links_in_container = container.find_all('a')
@@ -393,16 +377,108 @@ class WebScraper:
         )
         return links
     
-    def log_statistics(self, failed_downloads, monthly_stats):
+    def run(self, start_date, end_date, max_workers=None, force_reprocess=False):
+        """
+        Run the web scraper.
+        
+        Args:
+            start_date (datetime): Start date for filtering
+            end_date (datetime): End date for filtering
+            max_workers (int): Number of worker threads, overrides instance setting if provided
+            force_reprocess (bool): Whether to force reprocessing of previously downloaded files
+            
+        Returns:
+            dict: Scraping statistics
+        """
+        log_function_call(self.logger, "run", args=(start_date, end_date, max_workers, force_reprocess))
+        
+        # Use provided max_workers or instance default
+        max_workers = max_workers or self.max_workers
+        
+        # Start log consumer thread if not already running
+        if not self.log_thread or not self.log_thread.is_alive():
+            self.log_thread = threading.Thread(
+                target=log_consumer,
+                args=(self.log_queue, self.logger),
+                daemon=True
+            )
+            self.log_thread.start()
+        
+        # Get navigation links
+        navigation_links = self.get_navigation_links(start_date, end_date)
+        self.logger.info(f"Found {len(navigation_links)} pages to process")
+        
+        # Initialize statistics
+        all_failed_downloads = []
+        all_stats = {}
+        
+        # Process pages with ThreadPoolExecutor
+        self.logger.info(f"Starting multithreaded scraping with {max_workers} workers")
+        
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # Submit all jobs
+            future_to_url = {
+                executor.submit(
+                    self.process_daily_price_page,
+                    url,
+                    start_date,
+                    end_date,
+                    force_reprocess,
+                    self.log_queue
+                ): url for url in navigation_links
+            }
+            
+            # Process results as they complete
+            for future in future_to_url:
+                url = future_to_url[future]
+                try:
+                    failed_downloads, stats_dict = future.result()
+                    
+                    # Merge results
+                    all_failed_downloads.extend(failed_downloads)
+                    
+                    # Merge statistics dictionaries
+                    for month_key, month_stats in stats_dict.items():
+                        if month_key not in all_stats:
+                            all_stats[month_key] = {
+                                'links_explored': 0,
+                                'already_downloaded': 0,
+                                'new_downloads': 0,
+                                'failed_downloads': 0
+                            }
+                        
+                        # Add stats from this thread to the total
+                        all_stats[month_key]['links_explored'] += month_stats['links_explored']
+                        all_stats[month_key]['already_downloaded'] += month_stats['already_downloaded']
+                        all_stats[month_key]['new_downloads'] += month_stats['new_downloads']
+                        all_stats[month_key]['failed_downloads'] += month_stats['failed_downloads']
+                    
+                except Exception as e:
+                    self.logger.error(f"Error processing {url}: {str(e)}")
+        
+        # Log statistics
+        stats = self._log_statistics(all_failed_downloads, all_stats)
+        
+        # Export registry to CSV
+        self.registry.export_to_csv()
+        
+        # Signal to stop log consumer
+        self.log_queue.put(None)
+        self.log_thread.join()
+        
+        return stats
+    
+    def _log_statistics(self, failed_downloads, monthly_stats):
         """
         Log final statistics for the scraping run.
         
         Args:
             failed_downloads (list): List of failed downloads
             monthly_stats (dict): Dictionary of statistics by month
+            
+        Returns:
+            dict: Overall statistics
         """
-        log_function_call(self.logger, "log_statistics")
-        
         # Prepare statistics report
         stats_report = "\nScraping Statistics Summary:\n"
         stats_report += "=" * 50 + "\n\n"
@@ -444,6 +520,7 @@ class WebScraper:
         stats_report += f"Total failed downloads: {total_failed_downloads}\n"
         
         # Overall success rate
+        success_rate = 0
         if total_links_explored > 0:
             success_rate = ((total_already_downloaded + total_new_downloads) / 
                           total_links_explored * 100)
@@ -453,11 +530,14 @@ class WebScraper:
         if failed_downloads:
             stats_report += "\nFailed Downloads:\n"
             stats_report += "-" * 30 + "\n"
-            for failure in failed_downloads:
+            for failure in failed_downloads[:10]:  # Show first 10 failures
                 stats_report += f"\nMonth: {failure['month_key']}\n"
                 stats_report += f"File: {failure['filename']}\n"
                 stats_report += f"URL: {failure['url']}\n"
                 stats_report += f"Error: {failure['error']}\n"
+            
+            if len(failed_downloads) > 10:
+                stats_report += f"\n... and {len(failed_downloads) - 10} more failed downloads.\n"
             
             stats_report += f"\nTotal failed downloads: {total_failed_downloads}\n"
         else:
@@ -471,104 +551,10 @@ class WebScraper:
             'total_already_downloaded': total_already_downloaded,
             'total_new_downloads': total_new_downloads,
             'total_failed_downloads': total_failed_downloads,
-            'success_rate': success_rate if total_links_explored > 0 else 0,
+            'success_rate': success_rate,
             'months_processed': len(monthly_stats),
             'failed_downloads': failed_downloads
         }
-    
-    def run(self, start_date, end_date, max_workers=None):
-        """
-        Run the web scraper.
-        
-        Args:
-            start_date (datetime): Start date for filtering
-            end_date (datetime): End date for filtering
-            max_workers (int): Number of worker threads, overrides instance setting if provided
-            
-        Returns:
-            dict: Scraping statistics
-        """
-        log_function_call(self.logger, "run", args=(start_date, end_date, max_workers))
-        
-        # Use provided max_workers or instance default
-        max_workers = max_workers or self.max_workers
-        
-        # Start log consumer thread if not already running
-        if not self.log_thread or not self.log_thread.is_alive():
-            self.log_thread = threading.Thread(
-                target=log_consumer,
-                args=(self.log_queue, self.logger),
-                daemon=True
-            )
-            self.log_thread.start()
-        
-        # Get existing files in source directory
-        existing_files = set(os.listdir(self.source_dir))
-        self.logger.debug(f"Loaded {len(existing_files)} existing files from source directory")
-        
-        # Get navigation links
-        navigation_links = self.get_navigation_links(start_date, end_date)
-        self.logger.info(f"Found {len(navigation_links)} pages to process")
-        
-        # Initialize statistics
-        all_failed_downloads = []
-        all_stats = {}
-        
-        # Process pages with ThreadPoolExecutor
-        self.logger.info(f"Starting multithreaded scraping with {max_workers} workers")
-        
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            # Submit all jobs
-            future_to_url = {
-                executor.submit(
-                    self.process_daily_price_page,
-                    url,
-                    start_date,
-                    end_date,
-                    existing_files,
-                    self.log_queue
-                ): url for url in navigation_links
-            }
-            
-            # Process results as they complete
-            for future in future_to_url:
-                url = future_to_url[future]
-                try:
-                    failed_downloads, stats_dict = future.result()
-                    
-                    # Merge results
-                    all_failed_downloads.extend(failed_downloads)
-                    
-                    # Merge statistics dictionaries
-                    for month_key, month_stats in stats_dict.items():
-                        if month_key not in all_stats:
-                            all_stats[month_key] = {
-                                'links_explored': 0,
-                                'already_downloaded': 0,
-                                'new_downloads': 0,
-                                'failed_downloads': 0
-                            }
-                        
-                        # Add stats from this thread to the total
-                        all_stats[month_key]['links_explored'] += month_stats['links_explored']
-                        all_stats[month_key]['already_downloaded'] += month_stats['already_downloaded']
-                        all_stats[month_key]['new_downloads'] += month_stats['new_downloads']
-                        all_stats[month_key]['failed_downloads'] += month_stats['failed_downloads']
-                    
-                except Exception as e:
-                    self.logger.error(f"Error processing {url}: {str(e)}")
-        
-        # Log statistics
-        stats = self.log_statistics(all_failed_downloads, all_stats)
-        
-        # Export registry to CSV
-        self.registry.export_to_csv()
-        
-        # Signal to stop log consumer
-        self.log_queue.put(None)
-        self.log_thread.join()
-        
-        return stats
     
     # Helper methods
     def _get_page_year(self, soup, logger):
@@ -593,7 +579,6 @@ class WebScraper:
                     logger.info(f"Found date in table strong element: '{header}'")
                 else:
                     logger.error("Could not find header or strong element")
-                    logger.debug(f"Page content preview: {str(soup)[:500]}...")
                     return page_year, page_month
             
             if "SIPSA- diario" in header:
@@ -616,7 +601,6 @@ class WebScraper:
                 
         except Exception as e:
             logger.error(f"Error extracting page year/month: {str(e)}")
-            logger.debug(f"Full page content: {soup.prettify()[:500]}...")  # First 500 chars
             page_year = None
             page_month = None
         
@@ -637,102 +621,6 @@ class WebScraper:
             return True
         
         return False
-    
-    def _find_anexo_links(self, soup, logger):
-        """Search for and create a table from links in the article body."""
-        logger.info("Starting _find_anexo_links method")
-        
-        article_body = soup.select_one("#t3-content > div > div.com-content-article__body")
-        if not article_body:
-            logger.warning("No article body found")
-            return None
-        
-        logger.debug(f"Article body found: {type(article_body)}")
-        
-        # Find all links in paragraphs within the article body
-        all_links = article_body.select("p a")
-        if not all_links:
-            all_links = article_body.find_all('a')  # Fallback to all links if none found in paragraphs
-        
-        logger.debug(f"Total links found in article body: {len(all_links)}")
-        
-        valid_links = []
-        for link in all_links:
-            href = link.get('href')
-            text = link.get_text(strip=True)
-            logger.debug(f"Processing link - href: {href}, text: {text}")
-            
-            if not href:
-                continue
-            
-            # Try to extract year from the href
-            year_match = re.search(r'_(\d{4})\.', href)
-            if not year_match:
-                # Try alternate pattern for non-anexo files
-                year_match = re.search(r'/(\d{4})/', href)
-            
-            if year_match:
-                year = year_match.group(1)
-                
-                # Handle different date formats
-                if text.lower().startswith('anexo'):
-                    # Format: "Anexo - 1 de noviembre"
-                    date_text = text.replace('Anexo - ', '')
-                else:
-                    # Format: "31 de julio de 2012"
-                    # Remove year if it appears in the text to avoid duplication
-                    date_text = re.sub(r'\s*de\s+\d{4}', '', text)
-                
-                valid_links.append((link, date_text, year))
-                logger.info(f"Found valid link with year {year}: {href}")
-            else:
-                logger.warning(f"Could not extract year from href: {href}")
-
-        logger.info(f"Total valid links found: {len(valid_links)}")
-
-        if valid_links:
-            try:
-                logger.debug("Creating new BeautifulSoup structure for links")
-                new_html = BeautifulSoup('<div><table></table></div>', 'html.parser')
-                table = new_html.find('table')
-                
-                for link, date_text, year in valid_links:
-                    # Create new tags
-                    row = new_html.new_tag('tr')
-                    date_cell = new_html.new_tag('td')
-                    link_cell = new_html.new_tag('td')
-                    
-                    # Format date consistently
-                    date_cell.string = f"{date_text} - {year}"
-                    logger.debug(f"Created row with date: {date_cell.string}")
-                    
-                    # Create a new link tag and copy attributes
-                    new_link = new_html.new_tag('a')
-                    new_link['href'] = link.get('href', '')
-                    new_link.string = link.get_text(strip=True)
-                    
-                    # Add the new link to the cell
-                    link_cell.append(new_link)
-                    
-                    # Build the row
-                    row.append(date_cell)
-                    row.append(link_cell)
-                    table.append(row)
-                    
-                    logger.debug("Successfully added row to table")
-
-                logger.info("Successfully created table structure")
-                return new_html
-                
-            except Exception as e:
-                logger.error(f"Error creating table structure: {str(e)}")
-                logger.error(f"Exception type: {type(e)}")
-                import traceback
-                logger.error(f"Traceback: {traceback.format_exc()}")
-                return None
-        
-        logger.info("No valid links found to process")
-        return None
     
     def _find_data_table(self, soup, logger):
         """
@@ -792,4 +680,78 @@ class WebScraper:
             return anexo_table
 
         logger.error("No suitable table or Anexo links found with any selector")
+        return None
+        
+    def _find_anexo_links(self, soup, logger):
+        """Search for and create a table from links in the article body."""
+        logger.info("Starting _find_anexo_links method")
+        
+        article_body = soup.select_one("#t3-content > div > div.com-content-article__body")
+        if not article_body:
+            logger.warning("No article body found")
+            return None
+        
+        # Find all links in paragraphs within the article body
+        all_links = article_body.select("p a")
+        if not all_links:
+            all_links = article_body.find_all('a')  # Fallback to all links if none found in paragraphs
+        
+        valid_links = []
+        for link in all_links:
+            href = link.get('href')
+            text = link.get_text(strip=True)
+            
+            if not href:
+                continue
+            
+            # Try to extract year from the href
+            year_match = re.search(r'_(\d{4})\.', href)
+            if not year_match:
+                year_match = re.search(r'/(\d{4})/', href)
+            
+            if year_match:
+                year = year_match.group(1)
+                
+                # Handle different date formats
+                if text.lower().startswith('anexo'):
+                    date_text = text.replace('Anexo - ', '')
+                else:
+                    date_text = re.sub(r'\s*de\s+\d{4}', '', text)
+                
+                valid_links.append((link, date_text, year))
+
+        if valid_links:
+            try:
+                new_html = BeautifulSoup('<div><table></table></div>', 'html.parser')
+                table = new_html.find('table')
+                
+                for link, date_text, year in valid_links:
+                    # Create new tags
+                    row = new_html.new_tag('tr')
+                    date_cell = new_html.new_tag('td')
+                    link_cell = new_html.new_tag('td')
+                    
+                    # Format date consistently
+                    date_cell.string = f"{date_text} - {year}"
+                    
+                    # Create a new link tag and copy attributes
+                    new_link = new_html.new_tag('a')
+                    new_link['href'] = link.get('href', '')
+                    new_link.string = link.get_text(strip=True)
+                    
+                    # Add the new link to the cell
+                    link_cell.append(new_link)
+                    
+                    # Build the row
+                    row.append(date_cell)
+                    row.append(link_cell)
+                    table.append(row)
+
+                return new_html
+                
+            except Exception as e:
+                logger.error(f"Error creating table structure: {str(e)}")
+                return None
+        
+        logger.info("No valid links found to process")
         return None

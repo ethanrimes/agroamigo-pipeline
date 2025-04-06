@@ -1,0 +1,40 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpg4op7lw2/page_3.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:09:59
+Raw GPT-4o mini response:
+```
+Otros tuberculos;;;;;;
+Arracacha amarilla;Bulto;60 Kilogramo;55.000;60.000;0;0
+Plátano;Kilogramo;1 Kilogramo;1.200;1.200;0;0
+Papa;Bulto;50 Kilogramo;57.000;60.000;0;0
+Papa capira;Bulto;50 Kilogramo;120.000;120.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;120.000;120.000;0;0
+Papa suprema;Bulto;50 Kilogramo;58.000;58.000;0;0
+Yuca;Bulto;50 Kilogramo;38.000;38.000;0;0
+Yuca ica;Bolsa;25 Kilogramo;38.000;38.000;0;0
+Verduras y hortalizas;;;;;;
+Arveja verde en vaina;Bulto;50 Kilogramo;120.000;120.000;0;0
+Habichuela;Kilogramo;1 Kilogramo;1.400;1.400;0;0
+Ahuayma;Kilogramo;1 Kilogramo;1.400;1.400;0;0
+Ajo importado;Caja de cartón;10 Kilogramo;75.000;80.000;0;0
+Choclo mazorca;Bulto;70 Kilogramo;70.000;70.000;0;0
+Pepino cohombro;Tula;30 Kilogramo;40.000;40.000;0;0
+Pimentón;Kilogramo;1 Kilogramo;2.300;2.300;0;0
+Remolacha bogotana;Bulto;60 Kilogramo;50.000;55.000;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;50 Kilogramo;35.000;40.000;0;0
+Cebollas;;;;;;
+Cebolla cabeza blanca bogotana;Bulto;48 Kilogramo;35.000;40.000;0;0
+Cebolla junca aquitina;Atado/manojo;22,5 Kilogramo;18.000;20.000;0;0
+Cebolla junca tenerife;Atado/manojo;20 Kilogramo;18.000;20.000;0;0
+Tomates;;;;;;
+Tomate chonto;Unidad;1 Kilogramo;2.000;2.000;0;0
+Tomate larga vida;Kilogramo;1 Kilogramo;2.700;2.800;0;0
+Hortalizas;;;;;;
+Apio;Atado/manojo;17 Kilogramo;22.000;24.000;0;0
+Brócoli;Caja de cartón;10 Kilogramo;25.000;27.000;0;0
+Cilantro;Atado/manojo;2 Kilogramo;7.500;8.000;0;0
+Colliflor;Caja de cartón;10 Kilogramo;25.000;25.000;0;0
+Lechuga batavia;Caja de cartón;13 Kilogramo;7.000;8.000;0;0
+Repollo blanco;Bulto;30 Kilogramo;14.000;15.000;0;0
+```

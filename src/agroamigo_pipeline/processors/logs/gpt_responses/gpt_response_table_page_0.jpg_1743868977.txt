@@ -1,0 +1,45 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp_ka5qbnw/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-06 00:02:57
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón tahití;Bulto;70 Kilogramo;150.000;160.000;150.000;160.000
+Limón común;Bulto;70 Kilogramo;150.000;160.000;150.000;160.000
+Mandarina arrayana;Canastilla;22 Kilogramo;70.000;80.000;70.000;80.000
+Naranja sweet;Canastilla;22 Kilogramo;37.000;40.000;37.000;40.000
+Naranja valencia;Canastilla;22 Kilogramo;37.000;40.000;37.000;40.000
+Tangelo;Canastilla;25 Kilogramo;55.000;60.000;55.000;60.000
+Aguacate hass;Kilogramo;1 Kilogramo;6.000;6.000;6.000;6.000
+Aguacate papelillo;Kilogramo;1 Kilogramo;6.000;6.000;6.000;6.000
+Banano uraba;Caja de cartón;1 Caja;40.000;45.000;40.000;45.000
+Banano variedad;Caja de cartón;1 Caja;40.000;45.000;40.000;45.000
+Curuba;Canastilla;22 Kilogramo;40.000;40.000;40.000;40.000
+Durazno importado;Caja de cartón;9 Kilogramo;105.000;110.000;105.000;110.000
+Durazno nacional;Kilogramo;1 Kilogramo;5.500;6.000;5.500;6.000
+Fresa;Kilogramo;1 Kilogramo;7.800;7.800;7.800;7.800
+Granadilla;Caja de cartón;15 Kilogramo;40.000;45.000;40.000;45.000
+Guanábana;Kilogramo;1 Kilogramo;4.000;4.000;4.000;4.000
+Guayaba pera;Canastilla;15 Kilogramo;40.000;45.000;40.000;45.000
+Gulupa;Canastilla;12 Kilogramo;36.000;38.000;36.000;38.000
+Higo;Kilogramo;1 Kilogramo;11.000;12.000;11.000;12.000
+Kiwi;Canastilla;1 Kilogramo;11.000;12.000;11.000;12.000
+Lulo;Canastilla;25 Kilogramo;120.000;130.000;120.000;130.000
+Mango de azúcar;Canastilla;20 Kilogramo;90.000;90.000;90.000;90.000
+Manzana nacional;Canastilla;20 Kilogramo;90.000;90.000;90.000;90.000
+Manzana roja importada;Caja de cartón;19 Kilogramo;115.000;120.000;115.000;120.000
+Manzana verde importada;Caja de cartón;19 Kilogramo;145.000;148.000;145.000;148.000
+Maracuyá;Bolsa;10 Kilogramo;30.000;32.000;30.000;32.000
+Melón cantalupo;Kilogramo;1 Kilogramo;1.900;2.000;1.900;2.000
+Mora de castilla;Caja de madera;6 Kilogramo;30.000;35.000;30.000;35.000
+Papaya paulina;Caja de madera;18 Kilogramo;30.000;35.000;30.000;35.000
+Papaya taiñung;Caja de;10 Kilogramo;25.000;26.000;25.000;26.000
+Patilla;Kilogramo;1 Kilogramo;1.400;1.500;1.400;1.500
+Patilla baby;Kilogramo;1 Kilogramo;1.000;1.000;1.000;1.000
+Pera importada;Caja de cartón;20 Kilogramo;100.000;110.000;100.000;110.000
+Pera nacional;Canastilla;23 Kilogramo;60.000;65.000;60.000;65.000
+Pitahaya;Kilogramo;1 Kilogramo;16.000;17.000;16.000;17.000
+Piña gold;Caja de cartón;11 Kilogramo;16.000;17.000;16.000;17.000
+Piña perolera;Caja de madera;30 Kilogramo;26.000;27.000;25.000;27.000
+```

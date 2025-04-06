@@ -1,0 +1,48 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp_croztqu/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:05:21
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón tahití;Bulto;70 Kilogramo;300.000;320.000;300.000;300.000
+Mandarina arrayana;Caja;22 Kilogramo;65.000;70.000;0;0
+Naranja sweet;Canastilla;20 Kilogramo;33.000;35.000;0;0
+Naranja valenciana;Canastilla;20 Kilogramo;33.000;35.000;0;0
+Tangelo;Canastilla;25 Kilogramo;30.000;30.000;0;0
+Otras frutas;;;;;;
+Aguacate hass;Kilogramo;1 Kilogramo;9.000;9.000;0;0
+Aguacate papelillo;Kilogramo;1 Kilogramo;9.000;9.000;0;0
+Banano;Caja de cartón;1 Kilogramo;5.000;5.000;0;0
+Banano bocadillo;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Banano criollo;Kilogramo;1 Kilogramo;9.000;9.000;0;0
+Borojo;Kilogramo;1 Kilogramo;15.000;15.000;0;0
+Curuba;Canastilla;20 Kilogramo;25.000;30.000;0;0
+Fresa;Kilogramo;1 Kilogramo;7.000;7.000;7.000;7.500
+Granadilla;Caja de cartón;15 Kilogramo;85.000;85.000;0;0
+Guanábana;Kilogramo;1 Kilogramo;5.000;5.000;0;0
+Guayaba pera;Canastilla;14 Kilogramo;25.000;30.000;0;0
+Guayaba;Canastilla;12 Kilogramo;35.000;35.000;0;0
+Kiwi;Canastilla;10 Kilogramo;180.000;190.000;0;0
+Lulo;Canastilla;10 Kilogramo;180.000;190.000;0;0
+Mango tommy;Canastilla;24 Kilogramo;200.000;210.000;0;0
+Manzana nacional;Canastilla;20 Kilogramo;170.000;180.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;160.000;165.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;230.000;230.000;0;0
+Maracuyá;Bolsas;10 Kilogramo;45.000;50.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;1.600;1.700;0;0
+Mora de castilla;Caja de madera;6 Kilogramo;28.000;30.000;0;0
+Papaya paulina;Caja de madera;18 Kilogramo;28.000;30.000;0;0
+Papaya taiñung;Caja de madera;10 Kilogramo;25.000;25.000;0;0
+Patilla;Kilogramo;1 Kilogramo;1.600;1.700;0;0
+Patilla baby;Kilogramo;1 Kilogramo;1.600;1.600;0;0
+Pera importada;Caja de cartón;20 Kilogramo;160.000;162.000;0;0
+Pera nacional;Canastilla;23 Kilogramo;160.000;165.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;11.000;12.000;0;0
+Piña;Caja de cartón;11 Kilogramo;50.000;50.000;0;0
+Tomate de árbol;Canastilla;25 Kilogramo;54.000;55.000;0;0
+Uchuva con cáscara;Kilogramo;1 Kilogramo;54.000;55.000;0;0
+Uva;Caja de cartón;1 Unidad 450 GR;56.000;60.000;0;0
+Uva importada;Caja de icopor;8 Kilogramo;140.000;140.000;0;0
+Uva red globe nacional;Caja de madera;10 Kilogramo;74.000;75.000;73.000;75.000
+```

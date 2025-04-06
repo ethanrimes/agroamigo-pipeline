@@ -1,0 +1,44 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpk01b5y82/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:18:06
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Guayaba pera;Kilogramo;1 Kilogramo;1.000;1.400;0;0
+Kiwi;Canastilla;10 Kilogramo;90.000;100.000;0;0
+Lulo;Kilogramo;1 Kilogramo;4.200;4.500;0;0
+Mango tommy;Caja de madera;19 Kilogramo;120.000;130.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;120.000;130.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;140.000;150.000;0;0
+Melón cantalupo;Unidad;1 Unidad;10.000;12.000;0;0
+Pera de castilla;Kilogramo;1 Kilogramo;3.000;3.500;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;2.000;2.500;0;0
+Piña;Unidad;1 Unidad;3.000;3.500;0;0
+Sandía;Kilogramo;1 Kilogramo;1.500;2.000;0;0
+Cereales;;;;;;
+Arroz de primera;Bolsa;25 Unidad 500 GR;29.000;30.000;0;0
+Maíz amarillo cáscara;Arroba;12,5 Kilogramo;22.000;24.000;0;0
+Maíz blanco trillado;Arroba;12,5 Kilogramo;26.000;28.000;0;0
+Granos;;;;;;
+Arveja verde seca importada;Bolsa;25 Unidad 454 GR;40.000;46.000;0;0
+Frijol cargamento rojo;Bolsa;25 Unidad 454 GR;98.000;100.000;0;0
+Lenteja importada;Bolsa;25 Unidad 454 GR;65.000;66.000;0;0
+Lácteos;;;;;;
+Queso campesino;Kilogramo;1 Kilogramo;10.800;11.000;0;0
+Queso costeño;Kilogramo;1 Kilogramo;14.550;14.550;0;0
+Huevos;;;;;;
+Huevo blanco a;Panal;30 Unidad;8.600;8.800;0;0
+Huevo blanco b;Panal;30 Unidad;9.300;9.300;0;0
+Huevo blanco extra;Panal;30 Unidad;11.500;11.600;0;0
+Frescos y congelados;;;;;;
+Bocachico importado congelado;Kilogramo;1 Kilogramo;9.000;9.500;0;0
+Trucha en corte mariposa;Kilogramo;1 Kilogramo;22.000;22.000;0;0
+Procesados;;;;;;
+Café molido;Libra;500 Gramo;7.600;8.000;0;0
+Chocolate amargo;Libra;500 Gramo;12.000;12.600;0;0
+Galletas saladas;Caja de cartón;24 Unidad 300 GR;79.200;80.000;0;0
+Galletas;Caja de cartón;24 Unidad 40 GR;45.000;46.000;0;0
+Harina de trigo;Caja de cartón;24 Unidad 500 GR;42.000;45.000;0;0
+Harina precocida de maíz;Caja de cartón;24 Unidad 500 GR;42.000;45.000;0;0
+Mayonesa doy pack;Caja de cartón;24 Unidad 150 GR;39.000;40.000;0;0
+```

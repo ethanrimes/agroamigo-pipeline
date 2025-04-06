@@ -1,0 +1,19 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpl0wb316b/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:21:03
+Raw GPT-4o mini response:
+```csv
+Hortalizas;;;;;;
+Acega;Atado/manojo;1 Kilogramo;1.800;2.000;None;None
+Apio;Kilogramo;1 Kilogramo;900;1.000;None;None
+Brócoli;Kilogramo;2.800;3.000;None;None
+Cilantro;Kilogramo;1 Kilogramo;2.000;2.200;None;None
+Coles;Kilogramo;1 Kilogramo;1.800;2.000;None;None
+Coliflor;Kilogramo;1 Kilogramo;1.800;2.000;None;None
+Espinaca;Kilogramo;1 Kilogramo;1.800;2.000;None;None
+Lechuga batavia;Kilogramo;1 Kilogramo;1.800;2.000;None;None
+Lechuga batavia;Caja de cartón;16 Kilogramo;11.000;12.000;None;None
+Lechuga crespa verde;Kilogramo;1 Kilogramo;1.800;2.000;None;None
+Perijil;Kilogramo;1 Kilogramo;2.000;2.200;None;None
+Repollo blanco;Bulto;30 Kilogramo;14.000;16.000;None;None
+```

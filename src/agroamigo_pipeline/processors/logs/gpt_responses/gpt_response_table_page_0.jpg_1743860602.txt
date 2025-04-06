@@ -1,0 +1,47 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpxq62nvt8/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:43:22
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón tahití;Bulto;24 Kilogramo;75.000;80.000;0;0
+Mandarina común;Caja de cartón;24 Kilogramo;42.000;45.000;0;0
+Naranja común;Kilogramo;1 Kilogramo;760;760;0;0
+Naranja valenciana;Kilogramo;1 Kilogramo;960;960;0;0
+Otras frutas;;;;;;
+Aguacate pequeño;Kilogramo;1 Kilogramo;5.800;6.000;0;0
+Banano criollo;Kilogramo;1 Kilogramo;720;720;0;0
+Banano urabá;Kilogramo;1 Kilogramo;720;720;0;0
+Coco;Kilogramo;1 Kilogramo;720;720;0;0
+Guanábana;Kilogramo;1 Kilogramo;1.000;1.000;0;0
+Mango tommy;Canastilla;25 Kilogramo;130.000;130.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;133.000;135.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;139.000;140.000;0;0
+Maracuyá santandereano;Bulto;15 Kilogramo;59.000;62.000;0;0
+Maracuyá valluno;Bulto;10 Kilogramo;30.000;33.000;0;0
+Mora de castilla;Caja de cartón;2,5 Kilogramo;11.000;12.000;0;0
+Mora de castilla;Caja de cartón;12,5 Kilogramo;42.000;42.000;0;0
+Papaya taiwán;Kilogramo;15 Kilogramo;30.000;32.000;0;0
+Piña perolera;Caja de cartón;1 Kilogramo;2.600;2.700;0;0
+Tomate de árbol;Kilogramo;1 Kilogramo;2.600;2.700;0;0
+Tubérculos, raíces y platanos;;;;;;
+Plátano;;;;;;
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.650;1.650;0;0
+Papa;Bulto;50 Kilogramo;178.000;180.000;0;0
+Papa criolla sucia;Bulto;50 Kilogramo;50.000;52.000;0;0
+Papa única;Bulto;50 Kilogramo;50.000;52.000;0;0
+Yuca;Bolsa;40 Kilogramo;40.000;42.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Kilogramo;1 Kilogramo;7.000;7.000;0;0
+Frijol verde en vaina;Kilogramo;1 Kilogramo;7.000;7.000;0;0
+Habichuela;Saco;20 Kilogramo;73.000;76.000;0;0
+Habichuela larga;Kilogramo;1 Kilogramo;4.000;None;0;0
+Otras hortalizas y verduras;;;;;;
+Ají topito dulce;Bulto;40 Kilogramo;110.000;115.000;0;0
+Ají importado;Kilogramo;40 Kilogramo;78.000;80.000;0;0
+Berengena;Bulto;40 Kilogramo;39.000;40.000;0;0
+Chócolo maíz;Bulto;45 Kilogramo;39.000;40.000;0;0
+Pimentón;Caja de cartón;12 Kilogramo;24.000;25.000;0;0
+```

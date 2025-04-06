@@ -1,0 +1,15 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpgvyu8882/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:54:25
+Raw GPT-4o mini response:
+```plaintext
+Hortalizas;;;;;;
+Ajo importado;Caja de cartón;10 Kilogramo;90.000;95.000;0;0
+Pepino cohombro;Kilogramo;1 Kilogramo;1.500;1.600;0;0
+Pimentón;Kilogramo;1 Kilogramo;2.500;2.600;0;0
+Zanahorias;Kilogramo;1 Kilogramo;2.500;2.600;0;0
+Zanahoria bogotana;Bulto;60 Kilogramo;100.000;110.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;48.000;50.000;0;0
+Cebolla junco;Bulto;50 Kilogramo;48.000;50.000;0;0
+```

@@ -1,0 +1,43 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpgvyu8882/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:54:03
+Raw GPT-4o mini response:
+```plaintext
+Carnes;;;;;;
+Carne de res;Kilogramo;1 Kilogramo;22.000;23.000;0;0
+Carne de res, bola de brazo;Kilogramo;1 Kilogramo;22.000;23.000;0;0
+Carne de res, bola de pierna;Kilogramo;1 Kilogramo;22.000;23.000;0;0
+Carne de res, pierna;Kilogramo;1 Kilogramo;22.000;24.000;0;0
+Carne de res, centro de pierna;Kilogramo;1 Kilogramo;22.000;24.000;0;0
+Carne de res, chatas;Kilogramo;1 Kilogramo;28.000;30.000;0;0
+Carne de res, coyote;Kilogramo;1 Kilogramo;22.000;24.000;0;0
+Carne de res, costilla;Kilogramo;1 Kilogramo;22.000;24.000;0;0
+Carne de res, falda;Kilogramo;1 Kilogramo;22.000;24.000;0;0
+Carne de res, lomo fino;Kilogramo;1 Kilogramo;22.000;24.000;0;0
+Carne de res, paletero;Kilogramo;1 Kilogramo;22.000;23.000;0;0
+Carne de res, pecho;Kilogramo;1 Kilogramo;18.000;20.000;0;0
+Carne de res, punta de anca;Kilogramo;1 Kilogramo;28.000;30.000;0;0
+Carne de res, sobrebriga;Kilogramo;1 Kilogramo;20.000;22.000;0;0
+Carne de cerdo;;;;;;
+Carne de cerdo, braza sin hueso;Kilogramo;1 Kilogramo;16.000;18.000;0;0
+Carne de cerdo, costilla;Kilogramo;1 Kilogramo;18.000;19.000;0;0
+Carne de cerdo en canal;Kilogramo;1 Kilogramo;11.600;11.600;0;0
+Carne de cerdo, espinazo;Kilogramo;1 Kilogramo;12.000;13.000;0;0
+Carne de cerdo, lomo sin hueso;Kilogramo;1 Kilogramo;20.000;20.000;0;0
+Carne de cerdo, pernil sin hueso;Kilogramo;1 Kilogramo;18.000;18.000;0;0
+Carne de cerdo, tocino barriga;Kilogramo;1 Kilogramo;17.000;18.000;0;0
+Carne de cerdo, tocino papada;Kilogramo;1 Kilogramo;14.000;14.000;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Kilogramo;1 Kilogramo;4.000;4.500;0;0
+Limón mandarino;Kilogramo;1 Kilogramo;1.500;1.800;0;0
+Limón tahití;Kilogramo;1 Kilogramo;2.000;2.500;0;0
+Mandarina naranja;Kilogramo;1 Kilogramo;1.300;1.400;0;0
+Naranja sweet;Kilogramo;1 Kilogramo;1.000;1.000;0;0
+Otras frutas;;;;;;
+Banano criollo;Kilogramo;1 Kilogramo;1.100;1.200;0;0
+Guayaba agria;Kilogramo;1 Kilogramo;2.000;2.500;0;0
+Guayaba pera;Kilogramo;1 Kilogramo;1.500;1.600;0;0
+Kiwi;Caja de cartón;10 Kilogramo;80.000;80.000;0;0
+Lulo;Kilogramo;1 Kilogramo;3.800;4.200;0;0
+```

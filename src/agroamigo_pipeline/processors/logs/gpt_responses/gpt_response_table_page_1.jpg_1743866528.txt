@@ -1,0 +1,40 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp5fjvvfx6/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:22:08
+Raw GPT-4o mini response:
+```csv
+Frutas;;;;;;
+Manzana roja importada;Caja de cartón;19 Kilogramo;120.000;125.000;0;0
+Manzana royal gala importada;Caja de cartón;19 Kilogramo;105.000;110.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;115.000;120.000;0;0
+Maracuyá;Kilogramo;1 Kilogramo;3.000;3.000;0;0
+Pera de castilla;Arroba;2.125 Kilogramo;4.000;4.000;0;0
+Papaya maradol importada;Kilogramo;1 Kilogramo;1.400;1.400;0;0
+Piña manzana;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Tomate de árbol;Bulto;62.5 Kilogramo;105.000;0;0;0
+Uvas;Kilogramo;19 Kilogramo;25.000;26.000;0;0
+Basa, entero congelado importado;Kilogramo;1 Kilogramo;12.000;12.000;0;0
+Bocachico importado congelado;Kilogramo;1 Kilogramo;8.100;8.200;0;0
+Camarón tigre precocido seco;Kilogramo;1 Kilogramo;34.000;36.000;0;0
+Camarón titi precocido seco;Kilogramo;1 Kilogramo;17.000;18.000;0;0
+Pargo rojo platero;Kilogramo;1 Kilogramo;17.000;18.000;0;0
+Pescado cabezas;Kilogramo;1 Kilogramo;5.500;6.000;0;0
+Salmón, filete congelado;Kilogramo;1 Kilogramo;35.000;36.000;0;0
+Tilapia, filete congelado;Kilogramo;1 Kilogramo;18.000;0;0;0
+Tilapia roja entera congelada;Kilogramo;1 Kilogramo;16.000;16.000;0;0
+Toyo blanco, filete congelado;Kilogramo;1 Kilogramo;12.000;0;0;0
+Trucha en corte mariposa;Kilogramo;1 Kilogramo;18.000;19.000;0;0
+Otros tubérculos;;;;;;
+Arracacha amarilla;Canastilla;25 Kilogramo;47.000;48.000;0;0
+Ulluco;Bulto;60 Kilogramo;100.000;105.000;0;0
+Plátano;;;;;;
+Plátano hartón verde;Caja de cartón;25 Kilogramo;30.000;32.000;0;0
+Papa;;;;;;
+Papa criolla;Bulto;50 Kilogramo;50.000;0;0;0
+Papa criolla sucia;Bulto;60 Kilogramo;120.000;125.000;0;0
+Papa parba pastusa;Bulto;50 Kilogramo;55.000;0;0;0
+Papa suprema;Bulto;50 Kilogramo;55.000;0;0;0
+Papa única;Bulto;50 Kilogramo;53.000;0;0;0
+Yuca;;;;;;
+Yuca ica;Bulto;60 Kilogramo;50.000;55.000;0;0
+```

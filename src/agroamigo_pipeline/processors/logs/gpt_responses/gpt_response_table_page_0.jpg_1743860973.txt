@@ -1,0 +1,28 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp0341lwz4/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:49:33
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Otras frutas;;;;;;
+Banano criollo;Bolsa;17 Kilogramo;10.000;11.000;0;0
+Maracuyá santandereano;Bolsa;15 Kilogramo;55.000;55.000;0;0
+Mora de castilla;Caja de cartón;12,5 Kilogramo;38.000;40.000;0;0
+Tomate de árbol;Caja de cartón;25 Kilogramo;70.000;70.000;0;0
+Plátano;;;;;;
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.800;None;0;0
+Papa;Bulto;50 Kilogramo;160.000;160.000;0;0
+Papa rubia;Bulto;50 Kilogramo;None;None;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Otras hortalizas y verduras;;;;;;
+Pimentón;Caja de cartón;12 Kilogramo;24.000;25.000;0;0
+Remolacha;Bulto;60 Kilogramo;60.000;60.000;0;0
+Zanahorias;Bulto;60 Kilogramo;80.000;80.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;50.000;50.000;0;0
+Hortalizas;;;;;;
+Apio;Docena;15 Kilogramo;32.000;32.000;0;0
+Lechuga batavia;Caja de cartón;12 Kilogramo;28.000;28.000;0;0
+Repollo blanco;Bulto;70 Kilogramo;100.000;100.000;0;0
+```

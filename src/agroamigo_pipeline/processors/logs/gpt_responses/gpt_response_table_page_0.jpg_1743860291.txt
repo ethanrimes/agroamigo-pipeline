@@ -1,0 +1,42 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp6e3bq6b6/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:38:11
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Canastilla;25 Kilogramo;63.000;65.000;63.000;65.000
+Limón tahití;Canastilla;25 Kilogramo;60.000;65.000;60.000;65.000
+Mandarina común;Canastilla;23 Kilogramo;14.000;25.000;14.000;25.000
+Naranja valenciana;Canastilla;25 Kilogramo;14.000;20.000;14.000;20.000
+Tangelo;Canastilla;25 Kilogramo;30.000;35.000;30.000;35.000
+Otras frutas;;;;;;
+Aguacate común;Kilogramo;1 Kilogramo;5.000;5.500;5.000;5.500
+Aguacate papelillo;Kilogramo;1 Kilogramo;5.000;5.500;5.000;5.500
+Banano criollo;Caja de cartón;18 Kilogramo;20.000;25.000;20.000;25.000
+Banano urabá;Caja de cartón;18 Kilogramo;22.000;24.000;22.000;24.000
+Ciruela roja;Canastilla;25 Kilogramo;60.000;65.000;60.000;65.000
+Fresa;Kilogramo;1 Kilogramo;3.500;4.000;3.500;4.000
+Guanábana;Kilogramo;1 Kilogramo;3.400;3.600;3.400;3.600
+Guayaba pera;Canastilla;25 Kilogramo;20.000;23.000;20.000;23.000
+Kiwi;Caja de cartón;10 Kilogramo;82.000;90.000;82.000;90.000
+Lulo;Canastilla;25 Kilogramo;105.000;110.000;105.000;110.000
+Mango tommy;Caja de cartón;25 Kilogramo;140.000;145.000;140.000;145.000
+Manzana roja importada;Caja de cartón;20 Kilogramo;140.000;145.000;140.000;145.000
+Manzana royal gala importada;Caja de cartón;20 Kilogramo;155.000;160.000;155.000;160.000
+Maracuyá;Canastilla;15 Kilogramo;50.000;50.000;50.000;50.000
+Melón cantalup;Kilogramo;1 Kilogramo;2.500;2.500;2.500;2.500
+Mora de castilla;Arroba;12,5 Kilogramo;35.000;36.000;35.000;36.000
+Papaya madura;Kilogramo;1 Kilogramo;1.500;1.700;1.500;1.700
+Patilla;Unidad;1;1.500;1.700;1.500;1.700
+Patilla baby;Kilogramo;1 Kilogramo;1.700;1.700;1.700;1.700
+Pera importada;Caja de cartón;20 Kilogramo;115.000;120.000;115.000;120.000
+Pera nacional;Canastilla;25 Kilogramo;70.000;75.000;70.000;75.000
+Piña gold;Kilogramo;1 Kilogramo;1.200;1.300;1.200;1.300
+Piña perolera;Caja de;30 Kilogramo;23.000;24.000;23.000;24.000
+Pitahaya;Kilogramo;1 Kilogramo;6.000;6.500;6.000;6.500
+Tomate de árbol;Bolsa;25 Kilogramo;62.000;62.000;62.000;62.000
+Uchuva con cáscara;Bolsa;5 Kilogramo;30.000;30.000;30.000;30.000
+Uva importada;Caja de cartón;8 Kilogramo;37.000;38.000;37.000;38.000
+Uva rey;Caja de icopor;9 Kilogramo;60.000;63.000;60.000;63.000
+```

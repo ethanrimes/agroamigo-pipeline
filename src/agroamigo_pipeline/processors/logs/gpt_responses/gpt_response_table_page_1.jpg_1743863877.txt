@@ -1,0 +1,48 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpuhwlr39v/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:37:57
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Pitahaya;Kilogramo;1 Kilogramo;5.500;6.000;5.500;6.000
+Tomate de árbol;Kilogramo;1 Kilogramo;2.400;2.600;2.400;2.600
+Uchuva con cáscara;Kilogramo;1 Kilogramo;3.800;4.000;3.800;4.000
+Uva importada;Canastilla;1 Kilogramo;9.000;10.000;9.000;10.000
+Uva isabel;Bandeja;500 Gramo;1.800;2.000;1.800;2.000
+Uva de globe nacional;Caja de 1 kilogramo;62.000;64.000;62.000;64.000
+Zapote;Kilogramo;2.400;2.500;2.400;2.500
+Otros tubérculos, raíces y platanos;;;;;;
+Arracacha blanca;Bulto;40 Kilogramo;45.000;None;45.000;50.000
+Plátano;Kilogramo;1 Kilogramo;800;1.000;800;1.000
+Plátano dominico verde;Kilogramo;1 Kilogramo;800;1.000;800;1.000
+Papa;;;;;;
+Papa capira;Kilogramo;1 Kilogramo;1.200;1.250;1.200;1.250
+Papa criolla limpia;Kilogramo;1 Kilogramo;2.000;2.000;2.000;2.000
+Papa nevada;Kilogramo;1 Kilogramo;1.800;2.000;1.800;2.000
+Papa r-12 negra;50 Kilogramo;60.000;None;60.000;None
+Yuca;;;;;;
+Yuca chiroza;Bolsa;25 Kilogramo;37.000;39.000;37.000;39.000
+Yuca criolla;Bolsa;25 Kilogramo;40.000;42.000;40.000;42.000
+Verduras y hortalizas;;;;;;
+Arveja verde en vaina;Kilogramo;1 Kilogramo;2.800;3.000;2.800;3.000
+Arveja verde en vaina pastusa;Bulto;50 Kilogramo;140.000;140.000;140.000;140.000
+Frijol verde cargamanto;Kilogramo;1 Kilogramo;3.000;None;3.000;None
+Habichuela;Kilogramo;1 Kilogramo;1.800;2.000;1.800;2.000
+Otras hortalizas y verduras;;;;;;
+Albahaca;Kilogramo;1 Kilogramo;1.600;None;1.600;None
+Ají topito dulce;Kilogramo;1.800;None;1.800;None
+Ají Atado/manojo;2 Kilogramo;12.000;None;12.000;None
+Ajo importado;Caja de cartón;10 Kilogramo;75.000;None;75.000;None
+Berenjena;Kilogramo;1 Kilogramo;2.000;None;2.000;None
+Calabacín;Kilogramo;1 Kilogramo;1.500;None;1.500;None
+Calabaza;Kilogramo;1 Kilogramo;45.000;None;45.000;None
+Choclo;Bulto;40 Kilogramo;45.000;None;45.000;None
+Círca;Kilogramo;1 Kilogramo;1.600;None;1.600;None
+Pepino cobombo;Kilogramo;1 Kilogramo;2.700;None;2.700;None
+Pimentón;Kilogramo;1 Kilogramo;2.500;None;2.500;None
+Rábano rojo;Kilogramo;1 Kilogramo;2.000;None;2.000;None
+Renalacha;Kilogramo;1 Kilogramo;2.000;None;2.000;None
+Zanahorias;;;;;;
+Zanahoria larga vida;Bulto;45 Kilogramo;55.000;60.000;55.000;60.000
+Cebollas;;;;;;
+```

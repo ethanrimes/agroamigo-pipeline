@@ -1,0 +1,30 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpftlut_au/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:03:06
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Naranja común;Ciento;25 Kilogramo;20.000;20.000;0;0
+Otras frutas;;;;;;
+Banano criollo;Bolsa;17 Kilogramo;8.000;8.000;0;0
+Carne de castilla;Caja de cartón;12,5 Kilogramo;38.000;40.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.800;1.800;0;0
+Papa;Bulto;50 Kilogramo;170.000;180.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;170.000;180.000;0;0
+Papa rubí;Bulto;50 Kilogramo;54.000;55.000;0;0
+Verduras y hortalizas;;;;;;
+Habichuela;Saco;20 Kilogramo;0;0;0;0
+Otras hortalizas y verduras;;;;;;
+Pepino cohombro;Bulto;50 Kilogramo;0;0;0;0
+Remolacha;Bulto;60 Kilogramo;80.000;80.000;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;60 Kilogramo;110.000;110.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;60.000;62.000;0;0
+Hortalizas;;;;;;
+Apio;Docena;15 Kilogramo;28.000;29.000;0;0
+Lechuga batavia;Caja de cartón;12 Kilogramo;28.000;29.000;0;0
+Repollo blanco;Bulto;70 Kilogramo;110.000;110.000;0;0
+```

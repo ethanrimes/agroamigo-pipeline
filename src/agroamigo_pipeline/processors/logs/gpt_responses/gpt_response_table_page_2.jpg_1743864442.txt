@@ -1,0 +1,45 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpa3j_rofd/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:47:22
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Uva isabela;Bandeja;500 Gramo;1.500;1.700;1.500;1.700
+Uva red globe nacional;Caja de icopor;9 Kilogramo;60.000;62.000;6.000;62.000
+Zapote;Kilogramo;1 Kilogramo;2.400;2.500;2.400;2.500
+Granos y cereales;;;;;;
+Cereales;;;;;;
+Arroz de primera;Bolsa;25 Unidad 500 GR;0;0;30.000;31.000
+Maíz amarillo cáscara;Kilogramo;1 Kilogramo;0;0;1.700;1.750
+Maíz amarillo cáscara;Kilogramo;1 Kilogramo;0;0;1.700;1.750
+Maíz amarillo trillado;Kilogramo;1 Kilogramo;0;0;2.100;2.200
+Maíz amarillo trillado;Kilogramo;1 Kilogramo;0;0;2.100;2.200
+Arveja verde seca;Bulto;12,5 Kilogramo;0;0;39.000;41.000
+Frijol carita blanca;Kilogramo;1 Kilogramo;0;0;5.800;6.000
+Frijol mínima calima;Kilogramo;1 Kilogramo;0;0;6.600;6.600
+Frijol radical;Kilogramo;1 Kilogramo;0;0;5.400;5.400
+Frijol injerto rosado;Kilogramo;1 Kilogramo;0;0;5.400;5.400
+Garbanzos importados;Bolsa;25 Unidad 500 GR;0;0;67.500;70.000
+Lenteja importada;Bolsa;12,5 Kilogramo;0;0;68.000;70.000
+Lácteos y huevos;;;;;;
+Lácteos;;;;;;
+Leche en polvo;Caja de cartón;30 Bolsa 400 GR;0;0;228.000;236.500
+Queso campesino;Kilogramo;1 Kilogramo;0;0;14.000;18.000
+Queso costeño;Kilogramo;1 Kilogramo;0;0;18.000;19.500
+Queso cuajada;Kilogramo;1 Kilogramo;0;0;15.000;15.000
+Queso oble crema;Unidad;2,5 Kilogramo;0;0;40.000;43.000
+Huevos;;;;;;
+Huevo blanco a;Unidad;1 Unidad;0;0;320;330
+Huevo blanco;Unidad;1 Unidad;0;0;340;350
+Huevo blanco extra;Unidad;1 Unidad;0;0;440;450
+Huevo rojo a;Unidad;1 Unidad;0;0;320;330
+Huevo rojo;Unidad;1 Unidad;0;0;320;330
+Huevo rojo extra;Unidad;1 Unidad;0;0;440;450
+Pescados;;;;;;
+Almejas con concha;Kilogramo;1 Kilogramo;0;0;9.500;10.000
+Almejas sin concha;Kilogramo;1 Kilogramo;0;0;23.000;24.500
+Bagre rata en postas congelado;Kilogramo;1 Kilogramo;0;0;25.000;26.000
+Bagre rata entero congelado;Kilogramo;1 Kilogramo;0;0;25.000;26.000
+Basa, entero congelado;Kilogramo;1 Kilogramo;0;0;11.000;12.500
+Basa, filete congelado importado;Kilogramo;1 Kilogramo;0;0;13.500;14.500
+```

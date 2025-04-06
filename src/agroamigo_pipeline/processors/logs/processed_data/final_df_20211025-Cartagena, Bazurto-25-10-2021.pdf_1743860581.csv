@@ -1,0 +1,36 @@
+date,city,market,major_category,sub_category,product,presentation,units,daily_min,daily_max,source
+2021-10-25,Cartagena,Principal,Frutas,Cítricos,Limón común,Bulto,70 Kilogramo,170.0,180.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Cítricos,Limón tahití,Bulto,25 Kilogramo,80.0,85.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Cítricos,Naranja común,Kilogramo,1 Kilogramo,560.0,600.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Aguacate común,Kilogramo,1 Kilogramo,3.92,4.48,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Coco,Kilogramo,1 Kilogramo,25.0,30.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Guayaba perla de madera,Kilogramo,10 Kilogramo,25.0,26.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Manzana roja importada,Caja de cartón,19 Kilogramo,60.0,70.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Manzana verde,Kilogramo,1 Kilogramo,40.0,42.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Mora de castilla,Caja de cartón,"12,5 Kilogramo",40.0,41.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Patilla,Kilogramo,1 Kilogramo,1.1,1.2,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Piña gold,Kilogramo,1 Kilogramo,1.8,1.8,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Tomate de árbol,Kilogramo,1 Kilogramo,2.8,3.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Frutas,Otras frutas,Uva red globe nacional,Caja de madera,10 Kilogramo,70.0,75.0,informes por ciudades
+2021-10-25,Cartagena,Principal,"Tubérculos, raíces y platanos",Otros tubérculos,Name espino,Bulto,50 Kilogramo,47.0,55.0,informes por ciudades
+2021-10-25,Cartagena,Principal,"Tubérculos, raíces y platanos",Otros tubérculos,Plátano,Kilogramo,1 Kilogramo,1.05,1.2,informes por ciudades
+2021-10-25,Cartagena,Principal,"Tubérculos, raíces y platanos",Papa,Papa criolla limpia,Bulto,50 Kilogramo,165.0,180.0,informes por ciudades
+2021-10-25,Cartagena,Principal,"Tubérculos, raíces y platanos",Papa,Papa única,Caja de cartón,50 Kilogramo,55.0,58.0,informes por ciudades
+2021-10-25,Cartagena,Principal,"Tubérculos, raíces y platanos",Papa,Yuca,Bolsa,40 Kilogramo,35.0,40.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Leguminosas,Habichuela,Saco,20 Kilogramo,70.0,80.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Otras hortalizas y verduras,Ahuyama,Bulto,70 Kilogramo,119.0,140.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Otras hortalizas y verduras,Ají topito dulce,Bulto,40 Kilogramo,130.0,140.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Otras hortalizas y verduras,Ají importado,Caja de cartón,10 Kilogramo,78.0,80.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Otras hortalizas y verduras,Choclo mazorca,Bulto,40 Kilogramo,30.0,30.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Otras hortalizas y verduras,Pimentón,Caja de cartón,12 Kilogramo,40.0,42.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Otras hortalizas y verduras,Remolacha,Bulto,60 Kilogramo,65.0,70.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Zanahorias,Zanahoria bogotana,Bulto,60 Kilogramo,80.0,85.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Cebollas,Cebolla cabezona blanca,Bulto,50 Kilogramo,60.0,70.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Cebollas,Cebolla cabezona roja,Bulto,45 Kilogramo,100.0,105.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Cebollas,Cebolla cabezona roja peruana,Bulto,46 Kilogramo,120.0,125.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Verduras y hortalizas,Cebollas,Cebolla junca berlín,Atado/manojo,30 Kilogramo,45.0,50.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Hortalizas,,Tomate chonto,Caja de cartón,25 Kilogramo,50.0,55.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Hortalizas,,Apio,Atado/manojo,10 Kilogramo,18.0,20.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Hortalizas,,Cilantro,Atado/manojo,10 Kilogramo,35.0,38.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Hortalizas,,Lechuga batavia,Caja de,15 Kilogramo,22.0,25.0,informes por ciudades
+2021-10-25,Cartagena,Principal,Hortalizas,,Repollo blanco,Bulto,70 Kilogramo,100.0,110.0,informes por ciudades

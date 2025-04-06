@@ -1,0 +1,43 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpska7ap8t/page_3.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:27:31
+Raw GPT-4o mini response:
+```csv
+Frutas;;;;;;
+Bocachico importado congelado;Kilogramo;1 Kilogramo;0;11.000;0;12.000
+Cachama de cultivo fresca;Kilogramo;1 Kilogramo;0;11.500;0;12.600
+Calamar anillos;Kilogramo;1 Kilogramo;0;34.000;0;35.000
+Camarón tigre precocido seco;Kilogramo;1 Kilogramo;0;36.000;0;39.400
+Cazuela de mariscos (paquete);Libra;500 Gramo;0;10.000;0;0
+Langostino u12;Kilogramo;1 Kilogramo;0;94.000;0;96.000
+Langostino 16-20;Kilogramo;1 Kilogramo;0;68.000;0;70.000
+Merluza;Kilogramo;1 Kilogramo;0;18.000;0;19.500
+Palmitos;Kilogramo;1 Kilogramo;0;22.000;0;24.000
+Pargo rojo entero;Kilogramo;1 Kilogramo;0;22.000;0;24.000
+Tilapia, filete congelado;Kilogramo;1 Kilogramo;0;22.000;0;24.000
+Tilapia roja entera congelada;Kilogramo;1 Kilogramo;0;13.000;0;14.500
+Trucha en corte mariposa;Kilogramo;1 Kilogramo;0;23.000;0;24.000
+Procesados;;;;;;
+Otros procesados;;;;;;
+Arveja enlatada;Caja de cartón;24 Unidad 580 GR;0;100.000;0;108.900
+Avena en hojuelas;Caja de cartón;48 Unidad 200 GR;0;80.000;0;83.000
+Café instantáneo;Caja de cartón;18 Unidad 85 GR;0;138.900;0;0
+Café molido;Bolsa;5 Unidad 500 GR;0;44.650;0;46.000
+Chocolate amargo;Bolsa;25 Kilogramo;0;548.500;0;0
+Chocolate instantáneo;Bolsa;34 Unidad 230 GR;0;162.000;0;165.000
+Colbor (bolsa);12 Unidad 370 GR;0;0;0;0
+Fécula de maíz;Caja de cartón;24 Unidad 380 GR;0;279.000;0;280.000
+Frijol enlatado;Caja de cartón;24 Unidad 310 GR;0;179.000;0;0
+Galletas saladas;Caja de cartón;24 Unidad 441 GR;0;90.000;0;93.000
+Galletas saladas;Caja de cartón;24 Unidad 300 GR;0;90.000;0;93.000
+Harina de trigo;Bolsa;20 Unidad 12,5 Kilogramo;0;0;0;0
+Jugo instantáneo;Caja de cartón;20 Unidad 18 GR;0;8.500;0;8.800
+Lomitos de atún en lata;Caja de cartón;48 Unidad 170 GR;0;206.000;0;210.000
+Maíz enlatado;Caja de cartón;24 Unidad 432 GR;0;104.000;0;108.000
+Mayonesa easy pack;Caja de cartón;24 Unidad 250 GR;0;0;0;0
+Pastas alimenticias;Bolsa;24 Unidad 500 GR;0;0;0;0
+Sal;Bolsa;24 Unidad 150 GR;0;35.550;0;38.000
+Sardinas en lata;Caja de cartón;24 Unidad 425 GR;0;192.630;0;200.000
+Azúcar;;;;;;
+Azúcar morena;Bulto;25 Kilogramo;0;79.000;0;82.000
+```

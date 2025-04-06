@@ -1,0 +1,48 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp2eq57rax/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:52:15
+Raw GPT-4o mini response:
+```plaintext
+Frescos y congelados;;;;;;
+Papaya maradol;Canastilla;18 Kilogramo;32.000;35.000;0;0
+Patilla;1 Kilogramo;1.500;1.600;0;0
+Patilla baby;Kilogramo;1 Kilogramo;2.400;2.500;0;0
+Piña importada;Caja de cartón;19 Kilogramo;110.000;120.000;0;0
+Pera nacional;Canastilla;23 Kilogramo;60.000;65.000;0;0
+Piña gold;Caja;28 Kilogramo;28.000;30.000;0;0
+Piña perolera;Madera;30 Kilogramo;29.000;30.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;14.000;14.000;0;0
+Tomate de árbol;Canastilla;23 Kilogramo;50.000;55.000;0;0
+Uva isabel;Caja de cartón;12,5 Kilogramo;60.000;65.000;0;0
+Zapote;Bulto;30 Kilogramo;60.000;65.000;0;0
+Pescados;;;;;;
+Basa, filete congelado importado;Kilogramo;1 Kilogramo;13.000;13.500;0;0
+Nícuro fresco;Kilogramo;1 Kilogramo;14.000;14.000;0;0
+Tilapia roja enter fresca;Kilogramo;1 Kilogramo;12.000;13.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Arracacha amarilla;Bulto;60 Kilogramo;35.000;40.000;0;0
+Plátano;Kilogramo;20 Kilogramo;35.000;38.000;0;0
+Plátano hartón verde;Bolsa;20 Kilogramo;35.000;38.000;0;0
+Papa;;;;;;
+Papa betina;Bulto;50 Kilogramo;37.000;39.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;100.000;110.000;0;0
+Papa criolla sucia;Bulto;50 Kilogramo;40.000;42.000;0;0
+Papa rubí;Bulto;50 Kilogramo;40.000;42.000;0;0
+Papa r-12 roja;Bulto;50 Kilogramo;44.000;46.000;0;0
+Papa superior;Bulto;50 Kilogramo;46.000;48.000;0;0
+Papa única;Bulto;50 Kilogramo;37.000;39.000;0;0
+Yuca;Bulto;30 Kilogramo;40.000;45.000;0;0
+Verduras y hortalizas;;;;;;
+Arveja verde en vaina;Bulto;50 Kilogramo;110.000;120.000;0;0
+Frijol verde cargamanto;Bulto;50 Kilogramo;180.000;200.000;0;0
+Frijol verde en vaina;Bulto;50 Kilogramo;130.000;140.000;0;0
+Haba verde;Bulto;50 Kilogramo;50.000;55.000;0;0
+Habichuela;Bulto;25 Kilogramo;45.000;50.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ahuyama;Bulto;32 Kilogramo;25.000;28.000;0;0
+Ahuyama (sakata);Bulto;25 Kilogramo;27.000;30.000;0;0
+Ajo;Atado/manojo;22.000;22.000;0;0
+Calabacín;Bolsa;20 Kilogramo;22.000;25.000;0;0
+Choclo mazorca;Bulto;50 Kilogramo;37.000;39.000;0;0
+Pepino cohombro;Bulto;25 Kilogramo;30.000;35.000;0;0
+```

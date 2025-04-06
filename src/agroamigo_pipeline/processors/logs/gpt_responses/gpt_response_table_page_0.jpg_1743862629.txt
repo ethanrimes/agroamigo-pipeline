@@ -1,0 +1,43 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp1sjir1zy/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:17:09
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Kilogramo;1 Kilogramo;4.000;4.200;0;0
+Limón mandarina;Kilogramo;1 Kilogramo;1.500;1.700;0;0
+Limón tahití;Kilogramo;1 Kilogramo;2.300;2.500;0;0
+Mandarina oneco;Kilogramo;1 Kilogramo;2.000;2.200;0;0
+Naranja sweet;Kilogramo;1 Kilogramo;1.000;1.200;0;0
+Banano criollo;Kilogramo;1 Kilogramo;1.000;1.200;0;0
+Guayaba agria;Kilogramo;1 Kilogramo;2.000;2.500;0;0
+Guayaba pear;Kilogramo;1 Kilogramo;1.700;2.000;0;0
+Kiwi;Caja de cartón;10 Kilogramo;40.000;45.000;0;0
+Mango canasta;Canastilla;23 Kilogramo;40.000;45.000;0;0
+Mango yumila;Canastilla;25 Kilogramo;40.000;50.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;120.000;130.000;0;0
+Manzana royal gala importada;Caja de cartón;19 Kilogramo;115.000;120.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;125.000;130.000;0;0
+Maracuyá;Kilogramo;1 Kilogramo;2.800;3.200;0;0
+Mora de castilla;Kilogramo;1 Kilogramo;4.200;4.500;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;1.700;1.900;0;0
+Patilla;Kilogramo;1 Kilogramo;1.700;2.000;0;0
+Pera importada;Caja de cartón;20 Kilogramo;100.000;110.000;0;0
+Piña gold;Kilogramo;1 Kilogramo;1.900;2.100;0;0
+Tomate de árbol;Kilogramo;1 Kilogramo;2.500;2.700;0;0
+Tubérculos, raíces y platanos;;;;;;
+Arracacha blanca;Bulto;60 Kilogramo;75.000;80.000;0;0
+Plátano;Kilogramo;1 Kilogramo;1.000;1.100;0;0
+Plátano dominico hartón maduro;Kilogramo;1 Kilogramo;1.100;1.200;0;0
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.000;1.100;0;0
+Plátano hartón maduro;Kilogramo;1 Kilogramo;1.000;1.100;0;0
+Papa;Bulto;50 Kilogramo;60.000;63.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;140.000;160.000;0;0
+Papa parda pastusa;Bulto;50 Kilogramo;49.000;50.000;0;0
+Papa única;Bulto;50 Kilogramo;52.000;55.000;0;0
+Yuca;Bolsa;25 Kilogramo;40.000;40.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Arroba;12,5 Kilogramo;45.000;50.000;0;0
+```

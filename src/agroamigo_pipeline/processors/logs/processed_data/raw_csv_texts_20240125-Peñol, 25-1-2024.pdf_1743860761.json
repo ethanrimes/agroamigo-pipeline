@@ -1,0 +1,12 @@
+{
+  "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data/PDF_Files/PDFs/20240125-Peñol, 25-1-2024.pdf",
+  "metadata": {
+    "date": "2024-01-25",
+    "city": "Peñol (Antioquia)",
+    "market": "Unknown",
+    "source": "informes por ciudades"
+  },
+  "csv_texts": [
+    "```\nFrutas;;;;;;\nCítricos;;;;;;\nLimón mandarina;Kilogramo;1 Kilogramo;1.400;1.500;0;0\nOtras frutas;;;;;;\nGulupa;Kilogramo;1 Kilogramo;1.200;1.200;0;0\nTomate de árbol;Kilogramo;1 Kilogramo;1.800;1.800;0;0\nTubérculos, raíces y platanos;;;;;;\nPlátano;Racimo;15 Kilogramo;13.000;14.000;0;0\nPapa;Papa capira;Kilogramo;1.800;2.000;0;0\nPapa nevada;Kilogramo;1.800;2.000;0;0\nVerduras y hortalizas;;;;;;\nLeguminosas;;;;;;\nFrijol verde cargamanto;Kilogramo;1 Kilogramo;2.000;2.000;0;0\nChoclo maíz;Carga;120 Kilogramo;130.000;140.000;0;0\nTomates;;;;;;\nTomate chonto regional;Caja de cartón;10 Kilogramo;28.000;30.000;0;0\n```"
+  ]
+}

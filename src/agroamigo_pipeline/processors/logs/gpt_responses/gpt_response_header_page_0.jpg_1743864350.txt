@@ -1,0 +1,14 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp4d5gwj24/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 22:45:50
+Raw GPT-4o mini response:
+```
+DANE
+INFORMACIÓN PARA TODOS
+SISTEMA DE INFORMACIÓN DE PRECIOS Y ABASTECIMIENTO DEL SECTOR AGROPECUARIO - SIPSA
+
+PRECIOS DE VENTA MAYORISTA
+Valledupar, Mercado Nuevo
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+05 de Noviembre de 2021
+```

@@ -1,0 +1,70 @@
+date,city,market,major_category,sub_category,product,presentation,units,daily_min,daily_max,source
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,Carne de res,Kilogramo,1 Kilogramo,21.0,22.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, bola de brazo",Kilogramo,1 Kilogramo,21.0,22.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, bola de pierna",Kilogramo,1 Kilogramo,21.0,22.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, cadera",Kilogramo,1 Kilogramo,24.0,24.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, chatas",Kilogramo,1 Kilogramo,24.0,24.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, costilla",Kilogramo,1 Kilogramo,24.0,24.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,Carne de res en canal,Kilogramo,1 Kilogramo,21.0,22.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, falda",Kilogramo,1 Kilogramo,21.0,22.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, lomo fino",Kilogramo,1 Kilogramo,21.0,22.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,,"Carne de res, sobrebarriga",Kilogramo,1 Kilogramo,18.0,18.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Carne de cerdo,"Carne de cerdo, brazo sin hueso",Kilogramo,1 Kilogramo,17.0,17.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Carne de cerdo,"Carne de cerdo, costilla",Kilogramo,1 Kilogramo,15.0,15.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Carne de cerdo,Carne de cerdo en canal,Kilogramo,1 Kilogramo,10.7,10.8,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Carne de cerdo,"Carne de cerdo, espinazo",Kilogramo,1 Kilogramo,8.8,8.8,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Carne de cerdo,"Carne de cerdo, lomo sin hueso",Kilogramo,1 Kilogramo,21.0,22.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Carne de cerdo,"Carne de cerdo, pernil sin hueso",Kilogramo,1 Kilogramo,17.0,18.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Carne de cerdo,"Carne de cerdo, tocino barriga",Kilogramo,1 Kilogramo,7.8,7.8,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Pollo,Menudencias de pollo,Libra,500 Gramo,1.7,1.8,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Pollo,Pechuga de pollo,Libra,500 Gramo,5.8,5.8,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Pollo,Pierna de pollo,Libra,500 Gramo,4.0,4.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Carnes,Pollo,Pollo entero congelado sin visceras,Libra,500 Gramo,4.8,5.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Cítricos,Mandarina arrayana,Canastilla,25 Kilogramo,38.0,40.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Cítricos,Naranja sweet,50 Kilogramo,50.000,52.0,0.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Otras frutas,Aguacate papacillo,Kilogramo,1 Kilogramo,4.8,5.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Otras frutas,Banano criollo,Kilogramo,1 Kilogramo,1.2,1.2,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Otras frutas,Granadilla,Caja de cartón,15 Kilogramo,45.0,47.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Otras frutas,Guanábana,Kilogramo,1 Kilogramo,4.2,4.2,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Otras frutas,Guayaba pera,Caja de cartón,20 Kilogramo,28.0,30.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Otras frutas,Lulo,Canastilla,25 Kilogramo,90.0,95.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Mango tommy,Caja de cartón,25 Kilogramo,40.0,43.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Mango tommy,Caja de madera,35 Kilogramo,45.0,46.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Manzana roja importada,Caja de 19 Kilogramo,130.000,132.0,0.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Manzana royal gala importada,Caja de cartón,19 Kilogramo,110.0,112.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Manzana verde importada,Caja de cartón,19 Kilogramo,125.0,126.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Maracuyá,Arroba,2.80 Kilogramo,44.0,46.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Pera de castilla,Arroba,12.5 Kilogramo,44.0,45.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Papaya maradol,Paleta,1 Kilogramo,1.8,2.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Piña importada,Paleta,1 Kilogramo,1.8,2.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Tomate de árbol,Bulto,62.5 Kilogramo,30.0,32.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,,Uva isla,Caja de 500 GR,1 Kilogramo,5.0,6.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Bagre rayado entero congelado,Kilogramo,1 Kilogramo,25.0,26.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,"Basa, entero congelado importado",Kilogramo,1 Kilogramo,12.0,12.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Bocachico importado congelado,Kilogramo,1 Kilogramo,8.0,8.3,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Camarón tigre precocido seco,Kilogramo,1 Kilogramo,34.6,36.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Camarón tití precocido seco,Kilogramo,1 Kilogramo,17.0,18.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Pargo rojo platero,Kilogramo,1 Kilogramo,18.0,19.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Pescado cabezas,Kilogramo,1 Kilogramo,5.6,5.6,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,"Salmón, filete congelado",Kilogramo,1 Kilogramo,35.0,36.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,"Tilapia, filete congelado",Kilogramo,1 Kilogramo,25.0,26.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Tilapia roja enter,Kilogramo,1 Kilogramo,16.0,18.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,"Toyo blanco, filete congelado",Kilogramo,1 Kilogramo,12.0,12.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Frescos y congelados,Trucha en corte mariposa,Kilogramo,1 Kilogramo,18.0,19.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,"Tubérculos, raíces y platanos",Arracacha amarilla,Canastilla,25 Kilogramo,50.0,53.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,"Tubérculos, raíces y platanos",Ulluco,Bulto,60 Kilogramo,95.0,100.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Plátano,Plátano hartón verde,Caja de cartón,25 Kilogramo,30.0,32.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Papa,Papa aspirina,Bulto,50 Kilogramo,70.0,72.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Papa,Papa criolla sucia,Bulto,60 Kilogramo,118.0,120.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Papa,Papa aparada pastusa,Bulto,50 Kilogramo,70.0,73.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Papa,Papa suprema,Bulto,50 Kilogramo,45.0,50.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Frutas,Papa,Yuca,Bulto,50 Kilogramo,60.0,62.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Verduras y hortalizas,,Yuca ica,Bulto,60 Kilogramo,53.0,55.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Verduras y hortalizas,,Arveja verde en vaina pastusa,Bulto,50 Kilogramo,105.0,110.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Verduras y hortalizas,,Frijol verde cargamanto,Bulto,50 Kilogramo,150.0,160.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Verduras y hortalizas,,Habichuela,Bulto,25 Kilogramo,70.0,75.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Otros hortalizas y verduras,Zanahorias,Cebolla junco pastusa,Atado/manojo,"22,5 Kilogramo",20.0,20.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Otros hortalizas y verduras,Tomates,Tomate larga vida,Kilogramo,1 Kilogramo,2.5,2.6,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Otros hortalizas y verduras,Hortalizas,Cilantro,Atado/manojo,2 Kilogramo,5.0,5.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Otros hortalizas y verduras,Hortalizas,Lechuga batavia,Caja de cartón,13 Kilogramo,10.0,10.0,informes por ciudades
+2021-11-05,Popayán,Plaza de mercado del barrio Bolívar,Otros hortalizas y verduras,Hortalizas,Repollo blanco,Bulto,50 Kilogramo,22.0,23.0,informes por ciudades

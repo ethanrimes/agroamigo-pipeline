@@ -1,0 +1,49 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp4sm0meby/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:06:32
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bulto;60 Kilogramo;160.000;165.000;160.000;160.000
+Limón tahití;Kilogramo;1 Kilogramo;2.300;2.400;0;0
+Mandarina arrayana;Kilogramo;1 Kilogramo;1.700;1.800;0;0
+Mandarina oneco;Kilogramo;1 Kilogramo;1.700;1.800;0;0
+Naranja sweet;Bulto;50 Kilogramo;53.000;53.000;0;0
+Aguacate papacillo;Kilogramo;1 Kilogramo;4.800;5.000;0;0
+Banano criollo;Caja de madera;15 Kilogramo;19.000;19.000;0;0
+Coco;Docena;16,5 Kilogramo;40.000;42.000;0;0
+Curuba;Bulto;500 Gramo;20.000;22.000;0;0
+Fresa;Bandeja;250 Gramo;15.000;17.000;0;0
+Granadilla;Bandeja;500 Gramo;15.000;17.000;0;0
+Guayaba para el consumo;Kilogramo;1 Kilogramo;3.000;3.000;0;0
+Kiwi;Kilogramo;1 Kilogramo;4.000;4.000;0;0
+Mango tommy;Caja de cartón;25 Kilogramo;70.000;75.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;125.000;125.000;0;0
+Manzana royal gala importada;Caja de cartón;19 Kilogramo;125.000;130.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;125.000;130.000;0;0
+Maracuyá;Kilogramo;1 Kilogramo;3.000;3.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;3.000;3.000;0;0
+Mora de castilla;Canastilla;12,5 Kilogramo;40.000;42.000;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;1.800;2.000;0;0
+Patilla;Kilogramo;1 Kilogramo;1.600;1.800;0;0
+Patilla baby;Kilogramo;1 Kilogramo;110.000;110.000;0;0
+Pera importada;Caja de cartón;19 Kilogramo;110.000;110.000;0;0
+Piña gold;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Tome de árbol;Kilogramo;1 Kilogramo;3.000;3.000;0;0
+Uva importada;Canastilla;8,5 Kilogramo;40.000;42.000;0;0
+Uva isabela;Caja de cartón;12,5 Kilogramo;28.000;28.000;0;0
+Uva red globe nacional;Caja de icopor;9 Kilogramo;54.000;57.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Arracacha amarilla;Bulto;60 Kilogramo;55.000;60.000;0;0
+Ulluco;Bulto;60 Kilogramo;135.000;140.000;0;0
+Plátano;Plátano hartón verde;Kilogramo;1 Kilogramo;1.200;1.250;0;0
+Papa;;;;;;
+Papa betina;Bulto;50 Kilogramo;40.000;43.000;0;0
+Papa criolla;Bulto;50 Kilogramo;140.000;140.000;0;0
+Papa criolla sucia;Bulto;50 Kilogramo;140.000;140.000;0;0
+Papa pastusa;Bulto;50 Kilogramo;60.000;62.000;0;0
+Papa suprema;Bulto;50 Kilogramo;140.000;140.000;0;0
+Yuca;Bulto;50 Kilogramo;45.000;0;0;0
+```

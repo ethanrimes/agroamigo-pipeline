@@ -1,0 +1,47 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp84fg_ts_/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:34:35
+Raw GPT-4o mini response:
+```plaintext
+Pollo entero fresco sin visceras;Kilogramo;1 Kilogramo;8.600;9.000;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bulto;70 Kilogramo;160.000;170.000;0;0
+Limón mandarina;Bolsa;20 Kilogramo;18.000;20.000;0;0
+Limón tahití;Bolsa;20 Kilogramo;18.000;20.000;0;0
+Naranja sweet;Bulto;50 Kilogramo;55.000;60.000;0;0
+Aguacate papelillo;Kilogramo;1 Kilogramo;5.000;5.000;0;0
+Banano criollo;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Granadilla;Caja de cartón;1 Kilogramo;5.000;5.000;0;0
+Guayaba pera;Kilogramo;1 Kilogramo;2.500;2.500;0;0
+Guayaba;Bolsa;12,5 Kilogramo;20.000;25.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;130.000;140.000;0;0
+Manzana royal gala importada;Caja de cartón;19 Kilogramo;130.000;140.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;135.000;140.000;0;0
+Maracuyá;Caja;12,5 Kilogramo;34.000;35.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;2.200;2.300;0;0
+Mora de castilla;Kilogramo;1 Kilogramo;3.200;3.200;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;1.400;1.400;0;0
+Piña gold;Kilogramo;1 Kilogramo;1.400;1.400;0;0
+Tamarindo;Kilogramo;1 Kilogramo;1.200;1.200;0;0
+Tomate de árbol;Arroba;12,5 Kilogramo;33.000;35.000;0;0
+Tomate de árbol;Canastilla;25 Kilogramo;35.000;35.000;0;0
+Uchuva con cáscara;Arroba;12,5 Kilogramo;35.000;35.000;0;0
+Uva blanca;Kilogramo;1 Kilogramo;32.000;32.000;0;0
+Uva verde global nacional;Caja de cartón;12,5 Kilogramo;80.000;80.000;0;0
+Granos y cereales;;;;;;
+Cereales;;;;;;
+Arroz excelso;Bolsa;25 Unidad 500 GR;26.700;27.200;0;0
+Maíz blanco trillado;Bulto;50 Kilogramo;108.000;110.000;0;0
+Granos;;;;;;
+Arveja amarilla seca importada;Bulto;50 Kilogramo;152.000;0;0;0
+Frijol cargamanto rojo;Bulto;50 Kilogramo;354.000;374.000;0;0
+Lenteja importada;Bulto;50 Kilogramo;259.000;265.000;0;0
+Lácteos;;;;;;
+Queso campesino;Kilogramo;1 Kilogramo;11.000;11.000;0;0
+Queso de crema;Kilogramo;1 Kilogramo;15.000;15.000;0;0
+Huevos;;;;;;
+Huevo blanco;Panal;30 Unidad;8.000;9.000;0;0
+Huevo rojo;Panal;30 Unidad;8.000;9.000;0;0
+Huevo rojo b;Panal;30 Unidad;7.900;8.000;0;0
+```

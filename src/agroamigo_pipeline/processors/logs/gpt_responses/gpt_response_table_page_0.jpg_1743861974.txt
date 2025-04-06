@@ -1,0 +1,38 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpdwfo237c/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:06:14
+Raw GPT-4o mini response:
+```
+Carnes;;;;;;
+Carne de res;Kilogramo;1 Kilogramo;20.000;20.000;0;0
+Carne de res, bola de brazo;Kilogramo;1 Kilogramo;20.000;20.000;0;0
+Carne de res, bola de pierna;Kilogramo;1 Kilogramo;20.000;20.000;0;0
+Carne de res, bota;Kilogramo;1 Kilogramo;20.000;20.000;0;0
+Carne de res, cadera;Kilogramo;1 Kilogramo;20.000;20.000;0;0
+Carne de res, centro pierna;Kilogramo;1 Kilogramo;20.000;20.000;0;0
+Carne de res, lomo de brazo;Kilogramo;1 Kilogramo;16.000;16.000;0;0
+Carne de res, muchacho;Kilogramo;1 Kilogramo;16.000;16.000;0;0
+Carne de res, sobrebarriga;Kilogramo;1 Kilogramo;16.000;16.000;0;0
+Carne de cerdo;;;;;;
+Carne de cerdo, brazo con hueso;Kilogramo;1 Kilogramo;13.000;14.000;0;0
+Carne de cerdo, brazo sin hueso;Kilogramo;1 Kilogramo;16.000;16.000;0;0
+Carne de cerdo, lomo con hueso;Kilogramo;1 Kilogramo;13.000;14.000;0;0
+Carne de cerdo, lomo sin hueso;Kilogramo;1 Kilogramo;17.000;17.000;0;0
+Carne de cerdo, pernil con hueso;Kilogramo;1 Kilogramo;13.000;14.000;0;0
+Carne de cerdo, pernil sin hueso;Kilogramo;1 Kilogramo;16.000;16.000;0;0
+Pollo;;;;;;
+Alas de pollo con costillar;Kilogramo;1 Kilogramo;6.000;6.000;0;0
+Pechuga de pollo;Kilogramo;1 Kilogramo;11.400;11.600;0;0
+Pierna pernil con rabadilla;Kilogramo;1 Kilogramo;6.000;6.000;0;0
+Pollo entero fresco sin visceras;Kilogramo;1 Kilogramo;8.200;8.600;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Mandarina común;Caja de cartón;25 Kilogramo;35.000;35.000;0;0
+Otras frutas;;;;;;
+Aguacate papelillo;Kilogramo;1 Kilogramo;5.800;6.000;0;0
+Coco;Kilogramo;1 Kilogramo;3.248;3.248;0;0
+Fresa;Caja de cartón;5 Kilogramo;20.000;22.000;0;0
+Guayaba agria;Canastilla;25 Kilogramo;30.000;30.000;0;0
+Guayaba común;Caja de cartón;10 Kilogramo;20.000;22.000;0;0
+Lulo;10 Kilogramo;1 Kilogramo;45.000;45.000;0;0
+```

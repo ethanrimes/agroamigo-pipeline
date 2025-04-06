@@ -1,0 +1,938 @@
+[
+  {
+    "product": "Carne de res",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 18.7,
+    "daily_max": 18.8
+  },
+  {
+    "product": "Carne de res, bola de brazo",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 18.7,
+    "daily_max": 18.8
+  },
+  {
+    "product": "Carne de res, bola de pierna",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 18.5,
+    "daily_max": 18.6
+  },
+  {
+    "product": "Carne de res, lomo",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 18.3,
+    "daily_max": 18.4
+  },
+  {
+    "product": "Carne de res, centro de pierna",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 16.4,
+    "daily_max": 16.5
+  },
+  {
+    "product": "Carne de res, costilla",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 16.0,
+    "daily_max": 16.1
+  },
+  {
+    "product": "Carne de res, falda",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 16.0,
+    "daily_max": 16.1
+  },
+  {
+    "product": "Carne de res, lomo fino",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 18.0,
+    "daily_max": 18.1
+  },
+  {
+    "product": "Carne de res, punta de anca",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 20.0,
+    "daily_max": 21.0
+  },
+  {
+    "product": "Carne de res, sobrebrazo",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 16.0,
+    "daily_max": 16.1
+  },
+  {
+    "product": "Carne de cerdo",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 13.0,
+    "daily_max": 13.0
+  },
+  {
+    "product": "Carne de cerdo, brazo con hueso",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 13.0,
+    "daily_max": 13.0
+  },
+  {
+    "product": "Carne de cerdo, brazo sin hueso",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 15.0,
+    "daily_max": 15.0
+  },
+  {
+    "product": "Carne de cerdo, costilla",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 13.0,
+    "daily_max": 13.0
+  },
+  {
+    "product": "Carne de cerdo, lomo con hueso",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 13.0,
+    "daily_max": 13.2
+  },
+  {
+    "product": "Carne de cerdo, lomo sin hueso",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 18.0,
+    "daily_max": 18.0
+  },
+  {
+    "product": "Carne de cerdo, pernil con hueso",
+    "major_category": "Carnes",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 14.0,
+    "daily_max": 14.0
+  },
+  {
+    "product": "Alas de pollo con costilla",
+    "major_category": "Carnes",
+    "sub_category": "Pollo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 6.4,
+    "daily_max": 6.5
+  },
+  {
+    "product": "Pechuga de pollo",
+    "major_category": "Carnes",
+    "sub_category": "Pollo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 11.0,
+    "daily_max": 11.3
+  },
+  {
+    "product": "Pierna pernil con rabadilla",
+    "major_category": "Carnes",
+    "sub_category": "Pollo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.4,
+    "daily_max": 5.6
+  },
+  {
+    "product": "Pollo entero congelado sin vísceras",
+    "major_category": "Carnes",
+    "sub_category": "Pollo",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 7.3,
+    "daily_max": 7.4
+  },
+  {
+    "product": "Limón tahití",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Bulto",
+    "units": "24 Kilogramo",
+    "daily_min": 75.0,
+    "daily_max": 78.0
+  },
+  {
+    "product": "Mandarina común",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Caja de cartón",
+    "units": "24 Kilogramo",
+    "daily_min": 38.0,
+    "daily_max": 45.0
+  },
+  {
+    "product": "Naranja común",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 760.0,
+    "daily_max": 760.0
+  },
+  {
+    "product": "Naranja valencia",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 960.0,
+    "daily_max": 960.0
+  },
+  {
+    "product": "Aguacate papelillo",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.9,
+    "daily_max": 6.0
+  },
+  {
+    "product": "Banano criollo",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 540.0,
+    "daily_max": 540.0
+  },
+  {
+    "product": "Banano urabá",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 720.0,
+    "daily_max": 720.0
+  },
+  {
+    "product": "Coco",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 3.4,
+    "daily_max": 3.5
+  },
+  {
+    "product": "Guanábana",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 4.9,
+    "daily_max": 5.0
+  },
+  {
+    "product": "Guayaba atlántico",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Canastilla",
+    "units": "25 Kilogramo",
+    "daily_min": 35.0,
+    "daily_max": 36.0
+  },
+  {
+    "product": "Guayaba común",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Canastilla",
+    "units": "25 Kilogramo",
+    "daily_min": 40.0,
+    "daily_max": 41.0
+  },
+  {
+    "product": "Guayaba pera",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "10 Kilogramo",
+    "daily_min": 22.0,
+    "daily_max": 25.0
+  },
+  {
+    "product": "Lulo",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.4,
+    "daily_max": 5.5
+  },
+  {
+    "product": "Mango de azúcar",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Canastilla",
+    "units": "25 Kilogramo",
+    "daily_min": 130.0,
+    "daily_max": 130.0
+  },
+  {
+    "product": "Mango tommy",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "19 Kilogramo",
+    "daily_min": 140.0,
+    "daily_max": 145.0
+  },
+  {
+    "product": "Manzana roja importada",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "19 Kilogramo",
+    "daily_min": 60.0,
+    "daily_max": 62.0
+  },
+  {
+    "product": "Maracuyá",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Bulto",
+    "units": "15 Kilogramo",
+    "daily_min": 60.0,
+    "daily_max": 62.0
+  },
+  {
+    "product": "Maracuyá valluno",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Bolsa",
+    "units": "12.5 Kilogramo",
+    "daily_min": 50.0,
+    "daily_max": 52.0
+  },
+  {
+    "product": "Papaya tayrona",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 3.0,
+    "daily_max": 3.5
+  },
+  {
+    "product": "Piña perolera",
+    "major_category": "Frutas",
+    "sub_category": "",
+    "presentation": "Madera",
+    "units": "32 Kilogramo",
+    "daily_min": 32.0,
+    "daily_max": 33.0
+  },
+  {
+    "product": "Arroz de primera",
+    "major_category": "Granos y cereales",
+    "sub_category": "Cereales",
+    "presentation": "Bulto",
+    "units": "45 Kilogramo",
+    "daily_min": 101.5,
+    "daily_max": 103.0
+  },
+  {
+    "product": "Arroz de segunda",
+    "major_category": "Granos y cereales",
+    "sub_category": "Cereales",
+    "presentation": "Bulto",
+    "units": "45 Kilogramo",
+    "daily_min": 90.8,
+    "daily_max": 93.0
+  },
+  {
+    "product": "Arroz excelso",
+    "major_category": "Granos y cereales",
+    "sub_category": "Cereales",
+    "presentation": "Bolsa",
+    "units": "25 Kilogramo",
+    "daily_min": 32.0,
+    "daily_max": 32.0
+  },
+  {
+    "product": "Maíz amarillo trillado",
+    "major_category": "Granos y cereales",
+    "sub_category": "Cereales",
+    "presentation": "Bulto",
+    "units": "40 Kilogramo",
+    "daily_min": 88.0,
+    "daily_max": 88.991
+  },
+  {
+    "product": "Maíz blanco trillado",
+    "major_category": "Granos y cereales",
+    "sub_category": "Cereales",
+    "presentation": "Bulto",
+    "units": "40 Kilogramo",
+    "daily_min": 90.0,
+    "daily_max": 90.0
+  },
+  {
+    "product": "Frijol cabeza negra importado",
+    "major_category": "Granos y cereales",
+    "sub_category": "Granos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.6,
+    "daily_max": 5.8
+  },
+  {
+    "product": "Frijol palomito importado",
+    "major_category": "Granos y cereales",
+    "sub_category": "Granos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.1,
+    "daily_max": 5.3
+  },
+  {
+    "product": "Frijol zargazo",
+    "major_category": "Granos y cereales",
+    "sub_category": "Granos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 6.0,
+    "daily_max": 6.2
+  },
+  {
+    "product": "Lenteja importada",
+    "major_category": "Granos y cereales",
+    "sub_category": "Granos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.14,
+    "daily_max": 5.3
+  },
+  {
+    "product": "Leche en polvo",
+    "major_category": "Granos y cereales",
+    "sub_category": "Lácteos y huevos",
+    "presentation": "Caja de cartón",
+    "units": "32 Unidad 360 GR",
+    "daily_min": 348.4,
+    "daily_max": 350.35
+  },
+  {
+    "product": "Queso costeño",
+    "major_category": "Granos y cereales",
+    "sub_category": "Lácteos y huevos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 15.0,
+    "daily_max": 15.0
+  },
+  {
+    "product": "Avena molida",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Bolsa",
+    "units": "48 Unidad 200 GR",
+    "daily_min": 89.1,
+    "daily_max": 89.7
+  },
+  {
+    "product": "Café instantáneo",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 85 GR",
+    "daily_min": 185.1,
+    "daily_max": 185.1
+  },
+  {
+    "product": "Café molido",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Bolsa",
+    "units": "24 Unidad 500 GR",
+    "daily_min": 128.79,
+    "daily_max": 230.711
+  },
+  {
+    "product": "Chocolate dulce",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 500 GR",
+    "daily_min": 151.5,
+    "daily_max": 151.5
+  },
+  {
+    "product": "Fécula de maíz",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 600 GR",
+    "daily_min": 139.9,
+    "daily_max": 140.0
+  },
+  {
+    "product": "Galletas dulces",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 415 GR",
+    "daily_min": 184.1,
+    "daily_max": 187.0
+  },
+  {
+    "product": "Galletas saladas",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Caja de cartón",
+    "units": "48 Unidad 110 GR",
+    "daily_min": 1.0,
+    "daily_max": 1.0
+  },
+  {
+    "product": "Gelatina",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Bolsa",
+    "units": "12 Kilogramo",
+    "daily_min": 11.0,
+    "daily_max": 11.0
+  },
+  {
+    "product": "Harina",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Bolsita",
+    "units": "12 Kilogramo",
+    "daily_min": 11.0,
+    "daily_max": 11.0
+  },
+  {
+    "product": "Jugo de frutas",
+    "major_category": "Granos y cereales",
+    "sub_category": "Procesados",
+    "presentation": "Caja",
+    "units": "24 Unidad 215 CC",
+    "daily_min": 45.7,
+    "daily_max": 45.7
+  },
+  {
+    "product": "Jugo instantáneo (sobre)",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "20 Unidad 18 GR",
+    "daily_min": 8.8,
+    "daily_max": 8.9
+  },
+  {
+    "product": "Mayonesa doy pack",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 150 GR",
+    "daily_min": 41.08,
+    "daily_max": 41.3
+  },
+  {
+    "product": "Mostaza doy pack",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 110 GR",
+    "daily_min": 28.87,
+    "daily_max": 29.25
+  },
+  {
+    "product": "Pastas alimenticias",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Bolsas",
+    "units": "24 Unidad 250 GR",
+    "daily_min": 35.1,
+    "daily_max": 35.9
+  },
+  {
+    "product": "Sal yodada",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Bolsas",
+    "units": "24 Unidad 500 GR",
+    "daily_min": 16.1,
+    "daily_max": 16.7
+  },
+  {
+    "product": "Salsa de tomate doy pack",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 150 GR",
+    "daily_min": 40.0,
+    "daily_max": 41.01
+  },
+  {
+    "product": "Sardinas en lata",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "48 Unidad 425 GR",
+    "daily_min": 129.24,
+    "daily_max": 129.24
+  },
+  {
+    "product": "Vinagre",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 500 CC",
+    "daily_min": 23.1,
+    "daily_max": 23.422
+  },
+  {
+    "product": "Azúcar refinada",
+    "major_category": "Productos",
+    "sub_category": "",
+    "presentation": "Bulto",
+    "units": "25 Kilogramo",
+    "daily_min": 79.0,
+    "daily_max": 86.75
+  },
+  {
+    "product": "Panelas cuadrada blanca",
+    "major_category": "Productos",
+    "sub_category": "Panelas",
+    "presentation": "Caja de cartón",
+    "units": "6 Kilogramo",
+    "daily_min": 24.9,
+    "daily_max": 26.0
+  },
+  {
+    "product": "Aceite vegetal mezcla",
+    "major_category": "Productos",
+    "sub_category": "Aceites y grasas",
+    "presentation": "Caja de cartón",
+    "units": "12 Unidad 1000 CC",
+    "daily_min": 96.96,
+    "daily_max": 99.9
+  },
+  {
+    "product": "Margarina",
+    "major_category": "Productos",
+    "sub_category": "Aceites y grasas",
+    "presentation": "Caja de cartón",
+    "units": "24 Unidad 50 GR",
+    "daily_min": 16.93,
+    "daily_max": 17.4
+  },
+  {
+    "product": "Plátano hartón verde",
+    "major_category": "Productos",
+    "sub_category": "Tubérculos, raíces y platanos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 1.2,
+    "daily_max": 1.2
+  },
+  {
+    "product": "Papa criolla sucia",
+    "major_category": "Productos",
+    "sub_category": "Papa",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 160.0,
+    "daily_max": 165.0
+  },
+  {
+    "product": "Papa única",
+    "major_category": "Productos",
+    "sub_category": "Papa",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 50.0,
+    "daily_max": 52.0
+  },
+  {
+    "product": "Yuca",
+    "major_category": "Productos",
+    "sub_category": "Papa",
+    "presentation": "Bolsas",
+    "units": "40 Kilogramo",
+    "daily_min": 40.0,
+    "daily_max": 45.0
+  },
+  {
+    "product": "Arveja verde en vaina",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Leguminosas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 7.0,
+    "daily_max": 7.0
+  },
+  {
+    "product": "Frijol verde en vaina",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Leguminosas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 7.0,
+    "daily_max": 7.0
+  },
+  {
+    "product": "Habichuela",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Leguminosas",
+    "presentation": "Caja",
+    "units": "20 Kilogramo",
+    "daily_min": 64.0,
+    "daily_max": 64.0
+  },
+  {
+    "product": "Habichuela larga",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Leguminosas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 4.0,
+    "daily_max": 4.0
+  },
+  {
+    "product": "Ahuyama",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "70 Kilogramo",
+    "daily_min": 130.0,
+    "daily_max": 130.0
+  },
+  {
+    "product": "Ají topito dulce",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "40 Kilogramo",
+    "daily_min": 110.0,
+    "daily_max": 115.0
+  },
+  {
+    "product": "Ají importado",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Caja de cartón",
+    "units": "10 Kilogramo",
+    "daily_min": 75.0,
+    "daily_max": 78.0
+  },
+  {
+    "product": "Berenjena",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "40 Kilogramo",
+    "daily_min": 38.0,
+    "daily_max": 40.0
+  },
+  {
+    "product": "Chócolo maíz",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "45 Kilogramo",
+    "daily_min": 38.0,
+    "daily_max": 42.0
+  },
+  {
+    "product": "Pepino cohombro",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "25 Kilogramo",
+    "daily_min": 38.0,
+    "daily_max": 42.0
+  },
+  {
+    "product": "Pimiento",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Caja de cartón",
+    "units": "12 Kilogramo",
+    "daily_min": 22.0,
+    "daily_max": 25.0
+  },
+  {
+    "product": "Rábano rojo",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 6.0,
+    "daily_max": 7.0
+  },
+  {
+    "product": "Zanahoria bogotana",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Zanahorias",
+    "presentation": "Bulto",
+    "units": "60 Kilogramo",
+    "daily_min": 105.0,
+    "daily_max": 110.0
+  },
+  {
+    "product": "Cebolla cabezona blanca",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Cebollas",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 50.0,
+    "daily_max": 55.0
+  },
+  {
+    "product": "Cebolla cabezona roja",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Cebollas",
+    "presentation": "Bulto",
+    "units": "45 Kilogramo",
+    "daily_min": 100.0,
+    "daily_max": 100.0
+  },
+  {
+    "product": "Cebolla cabeza roja peruana",
+    "major_category": "Verduras",
+    "sub_category": "",
+    "presentation": "Bulto",
+    "units": "46 Kilogramo",
+    "daily_min": 135.0,
+    "daily_max": 140.0
+  },
+  {
+    "product": "Cebolla junca berlín",
+    "major_category": "Verduras",
+    "sub_category": "",
+    "presentation": "Atado/manojo",
+    "units": "30 Kilogramo",
+    "daily_min": 38.0,
+    "daily_max": 40.0
+  },
+  {
+    "product": "Cebollín chino",
+    "major_category": "Verduras",
+    "sub_category": "",
+    "presentation": "Atado/manojo",
+    "units": "1 Kilogramo",
+    "daily_min": 7.0,
+    "daily_max": 7.0
+  },
+  {
+    "product": "Tomates",
+    "major_category": "Verduras",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "25 Kilogramo",
+    "daily_min": 48.0,
+    "daily_max": 50.0
+  },
+  {
+    "product": "Tomate riñón",
+    "major_category": "Verduras",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "25 Kilogramo",
+    "daily_min": 53.0,
+    "daily_max": 55.0
+  },
+  {
+    "product": "Acelga",
+    "major_category": "Verduras",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 4.0,
+    "daily_max": 4.0
+  },
+  {
+    "product": "Brócoli",
+    "major_category": "Verduras",
+    "sub_category": "Hortalizas",
+    "presentation": "Atado",
+    "units": "10 Kilogramo",
+    "daily_min": 8.0,
+    "daily_max": 10.0
+  },
+  {
+    "product": "Cilantro",
+    "major_category": "Verduras",
+    "sub_category": "Hortalizas",
+    "presentation": "Atado",
+    "units": "10 Kilogramo",
+    "daily_min": 7.0,
+    "daily_max": 8.0
+  },
+  {
+    "product": "Coliflor",
+    "major_category": "Verduras",
+    "sub_category": "Hortalizas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 4.0,
+    "daily_max": 4.0
+  },
+  {
+    "product": "Lechuga batavia",
+    "major_category": "Verduras",
+    "sub_category": "Hortalizas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 3.0,
+    "daily_max": 3.0
+  },
+  {
+    "product": "Repollo blanco",
+    "major_category": "Verduras",
+    "sub_category": "Hortalizas",
+    "presentation": "Bulto",
+    "units": "70 Kilogramo",
+    "daily_min": 112.0,
+    "daily_max": 115.0
+  }
+]

@@ -1,0 +1,13 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpn8bimzxd/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 21:57:17
+Raw GPT-4o mini response:
+```
+DANE
+INFORMACIÓN PARA TODOS
+BOLETÍN DIARIO
+PRECIOS MAYORISTAS
+Popayán, Plaza de mercado del barrio Bolívar
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+05 de Noviembre de 2021
+```

@@ -1,0 +1,14 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp3bd02ty8/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 23:54:57
+Raw GPT-4o mini response:
+```
+DANE
+INFORMACIÓN PARA TODOS
+SISTEMA DE INFORMACIÓN DE PRECIOS Y ABASTECIMIENTO DEL SECTOR AGROPECUARIO - SIPSA
+
+PRECIOS DE VENTA MAYORISTA
+Valledupar, Mercabastos
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+05 de Noviembre de 2021
+```

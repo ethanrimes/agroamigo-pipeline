@@ -80,12 +80,28 @@ class GPTClient:
                 Example format:
 
                 Carnes;;;;;;
+                Carne de cerdo;;;;;;
                 Carne de cerdo;Kilogramo;1 Kilogramo;20.000;24.000;0;0
                 Carne de cerdo, costilla;Kilogramo;1 Kilogramo;20.000;24.000;0;0
                 Frutas;;;;;;
                 Cítricos;;;;;;
                 Limón tahití;Canastilla;22 Kilogramo;40.000;45.000;0;0
                 Mandarina arrayana;Canastilla;22 Kilogramo;50.000;60.000;0;0
+                Yuca criolla;Bolsa;40 Kilogramo;35.000;38.000;0;0
+                Verduras y hortalizas;;;;;;
+                Leguminosas;;;;;;
+                Arveja verde en vaina;Kilogramo;1 Kilogramo;9.500;10.000;0;0
+                Fríjol verde en vaina;Kilogramo;1 Kilogramo;6.000;6.500;0;0
+                Habichuela;Saco;20 Kilogramo;50.000;55.000;0;0
+                Habichuela larga;Kilogramo;1 Kilogramo;3.800;4.000;0;0
+                Otras hortalizas y verduras;;;;;;
+                Ahuyama;Bulto;70 Kilogramo;50.000;55.000;0;0
+                Ají topito dulce;Bulto;40 Kilogramo;196.000;200.000;0;0
+                Tuberculos, raices y platanos;;;;;;
+                Otros tuberculos;;;;;;
+                Ñame espino;Bulto;50 Kilogramo;95.000;100.000;0;0
+                Plátano;;;;;;
+                Plátano hartón verde;Kilogramo;1 Kilogramo;1.500;1.500;0;0
                 ...
                 """
 

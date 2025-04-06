@@ -1,0 +1,17 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpw36kxxl4/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:54:45
+Raw GPT-4o mini response:
+```
+Verduras;;;;;;
+Zanahoria bogotana;Bulto;60 Kilogramo;115.000;122.000;0;0
+Cebollas;;;;;;
+Cebolla cabeza blanca;Bulto;50 Kilogramo;65.000;70.000;0;0
+Cebolla junca;Atado/manojo;15 Kilogramo;40.000;45.000;0;0
+Tomates;Kilogramo;1 Kilogramo;3.500;4.000;0;0
+Apio;Docena;12 Kilogramo;20.000;24.000;0;0
+Cilantro;Atado/manojo;12 Kilogramo;15.000;18.000;0;0
+Coliflor;Docena;12 Kilogramo;20.000;24.000;0;0
+Lechuga batavia;Docena;12 Kilogramo;20.000;24.000;0;0
+Repollo blanco;Bulto;25 Kilogramo;20.000;24.000;0;0
+```

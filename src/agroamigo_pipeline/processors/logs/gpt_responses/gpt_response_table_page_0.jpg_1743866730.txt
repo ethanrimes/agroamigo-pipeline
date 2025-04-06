@@ -1,0 +1,50 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp6ya6upsu/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:25:30
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bulto;70 Kilogramo;170.000;180.000;0;0
+Mandarina común;Caja de cartón;25 Kilogramo;40.000;40.000;0;0
+Otras frutas;;;;;;
+Aguacate papelillo;Kilogramo;1 Kilogramo;5.500;5.600;0;0
+Coco;Kilogramo;1 Kilogramo;3.248;3.248;0;0
+Fresa;Caja de cartón;5 Kilogramo;3.000;3.000;0;0
+Guayaba;Canastilla;1 Kilogramo;20.000;22.000;0;0
+Guayaba madura;Caja de cartón;10 Kilogramo;20.000;22.000;0;0
+Lulo;Caja de cartón;10 Kilogramo;23.000;25.000;0;0
+Maracuyá antioqueño;Caja de cartón;30 Kilogramo;23.000;25.000;0;0
+Mora de castilla;Caja de cartón;30 Kilogramo;23.000;25.000;0;0
+Piña perolera;Kilogramo;1 Kilogramo;2.500;2.500;0;0
+Tomate de árbol;Caja de cartón;25 Kilogramo;60.000;65.000;0;0
+Uva isabela;Caja de cartón;12 Kilogramo;44.000;0;0;0
+Uva roja;Caja de cartón;10 Kilogramo;75.000;75.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Name criollo;Bulto;50 Kilogramo;100.000;100.000;0;0
+Name espino;Bulto;50 Kilogramo;50.000;50.000;0;0
+Plátano;Plátano hartón verde;Kilogramo;1 Kilogramo;970;1.013;0;0
+Papa;Papa criolla limpia;Bolsa;10 Kilogramo;30.000;30.000;0;0
+Papa purificada;Bolsa;50 Kilogramo;70.000;75.000;0;0
+Papa rubí;Bolsa;50 Kilogramo;55.000;0;0;0
+Yuca;Yuca criolla;Bolsa;40 Kilogramo;32.000;35.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Frijol verde en vaina;Bolsa;10 Kilogramo;40.000;45.000;0;0
+Habichuela;Bolsa;10 Kilogramo;25.000;25.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ahyuma;Bulto;50 Kilogramo;60.000;80.000;0;0
+Ají topito dulce;Bulto;40 Kilogramo;90.000;100.000;0;0
+Ají importado;Caja de cartón;10 Kilogramo;76.000;80.000;0;0
+Chócolo mazorca;Caja de cartón;10 Kilogramo;76.000;80.000;0;0
+Pepino cohombro;Bulto;10 Kilogramo;40.000;70.000;0;0
+Pimentón;Caja de cartón;10 Kilogramo;25.000;25.000;0;0
+Remolacha;Bulto;10 Kilogramo;20.000;25.000;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;40 Kilogramo;60.000;65.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;55.000;65.000;0;0
+Cebolla cabezona roja;Bulto;45 Kilogramo;140.000;140.000;0;0
+```(sakata);Bolsa;12,5 Kilogramo;18.000;20.000;0;0
+```

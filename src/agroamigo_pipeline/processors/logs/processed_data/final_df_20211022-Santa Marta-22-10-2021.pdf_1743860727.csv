@@ -1,0 +1,13 @@
+date,city,market,major_category,sub_category,product,presentation,units,daily_min,daily_max,source
+2021-10-22,Santa Marta,Principal,Frutas,Cítricos,Naranja común,Ciento,25 Kilogramo,20.0,20.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Otras frutas,Banano criollo,Bolsa,17 Kilogramo,8.0,8.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Otras frutas,Carne de castilla,Caja de cartón,"12,5 Kilogramo",38.0,40.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,"Tubérculos, raíces y platanos",Plátano hartón verde,Kilogramo,1 Kilogramo,1.8,1.8,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,"Tubérculos, raíces y platanos",Papa,Papel limpia,Bulto,50.0,180.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,"Tubérculos, raíces y platanos",Papa rubí,Bulto,50 Kilogramo,54.0,55.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Verduras y hortalizas,Remolacha,Bulto,60 Kilogramo,80.0,80.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Zanahorias,Zanahoria,Bulto,60 Kilogramo,110.0,110.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Cebollas,Cebolla cabezona blanca,Bulto,50 Kilogramo,60.0,62.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Hortalizas,Apio,Docena,15 Kilogramo,28.0,29.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Hortalizas,Lechuga batavia,Caja de cartón,12 Kilogramo,28.0,29.0,informes por ciudades
+2021-10-22,Santa Marta,Principal,Frutas,Hortalizas,Repollo blanco,Bulto,70 Kilogramo,110.0,110.0,informes por ciudades

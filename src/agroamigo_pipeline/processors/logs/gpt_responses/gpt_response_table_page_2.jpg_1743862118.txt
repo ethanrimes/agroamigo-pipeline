@@ -1,0 +1,14 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpu4y7vn9w/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:08:38
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Coliflor;Kilogramo;1 Kilogramo;3.500;4.000;0;0
+Espinaca;Kilogramo;1 Kilogramo;3.800;4.000;0;0
+Lechuga batavia;Caja;12 Kilogramo;18.000;20.000;18.000;20.000
+Lechuga crespa verde;Bolsa;500 Gramo;1.500;1.600;0;0
+Perjil;Atado/manojo;1 Kilogramo;3.000;3.500;0;0
+Repollo blanco;Bulto;62.5 Kilogramo;60.000;62.000;0;0
+Repollo morado;Kilogramo;1 Kilogramo;1.400;1.500;0;0
+```

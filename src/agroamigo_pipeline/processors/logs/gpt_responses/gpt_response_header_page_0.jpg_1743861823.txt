@@ -1,0 +1,13 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpza7lethe/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 22:03:43
+Raw GPT-4o mini response:
+```
+DANE
+INFORMACIÓN PARA TODOS
+BOLETÍN DIARIO
+PRECIOS DE VENTA MAYORISTA
+Ipiales (Nariño), Ipiales somos todos
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+25 de Enero de 2024
+```

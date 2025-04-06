@@ -1,0 +1,41 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpxy7ni8s4/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:33:53
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Arracacha blanca;Bulto;50 Kilogramo;35.000;40.000;0;0
+Ulluco;32 Kilogramo;45.000;50.000;0;0
+Plátano;Bolsa;16 Kilogramo;22.000;22.000;0;0
+Papa;;;;;;
+Papa capira;Bulto;50 Kilogramo;52.000;55.000;0;0
+Papa criolla;Bulto;50 Kilogramo;50.000;55.000;0;0
+Papa superior;Bulto;50 Kilogramo;52.000;55.000;0;0
+Papa suprema;Bulto;50 Kilogramo;45.000;50.000;0;0
+Yuca;Bulto;60 Kilogramo;80.000;85.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Habichuela;Caja de madera;5 Kilogramo;17.000;20.000;0;0
+Ajo;Atado/manojo;2 Kilogramo;15.000;15.000;0;0
+Ajo importado;Caja de cartón;10 Kilogramo;75.000;82.000;0;0
+Choclo mazorca;Bulto;46 Kilogramo;70.000;0;0;0
+Pepino cohombro;Caja de madera;5 Kilogramo;13.000;15.000;0;0
+Pimentón;Caja de madera;5 Kilogramo;9.000;12.000;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;50 Kilogramo;30.000;32.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca pastusa;Bulto;48 Kilogramo;30.000;37.000;0;0
+Cebolla junca pastusa;Atado/manojo;22,5 Kilogramo;14.000;0;0;0
+Tomates;;;;;;
+Tomate larga vida;Canastilla;20 Kilogramo;50.000;52.000;0;0
+Hortalizas;;;;;;
+Acelga;Atado/manojo;2 Kilogramo;5.000;6.000;0;0
+Brócoli;Kilogramo;1 Kilogramo;1.000;1.500;0;0
+Cilantro;Atado/manojo;2 Kilogramo;8.000;10.000;0;0
+Coliflor;Kilogramo;1 Kilogramo;2.000;2.500;0;0
+Espinaca;Atado/manojo;2 Kilogramo;6.000;7.000;0;0
+Lechuga batavia;Caja de cartón;13 Kilogramo;8.000;10.000;0;0
+Perejil;Atado/manojo;2 Kilogramo;5.000;6.000;0;0
+Repollo blanco;Bulto;50 Kilogramo;30.000;30.000;0;0
+Repollo morado;Bulto;40 Kilogramo;50.000;50.000;0;0
+```

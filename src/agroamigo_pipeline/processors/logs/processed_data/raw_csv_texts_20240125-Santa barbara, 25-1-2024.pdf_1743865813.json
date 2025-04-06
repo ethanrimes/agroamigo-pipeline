@@ -1,0 +1,12 @@
+{
+  "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data/PDF_Files/PDFs/20240125-Santa barbara, 25-1-2024.pdf",
+  "metadata": {
+    "date": "2024-01-25",
+    "city": "Santa Bárbara (Antioquia)",
+    "market": "Unknown",
+    "source": "informes por ciudades"
+  },
+  "csv_texts": [
+    "```\nFrutas;;;;;;\nCítricos;;;;;;\nLimón tahití;Kilogramo;1 Kilogramo;500;600;0;0\nLimón mandarina;Kilogramo;1 Kilogramo;2.500;2.600;0;0\nMandarina oneco;Canastilla;20 Kilogramo;45.000;50.000;0;0\nMandarina común;Canastilla;22 Kilogramo;40.000;45.000;0;0\nNaranja;Bulto;45 Kilogramo;3.500;4.000;0;0\nOtras frutas;;;;;;\nAguacate;Kilogramo;1 Kilogramo;3.500;4.000;0;0\nBanano criollo;Racimo;20 Kilogramo;14.000;16.000;0;0\nGuayaba;Kilogramo;1 Kilogramo;2.000;2.200;0;0\nTubérculos, raíces y platanos;;;;;;\nPlátano;;;;;;\nPlátano dominico verde;Kilogramo;1 Kilogramo;1.000;1.200;0;0\nPlátano dominico amarillo;Kilogramo;1 Kilogramo;1.100;1.300;0;0\nPapa criolla limpia;Kilogramo;1 Kilogramo;2.300;2.400;0;0\n```"
+  ]
+}

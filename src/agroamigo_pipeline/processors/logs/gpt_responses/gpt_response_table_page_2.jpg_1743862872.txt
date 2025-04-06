@@ -1,0 +1,34 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp7x7vpu1o/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:21:12
+Raw GPT-4o mini response:
+```
+Productos;;;;;;
+Harina precocida de maíz;Bolsa;24 Unidad 500 GR;31.000;32.000;0;0
+Jugo de frutas;Caja de cartón;30 Unidad 215 CC;42.000;43.000;0;0
+Jugo instantáneo (sobre);Caja de cartón;20 Unidad 18 GR;8.400;8.800;0;0
+Mayonesa doy pack;Caja de cartón;24 Unidad 150 GR;39.000;40.000;0;0
+Sal yodada;Bolsa;24 Unidad 500 GR;30.000;31.000;0;0
+Salsa de tomate doy pack;Caja de cartón;24 Unidad 150 GR;39.000;40.000;0;0
+Vinagre;Caja de cartón;24 Unidad 500 CC;13.000;14.000;0;0
+Azúcar;;;;;;
+Azúcar refinada;Bulto;25 Kilogramo;80.000;80.000;0;0
+Azúcar sulfitada;Bulto;25 Kilogramo;80.000;80.000;0;0
+Panelas;;;;;;
+Panelas cuadrada blanca;Caja de cartón;18 Kilogramo;74.000;75.000;0;0
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;91.000;93.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.200;1.350;0;0
+Papa;Bulto;50 Kilogramo;180.000;200.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;180.000;200.000;0;0
+Papa única;Bulto;50 Kilogramo;47.000;48.000;0;0
+Yuca;Bulto;40 Kilogramo;35.000;38.000;0;0
+Verduras y hortalizas;;;;;;
+Ahuayma;Bulto;50 Kilogramo;70.000;80.000;0;0
+Pimentón;Caja de cartón;12 Kilogramo;35.000;40.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona roja;Bulto;45 Kilogramo;85.000;90.000;0;0
+Tomates;Caja de cartón;25 Kilogramo;45.000;50.000;0;0
+Hortalizas;;;;;;
+Cilantro;Kilogramo;1 Kilogramo;2.500;2.500;0;0
+```

@@ -1,0 +1,353 @@
+[
+  {
+    "product": "Limón común",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Bulto",
+    "units": "70 Kilogramo",
+    "daily_min": 170.0,
+    "daily_max": 180.0
+  },
+  {
+    "product": "Limón tahití",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "25 Kilogramo",
+    "units": "80.000",
+    "daily_min": 85.0,
+    "daily_max": 0.0
+  },
+  {
+    "product": "Mandarina común",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Caja de cartón",
+    "units": "22 Kilogramo",
+    "daily_min": 45.0,
+    "daily_max": 50.0
+  },
+  {
+    "product": "Naranja común",
+    "major_category": "Frutas",
+    "sub_category": "Cítricos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 560.0,
+    "daily_max": 560.0
+  },
+  {
+    "product": "Aguacate común",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 4.0,
+    "daily_max": 4.0
+  },
+  {
+    "product": "Coco",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "3.783",
+    "daily_min": 3.783,
+    "daily_max": 0.0
+  },
+  {
+    "product": "Guayaba pera",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Caja de cartón",
+    "units": "10 Kilogramo",
+    "daily_min": 12.0,
+    "daily_max": 15.0
+  },
+  {
+    "product": "Lulo",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 2.0,
+    "daily_max": 2.0
+  },
+  {
+    "product": "Manzana verde importada",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Caja de cartón",
+    "units": "19 Kilogramo",
+    "daily_min": 101.0,
+    "daily_max": 105.0
+  },
+  {
+    "product": "Papaya lavada",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Caja de cartón",
+    "units": "19 Kilogramo",
+    "daily_min": 110.0,
+    "daily_max": 115.0
+  },
+  {
+    "product": "Pera importada",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Caja de cartón",
+    "units": "19 Kilogramo",
+    "daily_min": 116.0,
+    "daily_max": 120.0
+  },
+  {
+    "product": "Piña gold",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 1.7,
+    "daily_max": 1.8
+  },
+  {
+    "product": "Tomate de árbol",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Kilogramo",
+    "units": "2.800",
+    "daily_min": 3.0,
+    "daily_max": 0.0
+  },
+  {
+    "product": "Uva red globe nacional",
+    "major_category": "Frutas",
+    "sub_category": "Otras frutas",
+    "presentation": "Caja de madera",
+    "units": "10 Kilogramo",
+    "daily_min": 72.0,
+    "daily_max": 75.0
+  },
+  {
+    "product": "Nanche espino",
+    "major_category": "Tubérculos, raíces y platanos",
+    "sub_category": "Otros tubérculos",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 45.0,
+    "daily_max": 55.0
+  },
+  {
+    "product": "Plátano",
+    "major_category": "Tubérculos, raíces y platanos",
+    "sub_category": "Otros tubérculos",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 1.5,
+    "daily_max": 1.5
+  },
+  {
+    "product": "Papa",
+    "major_category": "Tubérculos, raíces y platanos",
+    "sub_category": "Otros tubérculos",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 165.0,
+    "daily_max": 180.0
+  },
+  {
+    "product": "Papa criolla limpia",
+    "major_category": "Tubérculos, raíces y platanos",
+    "sub_category": "Otros tubérculos",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 50.0,
+    "daily_max": 58.0
+  },
+  {
+    "product": "Yuca",
+    "major_category": "Tubérculos, raíces y platanos",
+    "sub_category": "Otros tubérculos",
+    "presentation": "Bolsa",
+    "units": "40 Kilogramo",
+    "daily_min": 30.0,
+    "daily_max": 36.0
+  },
+  {
+    "product": "Habichuela",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Leguminosas",
+    "presentation": "Saco",
+    "units": "20 Kilogramo",
+    "daily_min": 75.0,
+    "daily_max": 80.0
+  },
+  {
+    "product": "Ahuayma",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "70 Kilogramo",
+    "daily_min": 119.0,
+    "daily_max": 140.0
+  },
+  {
+    "product": "Ají topito dulce",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "40 Kilogramo",
+    "daily_min": 130.0,
+    "daily_max": 160.0
+  },
+  {
+    "product": "Ajo importado",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Caja de cartón",
+    "units": "10 Kilogramo",
+    "daily_min": 78.0,
+    "daily_max": 85.0
+  },
+  {
+    "product": "Choclo mazo",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Bulto",
+    "units": "40 Kilogramo",
+    "daily_min": 33.0,
+    "daily_max": 38.0
+  },
+  {
+    "product": "Pimentón",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Caja de cartón",
+    "units": "12 Kilogramo",
+    "daily_min": 35.0,
+    "daily_max": 40.0
+  },
+  {
+    "product": "Remolacha",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Otras hortalizas y verduras",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 4.0,
+    "daily_max": 4.0
+  },
+  {
+    "product": "Zanahoria bogotana",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Zanahorias",
+    "presentation": "Bulto",
+    "units": "60 Kilogramo",
+    "daily_min": 90.0,
+    "daily_max": 100.0
+  },
+  {
+    "product": "Cebolla cabezona blanca",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Cebollas",
+    "presentation": "Bulto",
+    "units": "50 Kilogramo",
+    "daily_min": 60.0,
+    "daily_max": 65.0
+  },
+  {
+    "product": "Cebolla cabezona roja",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Cebollas",
+    "presentation": "Bulto",
+    "units": "45 Kilogramo",
+    "daily_min": 105.0,
+    "daily_max": 110.0
+  },
+  {
+    "product": "Cebolla cabezona roja peruana",
+    "major_category": "Verduras y hortalizas",
+    "sub_category": "Cebollas",
+    "presentation": "Bulto",
+    "units": "46 Kilogramo",
+    "daily_min": 125.0,
+    "daily_max": 140.0
+  },
+  {
+    "product": "Cebolla junca berlín",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Atado/manojo",
+    "units": "30 Kilogramo",
+    "daily_min": 50.0,
+    "daily_max": 55.0
+  },
+  {
+    "product": "Tomate chonto",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Caja de cartón",
+    "units": "25 Kilogramo",
+    "daily_min": 50.0,
+    "daily_max": 55.0
+  },
+  {
+    "product": "Apio",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Atado/manojo",
+    "units": "10 Kilogramo",
+    "daily_min": 18.0,
+    "daily_max": 20.0
+  },
+  {
+    "product": "Brócoli",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Kilogramo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.0,
+    "daily_max": 5.0
+  },
+  {
+    "product": "Cilantro",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Atado/manojo",
+    "units": "1 Kilogramo",
+    "daily_min": 3.0,
+    "daily_max": 3.0
+  },
+  {
+    "product": "Coliflor",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Atado/manojo",
+    "units": "1 Kilogramo",
+    "daily_min": 35.0,
+    "daily_max": 40.0
+  },
+  {
+    "product": "Espinaca",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Atado/manojo",
+    "units": "1 Kilogramo",
+    "daily_min": 5.0,
+    "daily_max": 5.0
+  },
+  {
+    "product": "Lechuga batavia",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Caja de madera",
+    "units": "15 Kilogramo",
+    "daily_min": 22.0,
+    "daily_max": 27.0
+  },
+  {
+    "product": "Repollo blanco",
+    "major_category": "Hortalizas",
+    "sub_category": "",
+    "presentation": "Bulto",
+    "units": "70 Kilogramo",
+    "daily_min": 100.0,
+    "daily_max": 110.0
+  }
+]

@@ -1,0 +1,50 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpep5o286u/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:31:44
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón tahití;Bulto;70 Kilogramo;50.000;60.000;0;0
+Limón común;Bulto;70 Kilogramo;50.000;60.000;0;0
+Naranja sweet;Bulto;50 Kilogramo;90.000;90.000;0;0
+Otras frutas;;;;;;
+Aguacate papelillo;Kilogramo;1 Kilogramo;1.200;1.300;0;0
+Banano criollo;Kilogramo;1 Kilogramo;1.200;1.300;0;0
+Guayaba pera;Kilogramo;1 Kilogramo;1.500;1.600;0;0
+Kiwi;Caja de cartón;10 Kilogramo;130.000;140.000;0;0
+Lulo;Arroba;12.5 Kilogramo;20.000;25.000;0;0
+Melón cantalup;Kilogramo;1 Kilogramo;2.500;2.700;0;0
+Mora de castilla;Kilogramo;1 Kilogramo;5.000;5.200;0;0
+Papaya importada;Kilogramo;1 Kilogramo;1.500;1.600;0;0
+Pera importada;Caja de cartón;19 Kilogramo;180.000;180.000;0;0
+Piña gold;Kilogramo;1 Kilogramo;3.000;4.000;0;0
+Tomate de árbol;Arroba;12.5 Kilogramo;20.000;30.000;0;0
+Tomate de árbol;Canastilla;25 Kilogramo;45.000;50.000;0;0
+Uchuva con cáscara;Arroba;12.5 Kilogramo;35.000;40.000;0;0
+Uva Isabel;Caja de cartón;12.5 Kilogramo;45.000;50.000;0;0
+Uva verde nacional;Caja de cartón;12.5 Kilogramo;100.000;100.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Arracacha amarilla;Bulto;62.5 Kilogramo;100.000;110.000;0;0
+Plátano;;;;;;
+Plátano hartón maduro;Kilogramo;1 Kilogramo;2.000;2.200;0;0
+Plátano hartón maduro;Bulto;20 Kilogramo;30.000;30.000;0;0
+Plátano hartón verde;Kilogramo;1 Kilogramo;2.000;2.200;0;0
+Plátano hartón verde;Bols;20 Kilogramo;30.000;30.000;0;0
+Papa;;;;;;
+Papa criolla limpia;Arroba;12.5 Kilogramo;38.000;40.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;140.000;150.000;0;0
+Papa superior;Bulto;50 Kilogramo;70.000;70.000;0;0
+Yuca;Bols;30 Kilogramo;25.000;30.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Arroba;12.5 Kilogramo;60.000;70.000;0;0
+Arveja verde en vaina;Bulto;50 Kilogramo;240.000;250.000;0;0
+Frijol verde en vaina;Arroba;12.5 Kilogramo;35.000;40.000;0;0
+Habichuela;Arroba;12.5 Kilogramo;15.000;20.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ahuyama;Kilogramo;1 Kilogramo;1.200;1.300;0;0
+Ahuyami (sakata);Kilogramo;1 Kilogramo;2.500;3.000;0;0
+Ajo importado;Caja de cartón;10 Kilogramo;90.000;95.000;0;0
+```

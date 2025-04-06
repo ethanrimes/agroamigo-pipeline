@@ -1,0 +1,35 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpr7pkehu6/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:28:30
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Naranja común;Kilogramo;1 Kilogramo;400;480;0;0
+Naranja valencia;Kilogramo;1 Kilogramo;1.120;None;0;0
+Otras frutas;;;;;;
+Aguacate papipillo;Kilogramo;1 Kilogramo;5.700;6.000;0;0
+Manzana roja importada;Caja de cartón;20 Kilogramo;125.000;145.000;0;0
+Manzana verde importada;Caja de cartón;20 Kilogramo;120.000;130.000;0;0
+Melón cantalupo;Caja de cartón;19 Kilogramo;135.000;140.000;0;0
+Melón;Kilogramo;1 Kilogramo;1.200;1.350;0;0
+Papaya;Kilogramo;1 Kilogramo;None;None;0;0
+Fruta importada;Caja de cartón;20 Kilogramo;None;None;0;0
+Uva importada;Canastilla;None;None;None;0;0
+Tubérculos, raíces y platanos;;;;;;
+Plátano hartón verde;Kilogramo;1 Kilogramo;None;None;0;0
+Papa;;;;;;
+Papa criolla limpia;Bulto;50 Kilogramo;180.000;200.000;0;0
+Papa única;Bulto;50 Kilogramo;45.000;48.000;0;0
+Yuca;Bulto;40 Kilogramo;35.000;40.000;0;0
+Verduras y hortalizas;;;;;;
+Ahuymá;Bulto;50 Kilogramo;75.000;85.000;0;0
+Pimentón;Caja de cartón;12 Kilogramo;35.000;40.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona roja;Bulto;8 Kilogramo;20.000;23.000;0;0
+Cebolla cabeza roja;Bulto;45 Kilogramo;95.000;100.000;0;0
+Tomates;;;;;;
+Tomate chonto;Caja de cartón;25 Kilogramo;45.000;50.000;0;0
+Hortalizas;;;;;;
+Cilantro;Kilogramo;1 Kilogramo;2.500;3.000;0;0
+```

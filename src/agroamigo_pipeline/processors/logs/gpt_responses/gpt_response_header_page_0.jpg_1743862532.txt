@@ -1,0 +1,14 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp47vumtw4/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 22:15:32
+Raw GPT-4o mini response:
+```
+DANE
+INFORMACIÓN PARA TODOS
+SISTEMA DE INFORMACIÓN DE PRECIOS Y ABASTECIMIENTO DEL SECTOR AGROPECUARIO - SIPSA
+
+PRECIOS DE VENTA MAYORISTA
+Tunja, Complejo de Servicios del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+22 de Octubre de 2021
+```

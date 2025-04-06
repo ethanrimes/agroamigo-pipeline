@@ -1,0 +1,37 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpd2egjnis/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:42:42
+Raw GPT-4o mini response:
+```
+Carnes;;;;;;
+Carne de res;Kilogramo;1 Kilogramo;18.000;18.000;0;0
+Carne de res, bola de brazo;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, pierna;Kilogramo;1 Kilogramo;19.000;20.500;0;0
+Carne de res, cadera;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, centro de pierna;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, cogote;Kilogramo;1 Kilogramo;20.000;22.000;0;0
+Carne de res, falda;Kilogramo;1 Kilogramo;20.000;22.000;0;0
+Carne de res, lomo fino;Kilogramo;1 Kilogramo;28.000;30.000;0;0
+Carne de res, muchacho;Kilogramo;1 Kilogramo;20.000;22.000;0;0
+Carne de res, murillo;Kilogramo;1 Kilogramo;14.000;14.000;0;0
+Carne de res, paletilla;Kilogramo;1 Kilogramo;18.000;20.000;0;0
+Carne de res, pecho;Kilogramo;1 Kilogramo;17.000;18.000;0;0
+Carne de res, punta de anca;Kilogramo;1 Kilogramo;23.000;25.000;0;0
+Carne de res, sobrebarriga;Kilogramo;1 Kilogramo;16.000;17.000;0;0
+Carne de cerdo;;;;;;
+Carne de cerdo, brazo con hueso;Kilogramo;1 Kilogramo;13.000;13.000;0;0
+Carne de cerdo, brazo sin hueso;Kilogramo;1 Kilogramo;15.500;17.000;0;0
+Carne de cerdo, costilla;Kilogramo;1 Kilogramo;14.000;14.000;0;0
+Carne de cerdo, espinazo;Kilogramo;1 Kilogramo;13.500;14.000;0;0
+Carne de cerdo, lomo con hueso;Kilogramo;1 Kilogramo;15.000;15.000;0;0
+Carne de cerdo, lomo sin hueso;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de cerdo, pernil con hueso;Kilogramo;1 Kilogramo;13.000;14.000;0;0
+Carne de cerdo, pernil sin hueso;Kilogramo;1 Kilogramo;18.000;18.000;0;0
+Pollo;;;;;;
+Alas de pollo con costillar;Kilogramo;1 Kilogramo;6.200;6.400;0;0
+Menudencias de pollo;Kilogramo;1 Kilogramo;2.900;3.100;0;0
+Pechuga de pollo;Kilogramo;1 Kilogramo;11.700;11.900;0;0
+Pierna pernil con rabito;Kilogramo;1 Kilogramo;5.500;6.000;0;0
+Piernas de pollo;Kilogramo;1 Kilogramo;6.100;6.300;0;0
+Pollo entero congelado sin vísceras;Kilogramo;1 Kilogramo;7.800;8.200;0;0
+```

@@ -1,0 +1,51 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmptac8_38p/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:15:05
+Raw GPT-4o mini response:
+```csv
+Frutas;;;;;;
+Banano criollo;Kilogramo;1 Kilogramo;2.000;2.200;0;0
+Banano urabá;Caja de madera;25 Kilogramo;18.000;20.000;0;0
+Borojo;Kilogramo;1 Kilogramo;5.000;5.500;0;0
+Fresa;Caja de cartón;25 Kilogramo;40.000;55.000;0;0
+Curuba;Caja de cartón;25 Kilogramo;50.000;55.000;0;0
+Granadilla;Kilogramo;1 Kilogramo;5.000;5.500;0;0
+Guanábana;Kilogramo;1 Kilogramo;5.000;5.500;0;0
+Guayaba para mesa;Caja de madera;10 Kilogramo;80.000;90.000;0;0
+Kiwi;Canastilla;1 Kilogramo;80.000;90.000;0;0
+Lulo;Canastilla;1 Kilogramo;40.000;45.000;0;0
+Mango tommy;Canastilla;1 Kilogramo;30.000;35.000;0;0
+Manzana roja importada;Caja de cartón;20 Kilogramo;115.000;120.000;0;0
+Manzana verde importada;Caja de cartón;20 Kilogramo;115.000;120.000;0;0
+Maracuyá;Bolsa;10 Kilogramo;32.000;36.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;3.000;3.500;0;0
+Mora de Castilla;Canastilla;1 Kilogramo;38.000;40.000;0;0
+Papaya;Canastilla;20 Kilogramo;26.000;30.000;0;0
+Papaya taiñung;Canastilla;20 Kilogramo;26.000;30.000;0;0
+Patilla;Kilogramo;1 Kilogramo;1.400;1.500;0;0
+Pera importada;Caja de cartón;20 Kilogramo;115.000;120.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;75.000;80.000;0;0
+Tomate de árbol;Canastilla;5 Kilogramo;7.000;8.000;0;0
+Uva importada;Canastilla;8 Kilogramo;60.000;70.000;0;0
+Uva isabela;Caja de cartón;24 Unidad 500 GR;38.000;42.000;0;0
+Uva red globe nacional;Caja de cartón;8 Kilogramo;56.000;58.000;0;0
+Uva red globe nacional;Caja de madera;11 Kilogramo;65.000;70.000;0;0
+Granos y cereales;;;;;;
+Cereales;;;;;;
+Arroz de primera;Bolsa;25 Unidad 500 GR;28.000;28.500;0;0
+Arroz blanco trillado;Bulto;50 Kilogramo;115.000;125.000;0;0
+Mali piraz;Bolsa;25 Unidad 460 GR;49.300;54.000;0;0
+Granos;;;;;;
+Arveja verde seca importada;Bolsa;25 Unidad 460 GR;40.000;47.500;0;0
+Frijol bólon;Bolsa;25 Unidad 460 GR;90.000;95.000;0;0
+Frijol cargamanto rojo;Bolsa;25 Unidad 460 GR;90.000;93.500;0;0
+Frijol nima calima;Bolsa;25 Unidad 460 GR;64.000;75.500;0;0
+Garbanzos importados;Bolsa;25 Unidad 500 GR;62.500;70.000;0;0
+Lenteja importada;Bolsa;25 Unidad 460 GR;62.000;70.000;0;0
+Lácteos y huevos;;;;;;
+Queso campesino;Kilogramo;1 Kilogramo;11.000;13.000;0;0
+Queso costeño;Kilogramo;1 Kilogramo;16.000;0;0;0
+Queso cuajada;Kilogramo;1 Kilogramo;14.000;14.400;0;0
+Queso doble crema;Kilogramo;1 Kilogramo;14.800;15.200;0;0
+Huevos;;;;;;
+```

@@ -1,0 +1,43 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmppyjsofff/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:05:38
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón tahití;Bulto;24 Kilogramo;63.000;65.000;0;0
+Mandarina común;Caja de cartón;24 Kilogramo;40.000;43.000;0;0
+Naranja común;Kilogramo;1 Kilogramo;760;760;0;0
+Naranja valenciana;Kilogramo;1 Kilogramo;960;960;0;0
+Otros frutas;;;;;;
+Aguacate pequeño;Kilogramo;1 Kilogramo;5.800;6.000;0;0
+Banano criollo;Kilogramo;1 Kilogramo;720;720;0;0
+Banano urabá;Kilogramo;1 Kilogramo;720;720;0;0
+Coco;Kilogramo;1 Kilogramo;720;720;0;0
+Guanábana;Kilogramo;1 Kilogramo;1.400;1.400;0;0
+Guayaba;Canastilla;25 Kilogramo;30.000;31.000;0;0
+Guayaba pera;Caja de;25 Kilogramo;11.000;12.000;0;0
+Lulo;Kilogramo;1 Kilogramo;1.500;1.600;0;0
+Mango de azúcar;Canastilla;25 Kilogramo;130.000;130.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;132.000;135.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;140.000;140.000;0;0
+Maracuyá santandereano;Bulto;15 Kilogramo;58.000;60.000;0;0
+Maracuyá valluno;Bulto;10 Kilogramo;30.000;33.000;0;0
+Mora de castilla;Caja de cartón;2,5 Kilogramo;11.000;12.000;0;0
+Mora de castilla;Kilogramo;1 Kilogramo;42.000;42.000;0;0
+Piña tainung;Caja de madera;25 Kilogramo;30.000;31.000;0;0
+Tomate de árbol;Kilogramo;1 Kilogramo;2.600;2.700;0;0
+Pescados y congelados;;;;;;
+Basa, entero congelado importado;Caja de cartón;10 Kilogramo;98.000;100.000;0;0
+Bocachico importado congelado;Kilogramo;1 Kilogramo;8.900;9.000;0;0
+Mojarra lora entera congelada;Kilogramo;1 Kilogramo;9.800;10.000;0;0
+Mojarra lora entera fresca;Kilogramo;1 Kilogramo;9.700;9.800;0;0
+Tilapia roja entera congelada;Kilogramo;1 Kilogramo;14.600;14.600;0;0
+Tilapia roja entera fresca;Kilogramo;1 Kilogramo;9.800;10.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Plátano;;;;;;
+Plátano hartón verde;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Papa criolla sucia;Bolsa;50 Kilogramo;177.000;180.000;0;0
+Papa única;Bulto;50 Kilogramo;50.000;51.000;0;0
+Yuca;Bolsa;40 Kilogramo;40.000;42.000;0;0
+```

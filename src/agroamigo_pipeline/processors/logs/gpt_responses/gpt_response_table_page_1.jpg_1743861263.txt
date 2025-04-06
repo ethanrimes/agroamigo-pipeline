@@ -1,0 +1,29 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpvv65fcvg/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:54:23
+Raw GPT-4o mini response:
+```
+Hortalizas;;;;;;
+Habichuela;Arroba;12,5 Kilogramo;48.000;50.000;0;0
+Ahuya;Kilogramo;1 Kilogramo;1.000;1.100;0;0
+Apio importado;Caja de cartón;10 Kilogramo;95.000;100.000;0;0
+Choclo maíz;Bulto;70 Kilogramo;3.800;4.000;0;0
+Pepino cohombro;Kilogramo;1 Kilogramo;4.000;4.500;0;0
+Remolacha;Bulto;62.5 Kilogramo;115.000;120.000;0;0
+Zanahoria;Bulto;60 Kilogramo;130.000;140.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;68.000;70.000;0;0
+Cebolla junca;Atado/manojo;14 Kilogramo;18.000;20.000;0;0
+Tomates;;;;;;
+Tomate;Canastilla;15 Kilogramo;18.000;20.000;0;0
+Hortalizas;;;;;;
+Acelga;Atado/manojo;15 Kilogramo;18.000;20.000;0;0
+Apio;Docena;20 Kilogramo;20.000;20.000;0;0
+Brócoli;Atado/manojo;2.5 Kilogramo;8.000;9.000;0;0
+Cilantro;Atado/manojo;2.5 Kilogramo;9.000;9.000;0;0
+Coliflor;Docena;12 Kilogramo;50.000;54.000;0;0
+Espinaca;Atado/manojo;9 Kilogramo;38.000;40.000;0;0
+Lechuga batavia;Docena;15 Kilogramo;32.000;34.000;0;0
+Perejil;Atado/manojo;4 Kilogramo;40.000;43.000;0;0
+Repollo blanco;Bolsa;30 Kilogramo;35.000;35.000;0;0
+```

@@ -1,0 +1,16 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpi3396apl/page_3.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:52:01
+Raw GPT-4o mini response:
+```plaintext
+Tomates;;;;;;
+Tomate chonto;Canastilla;22 Kilogramo;40.000;40.000;0;0
+Hortalizas;;;;;;
+Apio;Atado/manojo;12,5 Kilogramo;24.000;28.000;0;0
+Brócoli;Docena;15 Kilogramo;50.000;50.000;0;0
+Cilantro;Atado/manojo;250 Gramo;1.500;1.500;0;0
+Coliflor;Docena;10 Kilogramo;30.000;36.000;0;0
+Espinaca;Kilogramo;1 Kilogramo;30.000;36.000;0;0
+Lechuga batavia;Docena;250 Gramo;0;0;0;0
+Repollo verde;Bulto;25 Kilogramo;15.000;18.000;0;0
+```

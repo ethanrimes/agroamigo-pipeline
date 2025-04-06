@@ -1,0 +1,13 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp7i0hvz8n/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 23:10:13
+Raw GPT-4o mini response:
+```
+DANE
+INFORMACIÓN PARA TODOS
+SISTEMA DE INFORMACIÓN DE PRECIOS Y ABASTECIMIENTO DEL SECTOR AGROPECUARIO - SIPS
+PRECIOS DE VENTA MAYORISTA
+Santa Bárbara (Antioquia)
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+25 de Enero de 2024
+```

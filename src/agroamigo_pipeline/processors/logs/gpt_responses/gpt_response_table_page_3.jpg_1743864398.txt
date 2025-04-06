@@ -1,0 +1,42 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpuj2a9uzr/page_3.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:46:38
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Papa criolla limpia;Bulto;50 Kilogramo;120.000;130.000;0;0
+Papa superior;Bulto;50 Kilogramo;65.000;70.000;0;0
+Yuca;Bulto;50 Kilogramo;None;None;0;0
+Yuca chiroza;Bolsa;30 Kilogramo;30.000;40.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Bulto;50 Kilogramo;120.000;130.000;0;0
+Frijol verde;Arroba;25 Kilogramo;None;None;0;0
+Habichuela;Arroba;12,5 Kilogramo;35.000;None;0;0
+Otros hortalizas y verduras;;;;;;
+Ahuayma;Kilogramo;1 Kilogramo;None;None;0;0
+Ahuayma;Kilogramo;1 Kilogramo;None;None;0;0
+Ajo importado;Caja de cartón;1 Kilogramo;None;None;0;0
+Choclo maíz;Bolsa;62,5 Kilogramo;None;None;0;0
+Pepino;Bolsa;25 Kilogramo;None;None;0;0
+Pimentón;Kilogramo;1 Kilogramo;2.000;3.000;0;0
+Remolacha;Arroba;12,5 Kilogramo;16.000;20.000;0;0
+Zanahorias;;;;;;
+Zanahoria;Arroba;12,5 Kilogramo;22.000;24.000;0;0
+Zanahoria;Bulto;62,5 Kilogramo;100.000;None;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Arroba;12,5 Kilogramo;15.000;16.000;0;0
+Cebolla cabezona blanca;Bulto;50 Kilogramo;50.000;None;0;0
+Cebolla junco aquitainia;Atado/manojo;32 Kilogramo;25.000;30.000;0;0
+Tomates;;;;;;
+Tomate chonto;Caja de cartón;25 Kilogramo;58.000;60.000;0;0
+Hortalizas;;;;;;
+Acelga;Atado/manojo;12,5 Kilogramo;16.000;18.000;0;0
+Apio;Atado/manojo;12,5 Kilogramo;None;None;0;0
+Brócoli;Atado/manojo;2 Kilogramo;4.000;4.000;0;0
+Cilantro;Atado/manojo;2,5 Kilogramo;7.000;None;0;0
+Cilantro;Atado/manojo;5 Kilogramo;15.000;None;0;0
+Espinaca;Atado/manojo;9 Kilogramo;30.000;40.000;0;0
+Lechuga batavia;Docena;12,5 Kilogramo;14.000;None;0;0
+Perejil;Atado/manojo;4 Kilogramo;20.000;25.000;0;0
+```

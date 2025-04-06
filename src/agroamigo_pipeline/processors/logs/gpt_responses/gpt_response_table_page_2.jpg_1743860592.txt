@@ -1,0 +1,48 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpd2egjnis/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:43:12
+Raw GPT-4o mini response:
+```csv
+Productos;;;;;;
+Bocachico criollo fresco;Kilogramo;1 Kilogramo;16.000;18.000;0;0
+Bocachico importado congelado;Kilogramo;1 Kilogramo;11.000;11.000;0;0
+Cachama de cultivo fresca;Kilogramo;1 Kilogramo;9.000;9.000;0;0
+Mojarra lora entera fresca;Kilogramo;1 Kilogramo;8.300;8.500;0;0
+Tilapia roja entera fresca;Kilogramo;1 Kilogramo;10.500;11.000;0;0
+Procesados;;;;;;
+Café molido;Bolsa;10 Unidad 50 GR;8.300;8.500;0;0
+Chocolate dulce;Kilogramo;1 Kilogramo;20.000;24.600;0;0
+Fécula de maíz;Caja de cartón;48 Unidad 110 GR;36.000;40.000;0;0
+Galletas saladas;Caja de cartón;48 Unidad 500 GR;33.000;35.000;0;0
+Harina de trigo;Bolsa;25 Unidad 500 GR;33.000;35.000;0;0
+Lomos de atún en lata;Caja de cartón;48 Unidad 170 GR;198.000;205.000;0;0
+Pastas alimenticias;Bolsa;20 Unidad 500 GR;32.000;33.000;0;0
+Sal yodada;Bolsa;25 Unidad 500 GR;14.000;15.000;0;0
+Salsa de tomate doy pack;Caja de cartón;24 Unidad 43 GR;32.000;34.000;0;0
+Sardinas en lata;Caja de cartón;48 Unidad 425 GR;190.000;195.000;0;0
+Vinagre;Caja de cartón;24 Unidad 500 CC;17.000;18.000;0;0
+Azúcar;Bulto;50 Kilogramo;150.000;153.000;0;0
+Azúcar refinada;Bulto;50 Kilogramo;150.000;153.000;0;0
+Panelas;Caja de cartón;7 Kilogramo;20.000;22.000;0;0
+Panelas cuadrada morena;Caja de cartón;7 Kilogramo;20.000;22.000;0;0
+Panelas redonda morena;Kilogramo;1 Kilogramo;3.300;3.500;0;0
+Aceites y grasas;;;;;;
+Aceite girasol;Caja de cartón;12 Unidad 900 CC;130.000;133.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Name diamante;Bulto;50 Kilogramo;34.000;35.000;0;0
+Name espino;Bulto;50 Kilogramo;40.000;40.000;0;0
+Plátano;Ciento;40 Kilogramo;42.000;45.000;0;0
+Plátano hartón verde;Ciento;40 Kilogramo;42.000;45.000;0;0
+Papa;Bulto;50 Kilogramo;68.000;68.000;0;0
+Papa criolla limpia;Bulto;10 Kilogramo;30.000;32.000;0;0
+Papa puracé;Bulto;50 Kilogramo;30.000;32.000;0;0
+Yuca;Bulto;40 Kilogramo;34.000;36.000;0;0
+Yuca criolla;Bolsa;40 Kilogramo;34.000;36.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Frijol verde en vaina;Kilogramo;1 Kilogramo;3.200;3.500;0;0
+Habichuela;Kilogramo;1 Kilogramo;3.000;3.000;0;0
+Habichuela larga;Kilogramo;1 Kilogramo;2.500;2.500;0;0
+Otras hortalizas y verduras;;;;;;
+```

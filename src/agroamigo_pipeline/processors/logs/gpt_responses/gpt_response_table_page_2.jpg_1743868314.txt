@@ -1,0 +1,44 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpi3396apl/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:51:54
+Raw GPT-4o mini response:
+```csv
+Productos;;;;;;
+Sardinas en lata;Caja de cartón;48 Unidad 425 GR;255.000;264.000;0;0
+Azúcar;Bulto;50 Kilogramo;152.000;155.000;0;0
+Panela;Bolsa;24 Kilogramo;85.000;87.000;0;0
+Aceites y grasas;;;;;;
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;96.000;102.000;0;0
+Aceite vegetal mezcla;Caja de cartón;24 Unidad 500 CC;103.000;110.000;0;0
+Manteca;Caja de cartón;40 Unidad 250 GR;93.000;94.000;0;0
+Margarina;Caja de cartón;40 Unidad 250 GR;132.000;132.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Batata;Bulto;62 Kilogramo;90.000;100.000;0;0
+Plátano dominico;Racimo;20 Kilogramo;24.000;26.000;0;0
+Plátano maduro;Racimo;1 Kilogramo;1.200;1.300;0;0
+Papa;Bulto;50 Kilogramo;52.000;56.000;0;0
+Papa criolla limpia;Bulto;48 Kilogramo;130.000;140.000;0;0
+Papa para pastusa;Bulto;50 Kilogramo;52.000;52.000;0;0
+Papa r-12 negra;Bulto;50 Kilogramo;52.000;52.000;0;0
+Papa única;Bulto;50 Kilogramo;50.000;52.000;0;0
+Yuca;Bolsa;25 Kilogramo;40.000;40.000;0;0
+Verduras y hortalizas;;;;;;
+Arveja verde en vaina;Kilogramo;1 Kilogramo;2.600;3.000;0;0
+Frijol verde en vaina;Kilogramo;1 Kilogramo;3.500;3.500;0;0
+Habichuela;Arroba;12,5 Kilogramo;36.000;0;0;0
+Otras hortalizas y verduras;;;;;;
+Ahuayma;Kilogramo;1 Kilogramo;1.700;1.700;0;0
+Ajo;Atado/manojo;8 Kilogramo;60.000;65.000;0;0
+Ajo importado;Caja de cartón;10 Kilogramo;90.000;100.000;0;0
+Berenjena;Kilogramo;1 Kilogramo;2.500;2.500;0;0
+Chócolo mazorca;50 Kilogramo;40.000;0;0;0
+Pepino cohombro;Kilogramo;1 Kilogramo;1.000;1.000;0;0
+Pimentón;Kilogramo;1 Kilogramo;1.000;1.000;0;0
+Rábano rojo;Kilogramo;1 Kilogramo;5.000;5.000;0;0
+Remolacha;Bulto;55 Kilogramo;80.000;90.000;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;62 Kilogramo;90.000;100.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;50.000;55.000;0;0
+Cebolla junca;Arroba;12,5 Kilogramo;18.000;22.000;0;0
+```

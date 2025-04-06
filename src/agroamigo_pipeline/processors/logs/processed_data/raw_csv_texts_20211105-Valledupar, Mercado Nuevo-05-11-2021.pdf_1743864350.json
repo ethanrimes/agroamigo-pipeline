@@ -1,0 +1,12 @@
+{
+  "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data/PDF_Files/PDFs/20211105-Valledupar, Mercado Nuevo-05-11-2021.pdf",
+  "metadata": {
+    "date": "2021-11-05",
+    "city": "Valledupar",
+    "market": "Mercado Nuevo",
+    "source": "informes por ciudades"
+  },
+  "csv_texts": [
+    "```\nFrutas;;;;;;\nCítricos;;;;;;\nLimón común;Bulto;50 Kilogramo;120.000;130.000;0;0\nLimón común;Canastilla;25 Kilogramo;65.000;70.000;0;0\nNaranja común;Kilogramo;1 Kilogramo;400;480;0;0\nOtras frutas;;;;;;\nAguacate papillo;Kilogramo;1 Kilogramo;None;None;0;0\nPapaya;Canastilla;25 Kilogramo;80.000;90.000;0;0\nPapaya importada;Caja de cartón;12 Kilogramo;125.000;None;0;0\nManzana royal gala;Caja de cartón;19 Kilogramo;135.000;140.000;0;0\nManzana verde;Caja de cartón;19 Kilogramo;125.000;None;0;0\nUva importada;Kilogramo;1 Kilogramo;None;None;0;0\nPlátano;;;;;;\nPlátano hartón verde;Kilogramo;1 Kilogramo;1.350;1.500;0;0\nPapa;;;;;;\nPapa criolla limpia;Bulto;50 Kilogramo;180.000;180.000;0;0\nPapa única;Bulto;50 Kilogramo;68.000;70.000;0;0\nYuca;;;;;;\nYuca criolla;Bulto;40 Kilogramo;35.000;38.000;0;0\nVerduras y hortalizas;;;;;;\nOtras hortalizas y verduras;;;;;;\nPimentón;Caja de cartón;12 Kilogramo;40.000;40.000;0;0\nCebollas;;;;;;\nCebolla cabezona roja;Bulto;8 Kilogramo;20.000;22.000;0;0\nCebolla cabezona roja;Bulto;45 Kilogramo;100.000;110.000;0;0\nTomates;;;;;;\nTomate chonto;Caja de cartón;25 Kilogramo;50.000;55.000;0;0\nHortalizas;;;;;;\nCilantro;Kilogramo;1 Kilogramo;2.000;2.000;0;0\n```"
+  ]
+}

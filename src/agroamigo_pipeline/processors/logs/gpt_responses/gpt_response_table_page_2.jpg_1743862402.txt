@@ -1,0 +1,22 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpdd3v_rc3/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:13:22
+Raw GPT-4o mini response:
+```plaintext
+Otros hortalizas y verduras;;;;;;
+Habichuela;Bulto;25 Kilogramo;70.000;74.000;0;0
+Ahuym;Bulto;50 Kilogramo;68.000;70.000;0;0
+Ajo importado;Caja de cartón;10 Kilogramo;33.000;85.000;0;0
+Choclo maíz;Bulto;10 Kilogramo;42.000;42.000;0;0
+Pepino cohombro;Bulto;13 Kilogramo;42.000;53.000;0;0
+Pimentón;Caja de cartón;7 Kilogramo;42.000;42.000;0;0
+Zanahorias;Bulto;48 Kilogramo;50.000;50.000;0;0
+Cebollas;Bulto;48 Kilogramo;40.000;40.000;0;0
+Cebolla cabezona blanca pastusa;Bulto;48 Kilogramo;20.000;20.000;0;0
+Cebolla lisa pastusa;Atado/manojo;22,5 Kilogramo;20.000;20.000;0;0
+Tomates;Kilogramo;2.200;20.000;20.000;0;0
+Tomate larga vida;Kilogramo;5.000;20.000;20.000;0;0
+Hortalizas;;;;;;
+Cilantro;Atado/manojo;1 Kilogramo;5.000;5.000;0;0
+Repollo blanco;Bulto;50 Kilogramo;35.000;35.000;0;0
+```

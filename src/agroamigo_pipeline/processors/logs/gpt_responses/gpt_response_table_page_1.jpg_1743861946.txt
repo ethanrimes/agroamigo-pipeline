@@ -1,0 +1,16 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmptr2h5ydv/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:05:46
+Raw GPT-4o mini response:
+```
+Hortalizas;;;;;;
+Cebolla junca berlín;Atado/manojo;30 Kilogramo;50.000;55.000;0;0
+Tomate chonto;Caja de cartón;25 Kilogramo;50.000;55.000;0;0
+Apio;Atado/manojo;10 Kilogramo;18.000;20.000;0;0
+Brócoli;Kilogramo;1 Kilogramo;5.000;5.000;0;0
+Cilantro;Atado/manojo;1 Kilogramo;3.000;3.000;0;0
+Coliflor;Kilogramo;1 Kilogramo;38.000;40.000;0;0
+Espinaca;Atado/manojo;1 Kilogramo;5.000;5.000;0;0
+Lechuga batavia;Caja de madera;15 Kilogramo;22.000;27.000;0;0
+Repollo blanco;Bulto;70 Kilogramo;100.000;110.000;0;0
+```

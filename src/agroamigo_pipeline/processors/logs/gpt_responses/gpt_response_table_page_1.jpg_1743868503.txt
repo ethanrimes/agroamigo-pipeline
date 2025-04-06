@@ -1,0 +1,9 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpr83zh6j5/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:55:03
+Raw GPT-4o mini response:
+```plaintext
+Frutas;;;;;;
+Lechuga batavia;Caja de cartón;12 Kilogramo;22.000;25.000;0;0
+Repollo blanco;Bulto;70 Kilogramo;80.000;90.000;0;0
+```

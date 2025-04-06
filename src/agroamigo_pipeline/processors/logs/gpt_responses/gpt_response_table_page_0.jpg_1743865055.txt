@@ -1,0 +1,34 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp2a30tgpy/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:57:36
+Raw GPT-4o mini response:
+```
+Carnes;;;;;;
+Carne de res;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, bola de brazo;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, bota;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, cadera;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, centro de pierna;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, costilla;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, lomo de brazo;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, morcillo;Kilogramo;1 Kilogramo;0;0;18.000;18.000
+Carne de res, muchacho;Kilogramo;1 Kilogramo;0;0;20.000;21.000
+Carne de res, murillo;Kilogramo;1 Kilogramo;0;0;18.000;19.000
+Carne de res, paletero;Kilogramo;1 Kilogramo;0;0;18.000;19.000
+Carne de res, pecho;Kilogramo;1 Kilogramo;0;0;18.000;19.000
+Carne de res, punta de anca;Kilogramo;1 Kilogramo;0;0;24.000;24.500
+Carne de cerdo;;;;;;
+Carne de cerdo, brazo con hueso;Kilogramo;1 Kilogramo;0;0;15.000;16.000
+Carne de cerdo, cabeza de lomo;Kilogramo;1 Kilogramo;0;0;17.000;17.000
+Carne de cerdo, costilla;Kilogramo;1 Kilogramo;0;0;17.000;18.000
+Carne de cerdo, espinazo;Kilogramo;1 Kilogramo;0;0;5.000;5.000
+Carne de cerdo, lomo con hueso;Kilogramo;1 Kilogramo;0;0;18.000;18.500
+Carne de cerdo, lomo sin hueso;Kilogramo;1 Kilogramo;0;0;15.000;15.000
+Carne de cerdo, pernil con hueso;Kilogramo;1 Kilogramo;0;0;16.500;17.000
+Carne de cerdo, tocino papada;Kilogramo;1 Kilogramo;0;0;13.000;13.000
+Pollo;;;;;;
+Alas de pollo sin costillar;Kilogramo;1 Kilogramo;0;0;8.100;8.300
+Pechuga de pollo;Kilogramo;1 Kilogramo;0;0;11.000;12.000
+Pierna pernil con rabadilla;Kilogramo;1 Kilogramo;0;0;6.100;6.500
+Piernas de pollo;Kilogramo;1 Kilogramo;0;0;6.850;7.600
+```

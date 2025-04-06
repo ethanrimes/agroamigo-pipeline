@@ -1,0 +1,19 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpk9uas7z9/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:35:32
+Raw GPT-4o mini response:
+```
+Zanahorias;;;;;;
+Zanahoria larga vida;Bulto;45 Kilogramo;60.000;62.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;55.000;57.000;0;0
+Cebolla cabezona roja;Bulto;46 Kilogramo;138.000;140.000;0;0
+Cebolla cabezona roja importada;Bulto;46 Kilogramo;78.000;81.000;0;0
+Cebolla junca;Atado/manojo;12 Kilogramo;None;None;0;0
+Tomate chonto regional;Caja de cartón;10 Kilogramo;None;None;0;0
+Tomate riñón;Bolsa;10 Kilogramo;None;36.000;0;0
+Hortalizas;;;;;;
+Apio;Atado/manojo;None;None;None;0;0
+Cilantro;Atado/manojo;None;None;None;0;0
+Lechuga batavia;Caja de cartón;15 Kilogramo;None;None;0;0
+```

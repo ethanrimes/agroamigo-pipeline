@@ -1,0 +1,8 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmppfxhjlax/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:50:24
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Repollo verde;Bulto;60 Kilogramo;70.000;72.000;0;0
+```

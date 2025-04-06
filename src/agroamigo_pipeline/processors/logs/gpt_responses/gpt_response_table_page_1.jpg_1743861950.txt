@@ -1,0 +1,14 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp0r6zrv6h/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:05:50
+Raw GPT-4o mini response:
+```plaintext
+Hortalizas;;;;;;
+Zanahoria;Bulto;62,5 Kilogramo;120.000;140.000;0;0
+Cebolla;Cabezona blanca;Bulto;50 Kilogramo;40.000;45.000;0;0
+Cebolla cabezona roja;Bulto;45 Kilogramo;115.000;120.000;0;0
+Cebolla junca;Ajuinita;30 Kilogramo;30.000;0;0;0
+Tomate chonto;Canastilla;23 Kilogramo;40.000;0;0;0
+Tomate larga vida;Canastilla;0;0;0;0;0
+Cilantro;Atado/manojo;1,5 Kilogramo;18.000;0;0;0
+```

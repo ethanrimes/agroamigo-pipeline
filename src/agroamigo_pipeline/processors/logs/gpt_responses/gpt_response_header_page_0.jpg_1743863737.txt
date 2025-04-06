@@ -1,0 +1,13 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpk9uas7z9/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 22:35:37
+Raw GPT-4o mini response:
+```
+DANE
+INFORMACIÓN PARA TODOS
+BOLETÍN DIARIO
+PRECIOS DE VENTA MAYORISTA
+Montería, Mercado del Sur
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+25 de Octubre de 2021
+```

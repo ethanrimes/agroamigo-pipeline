@@ -1,0 +1,11 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpg9om9ku9/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-06 00:01:05
+Raw GPT-4o mini response:
+```plaintext
+Hortalizas;;;;;;
+Apio;Atado/manojo;10 Kilogramo;15.000;20.000;0;0
+Cilantro;Atado/manojo;10 Kilogramo;34.000;40.000;0;0
+Lechuga batavia;Caja de madera;15 Kilogramo;20.000;22.000;0;0
+Repollo blanco;Bulto;70 Kilogramo;110.000;110.000;0;0
+```

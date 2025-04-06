@@ -1,0 +1,50 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpvdb2ur9b/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:55:34
+Raw GPT-4o mini response:
+```csv
+Jugos;;;;;;
+Jugo instantáneo (sobre);Caja de cartón;20 Unidad 18 GR;9.000;9.000;0;0
+Lomitos de atún en lata;Caja de cartón;48 Unidad 170 GR;199.300;202.000;0;0
+Mayonesa doy pack;Caja de cartón;24 Unidad 190 GR;52.000;55.000;0;0
+Pastas alimenticias;Bolsa;24 Unidad 250 GR;35.000;37.250;0;0
+Salsa de tomate doy pack;Caja de cartón;24 Unidad 190 GR;52.000;55.000;0;0
+Sardinas en lata;Caja de cartón;24 Unidad 425 GR;0;0;0;0
+Azúcar;;;;;;
+Azúcar;Bulto;50 Kilogramo;150.000;151.000;0;0
+Panelas;;;;;;
+Panela;Panelera;Bolsa;24 Kilogramo;88.000;0;0;0
+Aceites y grasas;;;;;;
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;75.000;80.000;0;0
+Manteca;Caja de cartón;10 Kilogramo;70.000;72.000;0;0
+Margarina;Caja de cartón;10 Kilogramo;110.000;122.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Arracacha blanca;Bulto;60 Kilogramo;75.000;80.000;0;0
+Plátano;;;;;;
+Plátano hartón maduro;Kilogramo;1 Kilogramo;700;750;0;0
+Plátano hartón verde;Kilogramo;1 Kilogramo;800;850;0;0
+Papa;;;;;;
+Papa criolla limpia;Bulto;60 Kilogramo;180.000;180.000;0;0
+Papa pardapastusa;Bulto;50 Kilogramo;55.000;55.000;0;0
+Papa suprema;Bulto;50 Kilogramo;55.000;60.000;0;0
+Yuca;Bolsa;25 Kilogramo;36.000;38.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Arroba;12,5 Kilogramo;38.000;40.000;0;0
+Frijol verde en vaina;Arroba;12,5 Kilogramo;50.000;50.000;0;0
+Habichuela;Arroba;12,5 Kilogramo;34.000;0;0;0
+Otros hortalizas y verduras;;;;;;
+Ahuyama;Kilogramo;1 Kilogramo;88.000;1.200;0;0
+Choclo mazorca;Bulto;70 Kilogramo;0;0;0;0
+Pepino cohombro;Kilogramo;1 Kilogramo;1.400;1.500;0;0
+Pimentón;Kilogramo;1 Kilogramo;1.200;1.300;0;0
+Remolacha;Bulto;62,5 Kilogramo;90.000;90.000;0;0
+Zanahorias;Bulto;60 Kilogramo;90.000;90.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;50.000;50.000;0;0
+Cebolla junca;Atado/manojo;14 Kilogramo;22.000;23.000;0;0
+Tomates;;;;;;
+Tomate chonto;Canastilla;22 Kilogramo;35.000;38.000;0;0
+Tomate riñón;Kilogramo;1 Kilogramo;2.800;0;0;0
+Hortalizas;;;;;;
+```

@@ -1,0 +1,11 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp8is4heie/page_0.jpg
+Prompt type: header
+Timestamp: 2025-04-05 22:07:30
+Raw GPT-4o mini response:
+```
+BOLETÍN DIARIO
+PRECIOS DE VENTA MAYORISTA
+Rionegro (Antioquia)
+PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+25 de Enero de 2024
+```

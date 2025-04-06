@@ -1,0 +1,51 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp2a30tgpy/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:57:56
+Raw GPT-4o mini response:
+```plaintext
+Pollo entero fresco sin visceras;Kilogramo;1 Kilogramo;0;0;8.200;8.350
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Kilogramo;1 Kilogramo;3.000;3.500;3.000;3.500
+Limón tahití;Bulto;20 Kilogramo;40.000;42.000;0;0
+Mandarina común;Canastilla;25 Kilogramo;40.000;45.000;0;0
+Naranja común;Bulto;30 Kilogramo;25.000;30.000;0;0
+Otras frutas;;;;;;
+Aguacate común;Kilogramo;1 Kilogramo;4.500;4.600;0;0
+Banano criollo;Kilogramo;1 Kilogramo;2.000;2.200;0;0
+Borojo;Kilogramo;1 Kilogramo;2.600;2.800;0;0
+Ciruela roja;Kilogramo;1 Kilogramo;3.000;3.500;0;0
+Curuba;Bolsa;12 Kilogramo;6.000;6.500;0;0
+Durazno nacional;Kilogramo;1 Kilogramo;2.500;3.000;0;0
+Granadilla;Kilogramo;1 Kilogramo;1.500;1.700;0;0
+Guayaba común;Canastilla;30 Kilogramo;30.000;35.000;0;0
+Guayaba pera;Canastilla;22 Kilogramo;30.000;35.000;0;0
+Kiwi;Kilogramo;1 Kilogramo;12.000;14.000;0;0
+Lulo;Kilogramo;1 Kilogramo;3.500;4.000;0;0
+Manzana roja importada;Caja de cartón;20 Kilogramo;140.000;150.000;0;0
+Manzana royal gala importada;Caja de cartón;20 Kilogramo;140.000;150.000;0;0
+Manzana verde importada;Caja de cartón;20 Kilogramo;145.000;155.000;0;0
+Maracuyá;Kilogramo;1 Kilogramo;3.500;3.500;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;2.600;2.800;2.600;2.800
+Mora de castilla;Bolsa;12 Kilogramo;6.000;6.500;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;1.500;1.700;0;0
+Patilla;Kilogramo;1 Kilogramo;1.800;2.000;0;0
+Pera importada;Caja de cartón;20 Kilogramo;115.000;120.000;1.500;1.600
+Piña gold;Caja de madera;30 Kilogramo;26.000;28.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;8.000;8.500;0;0
+Tomate de árbol;Canastilla;25 Kilogramo;6.000;6.500;3.000;3.500
+Uchuva con cáscara;Kilogramo;1 Kilogramo;8.000;8.500;0;0
+Uva importada;Caja de cartón;8 Kilogramo;110.000;115.000;0;0
+Uva isabelina;Bandeja;1.000 Gramo;2.000;2.200;0;0
+Uva verde;Caja de cartón;9 Kilogramo;70.000;75.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Arracacha amarilla;Bulto;50 Kilogramo;45.000;50.000;0;0
+Plátano;Kilogramo;1 Kilogramo;2.100;2.200;2.100;2.200
+Plátano hartón maduro;Kilogramo;1 Kilogramo;2.100;2.200;0;0
+Plátano hartón verde;Kilogramo;1 Kilogramo;2.100;2.200;0;0
+Papa;Kilogramo;1 Kilogramo;2.200;2.300;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;130.000;140.000;0;0
+Papa pastusa;Bulto;50 Kilogramo;50.000;52.000;0;0
+Papa superior;Bulto;50 Kilogramo;50.000;52.000;0;0
+```

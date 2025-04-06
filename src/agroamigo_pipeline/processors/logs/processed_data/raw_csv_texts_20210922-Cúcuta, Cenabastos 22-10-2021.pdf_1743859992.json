@@ -1,0 +1,13 @@
+{
+  "file_path": "/Users/ethankallett/Documents/Projects/agroamigo_data/daily_price_data/PDF_Files/PDFs/20210922-Cúcuta, Cenabastos 22-10-2021.pdf",
+  "metadata": {
+    "date": "2021-09-22",
+    "city": "Cucuta",
+    "market": "22",
+    "source": "informes por ciudades"
+  },
+  "csv_texts": [
+    "```\nFrutas;;;;;;\nCítricos;;;;;;\nLimón común;Bulto;70 Kilogramo;170.000;180.000;0;0\nLimón tahití;25 Kilogramo;80.000;85.000;0;0\nMandarina común;Caja de cartón;22 Kilogramo;45.000;50.000;0;0\nNaranja común;Kilogramo;1 Kilogramo;560;560;0;0\nOtras frutas;;;;;;\nAguacate común;Kilogramo;1 Kilogramo;4.000;4.000;0;0\nCoco;Kilogramo;3.783;3.783;0;0\nGuayaba pera;Caja de cartón;10 Kilogramo;12.000;15.000;0;0\nLulo;Kilogramo;1 Kilogramo;2.000;2.000;0;0\nManzana verde importada;Caja de cartón;19 Kilogramo;101.000;105.000;0;0\nPapaya lavada;Caja de cartón;19 Kilogramo;110.000;115.000;0;0\nPera importada;Caja de cartón;19 Kilogramo;116.000;120.000;0;0\nPiña gold;Kilogramo;1 Kilogramo;1.700;1.800;0;0\nTomate de árbol;Kilogramo;2.800;3.000;0;0\nUva red globe nacional;Caja de madera;10 Kilogramo;72.000;75.000;0;0\nTubérculos, raíces y platanos;;;;;;\nOtros tubérculos;;;;;;\nNanche espino;Bulto;50 Kilogramo;45.000;55.000;0;0\nPlátano;Kilogramo;1 Kilogramo;1.500;1.500;0;0\nPapa;Bulto;50 Kilogramo;165.000;180.000;0;0\nPapa criolla limpia;Bulto;50 Kilogramo;50.000;58.000;0;0\nYuca;Bolsa;40 Kilogramo;30.000;36.000;0;0\nVerduras y hortalizas;;;;;;\nLeguminosas;;;;;;\nHabichuela;Saco;20 Kilogramo;75.000;80.000;0;0\nOtras hortalizas y verduras;;;;;;\nAhuayma;Bulto;70 Kilogramo;119.000;140.000;0;0\nAjí topito dulce;Bulto;40 Kilogramo;130.000;160.000;0;0\nAjo importado;Caja de cartón;10 Kilogramo;78.000;85.000;0;0\nChoclo mazo;Bulto;40 Kilogramo;33.000;38.000;0;0\nPimentón;Caja de cartón;12 Kilogramo;35.000;40.000;0;0\nRemolacha;Kilogramo;1 Kilogramo;4.000;4.000;0;0\nZanahorias;;;;;;\nZanahoria bogotana;Bulto;60 Kilogramo;90.000;100.000;0;0\nCebollas;;;;;;\nCebolla cabezona blanca;Bulto;50 Kilogramo;60.000;65.000;0;0\nCebolla cabezona roja;Bulto;45 Kilogramo;105.000;110.000;0;0\nCebolla cabezona roja peruana;Bulto;46 Kilogramo;125.000;140.000;0;0\n```",
+    "```\nHortalizas;;;;;;\nCebolla junca berlín;Atado/manojo;30 Kilogramo;50.000;55.000;0;0\nTomate chonto;Caja de cartón;25 Kilogramo;50.000;55.000;0;0\nApio;Atado/manojo;10 Kilogramo;18.000;20.000;0;0\nBrócoli;Kilogramo;1 Kilogramo;5.000;5.000;0;0\nCilantro;Atado/manojo;1 Kilogramo;3.000;3.000;0;0\nColiflor;Atado/manojo;1 Kilogramo;35.000;40.000;0;0\nEspinaca;Atado/manojo;1 Kilogramo;5.000;5.000;0;0\nLechuga batavia;Caja de madera;15 Kilogramo;22.000;27.000;0;0\nRepollo blanco;Bulto;70 Kilogramo;100.000;110.000;0;0\n```"
+  ]
+}

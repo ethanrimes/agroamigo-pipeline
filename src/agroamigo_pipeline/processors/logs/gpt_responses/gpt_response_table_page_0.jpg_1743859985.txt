@@ -1,0 +1,46 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp4muhe9q1/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:33:06
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bulto;70 Kilogramo;170.000;180.000;0;0
+Limón tahití;25 Kilogramo;80.000;85.000;0;0
+Mandarina común;Caja de cartón;22 Kilogramo;45.000;50.000;0;0
+Naranja común;Kilogramo;1 Kilogramo;560;560;0;0
+Otras frutas;;;;;;
+Aguacate común;Kilogramo;1 Kilogramo;4.000;4.000;0;0
+Coco;Kilogramo;3.783;3.783;0;0
+Guayaba pera;Caja de cartón;10 Kilogramo;12.000;15.000;0;0
+Lulo;Kilogramo;1 Kilogramo;2.000;2.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;101.000;105.000;0;0
+Papaya lavada;Caja de cartón;19 Kilogramo;110.000;115.000;0;0
+Pera importada;Caja de cartón;19 Kilogramo;116.000;120.000;0;0
+Piña gold;Kilogramo;1 Kilogramo;1.700;1.800;0;0
+Tomate de árbol;Kilogramo;2.800;3.000;0;0
+Uva red globe nacional;Caja de madera;10 Kilogramo;72.000;75.000;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Nanche espino;Bulto;50 Kilogramo;45.000;55.000;0;0
+Plátano;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Papa;Bulto;50 Kilogramo;165.000;180.000;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;50.000;58.000;0;0
+Yuca;Bolsa;40 Kilogramo;30.000;36.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Habichuela;Saco;20 Kilogramo;75.000;80.000;0;0
+Otras hortalizas y verduras;;;;;;
+Ahuayma;Bulto;70 Kilogramo;119.000;140.000;0;0
+Ají topito dulce;Bulto;40 Kilogramo;130.000;160.000;0;0
+Ajo importado;Caja de cartón;10 Kilogramo;78.000;85.000;0;0
+Choclo mazo;Bulto;40 Kilogramo;33.000;38.000;0;0
+Pimentón;Caja de cartón;12 Kilogramo;35.000;40.000;0;0
+Remolacha;Kilogramo;1 Kilogramo;4.000;4.000;0;0
+Zanahorias;;;;;;
+Zanahoria bogotana;Bulto;60 Kilogramo;90.000;100.000;0;0
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;60.000;65.000;0;0
+Cebolla cabezona roja;Bulto;45 Kilogramo;105.000;110.000;0;0
+Cebolla cabezona roja peruana;Bulto;46 Kilogramo;125.000;140.000;0;0
+```

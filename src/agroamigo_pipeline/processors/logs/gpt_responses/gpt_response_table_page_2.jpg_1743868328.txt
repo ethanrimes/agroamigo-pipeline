@@ -1,0 +1,9 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpheqdi3mw/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:52:08
+Raw GPT-4o mini response:
+```
+Verduras;;;;;;
+Perejil;Atado/manojo;5 Kilogramo;13.000;15.000;0;0
+Repollo verde;Bulto;60 Kilogramo;68.000;70.000;0;0
+```

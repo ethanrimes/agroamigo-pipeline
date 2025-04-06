@@ -1,0 +1,38 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmptac8_38p/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:14:48
+Raw GPT-4o mini response:
+```
+Carnes;;;;;;
+Carne de res;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, bola de pierna;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, bota;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, cadera;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, centro de pierna;Kilogramo;1 Kilogramo;19.000;20.000;0;0
+Carne de res, chatas;Kilogramo;1 Kilogramo;16.000;17.000;0;0
+Carne de res, costilla;Kilogramo;1 Kilogramo;15.000;16.000;0;0
+Carne de res, lomo fino;Kilogramo;1 Kilogramo;15.000;16.000;0;0
+Carne de res, molida, murillo;Kilogramo;1 Kilogramo;16.000;17.000;0;0
+Carne de cerdo;Kilogramo;1 Kilogramo;15.000;16.000;0;0
+Carne de cerdo, cabeza de lomo;Kilogramo;1 Kilogramo;15.000;16.000;0;0
+Carne de cerdo, costilla;Kilogramo;1 Kilogramo;15.000;15.800;0;0
+Carne de cerdo, perniles sin hueso;Kilogramo;1 Kilogramo;13.000;14.500;0;0
+Pollo;;;;;;
+Alas de pollo con costillar;Kilogramo;1 Kilogramo;7.000;7.600;0;0
+Menudencias de pollo;Kilogramo;1 Kilogramo;1.600;2.000;0;0
+Muslos de pollo sin rabadilla;Kilogramo;1 Kilogramo;9.000;12.000;0;0
+Pechuga de pollo;Kilogramo;1 Kilogramo;11.500;12.000;0;0
+Piernita pernil con rabadilla;Kilogramo;1 Kilogramo;7.600;8.400;0;0
+Perniles de pollo;Kilogramo;1 Kilogramo;9.000;9.000;0;0
+Pollo entero fresco sin visceras;Kilogramo;1 Kilogramo;8.600;9.000;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Canastilla;25 Kilogramo;65.000;70.000;0;0
+Limón mandarina;Canastilla;25 Kilogramo;25.000;30.000;0;0
+Limón tahití;Canastilla;25 Kilogramo;75.000;80.000;0;0
+Mandarina arrayana;Canastilla;25 Kilogramo;40.000;45.000;0;0
+Naranja valencia;Canastilla;25 Kilogramo;40.000;50.000;0;0
+Tangelo;Canastilla;23 Kilogramo;40.000;50.000;0;0
+Otras frutas;;;;;;
+Aguacate papita;Kilogramo;1 Kilogramo;6.000;6.000;0;0
+```

@@ -1,0 +1,45 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpqxi1ik6e/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:14:47
+Raw GPT-4o mini response:
+```plaintext
+Carnes;;;;;;
+Carne de res, bola de pierna;Libra;500 Gramo;9.500;9.500;0;0
+Carne de res, murillo;Libra;500 Gramo;6.500;7.000;0;0
+Carne de res, sobrebarriga;Libra;500 Gramo;7.000;7.500;0;0
+Carne de cerdo, espinazo;Libra;500 Gramo;2.000;3.000;0;0
+Carne de cerdo, lomo sin hueso;Libra;500 Gramo;5.000;5.500;0;0
+Pollo;;;;;;
+Alas de pollo con costilla;Libra;500 Gramo;2.900;3.200;0;0
+Menudencias de pollo;Libra;500 Gramo;5.700;5.900;0;0
+Pierna pernil con rabia;Libra;500 Gramo;3.500;3.600;0;0
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Bolsa;12,5 Kilogramo;24.000;26.000;0;0
+Limón tahití;Bolsa;12,5 Kilogramo;35.000;35.000;0;0
+Mandarina arrayana;Canastilla;22 Kilogramo;45.000;60.000;0;0
+Naranja sweet;Bulto;40 Kilogramo;38.000;0;0
+Otros frutas;;;;;;
+Aguacate papelillo;Kilogramo;1 Kilogramo;4.500;5.000;0;0
+Banano criollo;Canastilla;25 Kilogramo;30.000;30.000;0;0
+Curuba;Canastilla;25 Kilogramo;45.000;48.000;0;0
+Fresa;Caja de cartón;2 Kilogramo;40.000;42.000;0;0
+Granadilla;Caja de cartón;10 Kilogramo;45.000;48.000;0;0
+Guayaba pera;Caja de cartón;10 Kilogramo;12.500;12.500;0;0
+Gulupa;Caja de cartón;25 Kilogramo;75.000;75.000;0;0
+Kiwi;Caja de cartón;10 Kilogramo;78.000;80.000;0;0
+Lulo;Canastilla;25 Kilogramo;30.000;30.000;0;0
+Mango común;Canastilla;25 Kilogramo;30.000;30.000;0;0
+Manzana roja importada;Caja de cartón;21 Kilogramo;135.000;145.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;120.000;130.000;0;0
+Manzana ven;Caja de cartón;19 Kilogramo;150.000;160.000;0;0
+Maracuyá huilense;Bolsa;12,5 Kilogramo;30.000;35.000;0;0
+Melón cantalupo;Kilogramo;1 Kilogramo;2.500;3.000;0;0
+Mora de castilla;Canastilla;12,5 Kilogramo;0;0;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;1.800;2.000;0;0
+Pera importada;Caja de cartón;18 Kilogramo;120.000;130.000;0;0
+Piña gold;Kilogramo;1 Kilogramo;1.800;2.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;1.800;2.000;0;0
+Tamarindo;Bolsa;25 Kilogramo;65.000;70.000;0;0
+Uva roja;Kilogramo;1 Kilogramo;7.100;7.800;0;0
+```

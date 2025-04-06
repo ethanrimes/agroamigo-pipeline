@@ -1,0 +1,40 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpvdb2ur9b/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 22:55:18
+Raw GPT-4o mini response:
+```
+Granos;;;;;;
+Maiz amarillo trillado;Bulto;50 Kilogramo;95.000;98.000;0;0
+Maiz blanco trillado;Bulto;50 Kilogramo;106.000;108.000;0;0
+Arveja verde seca importada;Bolsa;25 Unidad 454 GR;43.950;45.000;0;0
+Frijol bólón;Bolsa;25 Unidad 454 GR;98.000;99.000;0;0
+Frijol caracolito rojo;Bolsa;25 Unidad 454 GR;76.000;77.000;0;0
+Frijol niama calima;Bolsa;25 Unidad 454 GR;76.000;77.000;0;0
+Garbanzos importado;Bolsa;454 Gramo;76.000;77.000;0;0
+Lenteja importada;Bolsa;25 Unidad 454 GR;68.650;70.000;0;0
+Lácteos;;;;;;
+Leche en polvo;Caja de cartón;30 Unidad 375 GR;287.000;290.000;0;0
+Leche en polvo;Caja de cartón;30 Unidad 400 GR;270.000;275.000;0;0
+Queso costeño;Bolsa;1 Kilogramo;14.000;16.000;0;0
+Queso doble crema;Kilogramo;1 Kilogramo;14.000;16.000;0;0
+Huevos;;;;;;
+Huevo rojo a;Unidad;1 Unidad;260;260;0;0
+Huevo rojo a;Unidad;1 Unidad;290;290;0;0
+Huevo rojo b;Unidad;1 Unidad;230;230;0;0
+Huevo rojo extra;Unidad;1 Unidad;360;360;0;0
+Pescados;;;;;;
+Bagre rayado en postas congelado;Libra;500 Gramo;13.000;13.000;0;0
+Bocachico importado congelado;Libra;500 Gramo;5.000;5.000;0;0
+Camarón tití precocido seco;Libra;500 Gramo;17.000;17.000;0;0
+Merluza, filete importado;Libra;500 Gramo;7.500;7.500;0;0
+Mojarra lora entera congelada;Libra;500 Gramo;7.500;7.500;0;0
+Pargo rojo entero congelado;Libra;500 Gramo;13.000;13.000;0;0
+Procesados;;;;;;
+Avena en hojuelas;Bolsa;12 Unidad 200 GR;23.400;24.000;0;0
+Café molido;Bolsa;500 Gramo;9.800;9.800;0;0
+Chocolate amargo;Caja de cartón;24 Unidad 500 CC;292.000;295.500;0;0
+Fécula de maíz;Caja de cartón;24 Unidad 90 GR;132.000;0;0;0
+Galletas saladas;Caja de cartón;24 Unidad 500 GR;78.400;0;0;0
+Harina de trigo;Bolsa;25 Unidad 500 GR;30.000;31.850;0;0
+Harina precocida de maíz;Bolsa;24 Unidad 500 GR;44.800;45.000;0;0
+```

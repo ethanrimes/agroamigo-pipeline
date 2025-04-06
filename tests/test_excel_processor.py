@@ -7,8 +7,6 @@ from pathlib import Path
 import filecmp
 
 from agroamigo_pipeline.processors.excel_processor import ExcelProcessor
-from agroamigo_pipeline.utils.file_registry import FileRegistry
-
 # Define test data directory paths
 TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'test_data', 'excel_processor')
 SOURCE_DIR = os.path.join(TEST_DATA_DIR, 'source')

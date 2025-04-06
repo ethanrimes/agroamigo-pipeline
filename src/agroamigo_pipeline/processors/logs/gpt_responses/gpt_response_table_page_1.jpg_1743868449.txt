@@ -1,0 +1,44 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpgftvbx62/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:54:09
+Raw GPT-4o mini response:
+```csv
+Frutas;;;;;;
+Kiwi;Canastilla;10 Kilogramo;150.000;160.000;0;0
+Lulo;Kilogramo;1 Kilogramo;3.500;4.000;0;0
+Mango tommy;Caja de cartón;25 Kilogramo;80.000;90.000;0;0
+Manzana roja importada;Caja de cartón;19 Kilogramo;170.000;180.000;0;0
+Manzana verde importada;Caja de cartón;19 Kilogramo;190.000;200.000;0;0
+Maracuyá;Bolsa;1 Kilogramo;4.000;5.000;0;0
+Melón cantalupo;Unidad;1 Kilogramo;4.000;5.000;0;0
+Pera maduro;Kilogramo;1 Kilogramo;4.000;5.000;0;0
+Piña golosa;Unidad;1 Kilogramo;4.000;5.000;0;0
+Tomate de árbol;Bolsa;1 Kilogramo;5.000;6.000;0;0
+Tomate de árbol nacional;Caja de cartón;1 Kilogramo;5.000;6.000;0;0
+Arroz de primera;Bolsa;25 Unidad 500 GR;51.000;52.000;0;0
+Maíz amarillo cáscara;Arroba;12.5 Kilogramo;22.000;23.000;0;0
+Maíz blanco trillado;Arroba;12.5 Kilogramo;29.000;30.000;0;0
+Granos;;;;;;
+Arveja verde seca importada;Bolsa;25 Unidad 454 GR;49.000;51.000;0;0
+Frijol cargamanto rojo;Bolsa;25 Unidad 454 GR;49.000;51.000;0;0
+Frijol nima calima;Bolsa;25 Unidad 454 GR;99.000;102.000;0;0
+Lenteja importada;Bolsa;25 Unidad 454 GR;83.000;0;0;0
+Lácteos y huevos;;;;;;
+Queso campesino;Kilogramo;1 Kilogramo;16.000;17.000;0;0
+Queso costeño;Kilogramo;1 Kilogramo;19.600;0;0;0
+Huevos;;;;;;
+Huevo blanco a;Panal;30 Unidad;14.000;14.000;0;0
+Huevo blanco a;Panal;30 Unidad;14.000;14.000;0;0
+Huevo blanco extra;Panal;30 Unidad;18.500;18.500;0;0
+Pescados y congelados;;;;;;
+Bocachico importado congelado;Kilogramo;1 Kilogramo;13.000;13.000;0;0
+Trucha en corte mariposa;Kilogramo;1 Kilogramo;23.500;23.500;0;0
+Procesados;;;;;;
+Café molido;Bolsa;450 Gramo;14.000;14.200;0;0
+Chocolate amargo;Libra;500 Gramo;16.100;16.100;0;0
+Gelatina;Caja de cartón;48 Unidad 35 GR;65.000;69.000;0;0
+Harina de trigo;Bolsa;25 Unidad 500 GR;38.000;39.000;0;0
+Harina precocida de maíz;Caja de cartón;24 Unidad 120 GR;51.000;51.000;0;0
+Mayonesa doy pack;Caja de cartón;24 Unidad 120 GR;51.000;51.000;0;0
+Sal yodada;Bolsa;25 Unidad 500 GR;25.000;26.000;0;0
+```

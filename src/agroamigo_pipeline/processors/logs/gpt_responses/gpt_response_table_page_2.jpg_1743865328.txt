@@ -1,0 +1,50 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpdpkp_ixf/page_2.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:02:09
+Raw GPT-4o mini response:
+```csv
+Vinagre;Caja de cartón;24 Unidad 500 CC;0;22.400;0;25.200
+Azúcar;Bolsa;25 Unidad 1 KG;0;0;87.000;88.000
+Azúcar refinada;Bulto;50 Kilogramo;0;0;149.600;150.000
+Panelas;;;;;;
+Panel cuadrada blanca;Caja de cartón;7 Kilogramo;0;26.000;0;28.000
+Panel cuadrada morena;15 Kilogramo;0;0;0;62.000
+Aceites y grasas;;;;;;
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 900 CC;0;85.200;0;93.000
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 450 CC;0;0;0;0
+Margarina;Caja de cartón;10 Kilogramo;0;124.700;0;137.000
+Otros tubérculos;;;;;;
+Arracacha amarilla;Bulto;62,5 Kilogramo;55.000;55.000;60.000;60.000
+Plátano;Bulto;62,5 Kilogramo;0;0;0;0
+Papa criolla limpia;Bulto;50 Kilogramo;130.000;140.000;130.000;140.000
+Papa parda pastusa;Bulto;50 Kilogramo;50.000;58.000;50.000;58.000
+Papa lisa;Bulto;50 Kilogramo;46.000;50.000;46.000;50.000
+Yuca;Bulto;50 Kilogramo;0;0;0;0
+Yuca criolla;Bolsa;42 Kilogramo;65.000;70.000;65.000;70.000
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Arveja verde en vaina;Bulto;50 Kilogramo;130.000;140.000;130.000;140.000
+Frijol verde en vaina;Bulto;50 Kilogramo;125.000;130.000;125.000;130.000
+Habichuela;Saco;20 Kilogramo;55.000;60.000;55.000;60.000
+Otras hortalizas y verduras;;;;;;
+Ahuayma;Kilogramo;1 Kilogramo;0;0;0;0
+Ahuaymín (sakata);Bulto;50 Kilogramo;36.000;40.000;36.000;40.000
+Ajo importado;Caja de cartón;1 Kilogramo;0;0;0;0
+Calabacín;Kilogramo;1 Kilogramo;0;0;0;0
+Chócolo mazorca;Bulto;62,5 Kilogramo;0;0;0;0
+Pepino cohombro;Bulto;25 Kilogramo;0;0;0;0
+Pimentón;Canastilla;10 Kilogramo;0;0;0;0
+Pimentón verde;Canastilla;13 Kilogramo;0;0;0;0
+Rábano rojo;Kilogramo;1 Kilogramo;0;0;0;0
+Remolacha;Bulto;60 Kilogramo;0;0;0;0
+Zanahorias;;;;;;
+Zanahoria;Bulto;60 Kilogramo;90.000;96.000;90.000;96.000
+Cebollas;;;;;;
+Cebolla cabezona blanca;Bulto;50 Kilogramo;45.000;0;0;46.000
+Cebolla cabezona roja importada;Bulto;48 Kilogramo;134.000;140.000;0;0
+Cebolla cabezona roja cercana;Bulto;48 Kilogramo;96.000;100.000;0;0
+Cebolla;Bulto;50 Kilogramo;0;0;0;0
+Tomates;;;;;;
+Tomate riñón;Canastilla;22 Kilogramo;46.000;50.000;0;0
+Tomate riograndense;Canastilla;22 Kilogramo;32.000;36.000;0;0
+```

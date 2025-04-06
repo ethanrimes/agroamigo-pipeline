@@ -1,0 +1,49 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmpyad4o19d/page_1.jpg
+Prompt type: table
+Timestamp: 2025-04-05 23:16:33
+Raw GPT-4o mini response:
+```
+Procesados;;;;;;
+Queso costeño;Kilogramo;1 Kilogramo;14.400;14.500;0;0
+Avena molida;Bolsa;48 Unidad 200 GR;88.100;90.000;0;0
+Café instantáneo;Caja de cartón;24 Unidad 85 GR;188.864;190.100;0;0
+Café molido;Caja de cartón;24 Unidad 500 GR;227.760;231.677;0;0
+Chocolate dulce;Kilogramo;1 Kilogramo;15.000;16.000;0;0
+Fécula de maíz;Caja de cartón;24 Unidad 90 GR;146.100;153.000;0;0
+Galletas saladas redondas con crema;Caja de cartón;24 Unidad 415 GR;139.100;145.973;0;0
+Gelatina;Caja de cartón;48 Unidad 110 GR;37.400;49.200;0;0
+Harina trigo;Bulto;50 Kilogramo;79.000;81.000;0;0
+Harina precocida de maíz;Bolsa;12 Kilogramo;31.800;32.800;0;0
+Jugo;Caja;48 Unidad 150 CC;32.000;32.800;0;0
+Lontitos de atún en lata;Caja de cartón;48 Unidad 160 GR;198.000;202.942;0;0
+Mayonesa doy pack;Caja de cartón;24 Unidad 150 GR;38.270;40.100;0;0
+Mostaza doy pack;Caja de cartón;24 Unidad 110 GR;25.000;27.000;0;0
+Pastas alimenticias;Bolsa;24 Unidad 250 GR;29.000;34.600;0;0
+Sal yodada;Bolsa;24 Unidad 500 GR;16.700;16.700;0;0
+Salsa de tomate doy pack;Caja de cartón;24 Unidad 150 GR;39.093;41.000;0;0
+Sardinas en lata;Caja de cartón;48 Unidad 425 GR;195.858;197.000;0;0
+Vinagre;Caja de cartón;24 Unidad 500 CC;18.653;23.500;0;0
+Azúcar;;;;;;
+Azúcar refinada;Bulto;25 Kilogramo;79.160;81.000;0;0
+Azúcar sulfitada;Bulto;50 Kilogramo;138.000;141.750;0;0
+Panelas;;;;;;
+Panela;Caja de cartón;9 Kilogramo;30.526;34.240;0;0
+Aceites y grasas;;;;;;
+Aceite girasol;Caja de cartón;12 Unidad 1000 CC;168.350;169.000;0;0
+Aceite vegetal mezcla;Caja de cartón;12 Unidad 1000 CC;98.200;103.000;0;0
+Margarina;Caja de cartón;24 Unidad 50 GR;15.400;16.700;0;0
+Tubérculos, raíces y platanos;;;;;;
+Otros tubérculos;;;;;;
+Name espino;Bulto;50 Kilogramo;70.000;75.000;0;0
+Papa;;;;;;
+Papa criolla limpia;Bulto;50 Kilogramo;150.000;160.000;0;0
+Papa única;Bulto;50 Kilogramo;70.000;75.000;0;0
+Yuca;Bulto;50 Kilogramo;70.000;74.000;0;0
+Yuca criolla;Bulto;40 Kilogramo;41.000;45.000;0;0
+Verduras y hortalizas;;;;;;
+Leguminosas;;;;;;
+Habichuela;Saco;20 Kilogramo;70.000;76.000;0;0
+Otros hortalizas y verduras;;;;;;
+Ajo importado;Caja de cartón;6 Kilogramo;76.000;78.000;0;0
+Pepino cohlombiano;Bulto;50 Kilogramo;70.000;74.000;0;0
+```

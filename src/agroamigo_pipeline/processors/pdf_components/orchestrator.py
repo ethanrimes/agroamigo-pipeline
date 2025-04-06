@@ -1,8 +1,8 @@
 """
-Updated import section for the PDF processor orchestrator to use ParquetRegistry
+PDF processor orchestrator component.
+Handles the detailed orchestration of PDF processing tasks.
 """
 
-# Original imports
 import os
 import logging
 import traceback
@@ -16,11 +16,11 @@ from pathlib import Path
 import pandas as pd
 
 from agroamigo_pipeline.config.settings import (
-    PDF_DIR, PROCESSED_DIR, MIN_UNIQUE_PRODUCTS, MAX_UNIQUE_PRODUCTS
+    PDF_DIR, PROCESSED_DIR, MIN_UNIQUE_PRODUCTS, MAX_UNIQUE_PRODUCTS, PIPELINE_RUN_ID
 )
 from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension
-from agroamigo_pipeline.utils.parquet_registry import ParquetRegistry  # Changed from FileRegistry
+from agroamigo_pipeline.registry.pdf_registry import PDFProcessorRegistry
 from agroamigo_pipeline.utils.exceptions import PDFProcessingError
 
 from agroamigo_pipeline.processors.pdf_components.text_extraction import TextExtractor
@@ -29,7 +29,6 @@ from agroamigo_pipeline.processors.pdf_components.product_parser import ProductP
 from agroamigo_pipeline.processors.pdf_components.image_handler import ImageHandler
 from agroamigo_pipeline.processors.pdf_components.gpt_client import GPTClient
 from agroamigo_pipeline.processors.pdf_components.gpt_csv_parser import GPTCSVParser
-
 
 # Global lock for coordinating directory creation
 dir_creation_lock = threading.Lock()
@@ -42,13 +41,14 @@ class PDFProcessorOrchestrator:
     Orchestrates the PDF processing workflow for Colombian agricultural price data.
     """
     
-    def __init__(self, logger=None, save_debug_data=False):
+    def __init__(self, logger=None, save_debug_data=False, registry=None):
         """
         Initialize the PDF processor orchestrator.
         
         Args:
             logger (Logger): Logger instance
             save_debug_data (bool): Whether to save debug data (images, GPT responses, CSV data)
+            registry (PDFProcessorRegistry): Registry instance for PDF tracking
         """
         # Set up logger if not provided
         if logger is None:
@@ -62,9 +62,8 @@ class PDFProcessorOrchestrator:
         if self.save_debug_data:
             self.logger.info("Debug mode enabled - will save intermediate data to permanent directories")
             
-        # Initialize registry - use it for reference only in multi-processing mode
-        # Changed to use ParquetRegistry instead of FileRegistry
-        self.registry = ParquetRegistry()
+        # Initialize registry - use provided registry or create new one
+        self.registry = registry or PDFProcessorRegistry(logger=self.logger)
         
         # Initialize statistics dictionary
         self.stats = {
@@ -271,132 +270,88 @@ class PDFProcessorOrchestrator:
             thread_logger.info(f"<---- Failed GPT-4o vision flow for: {filename}")
             return pd.DataFrame(), gpt4o_calls  # Return empty DataFrame with the number of calls made
     
-    def process_single_pdf_file(self, file_path, output_dir, force_reprocess, registry_info):
+    def process_single_pdf_file(self, pdf_id, file_path, output_dir=None, force_reprocess=False):
         """
-        Process a single PDF file in a thread-safe manner.
+        Process a single PDF file and save results to CSV.
         
         Args:
+            pdf_id (str): PDF ID from the registry
             file_path (str): Path to the PDF file
             output_dir (str): Directory to save processed data
             force_reprocess (bool): If True, reprocess file even if already processed
-            registry_info (dict): Pre-checked registry information
             
         Returns:
-            dict: Result information including stats and file registry data
+            dict: Processing results
         """
-        # Create thread-specific logger
-        thread_id = threading.get_ident()
-        thread_logger = logging.getLogger(f'pdf_processor_{thread_id}')
-        thread_logger.setLevel(self.logger.level)  # Use the same level as parent logger
-        
-        # Add handlers to the logger
-        for handler in self.logger.handlers:
-            # Create a copy of the handler to avoid sharing handler instances
-            if isinstance(handler, logging.FileHandler):
-                file_handler = logging.FileHandler(
-                    handler.baseFilename, mode='a', encoding='utf-8'
-                )
-                file_handler.setLevel(self.logger.level)  # Use parent logger's level
-                file_handler.setFormatter(handler.formatter)
-                thread_logger.addHandler(file_handler)
-            elif isinstance(handler, logging.StreamHandler):
-                console_handler = logging.StreamHandler()
-                console_handler.setLevel(max(logging.INFO, self.logger.level))  # Console shows INFO or higher
-                console_handler.setFormatter(handler.formatter)
-                thread_logger.addHandler(console_handler)
-        
-        # Create thread-specific timing stats
-        thread_timing_stats = {
-            'pdf_text_extraction': [],
-            'pdf_to_images': [],
-            'image_encoding': [],
-            'gpt4_query': [],
-            'data_processing': []
-        }
-        
         filename = os.path.basename(file_path)
-        thread_logger.info(f"========== STARTING PDF PROCESSING: {filename} ==========")
-        thread_logger.debug(f"Thread logger using level: {logging.getLevelName(thread_logger.level)}")
+        self.logger.info(f"Processing PDF file: {filename}")
         
-        # Rest of the method would follow...
+        # Check if file has already been processed
+        pdf_info = self.registry.get_pdf_by_id(pdf_id)
         
-        # Check if file should be processed based on pre-checked registry info
-        if not force_reprocess and not registry_info['process']:
-            thread_logger.info(f"File already processed: {filename}")
-            return {
-                'stats': registry_info['stats'],
-                'already_processed': True,
-                'registry_update': None,
-                'output_path': None
-            }
+        if pdf_info and pdf_info['processing_status'] == 'processed' and not force_reprocess:
+            self.logger.info(f"File already processed: {filename}")
+            return None
+        
+        # Set default output directory
+        output_dir = output_dir or PROCESSED_DIR
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Update registry status to 'processing'
+        self.registry.update_processing_status(pdf_id, 'processing')
         
         # Statistics dictionary
-        stats = {
-            'filename': filename,
-            'file_path': file_path,
+        processing_results = {
             'unique_products': 0,
             'unique_major_categories': 0,
             'unique_subcategories': 0,
             'rows_processed': 0,
             'error_occurred': False,
-            'errors_warnings': "",
-            'processing_time_seconds': 0,
+            'error_warnings': "",
+            'processing_duration_seconds': 0.0,
             'extraction_method': "",
-            'text_is_valid': False,
-            'used_gpt_extraction': False
+            'processed_csv_path': "",
+            'unique_cities_markets': 0,
+            'pipeline_run_id': PIPELINE_RUN_ID or ""
         }
         
         start_time = datetime.now()
-        thread_logger.info(f"Starting processing at: {start_time}")
+        self.logger.info(f"Starting processing at: {start_time}")
         
         try:
-            # Create thread-local TextExtractor for text extraction
-            text_extractor = TextExtractor(logger=thread_logger, timing_stats=thread_timing_stats)
+            # Try text extraction first
+            self.logger.info(f"Attempting text extraction for {filename}")
             
-            # Flag to track if text extraction had errors
-            text_extraction_error = False
-            text_to_use = ""
+            text = self.text_extractor.extract_text_with_pdfplumber(file_path)
+            text_is_valid = self.text_extractor.assess_text_quality(text)
             
-            try:
-                thread_logger.info(f"Step 1: Attempting text extraction from PDF")
-                # Use only pdfplumber for text extraction
-                thread_logger.info(f"Extracting text using pdfplumber")
-                text_to_use = text_extractor.extract_text_with_pdfplumber(file_path)
-                thread_logger.info(f"pdfplumber extraction complete, extracted {len(text_to_use)} characters")
-            except Exception as e:
-                thread_logger.error(f"Error during text extraction: {str(e)}")
-                text_extraction_error = True
-                stats['errors_warnings'] += f"Text extraction error: {str(e)}; "
-            
-            # Assess text validity only if extraction was successful
-            text_is_valid = False
-            if not text_extraction_error:
-                thread_logger.info(f"Step 2: Checking if text is valid")
-                text_is_valid = text_extractor.assess_text_quality(text_to_use)
-                stats['text_is_valid'] = text_is_valid
-                thread_logger.info(f"Text is valid: {text_is_valid}")
-            
-            # Processing strategy based on text validity
-            if not text_extraction_error and text_is_valid:
-                # Valid text - process directly
-                thread_logger.info(f"Step 3A: Text is valid, processing with direct text extraction")
-                stats['extraction_method'] = "text_extraction"
-                stats['used_gpt_extraction'] = False  # Text extraction was used
-                thread_logger.info(f"Extracting metadata from text")
-                output_df = self.process_pdf_with_text_extraction(file_path, text_to_use, thread_logger, thread_timing_stats)
-                thread_logger.info(f"Text extraction processing complete, extracted {len(output_df) if output_df is not None else 0} rows")
-            else:
-                # Invalid text or extraction error - use GPT-4o mini with image
-                if text_extraction_error:
-                    thread_logger.info(f"Step 3B: Text extraction failed, processing with GPT-4o vision")
+            if text_is_valid:
+                # Extract metadata from text
+                self.logger.info(f"Extracting metadata from text")
+                metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, text)
+                
+                # Try table extraction first
+                self.logger.info(f"Attempting to extract tables with pdfplumber")
+                tables = self.text_extractor.extract_table_with_pdfplumber(file_path)
+                
+                if tables and len(tables) > 0:
+                    self.logger.info(f"Processing {len(tables)} extracted tables")
+                    output_df = self.product_parser.process_table_data(file_path, tables, metadata)
+                    extraction_method = "text_extraction"
                 else:
-                    thread_logger.info(f"Step 3B: Text is not valid, processing with GPT-4o vision")
-                    
-                stats['extraction_method'] = "gpt4o_vision"
-                stats['used_gpt_extraction'] = True  # GPT image extraction was used
-                thread_logger.info(f"Converting PDF to images and processing with GPT-4o")
-                output_df, gpt4o_calls = self.process_pdf_with_gpt4o(file_path, thread_logger, thread_timing_stats)
-                thread_logger.info(f"GPT-4o vision processing complete, extracted {len(output_df) if output_df is not None else 0} rows")
+                    self.logger.info(f"No tables found, falling back to GPT extraction")
+                    # Use GPT vision
+                    output_df, gpt4o_calls = self.process_pdf_with_gpt4o(file_path, self.logger, self.timing_stats)
+                    extraction_method = "gpt_vision"
+                    self.stats['gpt4o_calls'] += gpt4o_calls
+                    self.stats['files_using_gpt_extraction'] += 1
+            else:
+                self.logger.info(f"Text extraction not valid, using GPT vision")
+                # Use GPT vision
+                output_df, gpt4o_calls = self.process_pdf_with_gpt4o(file_path, self.logger, self.timing_stats)
+                extraction_method = "gpt_vision"
+                self.stats['gpt4o_calls'] += gpt4o_calls
+                self.stats['files_using_gpt_extraction'] += 1
             
             # Check if we have results
             if output_df is not None and not output_df.empty:
@@ -404,241 +359,169 @@ class PDFProcessorOrchestrator:
                 base_filename = os.path.splitext(filename)[0]
                 output_csv = os.path.join(output_dir, f"{base_filename}.csv")
                 
-                # Save to CSV - use a lock to prevent contention during file writing
-                thread_logger.info(f"Step 4: Saving extracted data to CSV")
+                # Save to CSV
                 output_df.to_csv(output_csv, index=False)
-                thread_logger.info(f"Saved output to: {output_csv}")
+                self.logger.info(f"Saved output to: {output_csv}")
+                
+                # Update processing results
+                processing_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
+                processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
+                processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
+                processing_results['rows_processed'] = len(output_df)
+                processing_results['extraction_method'] = extraction_method
+                processing_results['processed_csv_path'] = output_csv
+                
+                # Count unique cities and markets
+                if 'city' in output_df.columns and 'market' in output_df.columns:
+                    unique_city_markets = output_df[['city', 'market']].drop_duplicates()
+                    processing_results['unique_cities_markets'] = len(unique_city_markets)
                 
                 # Update statistics
-                stats['unique_products'] = len(output_df['product'].unique())
-                stats['unique_major_categories'] = len(output_df['major_category'].unique())
-                stats['unique_subcategories'] = len(output_df['sub_category'].unique())
-                stats['rows_processed'] = len(output_df)
+                self.stats['processed_files'] += 1
+                self.stats['total_rows_processed'] += processing_results['rows_processed']
                 
-                thread_logger.info(f"Data statistics: {stats['rows_processed']} rows, {stats['unique_products']} products, " + 
-                               f"{stats['unique_major_categories']} major categories, {stats['unique_subcategories']} subcategories")
-                thread_logger.info(f"Used GPT extraction: {stats['used_gpt_extraction']}")
-                
-                output_path = output_csv
-                
+                self.logger.info(
+                    f"Successfully processed {filename}: "
+                    f"{processing_results['rows_processed']} rows, "
+                    f"{processing_results['unique_products']} products"
+                )
             else:
-                thread_logger.warning(f"No data extracted from PDF, no output file created")
-                stats['error_occurred'] = True
-                stats['errors_warnings'] += "No data extracted from PDF; "
-                output_path = None
+                processing_results['error_occurred'] = True
+                processing_results['error_warnings'] = "No data extracted from PDF"
+                self.logger.warning(f"No data extracted from {filename}")
+                self.stats['failed_files'] += 1
             
         except Exception as e:
-            stats['error_occurred'] = True
-            stats['errors_warnings'] += str(e)
+            processing_results['error_occurred'] = True
+            processing_results['error_warnings'] = str(e)
             
-            thread_logger.error(f"Error processing PDF file {filename}: {str(e)}")
-            thread_logger.error(f"Error details: {traceback.format_exc()}")
+            self.logger.error(f"Error processing PDF file {filename}: {str(e)}")
+            self.logger.debug(f"Error details: {traceback.format_exc()}")
             
-            output_path = None
+            self.stats['failed_files'] += 1
         
         # Calculate processing time
-        stats['processing_time_seconds'] = (datetime.now() - start_time).total_seconds()
-        thread_logger.info(f"Total processing time: {stats['processing_time_seconds']:.2f} seconds")
-        thread_logger.info(f"Used GPT extraction: {stats['used_gpt_extraction']}")
+        processing_results['processing_duration_seconds'] = (datetime.now() - start_time).total_seconds()
         
-        # Prepare registry update information
-        registry_update = {
-            'file_path': file_path,
-            'output_path': output_path,
-            'status': "processed" if not stats['error_occurred'] else "error",
-            'error': stats['errors_warnings'] if stats['error_occurred'] else None,
-            'stats': stats
-        }
+        # Update registry with processing results
+        if processing_results['error_occurred']:
+            self.registry.update_processing_status(pdf_id, 'error', error=processing_results['error_warnings'])
+        else:
+            self.registry.update_processing_results(pdf_id, processing_results)
         
-        thread_logger.info(f"========== COMPLETED PDF PROCESSING: {filename} ==========")
-        
-        # Return the stats, timing stats, and registry update info
-        return {
-            'stats': stats,
-            'timing_stats': thread_timing_stats,
-            'registry_update': registry_update,
-            'output_path': output_path,
-            'already_processed': False,
-            'gpt4o_calls': gpt4o_calls if 'gpt4o_calls' in locals() else 0
-        }
+        return processing_results
     
-    def process_pdf_files(self, pdf_files=None, output_dir=None, start_date=None, end_date=None, max_workers=None, force_reprocess=False):
+    def process_pdf_files(self, output_dir=None, start_date=None, end_date=None, max_workers=None, force_reprocess=False):
         """
-        Process multiple PDF files with multithreading.
+        Process all PDF files in the registry.
         
         Args:
-            pdf_files (list): List of PDF file paths to process
             output_dir (str): Directory to save processed data
-            start_date (datetime): Start date for filtering files by filename
-            end_date (datetime): End date for filtering files by filename
+            start_date (datetime): Start date for filtering files
+            end_date (datetime): End date for filtering files
             max_workers (int): Maximum number of worker threads
             force_reprocess (bool): If True, reprocess files even if already processed
             
         Returns:
-            dict: Statistics about the processing
+            dict: Processing statistics
         """
-        # Set default directories
+        # Set default values
         output_dir = output_dir or PROCESSED_DIR
-        ensure_directory(output_dir)
-        
-        # After getting PDF files but before filtering
-        if pdf_files is None:
-            self.logger.info(f"Finding PDF files in {PDF_DIR}")
-            pdf_files = get_files_by_extension(PDF_DIR, ['.pdf'], recursive=True)
-            # Convert PosixPath objects to strings if necessary
-            pdf_files = [str(file_path) for file_path in pdf_files]
-        
-        self.logger.info(f"Found {len(pdf_files)} PDF files")
-        self.logger.info(f"Date range filter: {start_date} to {end_date}")
-        
-        # Filter files by date in filename
-        from agroamigo_pipeline.utils.date_utils import filter_files_by_date
-        filtered_pdf_files = filter_files_by_date(pdf_files, start_date, end_date)
-        filtered_pdf_files = [str(file_path) for file_path in filtered_pdf_files]
-        self.logger.info(f"After date filtering: {len(filtered_pdf_files)} PDF files to process")
+        os.makedirs(output_dir, exist_ok=True)
         
         # Reset statistics
         self.stats = {
-            'total_files': len(pdf_files),
+            'total_files': 0,
             'processed_files': 0,
             'failed_files': 0,
             'skipped_files': 0,
-            'filtered_by_date': len(pdf_files) - len(filtered_pdf_files),
             'total_rows_processed': 0,
-            'warnings': 0,
-            'gpt4o_calls': 0,
-            'files_using_gpt_extraction': 0
+            'files_using_gpt_extraction': 0,
+            'gpt4o_calls': 0
         }
         
-        # Pre-check registry to determine which files need processing
-        registry_info = {}
-        for file_path in filtered_pdf_files:
-            if not force_reprocess and self.registry.file_processed(file_path):
-                file_info = self.registry.get_file_info(file_path)
-                registry_info[file_path] = {
-                    'process': False,
-                    'stats': file_info['processing_history'][-1]['stats'] if file_info else None
-                }
-                self.stats['skipped_files'] += 1
-            else:
-                registry_info[file_path] = {'process': True, 'stats': None}
+        # Get PDF files from registry that need to be processed
+        if force_reprocess:
+            # Get all PDFs
+            pdf_df = self.registry.read()
+        else:
+            # Get only unprocessed PDFs or PDFs with errors
+            pdf_df = self.registry.read()
+            pdf_df = pdf_df[(pdf_df['processing_status'] == 'not_processed') | 
+                            (pdf_df['processing_status'] == 'error')]
         
-        # Set maximum number of workers
-        max_workers = max_workers or min(os.cpu_count(), len(filtered_pdf_files))
+        # Filter by date if needed
+        if start_date or end_date:
+            if start_date:
+                pdf_df = pdf_df[pdf_df['file_date'] >= pd.Timestamp(start_date)]
+            if end_date:
+                pdf_df = pdf_df[pdf_df['file_date'] <= pd.Timestamp(end_date)]
+        
+        self.logger.info(f"Found {len(pdf_df)} PDF files to process")
+        self.stats['total_files'] = len(pdf_df)
         
         # Determine if we can use concurrent processing
-        use_concurrent = max_workers > 1 and len(filtered_pdf_files) > 1
-        
-        results = []
+        use_concurrent = max_workers and max_workers > 1 and len(pdf_df) > 1
         
         if use_concurrent:
             self.logger.info(f"Using {max_workers} workers for parallel processing")
             
-            # Process files concurrently using ProcessPoolExecutor
+            # Process files concurrently using ThreadPoolExecutor
             with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-                # Submit tasks
-                future_to_file = {}
-                for file_path in filtered_pdf_files:
-                    if registry_info[file_path]['process'] or force_reprocess:
-                        future = executor.submit(
-                            self.process_single_pdf_file,
-                            file_path,
-                            output_dir,
-                            force_reprocess,
-                            registry_info[file_path]
-                        )
-                        future_to_file[future] = file_path
+                future_to_pdf = {}
                 
-                # Collect results as they complete
-                for future in concurrent.futures.as_completed(future_to_file):
-                    file_path = future_to_file[future]
+                # Submit all tasks
+                for _, row in pdf_df.iterrows():
+                    pdf_id = row['pdf_id']
+                    file_path = row['file_path']
+                    
+                    future = executor.submit(
+                        self.process_single_pdf_file,
+                        pdf_id,
+                        file_path,
+                        output_dir,
+                        force_reprocess
+                    )
+                    future_to_pdf[future] = (pdf_id, file_path)
+                
+                # Process results as they complete
+                for future in concurrent.futures.as_completed(future_to_pdf):
+                    pdf_id, file_path = future_to_pdf[future]
                     filename = os.path.basename(file_path)
                     
                     try:
-                        result = future.result()
-                        results.append(result)
-                        
-                        if result['already_processed']:
-                            # File was already processed and we're using cached results
-                            continue
-                        
-                        # Update stats based on result
-                        if result['stats']['error_occurred']:
-                            self.stats['failed_files'] += 1
-                        else:
-                            self.stats['processed_files'] += 1
-                            self.stats['total_rows_processed'] += result['stats']['rows_processed']
-                            
-                        # Track GPT usage
-                        if result['stats']['used_gpt_extraction']:
-                            self.stats['files_using_gpt_extraction'] += 1
-                            
-                        if 'gpt4o_calls' in result:
-                            self.stats['gpt4o_calls'] += result['gpt4o_calls']
-                            
+                        results = future.result()
+                        if results is None:
+                            self.stats['skipped_files'] += 1
                     except Exception as e:
                         self.logger.error(f"Error processing {filename}: {str(e)}")
+                        self.registry.update_processing_status(pdf_id, 'error', error=str(e))
                         self.stats['failed_files'] += 1
         else:
             # Process files sequentially
-            for file_path in filtered_pdf_files:
+            for _, row in pdf_df.iterrows():
+                pdf_id = row['pdf_id']
+                file_path = row['file_path']
+                
                 try:
-                    result = self.process_single_pdf_file(
-                        file_path,
-                        output_dir,
-                        force_reprocess,
-                        registry_info[file_path]
-                    )
-                    results.append(result)
-                    
-                    if result['already_processed']:
-                        # File was already processed and we're using cached results
-                        continue
-                        
-                    # Update stats
-                    if result['stats']['error_occurred']:
-                        self.stats['failed_files'] += 1
-                    else:
-                        self.stats['processed_files'] += 1
-                        self.stats['total_rows_processed'] += result['stats']['rows_processed']
-                    
-                    # Track GPT usage
-                    if result['stats']['used_gpt_extraction']:
-                        self.stats['files_using_gpt_extraction'] += 1
-                        
-                    if 'gpt4o_calls' in result:
-                        self.stats['gpt4o_calls'] += result['gpt4o_calls']
-                        
+                    results = self.process_single_pdf_file(pdf_id, file_path, output_dir, force_reprocess)
+                    if results is None:
+                        self.stats['skipped_files'] += 1
                 except Exception as e:
                     filename = os.path.basename(file_path)
                     self.logger.error(f"Error processing {filename}: {str(e)}")
+                    self.registry.update_processing_status(pdf_id, 'error', error=str(e))
                     self.stats['failed_files'] += 1
         
-        # Update registry with all results
-        for result in results:
-            if result['registry_update']:
-                self.registry.register_file(
-                    result['registry_update']['file_path'],
-                    output_path=result['registry_update']['output_path'],
-                    status=result['registry_update']['status'],
-                    error=result['registry_update']['error'],
-                    stats=result['registry_update']['stats']
-                )
+        # Export registry to CSV
+        self.registry.export_to_csv()
         
         # Log summary
         self.logger.info(f"PDF processing summary: {self.stats['processed_files']} processed, "
-                      f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped, "
-                      f"{self.stats['filtered_by_date']} filtered by date "
+                      f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
                       f"out of {self.stats['total_files']} total files")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
-        self.logger.info(f"Files using GPT extraction: {self.stats['files_using_gpt_extraction']} out of {self.stats['processed_files']} processed files")
-        self.logger.info(f"Made {self.stats['gpt4o_calls']} GPT-4o calls")
-        
-        # Merge timing statistics from all threads
-        for result in results:
-            if 'timing_stats' in result:
-                for key, values in result['timing_stats'].items():
-                    if key in self.timing_stats:
-                        self.timing_stats[key].extend(values)
+        self.logger.info(f"Files using GPT extraction: {self.stats['files_using_gpt_extraction']}")
+        self.logger.info(f"Total GPT calls: {self.stats['gpt4o_calls']}")
         
         return self.stats

@@ -1,0 +1,43 @@
+Image: /var/folders/23/2k5mkn_579s5dnsm31nsbhnw0000gn/T/tmp6zbiuq3g/page_0.jpg
+Prompt type: table
+Timestamp: 2025-04-05 21:44:54
+Raw GPT-4o mini response:
+```
+Frutas;;;;;;
+Cítricos;;;;;;
+Limón común;Canastilla;25 Kilogramo;60.000;65.000;60.000;65.000
+Limón tahití;Canastilla;25 Kilogramo;60.000;65.000;0;0
+Mandarina común;Canastilla;23 Kilogramo;14.000;15.000;0;0
+Naranja valenciana;Canastilla;24 Kilogramo;14.000;15.000;0;0
+Tangelo;Canastilla;25 Kilogramo;30.000;35.000;0;0
+Otras frutas;;;;;;
+Aguacate común;Kilogramo;1 Kilogramo;5.000;5.000;5.000;5.000
+Aguacate papelillo;Kilogramo;1 Kilogramo;5.000;5.000;5.000;5.000
+Banano criollo;Caja de cartón;1 Caja;20.000;25.000;0;0
+Banano urabá;Caja de cartón;1 Caja;20.000;25.000;0;0
+Ciruela roja;Canastilla;25 Kilogramo;15.000;20.000;0;0
+Fresa;Kilogramo;1 Kilogramo;3.400;3.600;0;0
+Guanábana;Kilogramo;1 Kilogramo;3.400;3.600;0;0
+Guayaba pera;Canastilla;25 Kilogramo;20.000;25.000;0;0
+Kiwi;Caja de cartón;10 Kilogramo;85.000;100.000;0;0
+Lulo;Canastilla;25 Kilogramo;105.000;120.000;0;0
+Mango tommy;Canastilla;25 Kilogramo;140.000;145.000;0;0
+Manzana roja importada;Caja de cartón;20 Kilogramo;140.000;145.000;0;0
+Manzana verde importada;Caja de cartón;20 Kilogramo;150.000;165.000;0;0
+Maracuyá;Canastilla;15 Kilogramo;50.000;50.000;0;0
+Melón cantalup;Kilogramo;1 Kilogramo;2.500;2.500;0;0
+Mora de castilla;Arroba;12,5 Kilogramo;35.000;36.000;0;0
+Papaya maradol;Kilogramo;1 Kilogramo;1.500;1.500;0;0
+Papaya palmil;Unidad;1 Unidad;1.500;1.500;0;0
+Patilla;Kilogramo;1 Kilogramo;2.000;2.000;0;0
+Patilla baby;Kilogramo;1 Kilogramo;2.000;2.000;0;0
+Pera importada;Caja de cartón;20 Kilogramo;115.000;120.000;0;0
+Pera nacional;Canastilla;25 Kilogramo;70.000;75.000;0;0
+Piña gold;Kilogramo;1 Kilogramo;1.000;1.000;0;0
+Piña perolera;Caja de madera;30 Kilogramo;22.000;22.000;0;0
+Pitahaya;Kilogramo;1 Kilogramo;6.000;6.000;0;0
+Tomate de árbol;Bulto;25 Kilogramo;62.000;62.000;0;0
+Uchuva con cáscara;Bolsa;5 Kilogramo;30.000;30.000;0;0
+Uva importada;Caja de cartón;8 Kilogramo;37.000;38.000;0;0
+Uva negra;Caja de icopor;9 Kilogramo;60.000;62.000;0;0
+```
