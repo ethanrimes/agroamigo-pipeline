@@ -63,7 +63,23 @@ class GPTClient:
             # Select prompt based on type
             if prompt_type == "header":
                 prompt = """
-                Extract only the header section from this image. The header includes the title, location, and date—usually found at the top of the document. Return the extracted text as plain text, preserving line breaks. Do not include any table data or body content.
+                Extract EXACTLY what you see in the header section of this image, preserving the original formatting and line breaks.
+
+                The header contains these key elements:
+                1. The title "PRECIOS DE VENTA MAYORISTA"
+                2. The location line (city and market)
+                3. "PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito"
+                4. The date
+
+                DO NOT interpret, modify, or add any information. Extract the text exactly as it appears, maintaining all punctuation and spacing.
+
+                For example, if you see:
+                PRECIOS DE VENTA MAYORISTA
+                Bogotá, D.C., Corabastos
+                PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+                07 de Septiembre de 2024
+
+                That is precisely what you should return.
                 """
             else:  # Default to table prompt
                 prompt = """
@@ -92,21 +108,6 @@ class GPTClient:
                 Limón tahití;Canastilla;22 Kilogramo;40.000;45.000;0;0
                 Mandarina arrayana;Canastilla;22 Kilogramo;50.000;60.000;0;0
                 Yuca criolla;Bolsa;40 Kilogramo;35.000;38.000;0;0
-                Verduras y hortalizas;;;;;;
-                Leguminosas;;;;;;
-                Arveja verde en vaina;Kilogramo;1 Kilogramo;9.500;10.000;0;0
-                Fríjol verde en vaina;Kilogramo;1 Kilogramo;6.000;6.500;0;0
-                Habichuela;Saco;20 Kilogramo;50.000;55.000;0;0
-                Habichuela larga;Kilogramo;1 Kilogramo;3.800;4.000;0;0
-                Otras hortalizas y verduras;;;;;;
-                Ahuyama;Bulto;70 Kilogramo;50.000;55.000;0;0
-                Ají topito dulce;Bulto;40 Kilogramo;196.000;200.000;0;0
-                Tuberculos, raices y platanos;;;;;;
-                Otros tuberculos;;;;;;
-                Ñame espino;Bulto;50 Kilogramo;95.000;100.000;0;0
-                Plátano;;;;;;
-                Plátano hartón verde;Kilogramo;1 Kilogramo;1.500;1.500;0;0
-                ...
                 """
 
             # Prepare headers and payload
@@ -141,15 +142,38 @@ class GPTClient:
                 self.logger.error(f"GPT-4o mini API error: {response.status_code} - {response.text}")
                 return None
             
-            # Extract and process response
+            # Extract response
             response_json = response.json()
-            content = response_json['choices'][0]['message']['content']
+            raw_content = response_json['choices'][0]['message']['content']
             
-            # Log the raw response
-            self.logger.info(f"Raw GPT-4o mini response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(content)} characters")
-            self.logger.debug(f"GPT-4o mini raw response (first 200 chars): {content[:200]}...")
+            # Store the original raw content for debugging purposes
+            original_raw_content = raw_content
             
-            # Save raw response to files
+            # Clean the content immediately with regex processing
+            import re
+            
+            # First store the raw content for logging/debugging
+            self.logger.info(f"Raw GPT-4o mini response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(raw_content)} characters")
+            self.logger.debug(f"GPT-4o mini raw response (first 200 chars): {raw_content[:200]}...")
+            
+            # Process the content - remove all instances of markdown formatting
+            content = raw_content
+            
+            if prompt_type == "table":
+                # Remove all instances of triple backticks and plaintext/text tags
+                content = re.sub(r'```(?:plaintext|text|csv)?', '', content)
+                content = re.sub(r'```', '', content)
+                
+                # Also clean up any standalone plaintext or text tags
+                content = re.sub(r'^(?:plaintext|text|csv)$', '', content, flags=re.MULTILINE)
+                
+                # Log the cleaning results
+                self.logger.info(f"Cleaned GPT-4o response from {len(raw_content)} to {len(content)} characters")
+                if raw_content != content:
+                    self.logger.info(f"Markdown formatting removed from GPT-4o response")
+            
+            # Save both raw and cleaned response to files
+            self._save_response(image_path, original_raw_content, prompt_type + "_raw", source_pdf_path)
             self._save_response(image_path, content, prompt_type, source_pdf_path)
             
             duration = time.time() - start_time
@@ -169,7 +193,15 @@ class GPTClient:
             return None
     
     def _save_response(self, image_path, content, prompt_type, source_pdf_path=None):
-        """Helper method to save responses to log files"""
+        """
+        Helper method to save responses to log files
+        
+        Args:
+            image_path (str): Path to the image
+            content (str): Content to save (raw or cleaned)
+            prompt_type (str): Type of prompt used ("table", "header", "table_raw", etc.)
+            source_pdf_path (str): Path to the source PDF file
+        """
         image_basename = os.path.basename(image_path)
         pdf_filename = os.path.basename(source_pdf_path) if source_pdf_path else "unknown_pdf"
         
@@ -177,18 +209,24 @@ class GPTClient:
         log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs", "gpt_responses")
         os.makedirs(log_dir, exist_ok=True)
         
+        # Determine if this is raw or cleaned content based on prompt_type
+        content_type = "raw" if "_raw" in prompt_type else "cleaned"
+        prompt_base = prompt_type.replace("_raw", "")
+        
         log_file = os.path.join(log_dir, f"gpt_response_{prompt_type}_{pdf_filename}_{image_basename}_{int(time.time())}.txt")
         try:
             with open(log_file, "w", encoding="utf-8") as f:
                 f.write(f"Source PDF: {source_pdf_path}\n")
                 f.write(f"Image: {image_path}\n")
-                f.write(f"Prompt type: {prompt_type}\n")
+                f.write(f"Prompt type: {prompt_base}\n")
+                f.write(f"Content type: {content_type}\n")
                 f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-                f.write("Raw GPT-4o mini response:\n")
+                f.write(f"Content length: {len(content)} characters\n")
+                f.write(f"GPT-4o mini response ({content_type}):\n")
                 f.write(content)
-            self.logger.info(f"Saved raw GPT-4o mini response to: {log_file}")
+            self.logger.info(f"Saved {content_type} GPT-4o mini response to: {log_file}")
         except Exception as e:
-            self.logger.warning(f"Failed to save raw GPT-4o mini response to file: {str(e)}")
+            self.logger.warning(f"Failed to save {content_type} GPT-4o mini response to file: {str(e)}")
         
         # Save to permanent directory if requested
         if self.save_responses:
@@ -198,11 +236,12 @@ class GPTClient:
                 with open(permanent_log_file, "w", encoding="utf-8") as f:
                     f.write(f"Source PDF: {source_pdf_path}\n")
                     f.write(f"Image: {image_path}\n")
-                    f.write(f"Prompt type: {prompt_type}\n")
+                    f.write(f"Prompt type: {prompt_base}\n")
+                    f.write(f"Content type: {content_type}\n")
                     f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-                    f.write(f"Response length: {len(content)} characters\n")
-                    f.write("Raw GPT-4o mini response:\n")
+                    f.write(f"Content length: {len(content)} characters\n")
+                    f.write(f"GPT-4o mini response ({content_type}):\n")
                     f.write(content)
-                self.logger.info(f"Saved permanent GPT response to: {permanent_log_file}")
+                self.logger.info(f"Saved permanent {content_type} GPT response to: {permanent_log_file}")
             except Exception as e:
-                self.logger.error(f"Failed to save permanent GPT response: {str(e)}")
+                self.logger.error(f"Failed to save permanent {content_type} GPT response: {str(e)}")

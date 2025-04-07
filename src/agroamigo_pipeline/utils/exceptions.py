@@ -40,3 +40,9 @@ class ValidationError(PipelineError):
     def __init__(self, message, validation_errors=None):
         super().__init__(message)
         self.validation_errors = validation_errors or []
+
+class EmptyProductDataError(PDFProcessingError):
+    """Exception raised when no product data is extracted from a PDF."""
+    def __init__(self, message="No product data extracted from PDF or zero unique products"):
+        self.message = message
+        super().__init__(self.message)

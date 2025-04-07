@@ -27,7 +27,7 @@ from agroamigo_pipeline.config.settings import (
 from agroamigo_pipeline.utils.logger import setup_logging
 from agroamigo_pipeline.utils.path_manager import ensure_directory, get_files_by_extension
 from agroamigo_pipeline.registry.pdf_registry import PDFProcessorRegistry
-from agroamigo_pipeline.utils.exceptions import PDFProcessingError
+from agroamigo_pipeline.utils.exceptions import PDFProcessingError, EmptyProductDataError
 
 from agroamigo_pipeline.processors.pdf_components.text_extraction import TextExtractor
 from agroamigo_pipeline.processors.pdf_components.metadata_extraction import MetadataExtractor
@@ -401,8 +401,13 @@ class PDFProcessorOrchestrator:
                         self.stats['gpt4o_calls'] += gpt4o_calls
                         self.stats['files_using_gpt_extraction'] += 1
                 
-                # Check if we have results
+                # Check if we have results with valid product data
                 if output_df is not None and not output_df.empty:
+                    # Check for zero unique products
+                    unique_products = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
+                    if unique_products == 0:
+                        raise EmptyProductDataError("DataFrame contains zero unique products")
+                        
                     # Create output path
                     base_filename = os.path.splitext(os.path.basename(file_path))[0]
                     output_csv = os.path.join(output_dir, f"{base_filename}.csv")
@@ -416,7 +421,7 @@ class PDFProcessorOrchestrator:
                     thread_logger.info(f"Saved output to: {output_csv}")
                     
                     # Update processing results
-                    processing_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
+                    processing_results['unique_products'] = unique_products
                     processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
                     processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
                     processing_results['rows_processed'] = len(output_df)
@@ -439,14 +444,9 @@ class PDFProcessorOrchestrator:
                         f"{processing_results['unique_products']} products"
                     )
                 else:
-                    processing_results['error_occurred'] = True
-                    processing_results['error_warnings'] = "No data extracted from PDF"
-                    thread_logger.warning(f"No data extracted from {os.path.basename(file_path)}")
+                    # Raise exception for empty DataFrame
+                    raise EmptyProductDataError("No data extracted from PDF, DataFrame is empty")
                     
-                    # Update global stats safely
-                    with global_stats_lock:
-                        self.stats['failed_files'] += 1
-                
             except Exception as e:
                 processing_results['error_occurred'] = True
                 processing_results['error_warnings'] = str(e)
@@ -593,8 +593,13 @@ class PDFProcessorOrchestrator:
                     self.stats['gpt4o_calls'] += gpt4o_calls
                     self.stats['files_using_gpt_extraction'] += 1
             
-            # Check if we have results
+            # Check if we have results with valid product data
             if output_df is not None and not output_df.empty:
+                # Check for zero unique products
+                unique_products = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
+                if unique_products == 0:
+                    raise EmptyProductDataError("DataFrame contains zero unique products")
+                    
                 # Create output path
                 base_filename = os.path.splitext(filename)[0]
                 output_csv = os.path.join(output_dir, f"{base_filename}.csv")
@@ -608,7 +613,7 @@ class PDFProcessorOrchestrator:
                 self.logger.info(f"Saved output to: {output_csv}")
                 
                 # Update processing results
-                processing_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
+                processing_results['unique_products'] = unique_products
                 processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
                 processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
                 processing_results['rows_processed'] = len(output_df)
@@ -631,13 +636,8 @@ class PDFProcessorOrchestrator:
                     f"{processing_results['unique_products']} products"
                 )
             else:
-                processing_results['error_occurred'] = True
-                processing_results['error_warnings'] = "No data extracted from PDF"
-                self.logger.warning(f"No data extracted from {filename}")
-                
-                # Update global stats safely
-                with global_stats_lock:
-                    self.stats['failed_files'] += 1
+                # Raise exception for empty DataFrame
+                raise EmptyProductDataError("No data extracted from PDF, DataFrame is empty")
             
         except Exception as e:
             processing_results['error_occurred'] = True
@@ -661,6 +661,7 @@ class PDFProcessorOrchestrator:
                 self.registry.update_processing_results(pdf_id, processing_results)
         
         return processing_results
+
     
     def process_pdf_files(self, output_dir=None, start_date=None, end_date=None, max_workers=None, force_reprocess=False):
         """

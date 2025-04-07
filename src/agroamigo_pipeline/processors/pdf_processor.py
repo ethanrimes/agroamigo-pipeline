@@ -20,7 +20,7 @@ class PDFProcessor:
     Acts as an entry point to the PDF processing functionality.
     """
     
-    def __init__(self, logger=None, save_debug_data=False):
+    def __init__(self, logger=None, save_debug_data=True):
         """
         Initialize the PDF processor.
         
