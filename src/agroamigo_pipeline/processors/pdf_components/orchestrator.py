@@ -614,6 +614,24 @@ class PDFProcessorOrchestrator:
                                     if not results.get('error_occurred', False):
                                         with global_stats_lock:
                                             self.stats['validation_passed'] += 1
+                                            
+                                        # Add debug level logs for the saved DataFrame
+                                        output_csv = results.get('processed_csv_path', '')
+                                        if output_csv and os.path.exists(output_csv):
+                                            try:
+                                                # Read the saved DataFrame
+                                                df = pd.read_csv(output_csv)
+                                                self.logger.debug(f"DEBUG: Saved DataFrame for PDF {filename} from {file_path}:")
+                                                self.logger.debug(f"DEBUG: CSV path: {output_csv}")
+                                                self.logger.debug(f"DEBUG: DataFrame shape: {df.shape}")
+                                                self.logger.debug(f"DEBUG: DataFrame columns: {df.columns.tolist()}")
+                                                self.logger.debug(f"DEBUG: DataFrame head (5 rows):\n{df.head(5)}")
+                                                self.logger.debug(f"DEBUG: Unique products: {df['product'].nunique() if 'product' in df.columns else 0}")
+                                                self.logger.debug(f"DEBUG: Unique categories: {df['major_category'].nunique() if 'major_category' in df.columns else 0}")
+                                                self.logger.debug(f"DEBUG: Unique subcategories: {df['subcategory'].nunique() if 'subcategory' in df.columns else 0}")
+                                                self.logger.debug(f"DEBUG: Source PDF path: {file_path}")
+                                            except Exception as e:
+                                                self.logger.debug(f"DEBUG: Error reading saved DataFrame for {filename}: {str(e)}")
                                     else:
                                         with global_stats_lock:
                                             self.stats['validation_failed'] += 1
@@ -628,6 +646,10 @@ class PDFProcessorOrchestrator:
                             pbar.set_postfix(status="Error")
                             with global_stats_lock:
                                 self.stats['validation_failed'] += 1
+                                
+                            # Log debug info for error case
+                            self.logger.debug(f"DEBUG: Processing failed for PDF {os.path.basename(result['file_path'])} from {result['file_path']}")
+                            self.logger.debug(f"DEBUG: Error: {result.get('error', 'Unknown error')}")
                         
                         # Update progress
                         completed += 1

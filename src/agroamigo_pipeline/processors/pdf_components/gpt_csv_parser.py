@@ -26,7 +26,7 @@ class GPTCSVParser:
             timing_stats (dict): Dictionary to store timing statistics
             save_csv_data (bool): Whether to save CSV data to a permanent directory
         """
-        self.logger = logger or logging.getLogger(__name__)
+        self.logger = logger or logging.getLogger("pdf_processor")
         self.timing_stats = timing_stats or {
             'data_processing': []
         }
@@ -37,7 +37,7 @@ class GPTCSVParser:
             self.csv_data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
                                            "logs", "permanent_csv_data")
             os.makedirs(self.csv_data_dir, exist_ok=True)
-            self.logger.info(f"Will save CSV data to permanent directory: {self.csv_data_dir}")
+            self.logger.debug(f"Will save CSV data to permanent directory: {self.csv_data_dir}")
     
     def process_csv_from_gpt4o(self, csv_text, metadata):
         """
@@ -53,7 +53,7 @@ class GPTCSVParser:
         product_data = []
         
         # Log the input CSV text
-        self.logger.info(f"Processing CSV text from GPT-4.1 nano - {len(csv_text)} characters")
+        self.logger.debug(f"Processing CSV text from GPT-4.1 nano - {len(csv_text)} characters")
         self.logger.debug(f"CSV text to process:\n{csv_text}")
         
         if csv_text:
@@ -64,7 +64,7 @@ class GPTCSVParser:
 
         
         num_lines = csv_text.count('\n') + 1 if csv_text else 0
-        self.logger.info(f"Number of lines in CSV text after cleaning: {num_lines}")
+        self.logger.debug(f"Number of lines in CSV text after cleaning: {num_lines}")
         
         # Save to permanent directory if requested
         if self.save_csv_data:
@@ -208,8 +208,8 @@ class GPTCSVParser:
                     previous_row_had_prices = False
             
             # Log processing summary
-            self.logger.info(f"CSV processing summary: {processed_products} products, {processed_categories} categories, {skipped_lines} skipped lines, {price_errors} price errors")
-            self.logger.info(f"Final category stack state: {category_stack}")
+            self.logger.debug(f"CSV processing summary: {processed_products} products, {processed_categories} categories, {skipped_lines} skipped lines, {price_errors} price errors")
+            self.logger.debug(f"Final category stack state: {category_stack}")
             
             return product_data
             
@@ -241,7 +241,7 @@ class GPTCSVParser:
         try:
             # Process each CSV text and combine results
             all_product_data = []
-            self.logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4.1 nano")
+            self.logger.debug(f"      Processing {len(csv_texts)} CSV texts from GPT-4.1 nano")
             
             # Save raw CSV texts for debugging
             raw_csv_log_file = os.path.join(log_dir, f"raw_csv_texts_{filename}_{int(time.time())}.json")
@@ -252,7 +252,7 @@ class GPTCSVParser:
                         "metadata": metadata,
                         "csv_texts": csv_texts
                     }, f, indent=2, ensure_ascii=False)
-                self.logger.info(f"      Saved raw CSV texts to: {raw_csv_log_file}")
+                self.logger.debug(f"      Saved raw CSV texts to: {raw_csv_log_file}")
             except Exception as e:
                 self.logger.warning(f"      Failed to save raw CSV texts to file: {str(e)}")
             
@@ -331,16 +331,16 @@ class GPTCSVParser:
                 "min_price_range": output_df['daily_min'].min() if not output_df.empty else None,
                 "max_price_range": output_df['daily_max'].max() if not output_df.empty else None
             }
-            self.logger.info(f"      DataFrame statistics: {df_stats}")
+            self.logger.debug(f"      DataFrame statistics: {df_stats}")
             
             duration = time.time() - start_time
-            self.logger.info(f"      GPT-4o results processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
-            self.logger.info(f"      <----- Completed GPT-4o results processing for: {filename}")
+            self.logger.debug(f"      GPT-4o results processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
+            self.logger.debug(f"      <----- Completed GPT-4o results processing for: {filename}")
             
             return output_df
             
         except Exception as e:
             self.logger.error(f"      Error processing GPT-4o results for PDF {file_path}: {str(e)}")
-            self.logger.info(f"      Error details: {traceback.format_exc()}")
-            self.logger.info(f"      <----- Failed GPT-4o results processing for: {filename}")
+            self.logger.debug(f"      Error details: {traceback.format_exc()}")
+            self.logger.debug(f"      <----- Failed GPT-4o results processing for: {filename}")
             return pd.DataFrame()

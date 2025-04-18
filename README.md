@@ -91,6 +91,11 @@ python main.py --force-reprocess
 # Set log level
 python main.py --log-level DEBUG
 
+
+
+python main.py --log-level DEBUG --workers 8 --components extractor excel pdf aggregator --start-date 2023-01-01 --end-date 2023-02-01 --force-reprocess
+
+python main.py --log-level INFO --workers 8 --components extractor excel pdf aggregator --force-reprocess
 ```
 
 ### Command-line Arguments

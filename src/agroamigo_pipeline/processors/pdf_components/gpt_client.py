@@ -19,7 +19,7 @@ class GPTClient:
             timing_stats (dict): Dictionary to store timing statistics
             save_responses (bool): Whether to save responses to a permanent directory
         """
-        self.logger = logger or logging.getLogger(__name__)
+        self.logger = logger or logging.getLogger("pdf_processor")
         self.timing_stats = timing_stats or {
             'gpt4_query': []
         }
@@ -130,7 +130,7 @@ class GPTClient:
             }
             
             # Make API request
-            self.logger.info(f"Sending request to GPT-4.1 nano API for {os.path.basename(image_path)} from PDF: {pdf_filename}")
+            self.logger.debug(f"Sending request to GPT-4.1 nano API for {os.path.basename(image_path)} from PDF: {pdf_filename}")
             response = requests.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers=headers,
@@ -153,7 +153,7 @@ class GPTClient:
             import re
             
             # First store the raw content for logging/debugging
-            self.logger.info(f"Raw GPT-4.1 nano response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(raw_content)} characters")
+            self.logger.debug(f"Raw GPT-4.1 nano response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(raw_content)} characters")
             self.logger.debug(f"GPT-4.1 nano raw response (first 200 chars): {raw_content[:200]}...")
             
             # Process the content - remove all instances of markdown formatting
@@ -183,7 +183,7 @@ class GPTClient:
                 'prompt_type': prompt_type,
                 'duration': duration
             })
-            self.logger.info(f"GPT-4.1 nano query for {os.path.basename(image_path)} from PDF: {pdf_filename} completed in {duration:.2f} seconds")
+            self.logger.debug(f"GPT-4.1 nano query for {os.path.basename(image_path)} from PDF: {pdf_filename} completed in {duration:.2f} seconds")
             
             return content
             
@@ -226,6 +226,6 @@ class GPTClient:
                     f.write(f"Content length: {len(content)} characters\n")
                     f.write(f"GPT-4.1 nano response ({content_type}):\n")
                     f.write(content)
-                self.logger.info(f"Saved {content_type} GPT-4.1 nano response to: {log_file}")
+                self.logger.debug(f"Saved {content_type} GPT-4.1 nano response to: {log_file}")
             except Exception as e:
                 self.logger.warning(f"Failed to save {content_type} GPT-4.1 nano response to file: {str(e)}")

@@ -23,7 +23,7 @@ class ImageHandler:
             timing_stats (dict): Dictionary to store timing statistics
             save_images (bool): Whether to save images to a permanent directory
         """
-        self.logger = logger or logging.getLogger(__name__)
+        self.logger = logger or logging.getLogger("pdf_processor")
         self.timing_stats = timing_stats or {
             'pdf_to_images': [],
             'image_encoding': []
@@ -59,7 +59,7 @@ class ImageHandler:
             # Convert PDF pages to images
             self.logger.debug("Starting PDF to image conversion")
             images = convert_from_path(pdf_path, dpi=100)
-            self.logger.info(f"Converted {len(images)} pages to images")
+            self.logger.debug(f"Converted {len(images)} pages to images")
             
             image_paths = []
             # Save each page as a temporary image
@@ -67,7 +67,7 @@ class ImageHandler:
                 image_path = os.path.join(temp_dir, f'page_{i}.jpg')
                 image.save(image_path, 'JPEG')
                 image_paths.append(image_path)
-                self.logger.info(f"Saved page {i+1} to: {image_path}")
+                self.logger.debug(f"Saved page {i+1} to: {image_path}")
                 
                 # Save to permanent directory if requested
                 if self.save_images or save_copies:
@@ -76,13 +76,13 @@ class ImageHandler:
                         self.images_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
                                             "logs", "permanent_images")
                         os.makedirs(self.images_dir, exist_ok=True)
-                        self.logger.info(f"Created permanent images directory: {self.images_dir}")
+                        self.logger.debug(f"Created permanent images directory: {self.images_dir}")
                     
                     pdf_basename = os.path.basename(pdf_path)
                     permanent_image_path = os.path.join(self.images_dir, f"{pdf_basename}_page_{i}.jpg")
                     try:
                         image.save(permanent_image_path, 'JPEG')
-                        self.logger.info(f"Saved permanent copy of page {i+1} to: {permanent_image_path}")
+                        self.logger.debug(f"Saved permanent copy of page {i+1} to: {permanent_image_path}")
                     except Exception as e:
                         self.logger.warning(f"Failed to save permanent copy of image: {str(e)}")
             
@@ -93,7 +93,7 @@ class ImageHandler:
                 'duration': duration,
                 'temp_dir': temp_dir  # Include temp directory in stats for reference
             })
-            self.logger.info(f"PDF conversion completed in {duration:.2f} seconds")
+            self.logger.debug(f"PDF conversion completed in {duration:.2f} seconds")
             
             return image_paths
             

@@ -85,7 +85,7 @@ class DataAggregator:
             # Expected columns in the target schema
             expected_columns = [
                 'date', 'city', 'market', 'major_category', 'sub_category', 
-                'product', 'presentation', 'units', 'daily_min', 'daily_max', 'source'
+                'product', 'presentation', 'units', 'daily_min', 'daily_max', 'source', 'source_filepath'
             ]
             
             # Add missing columns if needed
@@ -93,6 +93,9 @@ class DataAggregator:
                 if col not in df.columns:
                     df[col] = None
                     self.logger.warning(f"Added missing column '{col}' to data from {os.path.basename(source_file)}")
+            
+            # Add source filepath
+            df['source_filepath'] = source_file
             
             # Standardize date format
             if 'date' in df.columns:
@@ -118,7 +121,7 @@ class DataAggregator:
             # Ensure all string columns are actually strings
             string_columns = [
                 'city', 'market', 'major_category', 'sub_category', 
-                'product', 'presentation', 'units', 'source'
+                'product', 'presentation', 'units', 'source', 'source_filepath'
             ]
             for col in string_columns:
                 if col in df.columns:
@@ -150,6 +153,8 @@ class DataAggregator:
             dedup_columns = [
                 'date', 'city', 'market', 'major_category', 'sub_category', 
                 'product', 'presentation', 'units', 'source'
+                # Note: We intentionally exclude 'source_filepath' from deduplication
+                # to avoid keeping duplicate data that comes from different files
             ]
             
             # Remove duplicates based on these columns

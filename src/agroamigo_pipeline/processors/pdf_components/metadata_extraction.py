@@ -27,7 +27,7 @@ class MetadataExtractor:
         Args:
             logger (Logger): Logger instance
         """
-        self.logger = logger or logging.getLogger(__name__)
+        self.logger = logger or logging.getLogger("pdf_processor")
     
     def extract_metadata_from_pdf(self, file_path, text=None):
         """
@@ -85,7 +85,7 @@ class MetadataExtractor:
                     
                     # Last part is market (handle multiple commas like in "Bogotá, D.C., Corabastos")
                     metadata['market'] = parts[-1].strip()
-                    self.logger.info(f"Split by comma - City: '{metadata['city']}', Market: '{metadata['market']}'")
+                    self.logger.debug(f"Split by comma - City: '{metadata['city']}', Market: '{metadata['market']}'")
                 else:
                     # If no comma, all is city
                     metadata['city'] = city_market_line
