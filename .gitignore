@@ -73,3 +73,5 @@ src/agroamigo_pipeline/processors/logs/**
 
 # Ignore all contents of logs/
 src/agroamigo_pipeline/processors/logs/*
+.DS_Store
+.DS_Store

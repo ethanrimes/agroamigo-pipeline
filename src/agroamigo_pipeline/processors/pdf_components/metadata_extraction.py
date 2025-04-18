@@ -9,12 +9,14 @@ import os
 import re
 import logging
 from datetime import datetime
+import pdfplumber  # Import pdfplumber for page extraction
 
 from agroamigo_pipeline.utils.utils import (
     normalize_string, extract_date_from_spanish_text, format_date, 
     extract_geography_info
 )
 from agroamigo_pipeline.utils.exceptions import ValidationError
+
 class MetadataExtractor:
     """Extracts metadata from PDF files containing agricultural price reports."""
     
@@ -27,13 +29,13 @@ class MetadataExtractor:
         """
         self.logger = logger or logging.getLogger(__name__)
     
-    def extract_metadata_from_pdf(self, file_path, text):
+    def extract_metadata_from_pdf(self, file_path, text=None):
         """
         Extract metadata from PDF text for informes por ciudades format based on positioning.
         
         Args:
             file_path (str): Path to the PDF file
-            text (str): Extracted text
+            text (str, optional): Previously extracted text. If None, will extract text from first page only.
             
         Returns:
             dict: Metadata dictionary
@@ -46,9 +48,30 @@ class MetadataExtractor:
         }
         
         try:
+            # If text is not provided or the document appears to be multi-page,
+            # extract text only from the first page
+            if text is None or len(text.split('\n')) > 50:  # Heuristic to detect multi-page documents
+                self.logger.info(f"Extracting text from first page only for metadata")
+                with pdfplumber.open(file_path) as pdf:
+                    if len(pdf.pages) > 0:
+                        first_page = pdf.pages[0]
+                        first_page_text = first_page.extract_text()
+                        if first_page_text:
+                            self.logger.info(f"Successfully extracted first page text for metadata")
+                            text_for_metadata = first_page_text
+                        else:
+                            self.logger.warning(f"Could not extract text from first page, using provided text")
+                            text_for_metadata = text
+                    else:
+                        self.logger.warning(f"PDF appears to have no pages, using provided text")
+                        text_for_metadata = text
+            else:
+                self.logger.info(f"Using provided text for metadata extraction")
+                text_for_metadata = text
+            
             # Look for the city/market line - it's between specific headers
             header_pattern = r'PRECIOS DE VENTA MAYORISTA\s*\n(.*?)\s*\n\s*PRODUCTOS PRIMERA CALIDAD'
-            header_match = re.search(header_pattern, text, re.IGNORECASE | re.DOTALL)
+            header_match = re.search(header_pattern, text_for_metadata, re.IGNORECASE | re.DOTALL)
             
             if header_match:
                 city_market_line = header_match.group(1).strip()
@@ -71,7 +94,7 @@ class MetadataExtractor:
             
             # Extract date from the pattern that follows PRODUCTOS PRIMERA CALIDAD
             date_pattern = r'PRODUCTOS PRIMERA CALIDAD.*?\n(.*?)(?:\n|$)'
-            date_match = re.search(date_pattern, text, re.IGNORECASE | re.DOTALL)
+            date_match = re.search(date_pattern, text_for_metadata, re.IGNORECASE | re.DOTALL)
             
             if date_match:
                 date_line = date_match.group(1).strip()
@@ -80,9 +103,9 @@ class MetadataExtractor:
                     metadata['date'] = format_date(date_obj)
                     self.logger.info(f"Extracted date: '{metadata['date']}' from line: '{date_line}'")
             
-            # If date not found by pattern, try to extract from any part of the text
+            # If date not found by pattern, try to extract from any part of the first page text
             if not metadata['date']:
-                date_obj = extract_date_from_spanish_text(text)
+                date_obj = extract_date_from_spanish_text(text_for_metadata)
                 if date_obj:
                     metadata['date'] = format_date(date_obj)
                     self.logger.info(f"Extracted date from general text: '{metadata['date']}'")
@@ -99,8 +122,23 @@ class MetadataExtractor:
             
             # Validate city and market
             if metadata['city'] is None or metadata['city'] == "":
-                self.logger.error("No city found in document header")
-                raise ValidationError("No city found in document header")
+                # If still not found, try looking in the entire text if we were only using first page
+                if text and text_for_metadata != text:
+                    self.logger.info("Attempting to find city in full document text")
+                    alt_header_match = re.search(header_pattern, text, re.IGNORECASE | re.DOTALL)
+                    if alt_header_match:
+                        city_market_line = alt_header_match.group(1).strip()
+                        if ',' in city_market_line:
+                            parts = city_market_line.split(',')
+                            metadata['city'] = parts[0].strip()
+                            metadata['market'] = parts[-1].strip()
+                        else:
+                            metadata['city'] = city_market_line
+                
+                # If still nothing found
+                if metadata['city'] is None or metadata['city'] == "":
+                    self.logger.error("No city found in document header")
+                    metadata['city'] = 'Unknown'
             
             # Don't accept 'Principal' as market
             if metadata['market'] and metadata['market'].lower() == 'principal':
@@ -117,13 +155,18 @@ class MetadataExtractor:
                 metadata['date'] = datetime.now().strftime('%Y-%m-%d')
                 self.logger.warning(f"No date found, using current date: {metadata['date']}")
             
+            # Ensure market has a value
+            if not metadata['market']:
+                metadata['market'] = 'Unknown'
+                self.logger.warning(f"No market found, using 'Unknown'")
+            
             return metadata
             
         except Exception as e:
             self.logger.error(f"Error extracting metadata: {str(e)}")
             
             # Default values
-            metadata['date'] = datetime.now().strftime('%Y-%m-%d')
+            metadata['date'] = 'Unknown'
             metadata['city'] = 'Unknown'
             metadata['market'] = 'Unknown'
             

@@ -420,6 +420,10 @@ class PDFProcessorOrchestrator:
                     output_df.to_csv(output_csv, index=False)
                     thread_logger.info(f"Saved output to: {output_csv}")
                     
+                    # Validate the output CSV
+                    validation_success = self.validate_output_csv(output_csv, pdf_id)
+                    thread_logger.info(f"Validation {'passed' if validation_success else 'failed'} for: {os.path.basename(output_csv)}")
+                    
                     # Update processing results
                     processing_results['unique_products'] = unique_products
                     processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
@@ -427,6 +431,11 @@ class PDFProcessorOrchestrator:
                     processing_results['rows_processed'] = len(output_df)
                     processing_results['extraction_method'] = extraction_method
                     processing_results['processed_csv_path'] = output_csv
+                    
+                    # If validation failed, update error status
+                    if not validation_success:
+                        processing_results['error_occurred'] = True
+                        processing_results['error_warnings'] = "CSV validation failed"
                     
                     # Count unique cities and markets
                     if 'city' in output_df.columns and 'market' in output_df.columns:
@@ -437,6 +446,10 @@ class PDFProcessorOrchestrator:
                     with global_stats_lock:
                         self.stats['processed_files'] += 1
                         self.stats['total_rows_processed'] += processing_results['rows_processed']
+                        if validation_success:
+                            self.stats['validation_passed'] += 1
+                        else:
+                            self.stats['validation_failed'] += 1
                     
                     thread_logger.info(
                         f"Successfully processed {os.path.basename(file_path)}: "
@@ -612,6 +625,10 @@ class PDFProcessorOrchestrator:
                 output_df.to_csv(output_csv, index=False)
                 self.logger.info(f"Saved output to: {output_csv}")
                 
+                # Validate the output CSV
+                validation_success = self.validate_output_csv(output_csv, pdf_id)
+                self.logger.info(f"Validation {'passed' if validation_success else 'failed'} for: {os.path.basename(output_csv)}")
+                
                 # Update processing results
                 processing_results['unique_products'] = unique_products
                 processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
@@ -619,6 +636,11 @@ class PDFProcessorOrchestrator:
                 processing_results['rows_processed'] = len(output_df)
                 processing_results['extraction_method'] = extraction_method
                 processing_results['processed_csv_path'] = output_csv
+                
+                # If validation failed, update error status
+                if not validation_success:
+                    processing_results['error_occurred'] = True
+                    processing_results['error_warnings'] = "CSV validation failed"
                 
                 # Count unique cities and markets
                 if 'city' in output_df.columns and 'market' in output_df.columns:
@@ -629,6 +651,10 @@ class PDFProcessorOrchestrator:
                 with global_stats_lock:
                     self.stats['processed_files'] += 1
                     self.stats['total_rows_processed'] += processing_results['rows_processed']
+                    if validation_success:
+                        self.stats['validation_passed'] += 1
+                    else:
+                        self.stats['validation_failed'] += 1
                 
                 self.logger.info(
                     f"Successfully processed {filename}: "
@@ -638,7 +664,7 @@ class PDFProcessorOrchestrator:
             else:
                 # Raise exception for empty DataFrame
                 raise EmptyProductDataError("No data extracted from PDF, DataFrame is empty")
-            
+                
         except Exception as e:
             processing_results['error_occurred'] = True
             processing_results['error_warnings'] = str(e)

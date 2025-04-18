@@ -28,52 +28,6 @@ class TextExtractor:
             'pdf_text_extraction': []
         }
     
-    def extract_text_with_pypdf(self, file_path):
-        """
-        Extract text from PDF using PyPDF2.
-        
-        Args:
-            file_path (str): Path to the PDF file
-            
-        Returns:
-            str: Extracted text
-        """
-        start_time = time.time()
-        filename = os.path.basename(file_path)
-        self.logger.info(f"        -----> Extracting text with PyPDF2: {filename}")
-        
-        text = ""
-        try:
-            with open(file_path, 'rb') as file:
-                reader = PyPDF2.PdfReader(file)
-                num_pages = len(reader.pages)
-                self.logger.info(f"        PDF has {num_pages} pages")
-                
-                for page_num in range(num_pages):
-                    self.logger.info(f"        Extracting text from page {page_num+1}/{num_pages}")
-                    page = reader.pages[page_num]
-                    page_text = page.extract_text()
-                    if page_text:
-                        text += page_text + "\n\n"
-                        self.logger.info(f"        Extracted {len(page_text)} characters from page {page_num+1}")
-                    else:
-                        self.logger.info(f"        No text extracted from page {page_num+1}")
-            
-            duration = time.time() - start_time
-            self.timing_stats['pdf_text_extraction'].append({
-                'method': 'PyPDF2',
-                'pdf': os.path.basename(file_path),
-                'duration': duration
-            })
-            self.logger.info(f"        PyPDF2 extraction completed in {duration:.2f} seconds, extracted {len(text)} total characters")
-            self.logger.info(f"        <----- Completed PyPDF2 extraction for: {filename}")
-            
-            return text
-        except Exception as e:
-            self.logger.warning(f"        Error extracting text with PyPDF2: {str(e)}")
-            self.logger.info(f"        <----- Failed PyPDF2 extraction for: {filename}")
-            return ""
-    
     def extract_text_with_pdfplumber(self, file_path):
         """
         Extract text from PDF using pdfplumber.

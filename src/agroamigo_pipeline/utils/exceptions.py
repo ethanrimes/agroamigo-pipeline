@@ -41,6 +41,37 @@ class ValidationError(PipelineError):
         super().__init__(message)
         self.validation_errors = validation_errors or []
 
+# New validation-specific exceptions
+class NoMajorCategoryError(ValidationError):
+    """Exception raised when major category is missing."""
+    def __init__(self, message="Major category is missing"):
+        self.message = message
+        super().__init__(self.message)
+
+class InvalidDateError(ValidationError):
+    """Exception raised when date is invalid."""
+    def __init__(self, message="Date is invalid or not a datetime object"):
+        self.message = message
+        super().__init__(self.message)
+
+class NonNumericPriceError(ValidationError):
+    """Exception raised when prices are not numeric."""
+    def __init__(self, message="Prices are not numeric"):
+        self.message = message
+        super().__init__(self.message)
+
+class NoDataError(ValidationError):
+    """Exception raised when no data is found."""
+    def __init__(self, message="No data found in file"):
+        self.message = message
+        super().__init__(self.message)
+
+class InvalidMajorCategoryError(ValidationError):
+    """Exception raised when a major category doesn't match the allowed list."""
+    def __init__(self, message="Major category is not in the allowed list"):
+        self.message = message
+        super().__init__(self.message)
+
 class EmptyProductDataError(PDFProcessingError):
     """Exception raised when no product data is extracted from a PDF."""
     def __init__(self, message="No product data extracted from PDF or zero unique products"):

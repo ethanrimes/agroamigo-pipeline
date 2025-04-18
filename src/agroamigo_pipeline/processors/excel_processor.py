@@ -110,9 +110,6 @@ class ExcelProcessor:
             # Read the Excel file using the reader component
             df = self.reader.read_and_prepare(file_path)
             
-            # Add this code in the process_excel_file method where dates are extracted:
-
-            # In the try block where the Excel file is read
             # Get the extracted date from the reader and store it
             extracted_date = self.reader.get_extracted_date()
             if extracted_date:
@@ -136,6 +133,11 @@ class ExcelProcessor:
             
             # Save to CSV
             output_df.to_csv(output_csv, index=False)
+            self.logger.info(f"Saved output to: {output_csv}")
+            
+            # Validate the output CSV
+            validation_success = self.validate_output_csv(output_csv, excel_id)
+            self.logger.info(f"Validation {'passed' if validation_success else 'failed'} for: {os.path.basename(output_csv)}")
             
             # Update processing results
             processing_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
@@ -143,6 +145,11 @@ class ExcelProcessor:
             processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
             processing_results['rows_processed'] = len(output_df)
             processing_results['processed_csv_path'] = output_csv
+            
+            # If validation failed, update error status
+            if not validation_success:
+                processing_results['error_occurred'] = True
+                processing_results['error_warnings'] = "CSV validation failed"
             
             # Count unique cities and markets
             if 'city' in output_df.columns and 'market' in output_df.columns:
@@ -152,6 +159,10 @@ class ExcelProcessor:
             # Update statistics
             self.stats['processed_files'] += 1
             self.stats['total_rows_processed'] += processing_results['rows_processed']
+            if validation_success:
+                self.stats['validation_passed'] += 1
+            else:
+                self.stats['validation_failed'] += 1
             
             self.logger.info(
                 f"Successfully processed {filename}: "
@@ -203,7 +214,9 @@ class ExcelProcessor:
             'processed_files': 0,
             'failed_files': 0,
             'skipped_files': 0,
-            'total_rows_processed': 0
+            'total_rows_processed': 0,
+            'validation_passed': 0,
+            'validation_failed': 0
         }
         
         # Get Excel files from webscraper registry
@@ -266,8 +279,10 @@ class ExcelProcessor:
         
         # Log summary
         self.logger.info(f"Excel processing summary: {self.stats['processed_files']} processed, "
-                       f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
-                       f"out of {self.stats['total_files']} total files")
+                    f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
+                    f"out of {self.stats['total_files']} total files")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
+        self.logger.info(f"Validation results: {self.stats['validation_passed']} passed, "
+                    f"{self.stats['validation_failed']} failed")
         
         return self.stats
