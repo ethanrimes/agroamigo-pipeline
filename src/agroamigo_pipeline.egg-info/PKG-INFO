@@ -46,7 +46,7 @@ This project processes Colombian agricultural price data from multiple sources (
 - **PDF Processing**: Extracts and processes PDF reports with multiple fallback mechanisms
   - Direct text extraction with PyPDF2/pdfplumber
   - Table extraction for structured data
-  - Fallback to GPT-4o mini for difficult cases
+  - Fallback to GPT-4.1 nano for difficult cases
 - **Data Aggregation**: Consolidates processed data into a unified dataset
 - **Error Handling**: Comprehensive error tracking and reporting
 - **Logging**: Detailed logging and process monitoring

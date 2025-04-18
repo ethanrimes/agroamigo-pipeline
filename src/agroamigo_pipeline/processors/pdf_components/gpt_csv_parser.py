@@ -1,7 +1,7 @@
 """
 CSV parsing utilities for GPT-4o extracted data.
 
-This module provides functions for parsing CSV data extracted by GPT-4o mini.
+This module provides functions for parsing CSV data extracted by GPT-4.1 nano.
 """
 
 import time
@@ -15,7 +15,7 @@ import re
 from agroamigo_pipeline.utils.utils import clean_price_value
 
 class GPTCSVParser:
-    """Parses CSV text extracted by GPT-4o mini into structured data."""
+    """Parses CSV text extracted by GPT-4.1 nano into structured data."""
     
     def __init__(self, logger=None, timing_stats=None, save_csv_data=False):
         """
@@ -41,10 +41,10 @@ class GPTCSVParser:
     
     def process_csv_from_gpt4o(self, csv_text, metadata):
         """
-        Process CSV text extracted by GPT-4o mini using stack-based category tracking.
+        Process CSV text extracted by GPT-4.1 nano using stack-based category tracking.
         
         Args:
-            csv_text (str): CSV text extracted by GPT-4o mini
+            csv_text (str): CSV text extracted by GPT-4.1 nano
             metadata (dict): Metadata dictionary with date, city, market
             
         Returns:
@@ -53,7 +53,7 @@ class GPTCSVParser:
         product_data = []
         
         # Log the input CSV text
-        self.logger.info(f"Processing CSV text from GPT-4o mini - {len(csv_text)} characters")
+        self.logger.info(f"Processing CSV text from GPT-4.1 nano - {len(csv_text)} characters")
         self.logger.debug(f"CSV text to process:\n{csv_text}")
         
         if csv_text:
@@ -119,29 +119,29 @@ class GPTCSVParser:
                 
                 if is_category_line:
                     category_name = parts[0].strip()
-                    self.logger.info(f"Found category line: '{category_name}'")
+                    self.logger.debug(f"Found category line: '{category_name}'")
                     
                     # Stack management according to the requirements
                     if len(category_stack) == 0:
                         # Empty stack - add as major category
                         category_stack.append(category_name)
-                        self.logger.info(f"Stack was empty -> Added major category: '{category_name}'")
+                        self.logger.debug(f"Stack was empty -> Added major category: '{category_name}'")
                     elif len(category_stack) == 1:
                         # One item in stack - add as subcategory
                         category_stack.append(category_name)
-                        self.logger.info(f"Stack had one item -> Added subcategory: '{category_name}'")
+                        self.logger.debug(f"Stack had one item -> Added subcategory: '{category_name}'")
                     elif len(category_stack) == 2:
                         # Two items in stack already
                         if previous_row_had_prices is True:
                             # Previous row had prices, update subcategory
                             category_stack[1] = category_name
-                            self.logger.info(f"Previous row had prices -> Updated subcategory to: '{category_name}'")
+                            self.logger.debug(f"Previous row had prices -> Updated subcategory to: '{category_name}'")
                         else:
                             # Previous row was also a category, shift stack
                             old_major = category_stack.pop(0)  # Remove old major
                             new_major = category_stack[0]      # Current subcategory becomes new major
                             category_stack = [new_major, category_name]  # Set new major and new sub
-                            self.logger.info(f"Previous row was a category -> Shifted stack: '{old_major}' out, '{new_major}' to major, '{category_name}' to sub")
+                            self.logger.debug(f"Previous row was a category -> Shifted stack: '{old_major}' out, '{new_major}' to major, '{category_name}' to sub")
                     
                     processed_categories += 1
                     previous_row_had_prices = False
@@ -198,7 +198,7 @@ class GPTCSVParser:
                         'daily_max': daily_max
                     })
                     
-                    self.logger.info(f"Added product '{product}' in category '{major_category}' > '{sub_category}'")
+                    self.logger.debug(f"Added product '{product}' in category '{major_category}' > '{sub_category}'")
                     processed_products += 1
                     previous_row_had_prices = True
                 
@@ -220,11 +220,11 @@ class GPTCSVParser:
     
     def process_gpt4o_results(self, file_path, csv_texts, metadata):
         """
-        Process multiple CSV texts extracted by GPT-4o mini and combine into a single DataFrame.
+        Process multiple CSV texts extracted by GPT-4.1 nano and combine into a single DataFrame.
         
         Args:
             file_path (str): Path to the original PDF file
-            csv_texts (list): List of CSV texts extracted by GPT-4o mini
+            csv_texts (list): List of CSV texts extracted by GPT-4.1 nano
             metadata (dict): Metadata dictionary with date, city, market
             
         Returns:
@@ -241,7 +241,7 @@ class GPTCSVParser:
         try:
             # Process each CSV text and combine results
             all_product_data = []
-            self.logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")
+            self.logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4.1 nano")
             
             # Save raw CSV texts for debugging
             raw_csv_log_file = os.path.join(log_dir, f"raw_csv_texts_{filename}_{int(time.time())}.json")
@@ -258,16 +258,16 @@ class GPTCSVParser:
             
             for i, csv_text in enumerate(csv_texts):
                 if csv_text:
-                    self.logger.info(f"      Processing CSV text {i+1}/{len(csv_texts)} ({len(csv_text)} characters)")
+                    self.logger.debug(f"      Processing CSV text {i+1}/{len(csv_texts)} ({len(csv_text)} characters)")
                     product_data = self.process_csv_from_gpt4o(csv_text, metadata)
-                    self.logger.info(f"      Extracted {len(product_data)} product entries from CSV text {i+1}")
+                    self.logger.debug(f"      Extracted {len(product_data)} product entries from CSV text {i+1}")
                     all_product_data.extend(product_data)
                 else:
                     self.logger.warning(f"      CSV text {i+1}/{len(csv_texts)} is empty or None")
             
             # If no products found, return empty DataFrame
             if not all_product_data:
-                self.logger.warning(f"      No product data extracted from PDF with GPT-4o mini")
+                self.logger.warning(f"      No product data extracted from PDF with GPT-4.1 nano")
                 return pd.DataFrame()
             
             # Save extracted product data for debugging
@@ -275,12 +275,12 @@ class GPTCSVParser:
             try:
                 with open(extracted_data_log_file, "w", encoding="utf-8") as f:
                     json.dump(all_product_data, f, indent=2, ensure_ascii=False)
-                self.logger.info(f"      Saved extracted product data to: {extracted_data_log_file}")
+                self.logger.debug(f"      Saved extracted product data to: {extracted_data_log_file}")
             except Exception as e:
                 self.logger.warning(f"      Failed to save extracted product data to file: {str(e)}")
             
             # Convert to DataFrame
-            self.logger.info(f"      Converting parsed data to DataFrame")
+            self.logger.debug(f"      Converting parsed data to DataFrame")
             output_data = []
             
             for product_entry in all_product_data:
@@ -302,7 +302,7 @@ class GPTCSVParser:
             
             # Create DataFrame from output data
             output_df = pd.DataFrame(output_data)
-            self.logger.info(f"      Created DataFrame with {len(output_df)} rows")
+            self.logger.debug(f"      Created DataFrame with {len(output_df)} rows")
             
             # Ensure all required columns exist
             required_columns = [
@@ -318,7 +318,7 @@ class GPTCSVParser:
             final_df_log_file = os.path.join(log_dir, f"final_df_{filename}_{int(time.time())}.csv")
             try:
                 output_df.to_csv(final_df_log_file, index=False)
-                self.logger.info(f"      Saved final processed DataFrame to: {final_df_log_file}")
+                self.logger.debug(f"      Saved final processed DataFrame to: {final_df_log_file}")
             except Exception as e:
                 self.logger.warning(f"      Failed to save final DataFrame to file: {str(e)}")
             

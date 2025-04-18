@@ -47,27 +47,6 @@ class PDFProcessor:
         
         self.logger.info("PDFProcessor initialized")
     
-    def process_pdf_file(self, pdf_id, file_path, output_dir=None, force_reprocess=False):
-        """
-        Process a single PDF file and save results to CSV.
-        
-        Args:
-            pdf_id (str): PDF ID from the registry
-            file_path (str): Path to the PDF file
-            output_dir (str): Directory to save processed data
-            force_reprocess (bool): If True, reprocess file even if already processed
-            
-        Returns:
-            dict: Processing statistics
-        """
-        # Delegate to orchestrator
-        return self.orchestrator.process_single_pdf_file(
-            pdf_id=pdf_id,
-            file_path=file_path,
-            output_dir=output_dir,
-            force_reprocess=force_reprocess
-        )
-    
     def process_pdf_files(self, output_dir=None, start_date=None, end_date=None, max_workers=None, force_reprocess=False):
         """
         Process all PDF files in the registry.

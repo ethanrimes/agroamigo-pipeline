@@ -51,13 +51,13 @@ class MetadataExtractor:
             # If text is not provided or the document appears to be multi-page,
             # extract text only from the first page
             if text is None or len(text.split('\n')) > 50:  # Heuristic to detect multi-page documents
-                self.logger.info(f"Extracting text from first page only for metadata")
+                self.logger.debug(f"Extracting text from first page only for metadata")
                 with pdfplumber.open(file_path) as pdf:
                     if len(pdf.pages) > 0:
                         first_page = pdf.pages[0]
                         first_page_text = first_page.extract_text()
                         if first_page_text:
-                            self.logger.info(f"Successfully extracted first page text for metadata")
+                            self.logger.debug(f"Successfully extracted first page text for metadata")
                             text_for_metadata = first_page_text
                         else:
                             self.logger.warning(f"Could not extract text from first page, using provided text")
@@ -66,7 +66,7 @@ class MetadataExtractor:
                         self.logger.warning(f"PDF appears to have no pages, using provided text")
                         text_for_metadata = text
             else:
-                self.logger.info(f"Using provided text for metadata extraction")
+                self.logger.debug(f"Using provided text for metadata extraction")
                 text_for_metadata = text
             
             # Look for the city/market line - it's between specific headers
@@ -75,7 +75,7 @@ class MetadataExtractor:
             
             if header_match:
                 city_market_line = header_match.group(1).strip()
-                self.logger.info(f"Extracted header line: '{city_market_line}'")
+                self.logger.debug(f"Extracted header line: '{city_market_line}'")
                 
                 # Process city and market based on comma presence
                 if ',' in city_market_line:
@@ -90,7 +90,7 @@ class MetadataExtractor:
                     # If no comma, all is city
                     metadata['city'] = city_market_line
                     metadata['market'] = ""
-                    self.logger.info(f"No comma found - City: '{metadata['city']}', No market specified")
+                    self.logger.debug(f"No comma found - City: '{metadata['city']}', No market specified")
             
             # Extract date from the pattern that follows PRODUCTOS PRIMERA CALIDAD
             date_pattern = r'PRODUCTOS PRIMERA CALIDAD.*?\n(.*?)(?:\n|$)'
@@ -101,14 +101,14 @@ class MetadataExtractor:
                 date_obj = extract_date_from_spanish_text(date_line)
                 if date_obj:
                     metadata['date'] = format_date(date_obj)
-                    self.logger.info(f"Extracted date: '{metadata['date']}' from line: '{date_line}'")
+                    self.logger.debug(f"Extracted date: '{metadata['date']}' from line: '{date_line}'")
             
             # If date not found by pattern, try to extract from any part of the first page text
             if not metadata['date']:
                 date_obj = extract_date_from_spanish_text(text_for_metadata)
                 if date_obj:
                     metadata['date'] = format_date(date_obj)
-                    self.logger.info(f"Extracted date from general text: '{metadata['date']}'")
+                    self.logger.debug(f"Extracted date from general text: '{metadata['date']}'")
             
             # If metadata is missing, try to extract from filename
             filename = os.path.basename(file_path)
@@ -118,13 +118,13 @@ class MetadataExtractor:
                 if date_match:
                     year, month, day = date_match.groups()
                     metadata['date'] = f"{year}-{month}-{day}"
-                    self.logger.info(f"Extracted date from filename: '{metadata['date']}'")
+                    self.logger.debug(f"Extracted date from filename: '{metadata['date']}'")
             
             # Validate city and market
             if metadata['city'] is None or metadata['city'] == "":
                 # If still not found, try looking in the entire text if we were only using first page
                 if text and text_for_metadata != text:
-                    self.logger.info("Attempting to find city in full document text")
+                    self.logger.debug("Attempting to find city in full document text")
                     alt_header_match = re.search(header_pattern, text, re.IGNORECASE | re.DOTALL)
                     if alt_header_match:
                         city_market_line = alt_header_match.group(1).strip()

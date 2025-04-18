@@ -15,7 +15,7 @@ The pipeline consists of five primary components that work in sequence:
 4. **PDF Processor**: Extracts price data from PDF reports using multiple approaches:
    - Direct text extraction with PyPDF2/pdfplumber
    - Table extraction for structured data
-   - Fallback to GPT-4o mini for difficult cases when text extraction fails
+   - Fallback to GPT-4.1 nano for difficult cases when text extraction fails
 
 5. **Data Aggregator**: Consolidates all processed CSV files into a unified dataset, handling deduplication and ensuring a consistent schema.
 
@@ -264,7 +264,7 @@ AgroAmigo Pipeline is designed to solve the challenge of collecting, standardizi
 
 2. **Multi-format Processing**: Handles Excel files and PDF reports, extracting structured data regardless of format.
 
-3. **Fallback Mechanisms**: When standard extraction methods fail, uses AI-powered extraction with GPT-4o mini as a fallback.
+3. **Fallback Mechanisms**: When standard extraction methods fail, uses AI-powered extraction with GPT-4.1 nano as a fallback.
 
 4. **Processing Tracking**: Tracks every file through the entire pipeline, from download to final consolidation.
 

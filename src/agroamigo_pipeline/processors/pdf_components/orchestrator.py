@@ -14,12 +14,7 @@ import pandas as pd
 import time
 import queue
 import re
-
-try:
-    from tqdm import tqdm
-    TQDM_AVAILABLE = True
-except ImportError:
-    TQDM_AVAILABLE = False
+from tqdm import tqdm
 
 from agroamigo_pipeline.config.settings import (
     PDF_DIR, PROCESSED_DIR, MIN_UNIQUE_PRODUCTS, MAX_UNIQUE_PRODUCTS, PIPELINE_RUN_ID
@@ -35,21 +30,14 @@ from agroamigo_pipeline.processors.pdf_components.product_parser import ProductP
 from agroamigo_pipeline.processors.pdf_components.image_handler import ImageHandler
 from agroamigo_pipeline.processors.pdf_components.gpt_client import GPTClient
 from agroamigo_pipeline.processors.pdf_components.gpt_csv_parser import GPTCSVParser
+from agroamigo_pipeline.error_handlers.validity_checker import ValidityChecker
 
-# Global lock for coordinating directory creation
-dir_creation_lock = threading.Lock()
-
-# Thread local storage for thread-specific loggers
-thread_local = threading.local()
-
-# Global stats dictionary for thread-safe updates
-global_stats_lock = threading.Lock()
-
-# Global registry lock for thread-safe registry operations
-registry_lock = threading.Lock()
-
-# Global output directory lock for thread-safe output directory creation
-output_dir_lock = threading.Lock()
+# Implement thread locking 
+dir_creation_lock = threading.Lock() # Global lock for coordinating directory creation
+thread_local = threading.local() # Thread local storage for thread-specific loggers
+global_stats_lock = threading.Lock() # Global stats dictionary for thread-safe updates
+registry_lock = threading.Lock() # Global registry lock for thread-safe registry operations
+output_dir_lock = threading.Lock() # Global output directory lock for thread-safe output directory creation
 
 class PDFProcessorOrchestrator:
     """
@@ -108,6 +96,9 @@ class PDFProcessorOrchestrator:
         self.image_handler = ImageHandler(logger=self.logger, timing_stats=self.timing_stats, save_images=self.save_debug_data)
         self.gpt_client = GPTClient(logger=self.logger, timing_stats=self.timing_stats, save_responses=self.save_debug_data)
         self.gpt_csv_parser = GPTCSVParser(logger=self.logger, timing_stats=self.timing_stats, save_csv_data=self.save_debug_data)
+        
+        # Initialize the validity checker
+        self.validity_checker = ValidityChecker(logger=self.logger)
         
         # Create necessary directories upfront to avoid race conditions
         self._ensure_all_directories()
@@ -190,7 +181,7 @@ class PDFProcessorOrchestrator:
     
     def process_pdf_with_gpt4o(self, file_path, thread_logger, thread_timing_stats):
         """
-        Process PDF using GPT-4o mini for image-based extraction.
+        Process PDF using GPT-4.1 nano for image-based extraction.
         
         Args:
             file_path (str): Path to the PDF file
@@ -283,7 +274,7 @@ class PDFProcessorOrchestrator:
                         thread_logger.info(f"      Updated date to: {metadata['date']}")
             
             # Process the CSV texts
-            thread_logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4o mini")
+            thread_logger.info(f"      Processing {len(csv_texts)} CSV texts from GPT-4.1 nano")
             result = gpt_csv_parser.process_gpt4o_results(file_path, csv_texts, metadata)
             thread_logger.info(f"      CSV processing complete, extracted {len(result) if result is not None else 0} rows")
             
@@ -291,10 +282,37 @@ class PDFProcessorOrchestrator:
             return result, gpt4o_calls
             
         except Exception as e:
-            thread_logger.error(f"Error processing PDF with GPT-4o mini: {str(e)}")
+            thread_logger.error(f"Error processing PDF with GPT-4.1 nano: {str(e)}")
             thread_logger.info(f"Error details: {traceback.format_exc()}")
             thread_logger.info(f"<---- Failed GPT-4o vision flow for: {filename}")
             return pd.DataFrame(), gpt4o_calls  # Return empty DataFrame with the number of calls made
+    
+    def handle_output_csv(self, output_df, output_csv, pdf_id, extraction_method, processing_results):
+        """
+        Handle validation and writing of the output CSV using the validity checker.
+        
+        Args:
+            output_df (DataFrame): DataFrame to validate and write
+            output_csv (str): Path to output CSV file
+            pdf_id (str): PDF ID from registry
+            extraction_method (str): Method used for extraction
+            processing_results (dict): Processing statistics
+            
+        Returns:
+            tuple: (bool, dict) - (validation success, updated processing results)
+        """
+        # Use the validity checker to validate and register the CSV
+        validation_success, updated_results = self.validity_checker.register_individual_pdf_csv(
+            registry=self.registry,
+            pdf_id=pdf_id,
+            output_df=output_df,
+            output_csv=output_csv,
+            processing_results=processing_results,
+            extraction_method=extraction_method,
+            registry_lock=registry_lock  # Pass the registry_lock from the module level
+        )
+        
+        return validation_success, updated_results
     
     def _process_pdf_worker(self, pdf_id, file_path, output_dir, force_reprocess, result_queue):
         """
@@ -324,31 +342,6 @@ class PDFProcessorOrchestrator:
                 'gpt4_query': [],
                 'data_processing': []
             }
-            
-            # Check if file has already been processed - using registry lock
-            with registry_lock:
-                pdf_info = self.registry.get_pdf_by_id(pdf_id)
-                if pdf_info and pdf_info['processing_status'] == 'processed' and not force_reprocess:
-                    thread_logger.info(f"File already processed: {os.path.basename(file_path)}")
-                    with global_stats_lock:
-                        self.stats['skipped_files'] += 1
-                    
-                    # Put results in queue
-                    result_queue.put({
-                        'success': True,
-                        'pdf_id': pdf_id,
-                        'file_path': file_path,
-                        'results': None,
-                        'status': 'skipped'
-                    })
-                    return
-                
-                # Update registry status to 'processing'
-                self.registry.update_processing_status(pdf_id, 'processing')
-            
-            # Ensure output directory exists with lock
-            with output_dir_lock:
-                os.makedirs(output_dir, exist_ok=True)
             
             # Statistics dictionary
             processing_results = {
@@ -416,40 +409,22 @@ class PDFProcessorOrchestrator:
                     with output_dir_lock:
                         os.makedirs(os.path.dirname(output_csv), exist_ok=True)
                     
-                    # Save to CSV
-                    output_df.to_csv(output_csv, index=False)
-                    thread_logger.info(f"Saved output to: {output_csv}")
+                    # Use handle_output_csv instead of validate_output_csv
+                    validation_success, updated_results = self.handle_output_csv(
+                        output_df=output_df,
+                        output_csv=output_csv,
+                        pdf_id=pdf_id,
+                        extraction_method=extraction_method,
+                        processing_results=processing_results
+                    )
                     
-                    # Validate the output CSV
-                    validation_success = self.validate_output_csv(output_csv, pdf_id)
-                    thread_logger.info(f"Validation {'passed' if validation_success else 'failed'} for: {os.path.basename(output_csv)}")
-                    
-                    # Update processing results
-                    processing_results['unique_products'] = unique_products
-                    processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
-                    processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
-                    processing_results['rows_processed'] = len(output_df)
-                    processing_results['extraction_method'] = extraction_method
-                    processing_results['processed_csv_path'] = output_csv
-                    
-                    # If validation failed, update error status
-                    if not validation_success:
-                        processing_results['error_occurred'] = True
-                        processing_results['error_warnings'] = "CSV validation failed"
-                    
-                    # Count unique cities and markets
-                    if 'city' in output_df.columns and 'market' in output_df.columns:
-                        unique_city_markets = output_df[['city', 'market']].drop_duplicates()
-                        processing_results['unique_cities_markets'] = len(unique_city_markets)
+                    # Update processing_results with the updated values
+                    processing_results = updated_results
                     
                     # Update global stats safely
                     with global_stats_lock:
                         self.stats['processed_files'] += 1
                         self.stats['total_rows_processed'] += processing_results['rows_processed']
-                        if validation_success:
-                            self.stats['validation_passed'] += 1
-                        else:
-                            self.stats['validation_failed'] += 1
                     
                     thread_logger.info(
                         f"Successfully processed {os.path.basename(file_path)}: "
@@ -474,13 +449,6 @@ class PDFProcessorOrchestrator:
             # Calculate processing time
             processing_results['processing_duration_seconds'] = (datetime.now() - start_time).total_seconds()
             
-            # Update registry with processing results - using registry lock
-            with registry_lock:
-                if processing_results['error_occurred']:
-                    self.registry.update_processing_status(pdf_id, 'error', error=processing_results['error_warnings'])
-                else:
-                    self.registry.update_processing_results(pdf_id, processing_results)
-            
             # Place results in queue
             result_queue.put({
                 'success': True,
@@ -495,13 +463,6 @@ class PDFProcessorOrchestrator:
             self.logger.error(f"Error in worker processing {os.path.basename(file_path)}: {str(e)}")
             self.logger.debug(f"Error details: {traceback.format_exc()}")
             
-            # Update registry with error - using registry lock
-            with registry_lock:
-                try:
-                    self.registry.update_processing_status(pdf_id, 'error', error=str(e))
-                except Exception as reg_err:
-                    self.logger.error(f"Failed to update registry for {pdf_id}: {str(reg_err)}")
-            
             # Put error in queue
             result_queue.put({
                 'success': False,
@@ -510,183 +471,6 @@ class PDFProcessorOrchestrator:
                 'error': str(e),
                 'status': 'error'
             })
-    
-    def process_single_pdf_file(self, pdf_id, file_path, output_dir=None, force_reprocess=False):
-        """
-        Process a single PDF file and save results to CSV.
-        
-        Args:
-            pdf_id (str): PDF ID from the registry
-            file_path (str): Path to the PDF file
-            output_dir (str): Directory to save processed data
-            force_reprocess (bool): If True, reprocess file even if already processed
-            
-        Returns:
-            dict: Processing results
-        """
-        filename = os.path.basename(file_path)
-        self.logger.info(f"Processing PDF file: {filename}")
-        
-        # Check if file has already been processed
-        pdf_info = self.registry.get_pdf_by_id(pdf_id)
-        
-        if pdf_info and pdf_info['processing_status'] == 'processed' and not force_reprocess:
-            self.logger.info(f"File already processed: {filename}")
-            
-            # Update global stats safely
-            with global_stats_lock:
-                self.stats['skipped_files'] += 1
-                
-            return None
-        
-        # Set default output directory
-        output_dir = output_dir or PROCESSED_DIR
-        os.makedirs(output_dir, exist_ok=True)
-        
-        # Update registry status to 'processing'
-        with registry_lock:
-            self.registry.update_processing_status(pdf_id, 'processing')
-        
-        # Statistics dictionary
-        processing_results = {
-            'unique_products': 0,
-            'unique_major_categories': 0,
-            'unique_subcategories': 0,
-            'rows_processed': 0,
-            'error_occurred': False,
-            'error_warnings': "",
-            'processing_duration_seconds': 0.0,
-            'extraction_method': "",
-            'processed_csv_path': "",
-            'unique_cities_markets': 0,
-            'pipeline_run_id': PIPELINE_RUN_ID or ""
-        }
-        
-        start_time = datetime.now()
-        self.logger.info(f"Starting processing at: {start_time}")
-        
-        try:
-            # Try text extraction first
-            self.logger.info(f"Attempting text extraction for {filename}")
-            
-            text = self.text_extractor.extract_text_with_pdfplumber(file_path)
-            text_is_valid = self.text_extractor.assess_text_quality(text)
-            
-            if text_is_valid:
-                # Extract metadata from text
-                self.logger.info(f"Extracting metadata from text")
-                metadata = self.metadata_extractor.extract_metadata_from_pdf(file_path, text)
-                
-                # Try table extraction first
-                self.logger.info(f"Attempting to extract tables with pdfplumber")
-                tables = self.text_extractor.extract_table_with_pdfplumber(file_path)
-                
-                if tables and len(tables) > 0:
-                    self.logger.info(f"Processing {len(tables)} extracted tables")
-                    output_df = self.product_parser.process_table_data(file_path, tables, metadata)
-                    extraction_method = "text_extraction"
-                else:
-                    self.logger.info(f"No tables found, falling back to GPT extraction")
-                    # Use GPT vision
-                    output_df, gpt4o_calls = self.process_pdf_with_gpt4o(file_path, self.logger, self.timing_stats)
-                    extraction_method = "gpt_vision"
-                    
-                    # Update global stats safely
-                    with global_stats_lock:
-                        self.stats['gpt4o_calls'] += gpt4o_calls
-                        self.stats['files_using_gpt_extraction'] += 1
-            else:
-                self.logger.info(f"Text extraction not valid, using GPT vision")
-                # Use GPT vision
-                output_df, gpt4o_calls = self.process_pdf_with_gpt4o(file_path, self.logger, self.timing_stats)
-                extraction_method = "gpt_vision"
-                
-                # Update global stats safely
-                with global_stats_lock:
-                    self.stats['gpt4o_calls'] += gpt4o_calls
-                    self.stats['files_using_gpt_extraction'] += 1
-            
-            # Check if we have results with valid product data
-            if output_df is not None and not output_df.empty:
-                # Check for zero unique products
-                unique_products = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
-                if unique_products == 0:
-                    raise EmptyProductDataError("DataFrame contains zero unique products")
-                    
-                # Create output path
-                base_filename = os.path.splitext(filename)[0]
-                output_csv = os.path.join(output_dir, f"{base_filename}.csv")
-                
-                # Ensure output directory exists
-                with output_dir_lock:
-                    os.makedirs(os.path.dirname(output_csv), exist_ok=True)
-                
-                # Save to CSV
-                output_df.to_csv(output_csv, index=False)
-                self.logger.info(f"Saved output to: {output_csv}")
-                
-                # Validate the output CSV
-                validation_success = self.validate_output_csv(output_csv, pdf_id)
-                self.logger.info(f"Validation {'passed' if validation_success else 'failed'} for: {os.path.basename(output_csv)}")
-                
-                # Update processing results
-                processing_results['unique_products'] = unique_products
-                processing_results['unique_major_categories'] = len(output_df['major_category'].unique()) if 'major_category' in output_df.columns else 0
-                processing_results['unique_subcategories'] = len(output_df['sub_category'].unique()) if 'sub_category' in output_df.columns else 0
-                processing_results['rows_processed'] = len(output_df)
-                processing_results['extraction_method'] = extraction_method
-                processing_results['processed_csv_path'] = output_csv
-                
-                # If validation failed, update error status
-                if not validation_success:
-                    processing_results['error_occurred'] = True
-                    processing_results['error_warnings'] = "CSV validation failed"
-                
-                # Count unique cities and markets
-                if 'city' in output_df.columns and 'market' in output_df.columns:
-                    unique_city_markets = output_df[['city', 'market']].drop_duplicates()
-                    processing_results['unique_cities_markets'] = len(unique_city_markets)
-                
-                # Update global stats safely
-                with global_stats_lock:
-                    self.stats['processed_files'] += 1
-                    self.stats['total_rows_processed'] += processing_results['rows_processed']
-                    if validation_success:
-                        self.stats['validation_passed'] += 1
-                    else:
-                        self.stats['validation_failed'] += 1
-                
-                self.logger.info(
-                    f"Successfully processed {filename}: "
-                    f"{processing_results['rows_processed']} rows, "
-                    f"{processing_results['unique_products']} products"
-                )
-            else:
-                # Raise exception for empty DataFrame
-                raise EmptyProductDataError("No data extracted from PDF, DataFrame is empty")
-                
-        except Exception as e:
-            processing_results['error_occurred'] = True
-            processing_results['error_warnings'] = str(e)
-            
-            self.logger.error(f"Error processing PDF file {filename}: {str(e)}")
-            self.logger.debug(f"Error details: {traceback.format_exc()}")
-            
-            # Update global stats safely
-            with global_stats_lock:
-                self.stats['failed_files'] += 1
-        
-        # Calculate processing time
-        processing_results['processing_duration_seconds'] = (datetime.now() - start_time).total_seconds()
-        
-        # Update registry with processing results
-        with registry_lock:
-            if processing_results['error_occurred']:
-                self.registry.update_processing_status(pdf_id, 'error', error=processing_results['error_warnings'])
-            else:
-                self.registry.update_processing_results(pdf_id, processing_results)
-        
-        return processing_results
 
     
     def process_pdf_files(self, output_dir=None, start_date=None, end_date=None, max_workers=None, force_reprocess=False):
@@ -719,6 +503,8 @@ class PDFProcessorOrchestrator:
             'total_rows_processed': 0,
             'files_using_gpt_extraction': 0,
             'gpt4o_calls': 0,
+            'validation_passed': 0,
+            'validation_failed': 0,
             'start_time': datetime.now(),
             'end_time': None,
             'total_duration_seconds': 0
@@ -766,257 +552,132 @@ class PDFProcessorOrchestrator:
         # Determine number of workers
         if max_workers is None or max_workers <= 0:
             # Default to number of CPUs if not specified
-            max_workers = min(os.cpu_count() or 4, 8)  # Cap at 8 to avoid too many threads
+            max_workers = os.cpu_count()
         
         # Cap max_workers to the number of PDFs
         max_workers = min(max_workers, total_pdfs)
+        self.logger.info(f"Using {max_workers} workers for parallel processing")
         
         # Create all required directories upfront to avoid race conditions
         self._ensure_all_directories()
         
-        # Sequential processing if only 1 worker or 1 file
-        if max_workers == 1 or total_pdfs == 1:
-            self.logger.info("Using sequential processing")
-            
-            # Process files sequentially with progress bar
-            if TQDM_AVAILABLE:
-                # Use tqdm for progress tracking
-                pbar = tqdm(total=total_pdfs, desc="Processing PDFs", unit="file")
+        # Create a queue for collecting results from workers
+        result_queue = queue.Queue()
+        
+        # Create thread pool and submit tasks
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # Submit all tasks to the pool
+            futures = []
+            for row in pdf_df.itertuples():
+                pdf_id = row.pdf_id
+                file_path = row.file_path
                 
-                for i, row in enumerate(pdf_df.itertuples()):
-                    pdf_id = row.pdf_id
-                    file_path = row.file_path
-                    filename = os.path.basename(file_path)
-                    
-                    self.logger.info(f"Processing {i+1}/{total_pdfs}: {filename}")
-                    
+                # Update registry status to 'processing' before submitting
+                with registry_lock:
+                    self.registry.update_processing_status(pdf_id, 'processing')
+                
+                future = executor.submit(
+                    self._process_pdf_worker,
+                    pdf_id,
+                    file_path,
+                    output_dir,
+                    force_reprocess,
+                    result_queue
+                )
+                futures.append(future)
+            
+            with tqdm(total=total_pdfs, desc="Processing PDFs", unit="file") as pbar:
+                # Monitor the queue and update progress
+                completed = 0
+                while completed < total_pdfs:
                     try:
-                        results = self.process_single_pdf_file(pdf_id, file_path, output_dir, force_reprocess)
-                        if results is None:
-                            pbar.set_postfix(status="Skipped")
-                        elif results['error_occurred']:
-                            pbar.set_postfix(status="Failed")
-                        else:
-                            pbar.set_postfix(
-                                rows=results['rows_processed'],
-                                method=results['extraction_method']
-                            )
-                    except Exception as e:
-                        self.logger.error(f"Error processing {filename}: {str(e)}")
-                        self.logger.debug(f"Error details: {traceback.format_exc()}")
-                        pbar.set_postfix(status="Error")
-                    
-                    # Update progress bar
-                    pbar.update(1)
-                
-                pbar.close()
-            else:
-                # Without tqdm, use simple progress reporting
-                for i, row in enumerate(pdf_df.itertuples()):
-                    pdf_id = row.pdf_id
-                    file_path = row.file_path
-                    filename = os.path.basename(file_path)
-                    
-                    self.logger.info(f"Processing {i+1}/{total_pdfs}: {filename}")
-                    
-                    try:
-                        results = self.process_single_pdf_file(pdf_id, file_path, output_dir, force_reprocess)
+                        # Check if any result is available with a small timeout
+                        result = result_queue.get(timeout=0.1)
                         
-                        # Log progress
-                        progress_msg = f"Progress: {i+1}/{total_pdfs} ({((i+1)/total_pdfs)*100:.1f}%)"
-                        if results is None:
-                            self.logger.info(f"{progress_msg} - Skipped: {filename}")
-                        elif results['error_occurred']:
-                            self.logger.info(f"{progress_msg} - Failed: {filename}")
-                        else:
-                            self.logger.info(
-                                f"{progress_msg} - Processed: {filename} "
-                                f"({results['rows_processed']} rows via {results['extraction_method']})"
-                            )
-                    except Exception as e:
-                        self.logger.error(f"Error processing {filename}: {str(e)}")
-                        self.logger.debug(f"Error details: {traceback.format_exc()}")
-                        self.logger.info(f"{progress_msg} - Error: {filename}")
-        else:
-            # Parallel processing with thread pool
-            self.logger.info(f"Using {max_workers} workers for parallel processing")
-            
-            # Create a queue for collecting results from workers
-            result_queue = queue.Queue()
-            
-            # Create thread pool and submit tasks
-            with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-                # Submit all tasks to the pool
-                futures = []
-                for row in pdf_df.itertuples():
-                    pdf_id = row.pdf_id
-                    file_path = row.file_path
-                    
-                    future = executor.submit(
-                        self._process_pdf_worker,
-                        pdf_id,
-                        file_path,
-                        output_dir,
-                        force_reprocess,
-                        result_queue
-                    )
-                    futures.append(future)
-                
-                # Track progress with tqdm if available
-                if TQDM_AVAILABLE:
-                    with tqdm(total=total_pdfs, desc="Processing PDFs", unit="file") as pbar:
-                        # Monitor the queue and update progress
-                        completed = 0
-                        
-                        while completed < total_pdfs:
-                            try:
-                                # Check if any result is available with a small timeout
-                                result = result_queue.get(timeout=0.1)
-                                
-                                # Process the result
-                                if result['success']:
-                                    pdf_id = result['pdf_id']
-                                    file_path = result['file_path']
-                                    filename = os.path.basename(file_path)
-                                    results = result['results']
-                                    
-                                    if result['status'] == 'skipped':
-                                        pbar.set_postfix(status="Skipped")
-                                    elif result['status'] == 'error':
-                                        pbar.set_postfix(status="Failed")
-                                    else:
-                                        if results:
-                                            pbar.set_postfix(
-                                                rows=results.get('rows_processed', 0),
-                                                method=results.get('extraction_method', 'unknown')
-                                            )
-                                else:
-                                    # Handle error case
-                                    pbar.set_postfix(status="Error")
-                                
-                                # Update progress
-                                completed += 1
-                                pbar.update(1)
-                                
-                                # Update description to show statistics
-                                pbar.set_description(
-                                    f"Processing PDFs [Processed: {self.stats['processed_files']}, "
-                                    f"Failed: {self.stats['failed_files']}, "
-                                    f"Skipped: {self.stats['skipped_files']}]"
-                                )
-                            except queue.Empty:
-                                # No results available yet, check if any futures are done
-                                done_futures = [f for f in futures if f.done()]
-                                if len(done_futures) > completed:
-                                    # Some futures are done but didn't put result in queue
-                                    # This could happen if there was an exception in _process_pdf_worker
-                                    missing = len(done_futures) - completed
-                                    self.logger.warning(f"{missing} tasks completed but didn't report results")
-                                    
-                                    # Update progress for these tasks
-                                    completed += missing
-                                    pbar.update(missing)
-                                    
-                                    # Update description
-                                    with global_stats_lock:
-                                        self.stats['failed_files'] += missing
-                                    
-                                    pbar.set_description(
-                                        f"Processing PDFs [Processed: {self.stats['processed_files']}, "
-                                        f"Failed: {self.stats['failed_files']}, "
-                                        f"Skipped: {self.stats['skipped_files']}]"
-                                    )
-                                
-                                # Check if all futures are done
-                                if all(f.done() for f in futures):
-                                    # Ensure we've completed all tasks
-                                    remaining = total_pdfs - completed
-                                    if remaining > 0:
-                                        self.logger.warning(f"{remaining} tasks may have failed silently")
-                                        pbar.update(remaining)
-                                        with global_stats_lock:
-                                            self.stats['failed_files'] += remaining
-                                    
-                                    completed = total_pdfs  # Force exit from loop
-                                    
-                                # Small sleep to avoid busy waiting
-                                time.sleep(0.01)
-                else:
-                    # Without tqdm, use manual progress tracking
-                    completed = 0
-                    start_time = time.time()
-                    
-                    # Wait for all futures to complete
-                    while completed < total_pdfs:
-                        try:
-                            # Check if any result is available with a small timeout
-                            result = result_queue.get(timeout=0.1)
+                        # Process the result
+                        if result['success']:
+                            pdf_id = result['pdf_id']
+                            file_path = result['file_path']
+                            filename = os.path.basename(file_path)
+                            results = result['results']
                             
-                            # Process the result
-                            if result['success']:
-                                pdf_id = result['pdf_id']
-                                file_path = result['file_path']
-                                filename = os.path.basename(file_path)
-                                results = result['results']
-                                
-                                if result['status'] == 'skipped':
-                                    status = "Skipped"
-                                elif result['status'] == 'error':
-                                    status = "Failed"
-                                else:
-                                    if results:
-                                        rows = results.get('rows_processed', 0)
-                                        method = results.get('extraction_method', 'unknown')
-                                        status = f"Processed ({rows} rows via {method})"
-                                    else:
-                                        status = "Processed (0 rows)"
-                            else:
-                                # Handle error case
-                                status = "Error"
-                            
-                            # Update progress
-                            completed += 1
-                            
-                            # Log progress every 5% or for each file if total is small
-                            log_interval = max(1, int(total_pdfs / 20))
-                            if completed % log_interval == 0 or completed == total_pdfs:
-                                elapsed = time.time() - start_time
-                                eta = (elapsed / completed) * (total_pdfs - completed) if completed > 0 else 0
-                                
-                                self.logger.info(
-                                    f"Progress: {completed}/{total_pdfs} ({(completed/total_pdfs)*100:.1f}%) "
-                                    f"[P:{self.stats['processed_files']} F:{self.stats['failed_files']} "
-                                    f"S:{self.stats['skipped_files']}] ETA: {eta:.1f}s"
-                                )
-                                
-                        except queue.Empty:
-                            # No results available yet, check if any futures are done
-                            done_futures = [f for f in futures if f.done()]
-                            if len(done_futures) > completed:
-                                # Some futures are done but didn't put result in queue
-                                missing = len(done_futures) - completed
-                                self.logger.warning(f"{missing} tasks completed but didn't report results")
-                                
-                                # Update progress for these tasks
-                                completed += missing
-                                
-                                # Count as failed
+                            if result['status'] == 'skipped':
+                                pbar.set_postfix(status="Skipped")
+                            elif result['status'] == 'error':
+                                pbar.set_postfix(status="Failed")
+                                # Update validation statistics
                                 with global_stats_lock:
-                                    self.stats['failed_files'] += missing
+                                    self.stats['validation_failed'] += 1
+                            else:
+                                if results:
+                                    # Successfully processed with validation
+                                    if not results.get('error_occurred', False):
+                                        with global_stats_lock:
+                                            self.stats['validation_passed'] += 1
+                                    else:
+                                        with global_stats_lock:
+                                            self.stats['validation_failed'] += 1
+                                    
+                                    pbar.set_postfix(
+                                        rows=results.get('rows_processed', 0),
+                                        method=results.get('extraction_method', 'unknown'),
+                                        valid="✓" if not results.get('error_occurred', False) else "✗"
+                                    )
+                        else:
+                            # Handle error case
+                            pbar.set_postfix(status="Error")
+                            with global_stats_lock:
+                                self.stats['validation_failed'] += 1
+                        
+                        # Update progress
+                        completed += 1
+                        pbar.update(1)
+                        
+                        # Update description to show statistics
+                        pbar.set_description(
+                            f"Processing PDFs [Processed: {self.stats['processed_files']}, "
+                            f"Failed: {self.stats['failed_files']}, "
+                            f"Validated: {self.stats['validation_passed']}/{self.stats['processed_files']}]"
+                        )
+                    except queue.Empty:
+                        # No results available yet, check if any futures are done
+                        done_futures = [f for f in futures if f.done()]
+                        if len(done_futures) > completed:
+                            # Some futures are done but didn't put result in queue
+                            # This could happen if there was an exception in _process_pdf_worker
+                            missing = len(done_futures) - completed
+                            self.logger.warning(f"{missing} tasks completed but didn't report results")
                             
-                            # Check if all futures are done
-                            if all(f.done() for f in futures):
-                                # Ensure we've completed all tasks
-                                remaining = total_pdfs - completed
-                                if remaining > 0:
-                                    self.logger.warning(f"{remaining} tasks may have failed silently")
-                                    with global_stats_lock:
-                                        self.stats['failed_files'] += remaining
-                                
-                                completed = total_pdfs  # Force exit from loop
+                            # Update progress for these tasks
+                            completed += missing
+                            pbar.update(missing)
                             
-                            # Small sleep to avoid busy waiting
-                            time.sleep(0.01)
+                            # Update description
+                            with global_stats_lock:
+                                self.stats['failed_files'] += missing
+                                self.stats['validation_failed'] += missing
+                            
+                            pbar.set_description(
+                                f"Processing PDFs [Processed: {self.stats['processed_files']}, "
+                                f"Failed: {self.stats['failed_files']}, "
+                                f"Validated: {self.stats['validation_passed']}/{self.stats['processed_files']}]"
+                            )
+                        
+                        # Check if all futures are done
+                        if all(f.done() for f in futures):
+                            # Ensure we've completed all tasks
+                            remaining = total_pdfs - completed
+                            if remaining > 0:
+                                self.logger.warning(f"{remaining} tasks may have failed silently")
+                                pbar.update(remaining)
+                                with global_stats_lock:
+                                    self.stats['failed_files'] += remaining
+                                    self.stats['validation_failed'] += remaining
+                            
+                            completed = total_pdfs  # Force exit from loop
+                            
+                        # Small sleep to avoid busy waiting
+                        time.sleep(0.01)
         
         # Update final statistics
         self.stats['end_time'] = datetime.now()
@@ -1034,8 +695,9 @@ class PDFProcessorOrchestrator:
         
         # Log summary
         self.logger.info(f"PDF processing summary: {self.stats['processed_files']} processed, "
-                      f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
-                      f"out of {self.stats['total_files']} total files")
+                    f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
+                    f"out of {self.stats['total_files']} total files")
+        self.logger.info(f"Validation results: {self.stats['validation_passed']} passed, {self.stats['validation_failed']} failed")
         self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
         self.logger.info(f"Files using GPT extraction: {self.stats['files_using_gpt_extraction']}")
         self.logger.info(f"Total GPT calls: {self.stats['gpt4o_calls']}")
@@ -1046,7 +708,7 @@ class PDFProcessorOrchestrator:
             self.logger.info(f"Average time per file: {avg_time_per_file:.2f} seconds")
             
             if self.stats['processed_files'] > 0:
-                success_rate = (self.stats['processed_files'] / self.stats['total_files']) * 100
-                self.logger.info(f"Success rate: {success_rate:.2f}%")
+                success_rate = (self.stats['validation_passed'] / self.stats['processed_files']) * 100
+                self.logger.info(f"Validation success rate: {success_rate:.2f}%")
         
         return self.stats

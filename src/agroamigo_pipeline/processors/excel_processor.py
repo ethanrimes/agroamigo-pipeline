@@ -190,99 +190,166 @@ class ExcelProcessor:
         
         return processing_results
     
-    def process_excel_files(self, source_dir=None, output_dir=None, start_date=None, end_date=None, force_reprocess=False):
+    def process_excel_file(self, excel_id, file_path, output_dir=None, force_reprocess=False):
         """
-        Process Excel files from the webscraper registry.
+        Process a single Excel file and save results to CSV.
         
         Args:
-            source_dir (str): Directory containing Excel files (not used, kept for API compatibility)
+            excel_id (str): Excel ID from the registry
+            file_path (str): Path to the Excel file
             output_dir (str): Directory to save processed data
-            start_date (datetime): Start date for filtering files
-            end_date (datetime): End date for filtering files
-            force_reprocess (bool): If True, reprocess files even if already processed
+            force_reprocess (bool): If True, reprocess file even if already processed
             
         Returns:
-            dict: Processing statistics
+            dict: Processing results
         """
+        filename = os.path.basename(file_path)
+        self.logger.info(f"Processing Excel file: {filename}")
+        
+        # Check if file has already been processed
+        excel_info = self.registry.get_excel_by_id(excel_id)
+        
+        if excel_info and excel_info['processing_status'] == 'processed' and not force_reprocess:
+            self.logger.info(f"File already processed: {filename}")
+            return None
+        
         # Set default output directory
         output_dir = output_dir or PROCESSED_DIR
         os.makedirs(output_dir, exist_ok=True)
         
-        # Reset statistics
-        self.stats = {
-            'total_files': 0,
-            'processed_files': 0,
-            'failed_files': 0,
-            'skipped_files': 0,
-            'total_rows_processed': 0,
-            'validation_passed': 0,
-            'validation_failed': 0
+        # Update registry status to 'processing'
+        self.registry.update_processing_status(excel_id, 'processing')
+        
+        # Processing results dictionary
+        processing_results = {
+            'unique_products': 0,
+            'unique_major_categories': 0,
+            'unique_subcategories': 0,
+            'rows_processed': 0,
+            'error_occurred': False,
+            'error_warnings': "",
+            'processing_duration_seconds': 0.0,
+            'extraction_method': "excel_parsing",
+            'processed_csv_path': "",
+            'unique_cities_markets': 0,
+            'pipeline_run_id': PIPELINE_RUN_ID or ""
         }
         
-        # Get Excel files from webscraper registry
-        excel_files_df = self.webscraper_registry.get_files_by_type("excel", with_errors=False)
+        start_time = time.time()
         
-        # Filter by date if needed
-        if start_date or end_date:
-            if start_date:
-                excel_files_df = excel_files_df[excel_files_df['file_date'] >= pd.Timestamp(start_date)]
-            if end_date:
-                excel_files_df = excel_files_df[excel_files_df['file_date'] <= pd.Timestamp(end_date)]
-        
-        # Filter out files with empty download paths
-        excel_files_df = excel_files_df[excel_files_df['download_path'] != '']
-        
-        self.logger.info(f"Found {len(excel_files_df)} Excel files to process")
-        self.stats['total_files'] = len(excel_files_df)
-        
-        # Process each Excel file
-        for _, row in excel_files_df.iterrows():
-            download_id = row['download_id']
-            file_path = row['download_path']
-            file_date = row['file_date']
-            filename = row['filename']
+        try:
+            # Read the Excel file using the reader component
+            df = self.reader.read_and_prepare(file_path)
             
-            # Check if already in Excel registry
-            existing_excel = self.registry.get_excel_by_download_id(download_id)
+            # Get the extracted date from the reader and store it
+            extracted_date = self.reader.get_extracted_date()
+            if extracted_date:
+                # Convert to pandas datetime if it's a string
+                if isinstance(extracted_date, str):
+                    extracted_date = pd.to_datetime(extracted_date)
+                
+                # Store in processing results as parsed_date
+                processing_results['parsed_date'] = extracted_date
+                self.logger.info(f"Extracted date from Excel content: {extracted_date}")
+            else:
+                # No content date found, we'll keep using the file_date from registry
+                self.logger.info("No date extracted from Excel content, using file_date from filename")
             
-            if not existing_excel.empty and not force_reprocess:
-                # Check if any existing Excel has been processed successfully
-                successful_excel = existing_excel[existing_excel['processing_status'] == 'processed']
-                if not successful_excel.empty:
-                    self.logger.info(f"Skipping {filename} - already processed successfully")
-                    self.stats['skipped_files'] += 1
-                    continue
+            # Transform the data using the transformer component
+            output_df = self.transformer.transform(df, file_path)
             
-            # Register this Excel file in the registry if needed
-            if existing_excel.empty:
-                excel_id = self.registry.register_excel(
-                    download_id=download_id,
-                    file_path=file_path,
-                    filename=filename,
-                    file_date=file_date
+            # Create output path
+            base_filename = os.path.splitext(filename)[0]
+            output_csv = os.path.join(output_dir, f"{base_filename}.csv")
+            
+            # Update processing duration
+            processing_results['processing_duration_seconds'] = time.time() - start_time
+            
+            # Import ValidityChecker if not already initialized
+            if not hasattr(self, 'validator'):
+                from agroamigo_pipeline.processors.validator import ValidityChecker
+                self.validator = ValidityChecker(logger=self.logger)
+            
+            # Validate the output and update the registry
+            validation_passed, updated_results = self.validator.validate_excel_output(
+                self.registry, excel_id, output_df, output_csv, processing_results
+            )
+            
+            # Update processing_results with results from validation
+            processing_results = updated_results
+            
+            # Update statistics
+            self.stats['processed_files'] += 1
+            self.stats['total_rows_processed'] += processing_results['rows_processed']
+            if validation_passed:
+                self.stats['validation_passed'] += 1
+                self.logger.info(
+                    f"Successfully processed {filename}: "
+                    f"{processing_results['rows_processed']} rows, "
+                    f"{processing_results['unique_products']} products"
                 )
             else:
-                excel_id = existing_excel.iloc[0]['excel_id']
+                self.stats['validation_failed'] += 1
+                self.logger.warning(f"Validation failed for {filename}: {processing_results['error_warnings']}")
             
-            # Process the Excel file
+        except Exception as e:
+            processing_results['error_occurred'] = True
+            processing_results['error_warnings'] = str(e)
+            
+            self.logger.error(f"Error processing Excel file {filename}: {str(e)}")
+            self.logger.debug(f"Error details: {traceback.format_exc()}")
+            
+            self.stats['failed_files'] += 1
+            
+            # Update registry with error
+            self.registry.update_processing_status(excel_id, 'error', error=processing_results['error_warnings'])
+        
+        return processing_results
+    
+    def validate_output_csv(self, output_csv, excel_id, output_df=None):
+        """
+        Validate the output CSV file and update the registry with validation results.
+        
+        Args:
+            output_csv (str): Path to the output CSV file
+            excel_id (str): Excel ID for the registry
+            output_df (DataFrame, optional): DataFrame to validate, if None will read from output_csv
+        
+        Returns:
+            bool: True if validation passed, False otherwise
+        """
+        # Import ValidityChecker if not already initialized
+        if not hasattr(self, 'validator'):
+            from agroamigo_pipeline.processors.validator import ValidityChecker
+            self.validator = ValidityChecker(logger=self.logger)
+            
+        # If DataFrame not provided, read from CSV
+        if output_df is None:
             try:
-                results = self.process_excel_file(excel_id, file_path, output_dir, force_reprocess)
-                if results is None:
-                    self.stats['skipped_files'] += 1
+                output_df = pd.read_csv(output_csv)
             except Exception as e:
-                self.logger.error(f"Error processing {filename}: {str(e)}")
-                self.registry.update_processing_status(excel_id, 'error', error=str(e))
-                self.stats['failed_files'] += 1
+                self.logger.error(f"Error reading output CSV: {str(e)}")
+                self.registry.update_processing_status(excel_id, 'error', error=f"Error reading output CSV: {str(e)}")
+                return False
         
-        # Export registry to CSV
-        self.registry.export_to_csv()
+        # Prepare processing results
+        processing_results = {
+            'unique_products': 0,
+            'unique_major_categories': 0,
+            'unique_subcategories': 0,
+            'rows_processed': len(output_df) if output_df is not None else 0,
+            'error_occurred': False,
+            'error_warnings': "",
+            'processing_duration_seconds': 0.0,
+            'extraction_method': "excel_parsing",
+            'processed_csv_path': output_csv,
+            'unique_cities_markets': 0,
+            'pipeline_run_id': PIPELINE_RUN_ID or ""
+        }
         
-        # Log summary
-        self.logger.info(f"Excel processing summary: {self.stats['processed_files']} processed, "
-                    f"{self.stats['failed_files']} failed, {self.stats['skipped_files']} skipped "
-                    f"out of {self.stats['total_files']} total files")
-        self.logger.info(f"Processed {self.stats['total_rows_processed']} total rows")
-        self.logger.info(f"Validation results: {self.stats['validation_passed']} passed, "
-                    f"{self.stats['validation_failed']} failed")
+        # Validate using the ValidityChecker
+        validation_passed, updated_results = self.validator.validate_excel_output(
+            self.registry, excel_id, output_df, output_csv, processing_results
+        )
         
-        return self.stats
+        return validation_passed

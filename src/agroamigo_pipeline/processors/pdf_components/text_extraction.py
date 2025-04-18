@@ -164,7 +164,7 @@ class TextExtractor:
                 return False
             
             # Check if there's enough text to be useful (at least some characters)
-            if len(text.strip()) < 100:
+            if len(text.strip()) < 25:
                 self.logger.info("        Text is too short to be useful")
                 return False
                 

@@ -8,7 +8,7 @@ import traceback
 from agroamigo_pipeline.config.settings import GPT4O_API_KEY
 
 class GPTClient:
-    """Client for interacting with GPT-4o mini API."""
+    """Client for interacting with GPT-4.1 nano API."""
     
     def __init__(self, logger=None, timing_stats=None, save_responses=True):
         """
@@ -35,7 +35,7 @@ class GPTClient:
     
     def query_gpt4o_with_image(self, image_path, base64_image=None, prompt_type="table", source_pdf_path=None):
         """
-        Query GPT-4o mini with an image to extract text data.
+        Query GPT-4.1 nano with an image to extract text data.
         
         Args:
             image_path (str): Path to the image file
@@ -52,7 +52,7 @@ class GPTClient:
         
         start_time = time.time()
         pdf_filename = os.path.basename(source_pdf_path) if source_pdf_path else "unknown_pdf"
-        self.logger.info(f"Querying GPT-4o mini with image: {os.path.basename(image_path)} from PDF: {pdf_filename}, prompt type: {prompt_type}")
+        self.logger.info(f"Querying GPT-4.1 nano with image: {os.path.basename(image_path)} from PDF: {pdf_filename}, prompt type: {prompt_type}")
         
         try:
             # Use provided base64 image or assume it needs to be encoded
@@ -117,7 +117,7 @@ class GPTClient:
             }
             
             payload = {
-                "model": "gpt-4o-mini",
+                "model": "gpt-4.1-nano",
                 "messages": [
                     {"role": "system", "content": "You are a specialized data extraction assistant that processes Colombian agricultural market reports."},
                     {"role": "user", "content": [
@@ -130,7 +130,7 @@ class GPTClient:
             }
             
             # Make API request
-            self.logger.info(f"Sending request to GPT-4o mini API for {os.path.basename(image_path)} from PDF: {pdf_filename}")
+            self.logger.info(f"Sending request to GPT-4.1 nano API for {os.path.basename(image_path)} from PDF: {pdf_filename}")
             response = requests.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers=headers,
@@ -139,7 +139,7 @@ class GPTClient:
             )
             
             if response.status_code != 200:
-                self.logger.error(f"GPT-4o mini API error: {response.status_code} - {response.text}")
+                self.logger.error(f"GPT-4.1 nano API error: {response.status_code} - {response.text}")
                 return None
             
             # Extract response
@@ -153,8 +153,8 @@ class GPTClient:
             import re
             
             # First store the raw content for logging/debugging
-            self.logger.info(f"Raw GPT-4o mini response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(raw_content)} characters")
-            self.logger.debug(f"GPT-4o mini raw response (first 200 chars): {raw_content[:200]}...")
+            self.logger.info(f"Raw GPT-4.1 nano response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(raw_content)} characters")
+            self.logger.debug(f"GPT-4.1 nano raw response (first 200 chars): {raw_content[:200]}...")
             
             # Process the content - remove all instances of markdown formatting
             content = raw_content
@@ -183,12 +183,12 @@ class GPTClient:
                 'prompt_type': prompt_type,
                 'duration': duration
             })
-            self.logger.info(f"GPT-4o mini query for {os.path.basename(image_path)} from PDF: {pdf_filename} completed in {duration:.2f} seconds")
+            self.logger.info(f"GPT-4.1 nano query for {os.path.basename(image_path)} from PDF: {pdf_filename} completed in {duration:.2f} seconds")
             
             return content
             
         except Exception as e:
-            self.logger.error(f"Failed to query GPT-4o mini for {os.path.basename(image_path)} from PDF: {pdf_filename}: {str(e)}")
+            self.logger.error(f"Failed to query GPT-4.1 nano for {os.path.basename(image_path)} from PDF: {pdf_filename}: {str(e)}")
             self.logger.error(f"Error details: {traceback.format_exc()}")
             return None
     
@@ -213,35 +213,19 @@ class GPTClient:
         content_type = "raw" if "_raw" in prompt_type else "cleaned"
         prompt_base = prompt_type.replace("_raw", "")
         
-        log_file = os.path.join(log_dir, f"gpt_response_{prompt_type}_{pdf_filename}_{image_basename}_{int(time.time())}.txt")
-        try:
-            with open(log_file, "w", encoding="utf-8") as f:
-                f.write(f"Source PDF: {source_pdf_path}\n")
-                f.write(f"Image: {image_path}\n")
-                f.write(f"Prompt type: {prompt_base}\n")
-                f.write(f"Content type: {content_type}\n")
-                f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-                f.write(f"Content length: {len(content)} characters\n")
-                f.write(f"GPT-4o mini response ({content_type}):\n")
-                f.write(content)
-            self.logger.info(f"Saved {content_type} GPT-4o mini response to: {log_file}")
-        except Exception as e:
-            self.logger.warning(f"Failed to save {content_type} GPT-4o mini response to file: {str(e)}")
-        
         # Save to permanent directory if requested
         if self.save_responses:
-            timestamp = time.strftime('%Y%m%d_%H%M%S')
-            permanent_log_file = os.path.join(self.responses_dir, f"permanent_response_{prompt_type}_{pdf_filename}_{image_basename}_{timestamp}.txt")
+            log_file = os.path.join(log_dir, f"gpt_response_{prompt_type}_{pdf_filename}_{image_basename}_{int(time.time())}.txt")
             try:
-                with open(permanent_log_file, "w", encoding="utf-8") as f:
+                with open(log_file, "w", encoding="utf-8") as f:
                     f.write(f"Source PDF: {source_pdf_path}\n")
                     f.write(f"Image: {image_path}\n")
                     f.write(f"Prompt type: {prompt_base}\n")
                     f.write(f"Content type: {content_type}\n")
                     f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
                     f.write(f"Content length: {len(content)} characters\n")
-                    f.write(f"GPT-4o mini response ({content_type}):\n")
+                    f.write(f"GPT-4.1 nano response ({content_type}):\n")
                     f.write(content)
-                self.logger.info(f"Saved permanent {content_type} GPT response to: {permanent_log_file}")
+                self.logger.info(f"Saved {content_type} GPT-4.1 nano response to: {log_file}")
             except Exception as e:
-                self.logger.error(f"Failed to save permanent {content_type} GPT response: {str(e)}")
+                self.logger.warning(f"Failed to save {content_type} GPT-4.1 nano response to file: {str(e)}")
