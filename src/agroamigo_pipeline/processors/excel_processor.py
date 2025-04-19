@@ -77,13 +77,13 @@ class ExcelProcessor:
             dict: Processing results
         """
         filename = os.path.basename(file_path)
-        self.logger.info(f"Processing Excel file: {filename}")
+        self.logger.debug(f"{file_path} - Processing Excel file: {filename}")
         
         # Check if file has already been processed
         excel_info = self.registry.get_excel_by_id(excel_id)
         
         if excel_info and excel_info['processing_status'] == 'processed' and not force_reprocess:
-            self.logger.info(f"File already processed: {filename}")
+            self.logger.debug(f"{file_path} - File already processed: {filename}")
             return None
         
         # Set default output directory
@@ -123,7 +123,7 @@ class ExcelProcessor:
                 
                 # Store in processing results as parsed_date
                 processing_results['parsed_date'] = extracted_date
-                self.logger.info(f"Extracted date from Excel content: {extracted_date}")
+                self.logger.debug(f"{file_path} - Extracted date from Excel content: {extracted_date}")
             else:
                 # No content date found, we'll keep using the file_date from registry
                 self.logger.info("No date extracted from Excel content, using file_date from filename")

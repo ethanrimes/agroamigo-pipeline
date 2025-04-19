@@ -56,6 +56,15 @@ class ValidityChecker:
             'daily_min', 'daily_max', 'source'
         ]
         
+        # Fields to check for max length
+        self.length_check_fields = [
+            'city', 'market', 'major_category', 'sub_category', 
+            'product', 'presentation', 'units'
+        ]
+        
+        # Maximum allowed character length for text fields
+        self.max_field_length = 80
+        
         self.logger.info("ValidityChecker initialized")
     
     def register_individual_pdf_csv(self, registry, pdf_id, output_df, output_csv, 
@@ -93,7 +102,7 @@ class ValidityChecker:
             if output_df is None or output_df.empty:
                 validation_results["passed"] = False
                 validation_results["error_messages"].append("No data in DataFrame")
-                self.logger.warning(f"PDF {pdf_id}: Validation failed - Empty DataFrame")
+                self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Empty DataFrame")
             else:
                 # Calculate metrics if we have data
                 updated_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
@@ -110,7 +119,7 @@ class ValidityChecker:
                 if missing_columns:
                     validation_results["passed"] = False
                     validation_results["error_messages"].append(f"Missing required columns: {', '.join(missing_columns)}")
-                    self.logger.warning(f"PDF {pdf_id}: Validation failed - Missing columns: {missing_columns}")
+                    self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Missing columns: {missing_columns}")
                 
                 # Only run these checks if all required columns exist
                 if not missing_columns:
@@ -131,12 +140,12 @@ class ValidityChecker:
                         if non_numeric_prices:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Found non-numeric price values")
-                            self.logger.warning(f"PDF {pdf_id}: Validation failed - Non-numeric price data")
+                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Non-numeric price data")
                         
                         if invalid_prices:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Found price values less than 1")
-                            self.logger.warning(f"PDF {pdf_id}: Validation failed - Invalid price values")
+                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid price values")
                     
                     # 4. Check for invalid date format
                     if 'date' in output_df.columns:
@@ -146,29 +155,50 @@ class ValidityChecker:
                         except:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Invalid date format")
-                            self.logger.warning(f"PDF {pdf_id}: Validation failed - Invalid date format")
+                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid date format")
                     
                     # 5. Check for major categories in product or subcategory columns
                     if 'product' in output_df.columns and 'sub_category' in output_df.columns:
                         # Check if any major category is found in product names
                         category_in_product = output_df['product'].apply(
-                            lambda x: any(cat.lower() in str(x).lower() for cat in self.valid_major_categories)
+                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
                         ).any()
                         
                         # Check if any major category is found in subcategory names
                         category_in_subcategory = output_df['sub_category'].apply(
-                            lambda x: any(cat.lower() in str(x).lower() for cat in self.valid_major_categories)
+                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
                         ).any()
                         
                         if category_in_product:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Major category names found in product column")
-                            self.logger.warning(f"PDF {pdf_id}: Validation failed - Major categories in product column")
+                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Major categories in product column")
                         
                         if category_in_subcategory:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Major category names found in sub_category column")
-                            self.logger.warning(f"PDF {pdf_id}: Validation failed - Major categories in subcategory column")
+                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Major categories in subcategory column")
+                    
+                    # 6. Check for field length exceeding the maximum allowed characters
+                    too_long_fields = []
+                    for field in self.length_check_fields:
+                        if field in output_df.columns:
+                            # Check if any field value exceeds max_field_length
+                            exceeds_length = output_df[field].astype(str).apply(
+                                lambda x: len(str(x)) > self.max_field_length if not pd.isna(x) else False
+                            ).any()
+                            
+                            if exceeds_length:
+                                too_long_fields.append(field)
+                    
+                    if too_long_fields:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append(
+                            f"Fields exceeding {self.max_field_length} characters: {', '.join(too_long_fields)}"
+                        )
+                        self.logger.warning(
+                            f"PDF {pdf_id} - {output_csv}: Validation failed - Fields exceeding length limit: {too_long_fields}"
+                        )
             
             # Update processing results based on validation
             updated_results['error_occurred'] = not validation_results["passed"]
@@ -181,9 +211,9 @@ class ValidityChecker:
                 
                 # Save to CSV
                 output_df.to_csv(output_csv, index=False)
-                self.logger.info(f"PDF {pdf_id}: Validation passed - Saved to {output_csv}")
+                self.logger.info(f"PDF {pdf_id} - {output_csv}: Validation passed - Saved to {output_csv}")
             else:
-                self.logger.error(f"PDF {pdf_id}: Validation failed - {updated_results['error_warnings']}")
+                self.logger.error(f"PDF {pdf_id} - {output_csv}: Validation failed - {updated_results['error_warnings']}")
             
             # Update registry with processing results - using registry lock
             with registry_lock:
@@ -192,14 +222,14 @@ class ValidityChecker:
                 else:
                     registry.update_processing_results(pdf_id, updated_results)
             
-            self.logger.info(f"PDF {pdf_id}: Registry updated with processing results")
+            self.logger.info(f"PDF {pdf_id} - {output_csv}: Registry updated with processing results")
             
             return validation_results["passed"], updated_results
             
         except Exception as e:
             # Handle any unexpected exceptions during validation
             error_message = f"Validation error: {str(e)}"
-            self.logger.error(f"PDF {pdf_id}: {error_message}")
+            self.logger.error(f"PDF {pdf_id} - {output_csv}: {error_message}")
             self.logger.debug(f"Error details: {traceback.format_exc()}")
             
             # Update processing results with error
@@ -243,7 +273,7 @@ class ValidityChecker:
             if output_df is None or output_df.empty:
                 validation_results["passed"] = False
                 validation_results["error_messages"].append("No data in DataFrame")
-                self.logger.warning(f"Excel {excel_id}: Validation failed - Empty DataFrame")
+                self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Empty DataFrame")
             else:
                 # Calculate metrics if we have data
                 updated_results['unique_products'] = len(output_df['product'].unique()) if 'product' in output_df.columns else 0
@@ -260,7 +290,7 @@ class ValidityChecker:
                 if missing_columns:
                     validation_results["passed"] = False
                     validation_results["error_messages"].append(f"Missing required columns: {', '.join(missing_columns)}")
-                    self.logger.warning(f"Excel {excel_id}: Validation failed - Missing columns: {missing_columns}")
+                    self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Missing columns: {missing_columns}")
                 
                 # Only run these checks if all required columns exist
                 if not missing_columns:
@@ -281,13 +311,15 @@ class ValidityChecker:
                         if non_numeric_prices:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Found non-numeric price values")
-                            self.logger.warning(f"Excel {excel_id}: Validation failed - Non-numeric price data")
+                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Non-numeric price data")
+                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Non-numeric price data found in columns 'daily_min' or 'daily_max'")
                         
                         if invalid_prices:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Found price values less than 1")
-                            self.logger.warning(f"Excel {excel_id}: Validation failed - Invalid price values")
-                    
+                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid price values")
+                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Price values less than 1 found in columns 'daily_min' or 'daily_max'")
+
                     # 4. Check for invalid date format
                     if 'date' in output_df.columns:
                         # Try to convert dates to datetime
@@ -296,29 +328,56 @@ class ValidityChecker:
                         except:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Invalid date format")
-                            self.logger.warning(f"Excel {excel_id}: Validation failed - Invalid date format")
-                    
+                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid date format")
+                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Invalid date format found in column 'date'")
+
                     # 5. Check for major categories in product or subcategory columns
                     if 'product' in output_df.columns and 'sub_category' in output_df.columns:
                         # Check if any major category is found in product names
                         category_in_product = output_df['product'].apply(
-                            lambda x: any(cat.lower() in str(x).lower() for cat in self.valid_major_categories)
+                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
                         ).any()
                         
                         # Check if any major category is found in subcategory names
                         category_in_subcategory = output_df['sub_category'].apply(
-                            lambda x: any(cat.lower() in str(x).lower() for cat in self.valid_major_categories)
+                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
                         ).any()
                         
                         if category_in_product:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Major category names found in product column")
-                            self.logger.warning(f"Excel {excel_id}: Validation failed - Major categories in product column")
+                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Major categories in product column")
+                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Major category names found in 'product' column")
                         
                         if category_in_subcategory:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append("Major category names found in sub_category column")
-                            self.logger.warning(f"Excel {excel_id}: Validation failed - Major categories in subcategory column")
+                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Major categories in subcategory column")
+                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Major category names found in 'sub_category' column")
+
+                    # 6. Check for field length exceeding the maximum allowed characters
+                    too_long_fields = []
+                    for field in self.length_check_fields:
+                        if field in output_df.columns:
+                            # Check if any field value exceeds max_field_length
+                            exceeds_length = output_df[field].astype(str).apply(
+                                lambda x: len(str(x)) > self.max_field_length if not pd.isna(x) else False
+                            ).any()
+                            
+                            if exceeds_length:
+                                too_long_fields.append(field)
+
+                    if too_long_fields:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append(
+                            f"Fields exceeding {self.max_field_length} characters: {', '.join(too_long_fields)}"
+                        )
+                        self.logger.warning(
+                            f"Excel {excel_id} - {output_csv}: Validation failed - Fields exceeding length limit: {too_long_fields}"
+                        )
+                        self.logger.debug(
+                            f"Excel {excel_id} - {output_csv}: The following fields exceed {self.max_field_length} characters: {', '.join(too_long_fields)}"
+                        )
             
             # Update processing results based on validation
             updated_results['error_occurred'] = not validation_results["passed"]
@@ -331,9 +390,9 @@ class ValidityChecker:
                 
                 # Save to CSV
                 output_df.to_csv(output_csv, index=False)
-                self.logger.info(f"Excel {excel_id}: Validation passed - Saved to {output_csv}")
+                self.logger.info(f"Excel {excel_id} - {output_csv}: Validation passed - Saved to {output_csv}")
             else:
-                self.logger.error(f"Excel {excel_id}: Validation failed - {updated_results['error_warnings']}")
+                self.logger.error(f"Excel {excel_id} - {output_csv}: Validation failed - {updated_results['error_warnings']}")
             
             # Update registry with processing results
             if updated_results['error_occurred']:
@@ -341,14 +400,14 @@ class ValidityChecker:
             else:
                 registry.update_processing_results(excel_id, updated_results)
             
-            self.logger.info(f"Excel {excel_id}: Registry updated with processing results")
+            self.logger.info(f"Excel {excel_id} - {output_csv}: Registry updated with processing results")
             
             return validation_results["passed"], updated_results
             
         except Exception as e:
             # Handle any unexpected exceptions during validation
             error_message = f"Validation error: {str(e)}"
-            self.logger.error(f"Excel {excel_id}: {error_message}")
+            self.logger.error(f"Excel {excel_id} - {output_csv}: {error_message}")
             self.logger.debug(f"Error details: {traceback.format_exc()}")
             
             # Update processing results with error

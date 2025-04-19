@@ -40,23 +40,24 @@ class TextExtractor:
         """
         start_time = time.time()
         filename = os.path.basename(file_path)
-        self.logger.debug(f"        -----> Extracting text with pdfplumber: {filename}")
+        self.logger.debug(f"{file_path} -----> Extracting text with pdfplumber: {filename}")
         
         text = ""
         try:
             with pdfplumber.open(file_path) as pdf:
                 num_pages = len(pdf.pages)
-                self.logger.debug(f"        PDF has {num_pages} pages")
+                self.logger.debug(f"{file_path} -----> PDF has {num_pages} pages")
                 
                 for page_num in range(num_pages):
-                    self.logger.debug(f"        Extracting text from page {page_num+1}/{num_pages}")
+                    self.logger.debug(f"{file_path} -----> Extracting text from page {page_num+1}/{num_pages}")
                     page = pdf.pages[page_num]
                     page_text = page.extract_text()
                     if page_text:
                         text += page_text + "\n\n"
-                        self.logger.debug(f"        Extracted {len(page_text)} characters from page {page_num+1}")
+                        self.logger.debug(f"{file_path} -----> Extracted {len(page_text)} characters from page {page_num+1}")
                     else:
-                        self.logger.debug(f"        No text extracted from page {page_num+1}")
+                        self.logger.warning(f"{file_path} -----> No text extracted from page {page_num+1}")
+                    self.logger.debug(f"{file_path} - Page text {page_text}")
             
             duration = time.time() - start_time
             self.timing_stats['pdf_text_extraction'].append({
@@ -64,13 +65,13 @@ class TextExtractor:
                 'pdf': os.path.basename(file_path),
                 'duration': duration
             })
-            self.logger.debug(f"        pdfplumber extraction completed in {duration:.2f} seconds, extracted {len(text)} total characters")
-            self.logger.debug(f"        <----- Completed pdfplumber extraction for: {filename}")
+            self.logger.debug(f"{file_path} -----> pdfplumber extraction completed in {duration:.2f} seconds, extracted {len(text)} total characters")
+            self.logger.debug(f"{file_path} <----- Completed pdfplumber extraction for: {filename}")
             
             return text
         except Exception as e:
-            self.logger.warning(f"        Error extracting text with pdfplumber: {str(e)}")
-            self.logger.debug(f"        <----- Failed pdfplumber extraction for: {filename}")
+            self.logger.warning(f"{file_path} -----> Error extracting text with pdfplumber: {str(e)}")
+            self.logger.debug(f"{file_path} <----- Failed pdfplumber extraction for: {filename}")
             return ""
     
     def extract_table_with_pdfplumber(self, file_path):
@@ -84,13 +85,13 @@ class TextExtractor:
             list: List of extracted tables as DataFrames
         """
         start_time = time.time()
-        self.logger.debug(f"Extracting tables with pdfplumber: {file_path}")
+        self.logger.debug(f"{file_path} -----> Extracting tables with pdfplumber")
         
         tables = []
         try:
             with pdfplumber.open(file_path) as pdf:
                 for i, page in enumerate(pdf.pages):
-                    self.logger.debug(f"Extracting tables from page {i+1}")
+                    self.logger.debug(f"{file_path} -----> Extracting tables from page {i+1}")
                     extracted_tables = page.extract_tables()
                     if extracted_tables:
                         for j, table in enumerate(extracted_tables):
@@ -98,7 +99,7 @@ class TextExtractor:
                                 # Simply convert to DataFrame with basic column names
                                 df = pd.DataFrame(table)
                                 tables.append(df)
-                                self.logger.debug(f"Extracted table {j+1} with shape {df.shape}")
+                                self.logger.debug(f"{file_path} -----> Extracted table {j+1} with shape {df.shape}")
             
             duration = time.time() - start_time
             self.timing_stats['pdf_text_extraction'].append({
@@ -106,12 +107,12 @@ class TextExtractor:
                 'pdf': os.path.basename(file_path),
                 'duration': duration
             })
-            self.logger.debug(f"Table extraction completed in {duration:.2f} seconds")
+            self.logger.debug(f"{file_path} -----> Table extraction completed in {duration:.2f} seconds")
             
             return tables
             
         except Exception as e:
-            self.logger.warning(f"Error extracting tables with pdfplumber: {str(e)}")
+            self.logger.warning(f"{file_path} -----> Error extracting tables with pdfplumber: {str(e)}")
             return []
     
     def is_valid_utf8(self, text):

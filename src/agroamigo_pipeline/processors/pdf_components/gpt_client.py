@@ -52,12 +52,12 @@ class GPTClient:
         
         start_time = time.time()
         pdf_filename = os.path.basename(source_pdf_path) if source_pdf_path else "unknown_pdf"
-        self.logger.info(f"Querying GPT-4.1 nano with image: {os.path.basename(image_path)} from PDF: {pdf_filename}, prompt type: {prompt_type}")
+        self.logger.info(f"Querying GPT-4.1 nano with image: {os.path.basename(image_path)} from PDF: {pdf_filename}, prompt type: {prompt_type} | file_path: {image_path}")
         
         try:
             # Use provided base64 image or assume it needs to be encoded
             if base64_image is None:
-                self.logger.warning("No base64_image provided, image encoding should be done separately")
+                self.logger.warning("No base64_image provided, image encoding should be done separately | file_path: {image_path}")
                 return None
             
             # Select prompt based on type
@@ -130,7 +130,7 @@ class GPTClient:
             }
             
             # Make API request
-            self.logger.debug(f"Sending request to GPT-4.1 nano API for {os.path.basename(image_path)} from PDF: {pdf_filename}")
+            self.logger.debug(f"Sending request to GPT-4.1 nano API for {os.path.basename(image_path)} from PDF: {pdf_filename} | file_path: {image_path}")
             response = requests.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers=headers,
@@ -139,7 +139,7 @@ class GPTClient:
             )
             
             if response.status_code != 200:
-                self.logger.error(f"GPT-4.1 nano API error: {response.status_code} - {response.text}")
+                self.logger.error(f"GPT-4.1 nano API error: {response.status_code} - {response.text} | file_path: {image_path}")
                 return None
             
             # Extract response
@@ -153,8 +153,8 @@ class GPTClient:
             import re
             
             # First store the raw content for logging/debugging
-            self.logger.debug(f"Raw GPT-4.1 nano response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(raw_content)} characters")
-            self.logger.debug(f"GPT-4.1 nano raw response (first 200 chars): {raw_content[:200]}...")
+            self.logger.debug(f"Raw GPT-4.1 nano response received for {os.path.basename(image_path)} from PDF: {pdf_filename} - {len(raw_content)} characters | file_path: {image_path}")
+            self.logger.debug(f"GPT-4.1 nano raw response (first 200 chars): {raw_content[:200]}... | file_path: {image_path}")
             
             # Process the content - remove all instances of markdown formatting
             content = raw_content
@@ -168,9 +168,9 @@ class GPTClient:
                 content = re.sub(r'^(?:plaintext|text|csv)$', '', content, flags=re.MULTILINE)
                 
                 # Log the cleaning results
-                self.logger.info(f"Cleaned GPT-4o response from {len(raw_content)} to {len(content)} characters")
+                self.logger.info(f"Cleaned GPT-4o response from {len(raw_content)} to {len(content)} characters | file_path: {image_path}")
                 if raw_content != content:
-                    self.logger.info(f"Markdown formatting removed from GPT-4o response")
+                    self.logger.info(f"Markdown formatting removed from GPT-4o response | file_path: {image_path}")
             
             # Save both raw and cleaned response to files
             self._save_response(image_path, original_raw_content, prompt_type + "_raw", source_pdf_path)
@@ -183,13 +183,13 @@ class GPTClient:
                 'prompt_type': prompt_type,
                 'duration': duration
             })
-            self.logger.debug(f"GPT-4.1 nano query for {os.path.basename(image_path)} from PDF: {pdf_filename} completed in {duration:.2f} seconds")
+            self.logger.debug(f"GPT-4.1 nano query for {os.path.basename(image_path)} from PDF: {pdf_filename} completed in {duration:.2f} seconds | file_path: {image_path}")
             
             return content
             
         except Exception as e:
-            self.logger.error(f"Failed to query GPT-4.1 nano for {os.path.basename(image_path)} from PDF: {pdf_filename}: {str(e)}")
-            self.logger.error(f"Error details: {traceback.format_exc()}")
+            self.logger.error(f"Failed to query GPT-4.1 nano for {os.path.basename(image_path)} from PDF: {pdf_filename}: {str(e)} | file_path: {image_path}")
+            self.logger.error(f"Error details: {traceback.format_exc()} | file_path: {image_path}")
             return None
     
     def _save_response(self, image_path, content, prompt_type, source_pdf_path=None):
@@ -226,6 +226,6 @@ class GPTClient:
                     f.write(f"Content length: {len(content)} characters\n")
                     f.write(f"GPT-4.1 nano response ({content_type}):\n")
                     f.write(content)
-                self.logger.debug(f"Saved {content_type} GPT-4.1 nano response to: {log_file}")
+                self.logger.debug(f"Saved {content_type} GPT-4.1 nano response to: {log_file} | file_path: {image_path}")
             except Exception as e:
-                self.logger.warning(f"Failed to save {content_type} GPT-4.1 nano response to file: {str(e)}")
+                self.logger.warning(f"Failed to save {content_type} GPT-4.1 nano response to file: {str(e)} | file_path: {image_path}")
