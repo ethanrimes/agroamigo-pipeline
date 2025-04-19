@@ -195,47 +195,48 @@ class PDFProcessorOrchestrator:
             gpt_csv_parser = GPTCSVParser(logger=thread_logger, timing_stats=thread_timing_stats, save_csv_data=self.save_debug_data)
             
             # First extract text to get metadata
-            thread_logger.debug(f"      Extracting text for metadata")
+            thread_logger.debug(f"{file_path} -      Extracting text for metadata")
             text_to_use = text_extractor.extract_text_with_pdfplumber(file_path)
-            thread_logger.debug(f"      Using text from pdfplumber for metadata")
+            thread_logger.debug(f"{file_path} -      Using text from pdfplumber for metadata")
             
             # Extract metadata from text
-            thread_logger.debug(f"      Extracting metadata from text")
+            thread_logger.debug(f"{file_path} -      Extracting metadata from text")
             metadata = metadata_extractor.extract_metadata_from_pdf(file_path, text_to_use)
-            thread_logger.debug(f"      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
+            thread_logger.debug(f"{file_path} -      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
             
             # Convert PDF to images
-            thread_logger.debug(f"      Converting PDF to images")
+            thread_logger.debug(f"{file_path} -      Converting PDF to images")
             image_paths = image_handler.convert_pdf_to_images(file_path, save_copies=True)
-            thread_logger.debug(f"      PDF converted to {len(image_paths)} images")
+            thread_logger.debug(f"{file_path} -      PDF converted to {len(image_paths)} images")
             
             # Check if we need to extract header metadata
-            need_header_extraction = metadata['city'] == 'Unknown' or metadata['market'] == 'Unknown'
+            need_header_extraction = any(x in ('Unknown', 'None', '', 'NaN') or x is None or pd.isna(x) for x in [metadata['city']])
+            thread_logger.debug(f"{file_path} -      need_header_extraction: {need_header_extraction}")
             
             # Encode all images to base64
-            thread_logger.debug(f"      Encoding all images to base64")
+            thread_logger.debug(f"{file_path} -      Encoding all images to base64")
             base64_images = []
             for img_path in image_paths:
                 base64_images.append(image_handler.encode_image(img_path))
-            thread_logger.debug(f"      All {len(base64_images)} images encoded")
+            thread_logger.debug(f"{file_path} -      All {len(base64_images)} images encoded")
             
             # Process images for tables using synchronous requests
             csv_texts = []
-            thread_logger.debug(f"      Processing images for table extraction")
+            thread_logger.debug(f"{file_path} -      Processing images for table extraction")
             
             for i, (image_path, base64_image) in enumerate(zip(image_paths, base64_images)):
-                thread_logger.debug(f"      Processing image {i+1}/{len(image_paths)} for table extraction")
+                thread_logger.debug(f"{file_path} -      Processing image {i+1}/{len(image_paths)} for table extraction")
                 csv_text = gpt_client.query_gpt4o_with_image(image_path, base64_image, source_pdf_path=file_path)
                 if csv_text:
-                    thread_logger.debug(f"      Successfully extracted table from image {i+1}")
+                    thread_logger.debug(f"{file_path} -      Successfully extracted table from image {i+1}")
                     csv_texts.append(csv_text)
                     gpt4o_calls += 1
                 else:
-                    thread_logger.warning(f"      Failed to extract table from image {i+1}")
+                    thread_logger.warning(f"{file_path} -      Failed to extract table from image {i+1}")
             
             # Process header if needed
             if need_header_extraction and len(image_paths) > 0:
-                thread_logger.debug(f"      Extracting header data from first image")
+                thread_logger.debug(f"{file_path} -      Extracting header data from first image")
                 header_text = gpt_client.query_gpt4o_with_image(
                     image_paths[0], 
                     base64_images[0], 
@@ -245,37 +246,34 @@ class PDFProcessorOrchestrator:
                 gpt4o_calls += 1
                 
                 if header_text:
-                    thread_logger.debug(f"      Successfully extracted header: {header_text[:100]}...")
+                    thread_logger.debug(f"{file_path} -      Successfully extracted header: {header_text[:100]}...")
                     
                     # Update metadata using the header text
-                    thread_logger.debug(f"      Updating metadata using extracted header")
+                    thread_logger.debug(f"{file_path} -      Updating metadata using extracted header")
                     updated_metadata = metadata_extractor.extract_metadata_from_pdf(file_path, header_text)
                     
                     # Only update missing fields
-                    if metadata['city'] == 'Unknown' and updated_metadata['city'] != 'Unknown':
-                        metadata['city'] = updated_metadata['city']
-                        thread_logger.debug(f"      Updated city to: {metadata['city']}")
+                    metadata['city'] = updated_metadata['city']
+                    thread_logger.debug(f"{file_path} -      Updated city to: {metadata['city']}")
                     
-                    if metadata['market'] == 'Unknown' and updated_metadata['market'] != 'Unknown':
-                        metadata['market'] = updated_metadata['market']
-                        thread_logger.debug(f"      Updated market to: {metadata['market']}")
+                    metadata['market'] = updated_metadata['market']
+                    thread_logger.debug(f"{file_path} -      Updated market to: {metadata['market']}")
                     
-                    if metadata['date'] == datetime.now().strftime('%Y-%m-%d') and updated_metadata['date'] != metadata['date']:
-                        metadata['date'] = updated_metadata['date']
-                        thread_logger.debug(f"      Updated date to: {metadata['date']}")
+                    metadata['date'] = updated_metadata['date']
+                    thread_logger.debug(f"{file_path} -      Updated date to: {metadata['date']}")
             
             # Process the CSV texts
-            thread_logger.debug(f"      Processing {len(csv_texts)} CSV texts from GPT-4.1 nano")
+            thread_logger.debug(f"{file_path} -      Processing {len(csv_texts)} CSV texts from GPT-4.1 nano")
             result = gpt_csv_parser.process_gpt4o_results(file_path, csv_texts, metadata)
-            thread_logger.debug(f"      CSV processing complete, extracted {len(result) if result is not None else 0} rows")
+            thread_logger.debug(f"{file_path} -      CSV processing complete, extracted {len(result) if result is not None else 0} rows")
             
             thread_logger.debug(f"<---- Completed GPT-4o vision flow for: {filename}")
             return result, gpt4o_calls
             
         except Exception as e:
-            thread_logger.error(f"Error processing PDF with GPT-4.1 nano: {str(e)}")
-            thread_logger.info(f"Error details: {traceback.format_exc()}")
-            thread_logger.info(f"<---- Failed GPT-4o vision flow for: {filename}")
+            thread_logger.error(f"{file_path} - Error processing PDF with GPT-4.1 nano: {str(e)}")
+            thread_logger.info(f"{file_path} - Error details: {traceback.format_exc()}")
+            thread_logger.info(f"{file_path} - <---- Failed GPT-4o vision flow for: {filename}")
             return pd.DataFrame(), gpt4o_calls  # Return empty DataFrame with the number of calls made
     
     def handle_output_csv(self, output_df, output_csv, pdf_id, extraction_method, processing_results):

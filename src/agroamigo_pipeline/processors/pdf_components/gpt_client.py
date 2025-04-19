@@ -79,6 +79,13 @@ class GPTClient:
                 PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
                 07 de Septiembre de 2024
 
+                or
+
+                PRECIOS DE VENTA MAYORISTA
+                PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
+                Bogotá, D.C., Corabastos
+                07 de Septiembre de 2024
+
                 That is precisely what you should return.
                 """
             else:  # Default to table prompt
