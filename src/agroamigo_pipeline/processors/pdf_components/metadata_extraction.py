@@ -48,21 +48,26 @@ class MetadataExtractor:
         }
         
         try:
-            # Extract text from first page using pdfplumber
-            self.logger.debug(f"{file_path}: Extracting text from first page only for metadata")
-            with pdfplumber.open(file_path) as pdf:
-                if len(pdf.pages) > 0:
-                    first_page = pdf.pages[0]
-                    first_page_text = first_page.extract_text()
-                    if first_page_text:
-                        self.logger.debug(f"{file_path}: Successfully extracted first page text for metadata")
-                        text_for_metadata = first_page_text
+            # Only extract text from first page if no text is provided
+            if text is None:
+                self.logger.debug(f"{file_path}: No text provided, extracting text from first page only for metadata")
+                with pdfplumber.open(file_path) as pdf:
+                    if len(pdf.pages) > 0:
+                        first_page = pdf.pages[0]
+                        first_page_text = first_page.extract_text()
+                        if first_page_text:
+                            self.logger.debug(f"{file_path}: Successfully extracted first page text for metadata")
+                            text_for_metadata = first_page_text
+                        else:
+                            self.logger.warning(f"{file_path}: Could not extract text from first page")
+                            text_for_metadata = ""
                     else:
-                        self.logger.warning(f"{file_path}: Could not extract text from first page")
+                        self.logger.warning(f"{file_path}: PDF has no pages")
                         text_for_metadata = ""
-                else:
-                    self.logger.warning(f"{file_path}: PDF has no pages")
-                    text_for_metadata = ""
+            else:
+                # Use the provided text parameter directly
+                self.logger.debug(f"{file_path}: Using provided text for metadata extraction ({len(text)} characters)")
+                text_for_metadata = text
             
             # Get the city, market and date using the new methodology
             city_line, date_line = self._extract_relevant_lines(text_for_metadata, file_path)
