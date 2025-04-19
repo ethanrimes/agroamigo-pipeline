@@ -59,19 +59,6 @@ class MetadataExtractor:
                     else:
                         self.logger.warning(f"{file_path}: Could not extract text from first page")
             
-            
-            # If text is not provided or the document appears to be multi-page,
-            # extract text only from the first page
-            # if text is None or len(text.split('\n')) > 50:  # Heuristic to detect multi-page documents
-                
-            #                 text_for_metadata = text
-            #         else:
-            #             self.logger.warning(f"{file_path}: PDF appears to have no pages, using provided text")
-            #             text_for_metadata = text
-            # else:
-            #     self.logger.debug(f"{file_path}: Using provided text for metadata extraction")
-            #     text_for_metadata = text
-            
             shortened_text = text[:300] if len(text) > 300 else text
             self.logger.debug(f"{file_path}: Used text for metadata extraction '{shortened_text}'")
             # Look for the city/market line - it's between specific headers
@@ -141,9 +128,9 @@ class MetadataExtractor:
                 self.logger.warning(f"{file_path}: No date found")
             
             # Ensure market has a value
-            if not metadata['market']:
-                # metadata['market'] = 'Unknown'
-                self.logger.warning(f"{file_path}: No market found")
+            # if not metadata['market']:
+            #     # metadata['market'] = 'Unknown'
+            #     self.logger.warning(f"{file_path}: No market found")
             
             return metadata
             

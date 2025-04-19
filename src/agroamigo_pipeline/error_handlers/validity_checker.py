@@ -65,6 +65,9 @@ class ValidityChecker:
         # Maximum allowed character length for text fields
         self.max_field_length = 80
         
+        # Invalid string values that should be considered null
+        self.invalid_string_values = ['nan', 'unknown', '', 'none', 'null']
+        
         self.logger.info("ValidityChecker initialized")
     
     def register_individual_pdf_csv(self, registry, pdf_id, output_df, output_csv, 
@@ -126,94 +129,138 @@ class ValidityChecker:
                 
                 # Only run these checks if all required columns exist
                 if not missing_columns:
-                    # 3. Check for invalid price data
-                    if 'daily_min' in output_df.columns and 'daily_max' in output_df.columns:
-                        # Check if any price is non-numeric
-                        non_numeric_prices = (
-                            output_df['daily_min'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))) |
-                            output_df['daily_max'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x)))
-                        ).any()
-                        
-                        # Check if any price is less than 1
-                        invalid_prices = (
-                            ((output_df['daily_min'] < 1) & (~pd.isna(output_df['daily_min']))) |
-                            ((output_df['daily_max'] < 1) & (~pd.isna(output_df['daily_max'])))
-                        ).any()
-                        
-                        if non_numeric_prices:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Found non-numeric price values")
-                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Non-numeric price data")
-                            # Log the entire DataFrame
-                            self.logger.info(f"PDF {pdf_id} - DataFrame with non-numeric price data: \n{output_df}")
-                        
-                        if invalid_prices:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Found price values less than 1")
-                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid price values")
-                            # Log the entire DataFrame
-                            self.logger.info(f"PDF {pdf_id} - DataFrame with invalid price values: \n{output_df}")
+                    # 3. Perform per-column validations
+                    # Date validation - must be non-null and valid datetime
+                    invalid_dates = False
+                    null_dates = output_df['date'].isna().any()
                     
-                    # 4. Check for invalid date format
-                    if 'date' in output_df.columns:
-                        # Try to convert dates to datetime
-                        try:
-                            pd.to_datetime(output_df['date'])
-                        except:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Invalid date format")
-                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid date format")
-                            # Log the entire DataFrame
-                            self.logger.info(f"PDF {pdf_id} - DataFrame with invalid date format: \n{output_df}")
+                    if null_dates:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Null values found in date column")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null dates")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with null dates: \n{output_df[output_df['date'].isna()]}")
                     
-                    # 5. Check for major categories in product or subcategory columns
-                    if 'product' in output_df.columns and 'sub_category' in output_df.columns:
-                        # Check if any major category is found in product names
-                        category_in_product = output_df['product'].apply(
-                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
+                    # Try to convert dates to datetime
+                    try:
+                        pd.to_datetime(output_df['date'])
+                    except:
+                        invalid_dates = True
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Invalid date format")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid date format")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with invalid date format: \n{output_df}")
+                    
+                    # Price validation - must be non-null, numeric, and > 0
+                    null_min_prices = output_df['daily_min'].isna().any()
+                    null_max_prices = output_df['daily_max'].isna().any()
+                    
+                    if null_min_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Null values found in daily_min column")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null min prices")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with null min prices: \n{output_df[output_df['daily_min'].isna()]}")
+                    
+                    if null_max_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Null values found in daily_max column")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null max prices")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with null max prices: \n{output_df[output_df['daily_max'].isna()]}")
+                    
+                    # Check if prices are numeric
+                    non_numeric_min = output_df['daily_min'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))).any()
+                    non_numeric_max = output_df['daily_max'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))).any()
+                    
+                    if non_numeric_min:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Non-numeric values found in daily_min column")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Non-numeric min prices")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with non-numeric min prices: \n{output_df}")
+                    
+                    if non_numeric_max:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Non-numeric values found in daily_max column")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Non-numeric max prices")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with non-numeric max prices: \n{output_df}")
+                    
+                    # Check if prices are > 0
+                    invalid_min_prices = ((output_df['daily_min'] <= 0) & (~pd.isna(output_df['daily_min']))).any()
+                    invalid_max_prices = ((output_df['daily_max'] <= 0) & (~pd.isna(output_df['daily_max']))).any()
+                    
+                    if invalid_min_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Values <= 0 found in daily_min column")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid min prices")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with invalid min prices: \n{output_df[((output_df['daily_min'] <= 0) & (~pd.isna(output_df['daily_min'])))]}")
+                    
+                    if invalid_max_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Values <= 0 found in daily_max column")
+                        self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid max prices")
+                        self.logger.info(f"PDF {pdf_id} - DataFrame with invalid max prices: \n{output_df[((output_df['daily_max'] <= 0) & (~pd.isna(output_df['daily_max'])))]}")
+                    
+                    # String field validation - major_category, city, product must be non-null, 
+                    # strings, and < 80 chars, and not invalid string values
+                    for field in ['major_category', 'city', 'product']:
+                        # Check for nulls
+                        null_values = output_df[field].isna().any()
+                        
+                        if null_values:
+                            validation_results["passed"] = False
+                            validation_results["error_messages"].append(f"Null values found in {field} column")
+                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null {field}")
+                            self.logger.info(f"PDF {pdf_id} - DataFrame with null {field}: \n{output_df[output_df[field].isna()]}")
+                        
+                        # Check for invalid string values (case insensitive)
+                        invalid_strings = output_df[field].fillna('').astype(str).apply(
+                            lambda x: x.lower().strip() in self.invalid_string_values
                         ).any()
                         
-                        # Check if any major category is found in subcategory names
-                        category_in_subcategory = output_df['sub_category'].apply(
-                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
-                        ).any()
-                        
-                        if category_in_product:
+                        if invalid_strings:
                             validation_results["passed"] = False
-                            validation_results["error_messages"].append("Major category names found in product column")
-                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Major categories in product column")
-                            # Log the entire DataFrame
-                            self.logger.info(f"PDF {pdf_id} - DataFrame with major categories in product column: \n{output_df}")
+                            validation_results["error_messages"].append(f"Invalid string values found in {field} column")
+                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid {field} strings")
+                            
+                            # Get rows with invalid strings
+                            invalid_mask = output_df[field].fillna('').astype(str).apply(
+                                lambda x: x.lower().strip() in self.invalid_string_values
+                            )
+                            self.logger.info(f"PDF {pdf_id} - DataFrame with invalid {field} strings: \n{output_df[invalid_mask]}")
                         
-                        if category_in_subcategory:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Major category names found in sub_category column")
-                            self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Major categories in subcategory column")
-                            # Log the entire DataFrame
-                            self.logger.info(f"PDF {pdf_id} - DataFrame with major categories in subcategory column: \n{output_df}")
-                    
-                    # 6. Check for field length exceeding the maximum allowed characters
-                    too_long_fields = []
-                    for field in self.length_check_fields:
-                        if field in output_df.columns:
-                            # Check if any field value exceeds max_field_length
+                        # Check field length
+                        if field in self.length_check_fields:
                             exceeds_length = output_df[field].astype(str).apply(
                                 lambda x: len(str(x)) > self.max_field_length if not pd.isna(x) else False
                             ).any()
                             
                             if exceeds_length:
-                                too_long_fields.append(field)
+                                validation_results["passed"] = False
+                                validation_results["error_messages"].append(f"Values exceeding {self.max_field_length} characters found in {field} column")
+                                self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - {field} exceeds length limit")
+                                
+                                # Get rows with field values exceeding length limit
+                                length_mask = output_df[field].astype(str).apply(
+                                    lambda x: len(str(x)) > self.max_field_length if not pd.isna(x) else False
+                                )
+                                self.logger.info(f"PDF {pdf_id} - DataFrame with {field} exceeding length limit: \n{output_df[length_mask]}")
                     
-                    if too_long_fields:
-                        validation_results["passed"] = False
-                        validation_results["error_messages"].append(
-                            f"Fields exceeding {self.max_field_length} characters: {', '.join(too_long_fields)}"
-                        )
-                        self.logger.warning(
-                            f"PDF {pdf_id} - {output_csv}: Validation failed - Fields exceeding length limit: {too_long_fields}"
-                        )
-                        # Log the entire DataFrame
-                        self.logger.info(f"PDF {pdf_id} - DataFrame with fields exceeding length limit: \n{output_df}")
+                    # Check in subcategory, city, and product if there is an exact match of any major category
+                    for field in ['sub_category', 'city', 'product']:
+                        if field in output_df.columns:
+                            # Check for exact matches with major categories (case-insensitive)
+                            category_in_field = output_df[field].fillna('').astype(str).apply(
+                                lambda x: any(cat.lower() == x.lower().strip() for cat in self.valid_major_categories)
+                            ).any()
+                            
+                            if category_in_field:
+                                validation_results["passed"] = False
+                                validation_results["error_messages"].append(f"Major category names found in {field} column")
+                                self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Major categories in {field} column")
+                                
+                                # Get rows with major categories in the field
+                                category_mask = output_df[field].fillna('').astype(str).apply(
+                                    lambda x: any(cat.lower() == x.lower().strip() for cat in self.valid_major_categories)
+                                )
+                                self.logger.info(f"PDF {pdf_id} - DataFrame with major categories in {field} column: \n{output_df[category_mask]}")
             
             # Update processing results based on validation
             updated_results['error_occurred'] = not validation_results["passed"]
@@ -316,102 +363,138 @@ class ValidityChecker:
                 
                 # Only run these checks if all required columns exist
                 if not missing_columns:
-                    # 3. Check for invalid price data
-                    if 'daily_min' in output_df.columns and 'daily_max' in output_df.columns:
-                        # Check if any price is non-numeric
-                        non_numeric_prices = (
-                            output_df['daily_min'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))) |
-                            output_df['daily_max'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x)))
+                    # 3. Perform per-column validations
+                    # Date validation - must be non-null and valid datetime
+                    invalid_dates = False
+                    null_dates = output_df['date'].isna().any()
+                    
+                    if null_dates:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Null values found in date column")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Null dates")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with null dates: \n{output_df[output_df['date'].isna()]}")
+                    
+                    # Try to convert dates to datetime
+                    try:
+                        pd.to_datetime(output_df['date'])
+                    except:
+                        invalid_dates = True
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Invalid date format")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid date format")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with invalid date format: \n{output_df}")
+                    
+                    # Price validation - must be non-null, numeric, and > 0
+                    null_min_prices = output_df['daily_min'].isna().any()
+                    null_max_prices = output_df['daily_max'].isna().any()
+                    
+                    if null_min_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Null values found in daily_min column")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Null min prices")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with null min prices: \n{output_df[output_df['daily_min'].isna()]}")
+                    
+                    if null_max_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Null values found in daily_max column")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Null max prices")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with null max prices: \n{output_df[output_df['daily_max'].isna()]}")
+                    
+                    # Check if prices are numeric
+                    non_numeric_min = output_df['daily_min'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))).any()
+                    non_numeric_max = output_df['daily_max'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))).any()
+                    
+                    if non_numeric_min:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Non-numeric values found in daily_min column")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Non-numeric min prices")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with non-numeric min prices: \n{output_df}")
+                    
+                    if non_numeric_max:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Non-numeric values found in daily_max column")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Non-numeric max prices")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with non-numeric max prices: \n{output_df}")
+                    
+                    # Check if prices are > 0
+                    invalid_min_prices = ((output_df['daily_min'] <= 0) & (~pd.isna(output_df['daily_min']))).any()
+                    invalid_max_prices = ((output_df['daily_max'] <= 0) & (~pd.isna(output_df['daily_max']))).any()
+                    
+                    if invalid_min_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Values <= 0 found in daily_min column")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid min prices")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with invalid min prices: \n{output_df[((output_df['daily_min'] <= 0) & (~pd.isna(output_df['daily_min'])))]}")
+                    
+                    if invalid_max_prices:
+                        validation_results["passed"] = False
+                        validation_results["error_messages"].append("Values <= 0 found in daily_max column")
+                        self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid max prices")
+                        self.logger.info(f"Excel {excel_id} - DataFrame with invalid max prices: \n{output_df[((output_df['daily_max'] <= 0) & (~pd.isna(output_df['daily_max'])))]}")
+                    
+                    # String field validation - major_category, city, product must be non-null, 
+                    # strings, and < 80 chars, and not invalid string values
+                    for field in ['major_category', 'city', 'product']:
+                        # Check for nulls
+                        null_values = output_df[field].isna().any()
+                        
+                        if null_values:
+                            validation_results["passed"] = False
+                            validation_results["error_messages"].append(f"Null values found in {field} column")
+                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Null {field}")
+                            self.logger.info(f"Excel {excel_id} - DataFrame with null {field}: \n{output_df[output_df[field].isna()]}")
+                        
+                        # Check for invalid string values (case insensitive)
+                        invalid_strings = output_df[field].fillna('').astype(str).apply(
+                            lambda x: x.lower().strip() in self.invalid_string_values
                         ).any()
                         
-                        # Check if any price is less than 1
-                        invalid_prices = (
-                            ((output_df['daily_min'] < 1) & (~pd.isna(output_df['daily_min']))) |
-                            ((output_df['daily_max'] < 1) & (~pd.isna(output_df['daily_max'])))
-                        ).any()
-                        
-                        if non_numeric_prices:
+                        if invalid_strings:
                             validation_results["passed"] = False
-                            validation_results["error_messages"].append("Found non-numeric price values")
-                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Non-numeric price data")
-                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Non-numeric price data found in columns 'daily_min' or 'daily_max'")
-                            # Log the entire DataFrame
-                            self.logger.info(f"Excel {excel_id} - DataFrame with non-numeric price data: \n{output_df}")
+                            validation_results["error_messages"].append(f"Invalid string values found in {field} column")
+                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid {field} strings")
+                            
+                            # Get rows with invalid strings
+                            invalid_mask = output_df[field].fillna('').astype(str).apply(
+                                lambda x: x.lower().strip() in self.invalid_string_values
+                            )
+                            self.logger.info(f"Excel {excel_id} - DataFrame with invalid {field} strings: \n{output_df[invalid_mask]}")
                         
-                        if invalid_prices:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Found price values less than 1")
-                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid price values")
-                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Price values less than 1 found in columns 'daily_min' or 'daily_max'")
-                            # Log the entire DataFrame
-                            self.logger.info(f"Excel {excel_id} - DataFrame with invalid price values: \n{output_df}")
-
-                    # 4. Check for invalid date format
-                    if 'date' in output_df.columns:
-                        # Try to convert dates to datetime
-                        try:
-                            pd.to_datetime(output_df['date'])
-                        except:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Invalid date format")
-                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Invalid date format")
-                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Invalid date format found in column 'date'")
-                            # Log the entire DataFrame
-                            self.logger.info(f"Excel {excel_id} - DataFrame with invalid date format: \n{output_df}")
-
-                    # 5. Check for major categories in product or subcategory columns
-                    if 'product' in output_df.columns and 'sub_category' in output_df.columns:
-                        # Check if any major category is found in product names
-                        category_in_product = output_df['product'].apply(
-                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
-                        ).any()
-                        
-                        # Check if any major category is found in subcategory names
-                        category_in_subcategory = output_df['sub_category'].apply(
-                            lambda x: any(cat.lower() == str(x).lower() for cat in self.valid_major_categories)
-                        ).any()
-                        
-                        if category_in_product:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Major category names found in product column")
-                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Major categories in product column")
-                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Major category names found in 'product' column")
-                            # Log the entire DataFrame
-                            self.logger.info(f"Excel {excel_id} - DataFrame with major categories in product column: \n{output_df}")
-                        
-                        if category_in_subcategory:
-                            validation_results["passed"] = False
-                            validation_results["error_messages"].append("Major category names found in sub_category column")
-                            self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Major categories in subcategory column")
-                            self.logger.debug(f"Excel {excel_id} - {output_csv}: Major category names found in 'sub_category' column")
-                            # Log the entire DataFrame
-                            self.logger.info(f"Excel {excel_id} - DataFrame with major categories in subcategory column: \n{output_df}")
-
-                    # 6. Check for field length exceeding the maximum allowed characters
-                    too_long_fields = []
-                    for field in self.length_check_fields:
-                        if field in output_df.columns:
-                            # Check if any field value exceeds max_field_length
+                        # Check field length
+                        if field in self.length_check_fields:
                             exceeds_length = output_df[field].astype(str).apply(
                                 lambda x: len(str(x)) > self.max_field_length if not pd.isna(x) else False
                             ).any()
                             
                             if exceeds_length:
-                                too_long_fields.append(field)
-
-                    if too_long_fields:
-                        validation_results["passed"] = False
-                        validation_results["error_messages"].append(
-                            f"Fields exceeding {self.max_field_length} characters: {', '.join(too_long_fields)}"
-                        )
-                        self.logger.warning(
-                            f"Excel {excel_id} - {output_csv}: Validation failed - Fields exceeding length limit: {too_long_fields}"
-                        )
-                        self.logger.debug(
-                            f"Excel {excel_id} - {output_csv}: The following fields exceed {self.max_field_length} characters: {', '.join(too_long_fields)}"
-                        )
-                        # Log the entire DataFrame
-                        self.logger.info(f"Excel {excel_id} - DataFrame with fields exceeding length limit: \n{output_df}")
+                                validation_results["passed"] = False
+                                validation_results["error_messages"].append(f"Values exceeding {self.max_field_length} characters found in {field} column")
+                                self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - {field} exceeds length limit")
+                                
+                                # Get rows with field values exceeding length limit
+                                length_mask = output_df[field].astype(str).apply(
+                                    lambda x: len(str(x)) > self.max_field_length if not pd.isna(x) else False
+                                )
+                                self.logger.info(f"Excel {excel_id} - DataFrame with {field} exceeding length limit: \n{output_df[length_mask]}")
+                    
+                    # Check in subcategory, city, and product if there is an exact match of any major category
+                    for field in ['sub_category', 'city', 'product']:
+                        if field in output_df.columns:
+                            # Check for exact matches with major categories (case-insensitive)
+                            category_in_field = output_df[field].fillna('').astype(str).apply(
+                                lambda x: any(cat.lower() == x.lower().strip() for cat in self.valid_major_categories)
+                            ).any()
+                            
+                            if category_in_field:
+                                validation_results["passed"] = False
+                                validation_results["error_messages"].append(f"Major category names found in {field} column")
+                                self.logger.warning(f"Excel {excel_id} - {output_csv}: Validation failed - Major categories in {field} column")
+                                
+                                # Get rows with major categories in the field
+                                category_mask = output_df[field].fillna('').astype(str).apply(
+                                    lambda x: any(cat.lower() == x.lower().strip() for cat in self.valid_major_categories)
+                                )
+                                self.logger.info(f"Excel {excel_id} - DataFrame with major categories in {field} column: \n{output_df[category_mask]}")
             
             # Update processing results based on validation
             updated_results['error_occurred'] = not validation_results["passed"]

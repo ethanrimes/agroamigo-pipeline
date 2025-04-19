@@ -138,7 +138,7 @@ class PDFProcessorOrchestrator:
             DataFrame: Processed data in standardized format
         """
         filename = os.path.basename(file_path)
-        thread_logger.info(f"----> Text extraction flow for: {filename}")
+        thread_logger.info(f"{file_path} -----> Text extraction flow for: {filename}")
         
         # Create thread-local component instances
         metadata_extractor = MetadataExtractor(logger=thread_logger)
@@ -146,38 +146,29 @@ class PDFProcessorOrchestrator:
         text_extractor = TextExtractor(logger=thread_logger, timing_stats=thread_timing_stats)
         
         # Extract metadata from text
-        thread_logger.info(f"      Extracting metadata from text")
+        thread_logger.info(f"{file_path} -      Extracting metadata from text")
         metadata = metadata_extractor.extract_metadata_from_pdf(file_path, text)
-        thread_logger.info(f"      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
+        thread_logger.info(f"{file_path} -      Metadata extracted: date={metadata['date']}, city={metadata['city']}, market={metadata['market']}")
         
         # Try table extraction first
-        thread_logger.info(f"      Attempting to extract tables with pdfplumber")
+        thread_logger.info(f"{file_path} -      Attempting to extract tables with pdfplumber")
         tables = text_extractor.extract_table_with_pdfplumber(file_path)
         
         if tables and len(tables) > 0:
-            thread_logger.info(f"      Successfully extracted {len(tables)} tables, processing table data")
+            thread_logger.info(f"{file_path} -      Successfully extracted {len(tables)} tables, processing table data")
             result = product_parser.process_table_data(file_path, tables, metadata)
             if result is not None and not result.empty:
-                thread_logger.info(f"      Table extraction successful, extracted {len(result)} rows")
-                thread_logger.info(f"<---- Completed table extraction flow for: {filename}")
+                thread_logger.info(f"{file_path} -      Table extraction successful, extracted {len(result)} rows")
+                thread_logger.info(f"{file_path} -<---- Completed table extraction flow for: {filename}")
                 return result
             else:
-                thread_logger.info(f"      Table extraction failed to produce results, falling back to text processing")
+                thread_logger.info(f"{file_path} -      Table extraction failed to produce results, falling back to text processing")
         else:
-            thread_logger.info(f"      No tables extracted, falling back to text processing")
+            thread_logger.info(f"{file_path} -      No tables extracted, error")
         
         # Process text directly if table extraction failed
-        thread_logger.info(f"      Processing extracted text directly")
-        result = product_parser.process_extracted_text(file_path, text, metadata)
-        
-        if result is not None and not result.empty:
-            thread_logger.info(f"      Text processing successful, extracted {len(result)} rows")
-            thread_logger.info(f"<---- Completed text extraction flow for: {filename}")
-            return result
-        else:
-            thread_logger.info(f"      Text processing failed to produce results")
-            thread_logger.info(f"<---- Completed text extraction flow for: {filename}")
-            return pd.DataFrame()  # Return empty DataFrame if processing failed
+        thread_logger.info(f"{file_path} -      Table extraction failed")
+        return pd.DataFrame()  # Return empty DataFrame if processing failed
     
     def process_pdf_with_gpt4o(self, file_path, thread_logger, thread_timing_stats):
         """
