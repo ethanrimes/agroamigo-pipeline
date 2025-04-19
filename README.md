@@ -95,7 +95,8 @@ python main.py --log-level DEBUG
 
 python main.py --log-level DEBUG --workers 8 --components excel pdf --start-date 2022-01-12 --end-date 2022-01-12 --force-reprocess
 
-python main.py --log-level INFO --workers 8 --components extractor excel pdf aggregator --force-reprocess
+python main.py --log-level DEBUG --workers 8 --components extractor excel pdf aggregator --force-reprocess --start-date 2022-01-01 --end-date 2022-01-07 
+
 ```
 
 ### Command-line Arguments

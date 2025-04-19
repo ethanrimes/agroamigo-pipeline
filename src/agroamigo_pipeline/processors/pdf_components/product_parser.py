@@ -197,7 +197,7 @@ class ProductParser:
             # Process product data
             self.logger.debug(f"      Parsing product data from text ({len(text)} characters)")
             product_data = self.process_product_data(text)
-            self.logger.debug(f"      Parsed {len(product_data)} product entries from text")
+            # self.logger.debug(f"      Parsed {len(product_data)} product entries from text")
             
             # If no products found, return empty DataFrame
             if not product_data:
@@ -205,7 +205,7 @@ class ProductParser:
                 return pd.DataFrame()
             
             # Convert to DataFrame
-            self.logger.debug(f"      Converting parsed data to DataFrame")
+            # self.logger.debug(f"      Converting parsed data to DataFrame")
             output_data = []
             
             for product_entry in product_data:
@@ -246,7 +246,7 @@ class ProductParser:
                 'rows': len(output_df),
                 'duration': duration
             })
-            self.logger.debug(f"      Text processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
+            # self.logger.debug(f"      Text processing completed in {duration:.2f} seconds, extracted {len(output_df)} rows")
             self.logger.debug(f"      <----- Completed text processing from: {filename}")
             
             return output_df
@@ -284,7 +284,7 @@ class ProductParser:
             
             # First, find header rows and clean up tables
             for table_idx, table in enumerate(tables):
-                self.logger.debug(f"Processing table {table_idx+1} of {len(tables)}")
+                # self.logger.debug(f"Processing table {table_idx+1} of {len(tables)}")
                 
                 if table is None or len(table) == 0:
                     continue
@@ -294,7 +294,7 @@ class ProductParser:
                 for idx, value in enumerate(table.iloc[:, 0]):
                     if isinstance(value, str) and "producto" in str(value).lower():
                         header_row_idx = idx
-                        self.logger.debug(f"      Found header row at index {header_row_idx}")
+                        # self.logger.debug(f"      Found header row at index {header_row_idx}")
                         break
                 
                 if header_row_idx == -1:
@@ -315,7 +315,7 @@ class ProductParser:
                 # Add to processed tables
                 if not data_df.empty:
                     processed_tables.append(data_df)
-                    self.logger.debug(f"      Added processed table with {len(data_df)} rows")
+                    # self.logger.debug(f"      Added processed table with {len(data_df)} rows")
                 else:
                     self.logger.warning(f"      No data rows found after header in table {table_idx+1}")
             
@@ -339,13 +339,13 @@ class ProductParser:
                 row_list = row.tolist()
                 
                 # Log the current row
-                self.logger.debug(f"      Processing row {i}: {row_list}")
-                self.logger.debug(f"      Current stack state: {category_stack}")
-                self.logger.debug(f"      Previous row had prices: {previous_row_had_prices}")
+                # self.logger.debug(f"      Processing row {i}: {row_list}")
+                # self.logger.debug(f"      Current stack state: {category_stack}")
+                # self.logger.debug(f"      Previous row had prices: {previous_row_had_prices}")
                 
                 # Skip empty rows
                 if all(pd.isna(cell) or str(cell).strip() == "" for cell in row_list):
-                    self.logger.debug(f"      Row {i} is empty, skipping")
+                    # self.logger.debug(f"      Row {i} is empty, skipping")
                     continue
                 
                 # Get product name from first column
@@ -353,7 +353,7 @@ class ProductParser:
                 
                 # Skip empty product names
                 if not product_name:
-                    self.logger.debug(f"      Row {i} has empty product name, skipping")
+                    # self.logger.debug(f"      Row {i} has empty product name, skipping")
                     continue
                 
                 # Skip header-related text
@@ -369,7 +369,7 @@ class ProductParser:
                         price_str = str(row_list[j]).strip() if not pd.isna(row_list[j]) else ""
                         if price_str and (price_str.replace('.', '').isdigit() or price_str.replace(',', '').isdigit()):
                             has_prices = True
-                            self.logger.debug(f"      Row {i} has price data in column {j}: {price_str}")
+                            # self.logger.debug(f"      Row {i} has price data in column {j}: {price_str}")
                             break
                 
                 # If no price data, this is a category row - update the stack
@@ -380,25 +380,25 @@ class ProductParser:
                     if len(category_stack) == 0:
                         # Empty stack - add as major category
                         category_stack.append(product_name)
-                        self.logger.debug(f"      Stack was empty -> Added major category: '{product_name}'")
+                        # self.logger.debug(f"      Stack was empty -> Added major category: '{product_name}'")
                     elif len(category_stack) == 1:
                         # One item in stack - add as subcategory
                         category_stack.append(product_name)
-                        self.logger.debug(f"      Stack had one item -> Added subcategory: '{product_name}'")
+                        # self.logger.debug(f"      Stack had one item -> Added subcategory: '{product_name}'")
                     elif len(category_stack) == 2:
                         # Two items in stack already
                         if previous_row_had_prices is True:
                             # Previous row had prices, update subcategory
                             category_stack[1] = product_name
-                            self.logger.debug(f"      Previous row had prices -> Updated subcategory to: '{product_name}'")
+                            # self.logger.debug(f"      Previous row had prices -> Updated subcategory to: '{product_name}'")
                         else:
                             # Previous row was also a category, shift stack
                             old_major = category_stack.pop(0)  # Remove old major
                             new_major = category_stack[0]      # Current subcategory becomes new major
                             category_stack = [new_major, product_name]  # Set new major and new sub
-                            self.logger.debug(f"      Previous row was a category -> Shifted stack: '{old_major}' out, '{new_major}' to major, '{product_name}' to sub")
+                            # self.logger.debug(f"      Previous row was a category -> Shifted stack: '{old_major}' out, '{new_major}' to major, '{product_name}' to sub")
                     
-                    self.logger.debug(f"      New stack state: {category_stack}")
+                    # self.logger.debug(f"      New stack state: {category_stack}")
                     previous_row_had_prices = False
                     continue
                 
@@ -418,11 +418,11 @@ class ProductParser:
                 
                 if len(row_list) > 3 and not pd.isna(row_list[3]):
                     min_price = self.clean_price_value(str(row_list[3]))
-                    self.logger.debug(f"      Min price: {min_price}")
+                    # self.logger.debug(f"      Min price: {min_price}")
                 
                 if len(row_list) > 4 and not pd.isna(row_list[4]):
                     max_price = self.clean_price_value(str(row_list[4]))
-                    self.logger.debug(f"      Max price: {max_price}")
+                    # self.logger.debug(f"      Max price: {max_price}")
                 
                 # If we don't have both prices, skip this row
                 if min_price is None or max_price is None:
@@ -445,11 +445,11 @@ class ProductParser:
                 }
                 
                 product_data.append(product_entry)
-                self.logger.debug(f"      Added product: '{product_name}' in category '{major_category}' > '{sub_category}'")
+                # self.logger.debug(f"      Added product: '{product_name}' in category '{major_category}' > '{sub_category}'")
                 previous_row_had_prices = True
             
             # Log final state of stack
-            self.logger.debug(f"      Final stack state: {category_stack}")
+            # self.logger.debug(f"      Final stack state: {category_stack}")
             
             # Create DataFrame from collected product data
             if not product_data:
