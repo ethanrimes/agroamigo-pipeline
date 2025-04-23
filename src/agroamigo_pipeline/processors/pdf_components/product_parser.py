@@ -44,6 +44,7 @@ class ProductParser:
     def clean_price_value(self, price_str):
         """
         Clean price strings and convert to float values.
+        Handles European-style numbers (periods as thousands separators, commas as decimal points)
         
         Args:
             price_str (str): Price string from PDF
@@ -56,12 +57,27 @@ class ProductParser:
             if price_str in ["0", ""]:
                 return 0.0
             
-            # Remove non-numeric characters except decimal point
-            cleaned = re.sub(r'[^\d.]', '', price_str.replace(',', '.'))
+            # Convert to string if it's not already
+            price_str = str(price_str)
+            
+            # First, determine if we have a European-style number with period as thousands separator
+            # A typical pattern would be like "3.000" or "1.234.567"
+            european_pattern = re.search(r'\d{1,3}(?:\.\d{3})+(?:,\d+)?$', price_str)
+            
+            if european_pattern:
+                # European format: remove periods (thousands separators) and convert commas to periods
+                cleaned = price_str.replace('.', '').replace(',', '.')
+            else:
+                # Could be US format or simple number: replace commas with periods
+                cleaned = price_str.replace(',', '.')
+            
+            # Remove any remaining non-numeric characters except decimal point
+            cleaned = re.sub(r'[^\d.]', '', cleaned)
+            
             if cleaned:
                 return float(cleaned)
             return None
-        except (ValueError, TypeError):
+        except (ValueError, TypeError) as e:
             return None
 
     def process_table_data(self, file_path, tables, metadata):
