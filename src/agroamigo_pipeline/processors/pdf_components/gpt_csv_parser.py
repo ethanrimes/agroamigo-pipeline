@@ -286,13 +286,14 @@ class GPTCSVParser:
 
     def process_gpt4o_results(self, file_path, csv_texts, metadata):
         """
-        Process multiple CSV texts extracted by GPT-4.1 nano and combine into a single DataFrame.
+        Process multiple CSV texts extracted by GPT-4.1 nano by combining them first,
+        then parsing the combined text to maintain continuity between pages.
         
         Args:
             file_path (str): Path to the original PDF file
             csv_texts (list): List of CSV texts extracted by GPT-4.1 nano
             metadata (dict): Metadata dictionary with date, city, market
-            
+                
         Returns:
             DataFrame: Processed data in standardized format
         """
@@ -305,10 +306,6 @@ class GPTCSVParser:
         os.makedirs(log_dir, exist_ok=True)
         
         try:
-            # Process each CSV text and combine results
-            all_product_data = []
-            self.logger.debug(f"{file_path} - Processing {len(csv_texts)} CSV texts from GPT-4.1 nano")
-            
             # Save raw CSV texts for debugging
             raw_csv_log_file = os.path.join(log_dir, f"raw_csv_texts_{filename}_{int(time.time())}.json")
             try:
@@ -322,17 +319,49 @@ class GPTCSVParser:
             except Exception as e:
                 self.logger.warning(f"{file_path} - Failed to save raw CSV texts to file: {str(e)}")
             
-            for i, csv_text in enumerate(csv_texts):
-                if csv_text:
-                    self.logger.debug(f"{file_path} - Processing CSV text {i+1}/{len(csv_texts)} ({len(csv_text)} characters)")
-                    product_data = self.process_csv_from_gpt4o(csv_text, metadata, file_path=file_path)
-                    self.logger.debug(f"{file_path} - Extracted {len(product_data)} product entries from CSV text {i+1}")
-                    all_product_data.extend(product_data)
-                else:
-                    self.logger.warning(f"{file_path} - CSV text {i+1}/{len(csv_texts)} is empty or None")
+            # Filter out empty CSV texts
+            filtered_csv_texts = [text for text in csv_texts if text and len(text.strip()) > 0]
+            
+            if not filtered_csv_texts:
+                self.logger.warning(f"{file_path} - No valid CSV texts found")
+                return pd.DataFrame()
+            
+            # COMBINE ALL CSV TEXTS into a single text before processing
+            # Process each CSV text to clean it
+            cleaned_texts = []
+            for i, csv_text in enumerate(filtered_csv_texts):
+                # Remove opening triple backticks or "plaintext"/"text"
+                cleaned_text = re.sub(r'^(?:```|plaintext|text)\s*\n', '', csv_text)
+                # Remove closing triple backticks or "plaintext"/"text"
+                cleaned_text = re.sub(r'\n(?:```|plaintext|text)\s*$', '', cleaned_text)
+                
+                # Skip header row in all but the first CSV text to avoid duplicating header
+                if i > 0:
+                    lines = cleaned_text.strip().split('\n')
+                    if lines and "producto" in lines[0].lower():
+                        cleaned_text = '\n'.join(lines[1:])
+                
+                cleaned_texts.append(cleaned_text)
+            
+            # Combine all cleaned texts with newlines between them
+            combined_csv_text = '\n'.join(cleaned_texts)
+            
+            # Save the combined CSV text for debugging
+            combined_csv_log_file = os.path.join(log_dir, f"combined_csv_text_{filename}_{int(time.time())}.txt")
+            try:
+                with open(combined_csv_log_file, "w", encoding="utf-8") as f:
+                    f.write(combined_csv_text)
+                self.logger.debug(f"{file_path} - Saved combined CSV text to: {combined_csv_log_file}")
+            except Exception as e:
+                self.logger.warning(f"{file_path} - Failed to save combined CSV text to file: {str(e)}")
+            
+            # Process the combined CSV text
+            self.logger.debug(f"{file_path} - Processing combined CSV text ({len(combined_csv_text)} characters)")
+            product_data = self.process_csv_from_gpt4o(combined_csv_text, metadata, file_path=file_path)
+            self.logger.debug(f"{file_path} - Extracted {len(product_data)} product entries from combined CSV text")
             
             # If no products found, return empty DataFrame
-            if not all_product_data:
+            if not product_data:
                 self.logger.warning(f"{file_path} - No product data extracted from PDF with GPT-4.1 nano")
                 return pd.DataFrame()
             
@@ -340,7 +369,7 @@ class GPTCSVParser:
             extracted_data_log_file = os.path.join(log_dir, f"extracted_data_{filename}_{int(time.time())}.json")
             try:
                 with open(extracted_data_log_file, "w", encoding="utf-8") as f:
-                    json.dump(all_product_data, f, indent=2, ensure_ascii=False)
+                    json.dump(product_data, f, indent=2, ensure_ascii=False)
                 self.logger.debug(f"{file_path} - Saved extracted product data to: {extracted_data_log_file}")
             except Exception as e:
                 self.logger.warning(f"{file_path} - Failed to save extracted product data to file: {str(e)}")
@@ -349,7 +378,7 @@ class GPTCSVParser:
             self.logger.debug(f"{file_path} - Converting parsed data to DataFrame")
             output_data = []
             
-            for product_entry in all_product_data:
+            for product_entry in product_data:
                 output_row = {
                     'date': metadata['date'],
                     'city': metadata['city'],

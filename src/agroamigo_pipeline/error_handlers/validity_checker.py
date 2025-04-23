@@ -70,6 +70,21 @@ class ValidityChecker:
         
         self.logger.info("ValidityChecker initialized")
     
+
+    def log_dataframe(self, logger, message, df):
+        """
+        Helper method to log a DataFrame without hiding rows or columns.
+        
+        Args:
+            logger: Logger instance
+            message: Log message prefix
+            df: DataFrame to log
+        """
+        with pd.option_context('display.max_rows', None, 
+                            'display.max_columns', None,
+                            'display.width', None):
+            logger.info(f"{message}\n{df}")
+
     def register_individual_pdf_csv(self, registry, pdf_id, output_df, output_csv, 
                                 processing_results, extraction_method, registry_lock):
         """
@@ -125,7 +140,7 @@ class ValidityChecker:
                     validation_results["error_messages"].append(f"Missing required columns: {', '.join(missing_columns)}")
                     self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Missing columns: {missing_columns}")
                     # Log the entire DataFrame
-                    self.logger.info(f"PDF {pdf_id} - DataFrame with missing columns: \n{output_df}")
+                    self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with missing columns:", output_df)
                 
                 # Only run these checks if all required columns exist
                 if not missing_columns:
@@ -138,7 +153,8 @@ class ValidityChecker:
                         validation_results["passed"] = False
                         validation_results["error_messages"].append("Null values found in date column")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null dates")
-                        self.logger.info(f"PDF {pdf_id} - DataFrame with null dates: \n{output_df[output_df['date'].isna()]}")
+                        # self.logger.info(f"PDF {pdf_id} - DataFrame with null dates: \n{output_df[output_df['date'].isna()]}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with null dates:", output_df)
                     
                     # Try to convert dates to datetime
                     try:
@@ -148,8 +164,9 @@ class ValidityChecker:
                         validation_results["passed"] = False
                         validation_results["error_messages"].append("Invalid date format")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid date format")
-                        self.logger.info(f"PDF {pdf_id} - DataFrame with invalid date format: \n{output_df}")
-                    
+                        # self.logger.info(f"PDF {pdf_id} - DataFrame with invalid date format: \n{output_df}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with invalid date format:", output_df)
+
                     # Price validation - must be non-null, numeric, and > 0
                     null_min_prices = output_df['daily_min'].isna().any()
                     null_max_prices = output_df['daily_max'].isna().any()
@@ -158,14 +175,16 @@ class ValidityChecker:
                         validation_results["passed"] = False
                         validation_results["error_messages"].append("Null values found in daily_min column")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null min prices")
-                        self.logger.info(f"PDF {pdf_id} - DataFrame with null min prices: \n{output_df[output_df['daily_min'].isna()]}")
-                    
+                        # self.logger.info(f"PDF {pdf_id} - DataFrame with null min prices: \n{output_df[output_df['daily_min'].isna()]}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with null min prices:", output_df)
+
                     if null_max_prices:
                         validation_results["passed"] = False
                         validation_results["error_messages"].append("Null values found in daily_max column")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null max prices")
-                        self.logger.info(f"PDF {pdf_id} - DataFrame with null max prices: \n{output_df[output_df['daily_max'].isna()]}")
-                    
+                        # self.logger.info(f"PDF {pdf_id} - DataFrame with null max prices: \n{output_df[output_df['daily_max'].isna()]}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with null max prices:", output_df)
+
                     # Check if prices are numeric
                     non_numeric_min = output_df['daily_min'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))).any()
                     non_numeric_max = output_df['daily_max'].apply(lambda x: not (isinstance(x, (int, float)) or pd.isna(x))).any()
@@ -175,12 +194,14 @@ class ValidityChecker:
                         validation_results["error_messages"].append("Non-numeric values found in daily_min column")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Non-numeric min prices")
                         self.logger.info(f"PDF {pdf_id} - DataFrame with non-numeric min prices: \n{output_df}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with non-numeric min prices:", output_df)
                     
                     if non_numeric_max:
                         validation_results["passed"] = False
                         validation_results["error_messages"].append("Non-numeric values found in daily_max column")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Non-numeric max prices")
                         self.logger.info(f"PDF {pdf_id} - DataFrame with non-numeric max prices: \n{output_df}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with non-numeric max prices:", output_df)
                     
                     # Check if prices are > 0
                     invalid_min_prices = ((output_df['daily_min'] <= 0) & (~pd.isna(output_df['daily_min']))).any()
@@ -191,12 +212,14 @@ class ValidityChecker:
                         validation_results["error_messages"].append("Values <= 0 found in daily_min column")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid min prices")
                         self.logger.info(f"PDF {pdf_id} - DataFrame with invalid min prices: \n{output_df[((output_df['daily_min'] <= 0) & (~pd.isna(output_df['daily_min'])))]}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with invalid min prices:", output_df)
                     
                     if invalid_max_prices:
                         validation_results["passed"] = False
                         validation_results["error_messages"].append("Values <= 0 found in daily_max column")
                         self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid max prices")
                         self.logger.info(f"PDF {pdf_id} - DataFrame with invalid max prices: \n{output_df[((output_df['daily_max'] <= 0) & (~pd.isna(output_df['daily_max'])))]}")
+                        self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with invalid max prices:", output_df)
                     
                     # String field validation - major_category, city, product must be non-null, 
                     # strings, and < 80 chars, and not invalid string values
@@ -209,6 +232,7 @@ class ValidityChecker:
                             validation_results["error_messages"].append(f"Null values found in {field} column")
                             self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Null {field}")
                             self.logger.info(f"PDF {pdf_id} - DataFrame with null {field}: \n{output_df[output_df[field].isna()]}")
+                            self.log_dataframe(self.logger, f"PDF {pdf_id} - DataFrame with null field {field}:", output_df)
                         
                         # Check for invalid string values (case insensitive)
                         invalid_strings = output_df[field].fillna('').astype(str).apply(
@@ -219,6 +243,7 @@ class ValidityChecker:
                             validation_results["passed"] = False
                             validation_results["error_messages"].append(f"Invalid string values found in {field} column")
                             self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Invalid {field} strings")
+                            self.log_dataframe(self.logger, f"PDF {pdf_id} - Invalid {field} strings:", output_df)
                             
                             # Get rows with invalid strings
                             invalid_mask = output_df[field].fillna('').astype(str).apply(
@@ -236,7 +261,7 @@ class ValidityChecker:
                                 validation_results["passed"] = False
                                 validation_results["error_messages"].append(f"Values exceeding {self.max_field_length} characters found in {field} column")
                                 self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - {field} exceeds length limit")
-                                
+                                self.log_dataframe(self.logger, f"PDF {pdf_id} - {field} exceeds length:", output_df)
                                 # Get rows with field values exceeding length limit
                                 length_mask = output_df[field].astype(str).apply(
                                     lambda x: len(str(x)) > self.max_field_length if not pd.isna(x) else False
@@ -255,12 +280,13 @@ class ValidityChecker:
                                 validation_results["passed"] = False
                                 validation_results["error_messages"].append(f"Major category names found in {field} column")
                                 self.logger.warning(f"PDF {pdf_id} - {output_csv}: Validation failed - Major categories in {field} column")
+                                self.log_dataframe(self.logger, f"PDF {pdf_id} - Major categories in {field} column:", output_df)
                                 
                                 # Get rows with major categories in the field
                                 category_mask = output_df[field].fillna('').astype(str).apply(
                                     lambda x: any(cat.lower() == x.lower().strip() for cat in self.valid_major_categories)
                                 )
-                                self.logger.info(f"PDF {pdf_id} - DataFrame with major categories in {field} column: \n{output_df[category_mask]}")
+                                # self.logger.info(f"PDF {pdf_id} - DataFrame with major categories in {field} column: \n{output_df[category_mask]}")
             
             # Update processing results based on validation
             updated_results['error_occurred'] = not validation_results["passed"]

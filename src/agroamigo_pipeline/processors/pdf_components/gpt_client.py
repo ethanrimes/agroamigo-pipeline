@@ -82,9 +82,9 @@ class GPTClient:
                 or
 
                 PRECIOS DE VENTA MAYORISTA
-                PRODUCTOS PRIMERA CALIDAD - Boletín Gratuito
-                Bogotá, D.C., Corabastos
-                07 de Septiembre de 2024
+                PRODUCTOS DE PRIMERA CALIDAD - Boletín Gratuito
+                Pasto, El Poterillo
+                16 Diciembre de 2024
 
                 That is precisely what you should return.
                 """
